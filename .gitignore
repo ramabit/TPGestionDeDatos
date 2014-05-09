@@ -1,21 +1,3 @@
-/obj/
-/bin/
+/FrbaCommerce/FrbaCommerce/obj
+/FrbaCommerce/FrbaCommerce/bin
 
-## Specific to RubyMotion:
-.dat*
-.repl_history
-build/
-
-## Documentation cache and generated files:
-/.yardoc/
-/_yardoc/
-/doc/
-/rdoc/
-
-## Environment normalisation:
-/.bundle/
-/lib/bundler/man/
-
-
-# unless supporting rvm < 1.11.0 or doing something fancy, ignore this:
-.rvmrc
