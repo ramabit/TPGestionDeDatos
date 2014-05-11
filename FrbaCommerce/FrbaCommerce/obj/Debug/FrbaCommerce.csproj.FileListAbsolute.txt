@@ -7,3 +7,5 @@ C:\Users\Fer\Documents\UTN\3° año\Gestión de Datos\TP FRBA Commerce 1.0 - 1C 
 C:\Users\Fer\Documents\UTN\3° año\Gestión de Datos\TP FRBA Commerce 1.0 - 1C 2014\Aplicacion Desktop\FrbaCommerce\FrbaCommerce\obj\Debug\FrbaCommerce.exe
 C:\Users\Fer\Documents\UTN\3° año\Gestión de Datos\TP FRBA Commerce 1.0 - 1C 2014\Aplicacion Desktop\FrbaCommerce\FrbaCommerce\obj\Debug\FrbaCommerce.pdb
 C:\Users\Fer\Documents\UTN\3° año\Gestión de Datos\TP FRBA Commerce 1.0 - 1C 2014\Aplicacion Desktop\FrbaCommerce\FrbaCommerce\obj\Debug\FrbaCommerce.Login.LoginForm.resources
+C:\Users\Fer\Documents\GitHub\gddfer\FrbaCommerce\FrbaCommerce\obj\Debug\FrbaCommerce.exe
+C:\Users\Fer\Documents\GitHub\gddfer\FrbaCommerce\FrbaCommerce\obj\Debug\FrbaCommerce.pdb
