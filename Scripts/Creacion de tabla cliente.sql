@@ -15,3 +15,9 @@ INSERT INTO CLIENTE
 select distinct Cli_Dni, Cli_Apeliido, Cli_Nombre, Cli_Fecha_Nac, Cli_Mail, Cli_Dom_Calle, Cli_Nro_Calle, Cli_Piso, Cli_Depto, Cli_Cod_Postal 
 from gd_esquema.Maestra 
 where ISNULL(Cli_DNI, 0) != 0
+
+INSERT INTO CLIENTE
+   ( [dni], [apellido], [nombre], [fecha_nacimiento], [mail], [domicilio_calle], [domicilio_numero], [domicilio_piso], [domicilio_depto], [domicilio_codigo_postal])
+select distinct Publ_Cli_Dni, Publ_Cli_Apeliido, Publ_Cli_Nombre, Publ_Cli_Fecha_Nac, Publ_Cli_Mail, Publ_Cli_Dom_Calle, Publ_Cli_Nro_Calle, Publ_Cli_Piso, Publ_Cli_Depto, Publ_Cli_Cod_Postal 
+from gd_esquema.Maestra 
+where ISNULL(Publ_Cli_DNI, 0) != 0
