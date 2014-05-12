@@ -12,5 +12,15 @@
 
 #Tabla de publicacion
 - [ ] Agregar FK a usuario
-- [ ] Agregar FK a visibilidad
+- [x] Agregar FK a visibilidad
 - [ ] Agregar FK a rubro
+- [ ] Separar los rubros y crear una tabla a partir de ellos
+
+#Tabla de usuario
+- [ ] Crear tabla
+
+#Tabla de visibilidad
+- [x] Crear tabla
+
+#Tabla de pregunta
+- [x] Crear tabla
