@@ -9,3 +9,8 @@
 - [ ] Preguntar por telefono
 - [ ] Agregar restriccion de razon social unico
 - [ ] Agregar restriccion de CUIT unico
+
+#Tabla de publicacion
+- [ ] Agregar FK a usuario
+- [ ] Agregar FK a visibilidad
+- [ ] Agregar FK a rubro
