@@ -6,7 +6,7 @@ cantidad numeric(18,0),
 fecha datetime,
 username nvarchar(255) default null,
 codigo_publicacion numeric(18,0) foreign key references publicacion (codigo),
-codigo_calificacion numeric(18,0) default null,
+codigo_calificacion numeric(18,0) foreign key references calificacion (codigo) default null,
 )
 
 insert into compra
