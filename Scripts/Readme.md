@@ -24,3 +24,7 @@
 
 #Tabla de pregunta
 - [x] Crear tabla
+
+#Tabla oferta
+- [ ] Agregar FK a usuario
+- [ ] Agregar FK a calificacion
