@@ -1,12 +1,13 @@
+drop table publicacion
 create table publicacion
-(codigo numeric(18,0),
+(codigo numeric(18,0) primary key,
 descripcion nvarchar(255),
 stock numeric(18,0),
 fecha_inicio datetime,
 fecha_vencimiento datetime,
 precio numeric(18,0),
 rubro nvarchar(255),
-codigo_visibilidad numeric(18,0),
+codigo_visibilidad numeric(18,0) foreign key references visibilidad (codigo),
 codigo_usuario numeric(18,0) default null,
 estado nvarchar(255),
 tipo nvarchar(255),

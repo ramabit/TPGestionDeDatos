@@ -1,6 +1,6 @@
 drop table visibilidad
 create table visibilidad
-(codigo numeric(18,0),
+(codigo numeric(18,0) primary key,
 descripcion nvarchar(255),
 precio numeric(18,2),
 porcentaje numeric(18,0),
