@@ -2,7 +2,7 @@
 - [ ] Agregar restriccion de telefono unico
 - [ ] Agregar tipo de documento
 - [ ] Preguntar por telefono
-- 
+
 #Tabla de empresa
 - [ ] Preguntar por nombre de contacto
 - [ ] Preguntar por ciudad
