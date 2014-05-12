@@ -25,13 +25,18 @@
 #Tabla de pregunta
 - [x] Crear tabla
 
-#Tabla oferta
+#Tabla de oferta
 - [ ] Agregar FK a usuario
 - [ ] Agregar FK a calificacion
 - [ ] Agregar fecha a der
+- [ ] Cambiar la cardinalidad de la relacion con Calificacion -> Una oferta no necesariamente tiene una calificacion
 
-#Tabla compra
+#Tabla de compra
 - [ ] Agregar FK a usuario
 - [ ] Agregar FK a calificacion
 - [ ] Cambiar monto por cantidad en der
 - [ ] Agregar fecha a der
+- [ ] Cambiar la cardinalidad de la relacion con Calificacion -> Una compra tiene una calificacion pero no automaticamenteno, es decir, cuando se crea no tiene calificacion
+
+#Tabla de calificacion
+- [x] Crear tabla
