@@ -28,3 +28,10 @@
 #Tabla oferta
 - [ ] Agregar FK a usuario
 - [ ] Agregar FK a calificacion
+- [ ] Agregar fecha a der
+
+#Tabla compra
+- [ ] Agregar FK a usuario
+- [ ] Agregar FK a calificacion
+- [ ] Cambiar monto por cantidad en der
+- [ ] Agregar fecha a der
