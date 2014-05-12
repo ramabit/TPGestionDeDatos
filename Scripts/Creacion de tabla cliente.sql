@@ -8,7 +8,8 @@ domicilio_calle nvarchar(255),
 domicilio_numero numeric(18,0),
 domicilio_piso numeric(18,0),
 domicilio_depto nvarchar(50),
-domicilio_codigo_postal nvarchar(50))
+domicilio_codigo_postal nvarchar(50),
+habilitado bit default 1)
 
 INSERT INTO CLIENTE
    ( [dni], [apellido], [nombre], [fecha_nacimiento], [mail], [domicilio_calle], [domicilio_numero], [domicilio_piso], [domicilio_depto], [domicilio_codigo_postal])

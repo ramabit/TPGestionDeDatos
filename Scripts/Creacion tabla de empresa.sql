@@ -7,7 +7,8 @@ domicilio_calle nvarchar(100),
 domicilio_numero numeric(18,0),
 domicilio_piso numeric(18,0),
 domicilio_depto nvarchar(50),
-domicilio_codigo_postal nvarchar(50))
+domicilio_codigo_postal nvarchar(50),
+habilitado bit default 1)
 
 INSERT INTO empresa
    ( [razon_social], [cuit], [fecha_creacion], [mail], [domicilio_calle], [domicilio_numero], [domicilio_piso], [domicilio_depto], [domicilio_codigo_postal])
