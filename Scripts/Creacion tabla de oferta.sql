@@ -7,10 +7,11 @@ id numeric(18,0) identity(0,1),
 monto numeric(18,0),
 gano_subasta bit default 0,
 fecha datetime,
-username nvarchar(255) default null,
+username nvarchar(255),
 id_publicacion numeric(18,0),
 id_calificacion numeric(18,0) default null,
 PRIMARY KEY (id),
+FOREIGN KEY (username) REFERENCES Usuario (username),
 FOREIGN KEY (id_publicacion) REFERENCES Publicacion (id),
 FOREIGN KEY (id_calificacion) REFERENCES Calificacion (id)
 )

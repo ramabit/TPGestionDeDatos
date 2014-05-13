@@ -6,10 +6,13 @@ create table Compra
 id numeric(18,0) identity(0,1),
 cantidad numeric(18,0),
 fecha datetime,
-username nvarchar(255) default null,
+username nvarchar(255),
 id_publicacion numeric(18,0) foreign key references publicacion (id),
 id_calificacion numeric(18,0) foreign key references calificacion (id) default null,
--- PRIMARY KEY ()
+PRIMARY KEY (id),
+FOREIGN KEY (username) REFERENCES Usuario (username),
+FOREIGN KEY (id_publicacion) REFERENCES Publicacion (id),
+FOREIGN KEY (id_calificacion) REFERENCES Calificacion (id),
 )
 
 insert into Compra
