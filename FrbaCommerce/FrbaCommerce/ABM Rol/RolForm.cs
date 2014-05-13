@@ -9,9 +9,9 @@ using System.Windows.Forms;
 
 namespace FrbaCommerce.ABM_Rol
 {
-    public partial class Form1 : Form
+    public partial class RolForm : Form
     {
-        public Form1()
+        public RolForm()
         {
             InitializeComponent();
         }
