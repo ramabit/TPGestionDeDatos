@@ -3,7 +3,7 @@ DROP TABLE Cliente
 
 create table Cliente
 (
-dni numeric(18,0),
+dni numeric(18,0) primary key,
 apellido nvarchar(255),
 nombre nvarchar(255),
 fecha_nacimiento datetime,
@@ -15,7 +15,6 @@ domicilio_depto nvarchar(50),
 domicilio_id_postal nvarchar(50),
 habilitado bit default 1,
 username nvarchar(45) foreign key references Usuario(username)
--- PRIMARY KEY ()
 )
 
 -- FALTA INSERTAR LOS USERNAME POR DEFECTO
