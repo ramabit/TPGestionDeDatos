@@ -1,10 +1,13 @@
 IF OBJECT_ID('Funcionalidad_x_Rol', 'U') IS NOT NULL
 DROP TABLE Funcionalidad_x_Rol
+
 create table Funcionalidad_x_Rol
 (
-funcionalidad_id int foreign key references funcionalidad(id),
-rol_id int foreign key references rol(id),
-PRIMARY KEY(funcionalidad_id,rol_id)
+funcionalidad_id numeric(18, 0),
+rol_id numeric(18, 0),
+PRIMARY KEY(funcionalidad_id, rol_id),
+FOREIGN KEY (funcionalidad_id) REFERENCES Funcionalidad (id),
+FOREIGN KEY (rol_id) REFERENCES Rol (id)
 )
 
 -- Agrego a administrador todas las funcionalidades

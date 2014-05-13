@@ -8,9 +8,11 @@ monto numeric(18,0),
 gano_subasta bit default 0,
 fecha datetime,
 username nvarchar(255) default null,
-id_publicacion numeric(18,0) foreign key references publicacion (id),
-id_calificacion numeric(18,0) foreign key references calificacion (id) default null,
-PRIMARY KEY (id)
+id_publicacion numeric(18,0),
+id_calificacion numeric(18,0) default null,
+PRIMARY KEY (id),
+FOREIGN KEY (id_publicacion) REFERENCES Publicacion (id),
+FOREIGN KEY (id_calificacion) REFERENCES Calificacion (id)
 )
 
 insert into Oferta

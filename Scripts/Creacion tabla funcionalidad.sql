@@ -1,9 +1,10 @@
 IF OBJECT_ID('Funcionalidad', 'U') IS NOT NULL
 DROP TABLE Funcionalidad
+
 create table Funcionalidad
 (
-id int identity(1,1),
-nombre varchar(45) not null,
+id numeric(18, 0) identity(1,1),
+nombre nvarchar(45) not null,
 PRIMARY KEY (id)
 )
 

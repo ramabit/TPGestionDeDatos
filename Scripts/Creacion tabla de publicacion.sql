@@ -10,13 +10,14 @@ fecha_inicio datetime,
 fecha_vencimiento datetime,
 precio numeric(18,0),
 rubro nvarchar(255),
-id_visibilidad numeric(18,0) foreign key references visibilidad (id),
+id_visibilidad numeric(18,0),
 id_usuario numeric(18,0) default null,
 estado nvarchar(255),
 tipo nvarchar(255),
 se_realizan_preguntas bit default 0,
 habilitado bit default 1,
-PRIMARY KEY (id)
+PRIMARY KEY (id),
+FOREIGN KEY (id_visibilidad) REFERENCES Visibilidad (id)
 )
 
 insert into Publicacion

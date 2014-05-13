@@ -1,5 +1,6 @@
 IF OBJECT_ID('Visibilidad', 'U') IS NOT NULL
 DROP TABLE Visibilidad
+
 create table Visibilidad
 (
 id numeric(18,0),

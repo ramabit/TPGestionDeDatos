@@ -13,8 +13,9 @@ domicilio_piso numeric(18,0),
 domicilio_depto nvarchar(50),
 domicilio_id_postal nvarchar(50),
 habilitado bit default 1,
-username nvarchar(45) foreign key references Usuario(username),
-PRIMARY KEY (razon_social,cuit)
+username nvarchar(45),
+PRIMARY KEY (razon_social, cuit),
+FOREIGN KEY (username) REFERENCES Usuario (username)
 )
 
 -- FALTA INSERTAR LOS USERNAME POR DEFECTO

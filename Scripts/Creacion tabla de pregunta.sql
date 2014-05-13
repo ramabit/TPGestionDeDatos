@@ -6,6 +6,7 @@ create table Pregunta
 id numeric(18,0),
 descripcion nvarchar(255) not null,
 respuesta nvarchar(255) default '',
-id_publicacion numeric(18,0) foreign key references publicacion (id),
-PRIMARY KEY (id)
+id_publicacion numeric(18,0),
+PRIMARY KEY (id),
+FOREIGN KEY (id_publicacion) REFERENCES Publicacion (id)
 )
