@@ -6,15 +6,17 @@
 - [ ] Discutir cual deberia ser la PK
 - [ ] Insertar username por defecto
 
+
 #Tabla de empresa
 - [ ] Preguntar por nombre de contacto
 - [ ] Preguntar por ciudad
 - [ ] Preguntar por telefono
-- [ ] Agregar restriccion de razon social unico
-- [ ] Agregar restriccion de CUIT unico
 - [x] Agregar PK
 - [ ] Discutir cual deberia ser la PK
 - [ ] Insertar username por defecto
+- [x] Agregar restriccion de razon social unico
+- [x] Agregar restriccion de CUIT unico
+- [x] Agregar PK
 
 #Tabla de publicacion
 - [ ] Agregar FK a usuario
@@ -23,7 +25,7 @@
 - [ ] Separar los rubros y crear una tabla a partir de ellos
 
 #Tabla de usuario
-- [ ] Crear tabla
+- [x] Crear tabla
 
 #Tabla de visibilidad
 - [x] Crear tabla
