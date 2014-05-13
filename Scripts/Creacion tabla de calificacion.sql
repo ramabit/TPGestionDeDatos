@@ -1,7 +1,9 @@
-drop table calificacion
-create table calificacion
+IF OBJECT_ID('Calificacion', 'U') IS NOT NULL
+DROP TABLE Calificacion
+create table Calificacion
 (
-codigo numeric(18,0) primary key,
+codigo numeric(18,0),
 cantidad_estrellas numeric(18,2),
-descripcion nvarchar(255)
+descripcion nvarchar(255),
+PRIMARY KEY (codigo)
 )

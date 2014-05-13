@@ -1,11 +1,15 @@
-drop table visibilidad
-create table visibilidad
-(codigo numeric(18,0) primary key,
+IF OBJECT_ID('Visibilidad', 'U') IS NOT NULL
+DROP TABLE Visibilidad
+create table Visibilidad
+(
+codigo numeric(18,0),
 descripcion nvarchar(255),
 precio numeric(18,2),
 porcentaje numeric(18,0),
-habilitado bit default 1)
+habilitado bit default 1,
+PRIMARY KEY (codigo)
+)
 
-insert into visibilidad
+insert into Visibilidad
 ([codigo],[descripcion],[precio],[porcentaje])
 select distinct Publicacion_Visibilidad_Cod, Publicacion_Visibilidad_Desc, Publicacion_Visibilidad_Porcentaje, Publicacion_Visibilidad_Precio from gd_esquema.Maestra

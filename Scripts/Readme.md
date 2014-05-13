@@ -2,6 +2,7 @@
 - [ ] Agregar restriccion de telefono unico
 - [ ] Agregar tipo de documento
 - [ ] Preguntar por telefono
+- [ ] Agregar PK
 
 #Tabla de empresa
 - [ ] Preguntar por nombre de contacto
@@ -9,6 +10,7 @@
 - [ ] Preguntar por telefono
 - [ ] Agregar restriccion de razon social unico
 - [ ] Agregar restriccion de CUIT unico
+- [ ] Agregar PK
 
 #Tabla de publicacion
 - [ ] Agregar FK a usuario
@@ -32,6 +34,7 @@
 - [ ] Cambiar la cardinalidad de la relacion con Calificacion -> Una oferta no necesariamente tiene una calificacion
 
 #Tabla de compra
+- [ ] Agregar PK
 - [ ] Agregar FK a usuario
 - [ ] Agregar FK a calificacion
 - [ ] Cambiar monto por cantidad en der

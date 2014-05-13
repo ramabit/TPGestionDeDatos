@@ -1,6 +1,11 @@
+IF OBJECT_ID('Funcionalidad', 'U') IS NOT NULL
+DROP TABLE Funcionalidad
 create table Funcionalidad
-(id int identity(1,1) primary key,
-nombre varchar(45) not null);
+(
+id int identity(1,1),
+nombre varchar(45) not null,
+PRIMARY KEY (id)
+)
 
 insert into Funcionalidad
 (nombre)

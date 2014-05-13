@@ -1,7 +1,11 @@
+IF OBJECT_ID('Funcionalidad_x_Rol', 'U') IS NOT NULL
+DROP TABLE Funcionalidad_x_Rol
 create table Funcionalidad_x_Rol
-(funcionalidad_id int foreign key references funcionalidad(id),
+(
+funcionalidad_id int foreign key references funcionalidad(id),
 rol_id int foreign key references rol(id),
-primary key(funcionalidad_id,rol_id));
+PRIMARY KEY(funcionalidad_id,rol_id)
+)
 
 -- Agrego a administrador todas las funcionalidades
 begin transaction
