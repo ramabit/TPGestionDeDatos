@@ -56,3 +56,6 @@
 
 #Tabla de usuarios
 - [x] Deliberar acerca de su PK (username vs codigo)
+
+#Tabla de rol_x_usuario
+- [ ] Insertar registros
