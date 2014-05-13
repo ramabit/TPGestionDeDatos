@@ -2,7 +2,9 @@
 - [ ] Agregar restriccion de telefono unico
 - [ ] Agregar tipo de documento
 - [ ] Preguntar por telefono
-- [ ] Agregar PK
+- [x] Agregar PK
+- [ ] Discutir cual deberia ser la PK
+- [ ] Insertar username por defecto
 
 #Tabla de empresa
 - [ ] Preguntar por nombre de contacto
@@ -10,7 +12,9 @@
 - [ ] Preguntar por telefono
 - [ ] Agregar restriccion de razon social unico
 - [ ] Agregar restriccion de CUIT unico
-- [ ] Agregar PK
+- [x] Agregar PK
+- [ ] Discutir cual deberia ser la PK
+- [ ] Insertar username por defecto
 
 #Tabla de publicacion
 - [ ] Agregar FK a usuario
@@ -49,4 +53,4 @@
 - [ ] Deliberar acerca de si puede tener un campo habilitado
 
 #Tabla de usuarios
-- [ ] Deliberar acerca de su PK (username vs codigo)
+- [x] Deliberar acerca de su PK (username vs codigo)
