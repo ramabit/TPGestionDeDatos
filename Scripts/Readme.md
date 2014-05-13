@@ -19,7 +19,7 @@
 - [x] Agregar PK
 
 #Tabla de publicacion
-- [ ] Agregar FK a usuario
+- [x] Agregar FK a usuario
 - [x] Agregar FK a visibilidad
 - [ ] Agregar FK a rubro
 - [ ] Separar los rubros y crear una tabla a partir de ellos
@@ -35,16 +35,16 @@
 - [ ] Deliberar acerca de si puede tener un campo habilitado
 
 #Tabla de oferta
-- [ ] Agregar FK a usuario
-- [ ] Agregar FK a calificacion
+- [x] Agregar FK a usuario
+- [x] Agregar FK a calificacion
 - [ ] Agregar fecha a der
 - [ ] Cambiar la cardinalidad de la relacion con Calificacion -> Una oferta no necesariamente tiene una calificacion
 - [ ] Deliberar acerca de si puede tener un campo habilitado
 
 #Tabla de compra
-- [ ] Agregar PK
-- [ ] Agregar FK a usuario
-- [ ] Agregar FK a calificacion
+- [x] Agregar PK
+- [x] Agregar FK a usuario
+- [x] Agregar FK a calificacion
 - [ ] Cambiar monto por cantidad en der
 - [ ] Agregar fecha a der
 - [ ] Cambiar la cardinalidad de la relacion con Calificacion -> Una compra tiene una calificacion pero no automaticamenteno, es decir, cuando se crea no tiene calificacion
