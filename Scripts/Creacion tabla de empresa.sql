@@ -13,8 +13,11 @@ domicilio_piso numeric(18,0),
 domicilio_depto nvarchar(50),
 domicilio_id_postal nvarchar(50),
 habilitado bit default 1,
--- PRIMARY KEY ()
+username nvarchar(45) foreign key references Usuario(username),
+PRIMARY KEY (razon_social,cuit)
 )
+
+-- FALTA INSERTAR LOS USERNAME POR DEFECTO
 
 insert into Empresa
    ( [razon_social], [cuit], [fecha_creacion], [mail], [domicilio_calle], [domicilio_numero], [domicilio_piso], [domicilio_depto], [domicilio_id_postal])
