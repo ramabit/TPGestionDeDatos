@@ -53,3 +53,4 @@ values ('Deshabilitar usuario');
 insert into Funcionalidad
 (nombre)
 values ('Generar factura');
+
