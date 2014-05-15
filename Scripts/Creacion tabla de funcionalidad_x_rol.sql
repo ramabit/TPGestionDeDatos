@@ -55,5 +55,3 @@ values(3,3);
 insert into Funcionalidad_x_Rol
 (funcionalidad_id,rol_id)
 values(13,3);
-
-select funcionalidad_id,rol_id from Funcionalidad_x_Rol
