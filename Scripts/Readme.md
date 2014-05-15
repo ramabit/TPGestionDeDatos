@@ -1,18 +1,21 @@
 #Tabla de usuario
+- [ ] Agregar restriccion de username unico e informar
+- [ ] Se debe enctriptar la password 
 
 #Tabla de empresa
 - [ ] Preguntar por nombre de contacto
 - [ ] Preguntar por ciudad
 - [ ] Preguntar por telefono
-- [ ] Discutir cual deberia ser la PK -- La PK no es minima
-- [ ] Insertar username por defecto
 - [x] Agregar restriccion de razon social unico -- no se si esta bien esto. Me parece que hay que ponerle un atributo UNIQUE
 - [x] Agregar restriccion de CUIT unico -- no se si esta bien esto
+- [ ] Agregar restriccion de telefono unico e informar
+- [ ] Discutir cual deberia ser la PK -- La PK no es minima
+- [ ] Insertar username por defecto
 
 #Tabla de cliente
-- [ ] Agregar restriccion de telefono unico
-- [ ] Agregar tipo de documento
+- [ ] Preguntar por tipo de documento
 - [ ] Preguntar por telefono
+- [ ] Agregar restriccion de telefono unico
 - [ ] Discutir cual deberia ser la PK
 - [ ] Insertar username por defecto
 
@@ -29,6 +32,7 @@
 #Tabla de publicacion
 - [ ] Agregar FK a rubro
 - [ ] Separar los rubros y crear una tabla a partir de ellos
+- [ ] Agregar funcionalidad de fecha_vencimiento automatica
 
 #Tabla de pregunta
 - [ ] Deliberar acerca de si puede tener un campo habilitado
