@@ -6,7 +6,7 @@ create table Compra
 id numeric(18,0) identity(0,1),
 cantidad numeric(18,0),
 fecha datetime,
-username nvarchar(255),
+username nvarchar(45),
 id_publicacion numeric(18,0) foreign key references publicacion (id),
 id_calificacion numeric(18,0) foreign key references calificacion (id) default null,
 PRIMARY KEY (id),
