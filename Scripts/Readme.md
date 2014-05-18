@@ -41,12 +41,12 @@
 - [ ] Deliberar acerca de si puede tener un campo habilitado
 
 #Tabla de oferta
-- [ ] Agregar fecha en der
+- [x] Agregar fecha en der
 - [ ] Cambiar la cardinalidad de la relacion con Calificacion en el der -> Una oferta no necesariamente tiene una calificacion
 - [ ] Deliberar acerca de si puede tener un campo habilitado
 
 #Tabla de compra
-- [ ] Cambiar monto por cantidad en der
-- [ ] Agregar fecha en der
+- [x] Cambiar monto por cantidad en der
+- [x] Agregar fecha en der
 - [ ] Cambiar la cardinalidad de la relacion con Calificacion en der-> Una compra tiene una calificacion pero no automaticamenteno, es decir, cuando se crea no tiene calificacion
 - [ ] Deliberar acerca de si puede tener un campo habilitado
