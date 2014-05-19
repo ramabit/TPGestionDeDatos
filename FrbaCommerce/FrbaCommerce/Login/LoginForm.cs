@@ -14,7 +14,6 @@ namespace FrbaCommerce.Login
     {
 
         private SqlCommand command { get; set; }
-
         ConexionDB conexion = new ConexionDB();
 
         public LoginForm()
@@ -26,7 +25,6 @@ namespace FrbaCommerce.Login
         {
         }
 
-    
         private SqlCommand CrearCommand(string sqlTexto, IList<SqlParameter> parametros)
         {
             this.command = new SqlCommand();
