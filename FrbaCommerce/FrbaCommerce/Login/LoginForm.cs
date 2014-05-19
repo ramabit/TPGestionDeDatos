@@ -12,51 +12,27 @@ namespace FrbaCommerce.Login
 {
     public partial class LoginForm : Form
     {
+
         private SqlCommand command { get; set; }
-        private SqlConnection Conexion { get; set; }
-        private SqlDataReader Reader { get; set; }
+
+        ConexionDB conexion = new ConexionDB();
 
         public LoginForm()
         {
             InitializeComponent();
         }
 
-
-        private SqlConnection AbrirConexion()
-        {
-            this.Conexion = new SqlConnection();
-            this.Conexion.ConnectionString = @"Server=localhost\SQLSERVER2008;Database=GD1C2014;User Id=gd; Password=gd2014";
-            this.Conexion.Open();
-
-            return this.Conexion;
-        }
-
-        public void CerrarConexion()
-        {
-            if (this.Reader != null) { this.Reader.Close(); }
-            if (this.Conexion != null) { this.Conexion.Close(); }
-        }
-
         private void label1_Click(object sender, EventArgs e)
         {
         }
 
-        public bool PuedeLeer()
-        {
-            return this.Reader.Read();
-        }
-
-        public object Leer(string campo)
-        {
-            return this.Reader[campo];
-        }
-
+    
         private SqlCommand CrearCommand(string sqlTexto, IList<SqlParameter> parametros)
         {
             this.command = new SqlCommand();
             this.command.CommandText = sqlTexto;
             if (parametros != null) { foreach (SqlParameter parametro in parametros) { this.command.Parameters.Add(parametro); } }
-            if (this.command.Connection == null) this.command.Connection = this.AbrirConexion();
+            if (this.command.Connection == null) this.command.Connection = conexion.AbrirConexion();
 
             return this.command;
         }
@@ -74,11 +50,11 @@ namespace FrbaCommerce.Login
             parametros.Add(new SqlParameter("@username", this.oTbxUsuario.Text));
             parametros.Add(new SqlParameter("@password", this.oTbxPass.Text));
 
-            this.Reader = this.CrearCommand(query, parametros).ExecuteReader();
+            conexion.Reader = this.CrearCommand(query, parametros).ExecuteReader();
 
-            if (this.PuedeLeer())
+            if (conexion.PuedeLeer())
             {
-                MessageBox.Show("Bienvenido " + this.Leer("username") + "!");
+                MessageBox.Show("Bienvenido " + conexion.Leer("username") + "!");
             }
             else
             {
