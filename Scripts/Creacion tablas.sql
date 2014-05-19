@@ -39,10 +39,11 @@ DROP TABLE Usuario
 
 create table Usuario
 (
+id numeric(18,0),
 username nvarchar(45),
 password nvarchar(45),
 habilitado bit default 1,
-PRIMARY KEY (username)
+PRIMARY KEY (id)
 )
 
 create table Empresa
@@ -57,9 +58,9 @@ domicilio_piso numeric(18,0),
 domicilio_depto nvarchar(50),
 domicilio_id_postal nvarchar(50),
 habilitado bit default 1,
-username nvarchar(45),
+usuario_id numeric(18,0),
 PRIMARY KEY (razon_social, cuit),
-FOREIGN KEY (username) REFERENCES Usuario (username)
+FOREIGN KEY (usuario_id) REFERENCES Usuario (id)
 )
 
 create table Cliente
@@ -75,9 +76,9 @@ domicilio_piso numeric(18,0),
 domicilio_depto nvarchar(50),
 domicilio_id_postal nvarchar(50),
 habilitado bit default 1,
-username nvarchar(45),
+usuario_id numeric(18,0),
 PRIMARY KEY (dni),
-FOREIGN KEY (username) REFERENCES Usuario (username)
+FOREIGN KEY (usuario_id) REFERENCES Usuario (id)
 )
 
 create table Rol
@@ -91,10 +92,10 @@ PRIMARY KEY (id)
 create table Rol_Por_Usuario
 (
 rol_id numeric(18,0),
-username nvarchar(45),
-PRIMARY KEY (rol_id, username),
+usuario_id numeric(18,0),
+PRIMARY KEY (rol_id, usuario_id),
 FOREIGN KEY (rol_id) REFERENCES Rol (id),
-FOREIGN KEY (username) REFERENCES Usuario (username),
+FOREIGN KEY (usuario_id) REFERENCES Usuario (id),
 )
 
 create table Funcionalidad
@@ -132,15 +133,15 @@ fecha_inicio datetime,
 fecha_vencimiento datetime,
 precio numeric(18,0),
 rubro nvarchar(255),
-id_visibilidad numeric(18,0),
-username nvarchar(45),
+visibilidad_id numeric(18,0),
+usuario_id numeric(18,0),
 estado nvarchar(255),
 tipo nvarchar(255),
 se_realizan_preguntas bit default 0,
 habilitado bit default 1,
 PRIMARY KEY (id),
-FOREIGN KEY (id_visibilidad) REFERENCES Visibilidad (id),
-FOREIGN KEY (username) REFERENCES Usuario (username),
+FOREIGN KEY (visibilidad_id) REFERENCES Visibilidad (id),
+FOREIGN KEY (usuario_id) REFERENCES Usuario (id),
 )
 
 create table Pregunta
@@ -149,9 +150,9 @@ id numeric(18,0),
 descripcion nvarchar(255) not null,
 respuesta nvarchar(255) default '',
 respuesta_fecha datetime default null,
-id_publicacion numeric(18,0),
+publicacion_id numeric(18,0),
 PRIMARY KEY (id),
-FOREIGN KEY (id_publicacion) REFERENCES Publicacion (id)
+FOREIGN KEY (publicacion_id) REFERENCES Publicacion (id)
 )
 
 create table Calificacion
@@ -168,13 +169,13 @@ id numeric(18,0) identity(0,1),
 monto numeric(18,0),
 gano_subasta bit default 0,
 fecha datetime,
-username nvarchar(45),
-id_publicacion numeric(18,0),
-id_calificacion numeric(18,0) default null,
+usuario_id numeric(18,0),
+publicacion_id numeric(18,0),
+calificacion_id numeric(18,0) default null,
 PRIMARY KEY (id),
-FOREIGN KEY (username) REFERENCES Usuario (username),
-FOREIGN KEY (id_publicacion) REFERENCES Publicacion (id),
-FOREIGN KEY (id_calificacion) REFERENCES Calificacion (id)
+FOREIGN KEY (usuario_id) REFERENCES Usuario (id),
+FOREIGN KEY (publicacion_id) REFERENCES Publicacion (id),
+FOREIGN KEY (calificacion_id) REFERENCES Calificacion (id)
 )
 
 create table Compra
@@ -182,11 +183,11 @@ create table Compra
 id numeric(18,0) identity(0,1),
 cantidad numeric(18,0),
 fecha datetime,
-username nvarchar(45),
-id_publicacion numeric(18,0) foreign key references publicacion (id),
-id_calificacion numeric(18,0) foreign key references calificacion (id) default null,
+usuario_id numeric(18,0),
+publicacion_id numeric(18,0),
+calificacion_id numeric(18,0) default null,
 PRIMARY KEY (id),
-FOREIGN KEY (username) REFERENCES Usuario (username),
-FOREIGN KEY (id_publicacion) REFERENCES Publicacion (id),
-FOREIGN KEY (id_calificacion) REFERENCES Calificacion (id),
+FOREIGN KEY (usuario_id) REFERENCES Usuario (id),
+FOREIGN KEY (publicacion_id) REFERENCES Publicacion (id),
+FOREIGN KEY (calificacion_id) REFERENCES Calificacion (id),
 )
