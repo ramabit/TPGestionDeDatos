@@ -41,9 +41,9 @@ namespace FrbaCommerce.ABM_Rol
         public void llenacombobox()
         {
             DataSet roles = new DataSet();
-            SqlDataAdapter adapter = new SqlDataAdapter("SELECT distinct nombre FROM Rol", conexion.Conexion);
+            SqlDataAdapter adapter = new SqlDataAdapter("SELECT distinct nombre FROM Rol where habilitado = 1", conexion.Conexion);
             IList<SqlParameter> parametros = new List<SqlParameter>();
-            command = CrearCommand("SELECT distinct nombre FROM Rol", parametros);
+            command = CrearCommand("SELECT distinct nombre FROM Rol  where habilitado = 1", parametros);
             adapter.SelectCommand = command;
             adapter.Fill(roles, "Rol");
             comboBox2.DataSource = roles.Tables[0].DefaultView;
@@ -53,27 +53,18 @@ namespace FrbaCommerce.ABM_Rol
         private void button1_Click(object sender, EventArgs e)
         {
             IList<SqlParameter> parametros = new List<SqlParameter>();
-            parametros.Add(new SqlParameter("@nombre", comboBox2.SelectedText));
+            String rolElegido = this.comboBox2.SelectedValue.ToString();
+            parametros.Add(new SqlParameter("@nombre", rolElegido));
 
-            string sql = @"UPDATE Rol SET habilitado = 0 WHERE nombre = @nombre";
-
-      //      string sql1 = @"SELECT id WHERE nombre = itemRol";
-      //      SqlCommand command2 = new SqlCommand(sql1, conexion.Conexion);
-
-      //      string sql2 = @"UPDATE Rol_x_Usuario SET Rol_id = null WHERE Rol_id = id";
-      //      SqlCommand command3 = new SqlCommand(sql2, conexion.Conexion);
+            string sql = @"UPDATE Rol SET habilitado = 1 WHERE nombre = @nombre";
+         //   string sql1 = @"SELECT id WHERE nombre = itemRol";
+         //   string sql2 = @"UPDATE Rol_x_Usuario SET Rol_id = null WHERE Rol_id = id";
 
             conexion.Reader = this.CrearCommand(sql, parametros).ExecuteReader();
+         //   conexion.Reader = this.CrearCommand(sql1, parametros).ExecuteReader();
+         //   conexion.Reader = this.CrearCommand(sql2, parametros).ExecuteReader();
 
-            if (conexion.PuedeLeer())
-            {
-                MessageBox.Show("Deshabilitado " + conexion.Leer("nombre") + "!");
-            }
-            else
-            {
-                MessageBox.Show("Error");
-            }
-
+            MessageBox.Show("Deshabilitado rol " + rolElegido + "!");
         }
 
         private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
