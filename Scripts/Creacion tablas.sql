@@ -39,15 +39,16 @@ DROP TABLE Usuario
 
 create table Usuario
 (
-id numeric(18,0),
-username nvarchar(45),
-password nvarchar(45),
+id numeric(18,0) IDENTITY(1,1),
+username AS ISNULL('USER' + CAST(ID AS NVARCHAR(10)), 'X'),
+password nvarchar(45) DEFAULT 'A',
 habilitado bit default 1,
 PRIMARY KEY (id)
 )
 
 create table Empresa
 (
+id numeric(18,0) identity(1,1),
 razon_social nvarchar(255),
 cuit nvarchar(50),
 fecha_creacion datetime,
@@ -59,12 +60,13 @@ domicilio_depto nvarchar(50),
 domicilio_id_postal nvarchar(50),
 habilitado bit default 1,
 usuario_id numeric(18,0),
-PRIMARY KEY (razon_social, cuit),
+PRIMARY KEY (id),
 FOREIGN KEY (usuario_id) REFERENCES Usuario (id)
 )
 
 create table Cliente
 (
+id numeric(18,0) identity(1,1),
 dni numeric(18,0),
 apellido nvarchar(255),
 nombre nvarchar(255),
@@ -77,7 +79,7 @@ domicilio_depto nvarchar(50),
 domicilio_id_postal nvarchar(50),
 habilitado bit default 1,
 usuario_id numeric(18,0),
-PRIMARY KEY (dni),
+PRIMARY KEY (id),
 FOREIGN KEY (usuario_id) REFERENCES Usuario (id)
 )
 
