@@ -160,14 +160,14 @@ FOREIGN KEY (publicacion_id) REFERENCES Publicacion (id)
 create table Calificacion
 (
 id numeric(18,0),
-cantidad_estrellas numeric(18,2),
+cantidad_estrellas numeric(18,0),
 descripcion nvarchar(255),
 PRIMARY KEY (id)
 )
 
 create table Oferta
 (
-id numeric(18,0) identity(0,1),
+id numeric(18,0) identity(1,1),
 monto numeric(18,0),
 gano_subasta bit default 0,
 fecha datetime,
@@ -182,7 +182,7 @@ FOREIGN KEY (calificacion_id) REFERENCES Calificacion (id)
 
 create table Compra
 (
-id numeric(18,0) identity(0,1),
+id numeric(18,0) identity(1,1),
 cantidad numeric(18,0),
 fecha datetime,
 usuario_id numeric(18,0),
