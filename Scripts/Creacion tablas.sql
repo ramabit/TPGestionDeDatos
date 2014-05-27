@@ -37,6 +37,16 @@ DROP TABLE Cliente
 IF OBJECT_ID('Usuario', 'U') IS NOT NULL
 DROP TABLE Usuario
 
+IF OBJECT_ID('Forma_Pago', 'U') IS NOT NULL
+DROP TABLE Forma_Pago
+
+IF OBJECT_ID('Factura', 'U') IS NOT NULL
+DROP TABLE Factura
+
+IF OBJECT_ID('Item_Factura', 'U') IS NOT NULL
+DROP TABLE Item_Factura
+
+
 create table Usuario
 (
 id numeric(18,0) IDENTITY(1,1),
@@ -193,3 +203,33 @@ FOREIGN KEY (usuario_id) REFERENCES Usuario (id),
 FOREIGN KEY (publicacion_id) REFERENCES Publicacion (id),
 FOREIGN KEY (calificacion_id) REFERENCES Calificacion (id),
 )
+
+create table Forma_Pago
+(
+id numeric(18,0) identity(1,1),
+Descripcion varchar(255),
+PRIMARY KEY (id),
+)
+
+create table Factura
+(
+Nro numeric(18,0),
+Fecha DATETIME,
+Total numeric(18,2),
+Forma_Pago_Id numeric(18,0),
+PRIMARY KEY (Nro),
+FOREIGN KEY (Forma_Pago_Id) REFERENCES Forma_Pago (id)
+)
+
+create table Item_Factura
+(
+id numeric(18,0) identity(1,1),
+monto numeric(18,2),
+cantidad numeric(18,0),
+Factura_Nro numeric(18,0),
+Publicacion_Cod numeric(18,0),
+PRIMARY KEY (id),
+FOREIGN KEY (Factura_Nro) REFERENCES Factura (Nro),
+FOREIGN KEY (Publicacion_Cod) REFERENCES Publicacion (id)
+)
+

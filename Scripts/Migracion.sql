@@ -236,3 +236,25 @@ INSERT INTO Compra
 ([cantidad], [fecha], [usuario_id], [publicacion_id], [calificacion_id])
 SELECT Compra_Cantidad, Compra_Fecha, (SELECT usuario_id FROM Cliente WHERE dni = Cli_Dni), Publicacion_Cod, Calificacion_Codigo FROM gd_esquema.Maestra
 WHERE ISNULL(Compra_Cantidad, 0) != 0
+
+-- INSERTAR Formas_Pago
+INSERT INTO Forma_Pago
+   ( [Descripcion])
+SELECT DISTINCT Forma_Pago_Desc
+FROM gd_esquema.Maestra 
+WHERE ISNULL(Forma_Pago_Desc,'') != ''
+
+-- INSERTAR Facturas
+INSERT INTO Factura
+   ( [Nro], [Fecha], [Total], [Forma_Pago_Id])
+SELECT DISTINCT Factura_Nro, Factura_Fecha, Factura_Total, (SELECT id FROM Forma_Pago WHERE descripcion = Forma_Pago_Desc)
+FROM gd_esquema.Maestra 
+WHERE ISNULL(Factura_Nro,-1) != -1
+
+-- INSERTAR Items_Factura
+INSERT INTO Item_Factura
+   ( [Monto], [Cantidad], [Factura_Nro], [Publicacion_Cod])
+SELECT DISTINCT Item_Factura_Monto, Item_Factura_Cantidad, Factura_Nro, Publicacion_Cod
+FROM gd_esquema.Maestra 
+WHERE ISNULL(Factura_Nro,-1) != -1
+
