@@ -42,6 +42,8 @@ namespace FrbaCommerce.ABM_Rol
         {
             DataSet roles = new DataSet();
             SqlDataAdapter adapter = new SqlDataAdapter("SELECT distinct nombre FROM Rol", conexion.Conexion);
+            IList<SqlParameter> parametros = new List<SqlParameter>();
+            command = CrearCommand("SELECT distinct nombre FROM Rol", parametros);
             adapter.SelectCommand = command;
             adapter.Fill(roles, "Rol");
             comboBox2.DataSource = roles.Tables[0].DefaultView;
