@@ -52,18 +52,28 @@ namespace FrbaCommerce.ABM_Rol
 
         private void button1_Click(object sender, EventArgs e)
         {
-            string itemRol = (string)comboBox2.SelectedItem;
+            IList<SqlParameter> parametros = new List<SqlParameter>();
+            parametros.Add(new SqlParameter("@nombre", comboBox2.SelectedText));
 
-            string sql = @"UPDATE Rol SET habilitado = 0 WHERE nombre = itemRol";
-            SqlCommand command = new SqlCommand(sql, conexion.Conexion);
+            string sql = @"UPDATE Rol SET habilitado = 0 WHERE nombre = @nombre";
 
-            string sql1 = @"SELECT id WHERE nombre = itemRol";
-            SqlCommand command1 = new SqlCommand(sql1, conexion.Conexion);
+      //      string sql1 = @"SELECT id WHERE nombre = itemRol";
+      //      SqlCommand command2 = new SqlCommand(sql1, conexion.Conexion);
 
-            string sql2 = @"UPDATE Rol_x_Usuario SET Rol_id = null WHERE Rol_id = id";
-            SqlCommand command2 = new SqlCommand(sql2, conexion.Conexion);
-        
-          
+      //      string sql2 = @"UPDATE Rol_x_Usuario SET Rol_id = null WHERE Rol_id = id";
+      //      SqlCommand command3 = new SqlCommand(sql2, conexion.Conexion);
+
+            conexion.Reader = this.CrearCommand(sql, parametros).ExecuteReader();
+
+            if (conexion.PuedeLeer())
+            {
+                MessageBox.Show("Deshabilitado " + conexion.Leer("nombre") + "!");
+            }
+            else
+            {
+                MessageBox.Show("Error");
+            }
+
         }
 
         private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
