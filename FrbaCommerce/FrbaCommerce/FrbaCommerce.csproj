@@ -90,6 +90,7 @@
     <Compile Include="Calificar Vendedor\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="BuilderDeComandos.cs" />
     <Compile Include="Comprar-Ofertar\Form1.cs">
       <SubType>Form</SubType>
     </Compile>

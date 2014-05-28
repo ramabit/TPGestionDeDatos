@@ -8,8 +8,8 @@ namespace FrbaCommerce
 {
     class ConexionDB
     {
-        public SqlConnection Conexion { get; set; }
-        public SqlDataReader Reader { get; set; }
+        private SqlConnection Conexion { get; set; }
+        private SqlDataReader Reader { get; set; }
 
         public SqlConnection AbrirConexion()
         {
@@ -29,16 +29,6 @@ namespace FrbaCommerce
             if (this.Conexion != null) { 
                 this.Conexion.Close(); 
             }
-        }
-
-        public bool PuedeLeer()
-        {
-            return this.Reader.Read();
-        }
-
-        public object Leer(string campo)
-        {
-            return this.Reader[campo];
         }
     }
 }

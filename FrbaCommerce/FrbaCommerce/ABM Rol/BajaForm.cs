@@ -14,7 +14,8 @@ namespace FrbaCommerce.ABM_Rol
     public partial class BajaForm : Form
     {
         private SqlCommand command { get; set; }
-        private ConexionDB conexion = new ConexionDB();
+        private IList<SqlParameter> parametros = new List<SqlParameter>();
+        private BuilderDeComandos builderDeComandos = new BuilderDeComandos();
         
         public Object SelectedItem { get; set; }
 
@@ -28,28 +29,12 @@ namespace FrbaCommerce.ABM_Rol
         {
         }
 
-         private SqlCommand CrearCommand(string sqlTexto, IList<SqlParameter> parametros)
-        {
-            this.command = new SqlCommand();
-            this.command.CommandText = sqlTexto;
-            if (parametros != null)
-            { 
-                foreach (SqlParameter parametro in parametros)
-                { 
-                    this.command.Parameters.Add(parametro); 
-                }
-            }
-            if (this.command.Connection == null) this.command.Connection = conexion.AbrirConexion();
-
-            return this.command;
-        }
-
         public void llenacombobox()
         {
             DataSet roles = new DataSet();
-            SqlDataAdapter adapter = new SqlDataAdapter("SELECT distinct nombre FROM Rol where habilitado = 1", conexion.Conexion);
-            IList<SqlParameter> parametros = new List<SqlParameter>();
-            command = CrearCommand("SELECT distinct nombre FROM Rol  where habilitado = 1", parametros);
+            SqlDataAdapter adapter = new SqlDataAdapter();
+            parametros = new List<SqlParameter>();
+            command = builderDeComandos.Crear("SELECT distinct nombre FROM Rol  where habilitado = 1", parametros);
             adapter.SelectCommand = command;
             adapter.Fill(roles, "Rol");
             comboBox2.DataSource = roles.Tables[0].DefaultView;
@@ -59,9 +44,8 @@ namespace FrbaCommerce.ABM_Rol
         private void button1_Click(object sender, EventArgs e)
         {
             String rolElegido = this.comboBox2.Text;
-            MessageBox.Show(rolElegido);
-            IList<SqlParameter> parametros = new List<SqlParameter>();
-            
+
+            parametros.Clear();
             parametros.Add(new SqlParameter("@nombre", rolElegido));
 
             // Hacemos la baja logica del rol
@@ -70,10 +54,10 @@ namespace FrbaCommerce.ABM_Rol
             int filas_afectadas = 0;
 
             // ExecuteNonQuery devuelve la cantidad de filas que modifico
-            filas_afectadas = this.CrearCommand(sql, parametros).ExecuteNonQuery();
+            filas_afectadas = builderDeComandos.Crear(sql, parametros).ExecuteNonQuery();
             if (filas_afectadas != -1)
             {
-                MessageBox.Show("Deshabilitado rol " + rolElegido + "!" + filas_afectadas);
+                MessageBox.Show("Deshabilitado rol " + rolElegido + "! Filas eliminadas: " + filas_afectadas);
             }
             else
             {
@@ -87,10 +71,10 @@ namespace FrbaCommerce.ABM_Rol
             // Borramos el rol en los usuarios que lo tienen
             String sql2 = "UPDATE Rol_x_Usuario SET habilitado = 0 WHERE rol_id = (SELECT id FROM Rol WHERE nombre = @nombre)";
             
-            filas_afectadas = this.CrearCommand(sql2, parametros).ExecuteNonQuery();
+            filas_afectadas = builderDeComandos.Crear(sql2, parametros).ExecuteNonQuery();
             if (filas_afectadas != -1)
             {
-                MessageBox.Show("Deshabilitado rol " + rolElegido + "!" + filas_afectadas);
+                MessageBox.Show("Deshabilitado rol " + rolElegido + "! Filas eliminadas: " + filas_afectadas);
             }
             else
             {
