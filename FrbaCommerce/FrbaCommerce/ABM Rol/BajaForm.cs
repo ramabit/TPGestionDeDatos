@@ -85,7 +85,7 @@ namespace FrbaCommerce.ABM_Rol
             parametros.Add(new SqlParameter("@nombre", rolElegido));
             
             // Borramos el rol en los usuarios que lo tienen
-            String sql2 = "DELETE Rol_x_Usuario WHERE rol_id = (SELECT id FROM Rol WHERE nombre = @nombre)";
+            String sql2 = "UPDATE Rol_x_Usuario SET habilitado = 0 WHERE rol_id = (SELECT id FROM Rol WHERE nombre = @nombre)";
             
             filas_afectadas = this.CrearCommand(sql2, parametros).ExecuteNonQuery();
             if (filas_afectadas != -1)
