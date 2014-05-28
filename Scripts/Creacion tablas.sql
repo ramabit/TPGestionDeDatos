@@ -1,8 +1,8 @@
 IF OBJECT_ID('Funcionalidad_x_Rol', 'U') IS NOT NULL
 DROP TABLE Funcionalidad_x_Rol
 
-IF OBJECT_ID('Rol_Por_Usuario', 'U') IS NOT NULL
-DROP TABLE Rol_Por_Usuario
+IF OBJECT_ID('Rol_x_Usuario', 'U') IS NOT NULL
+DROP TABLE Rol_x_Usuario
 
 IF OBJECT_ID('Pregunta', 'U') IS NOT NULL
 DROP TABLE Pregunta
@@ -15,6 +15,9 @@ DROP TABLE Compra
 
 IF OBJECT_ID('Calificacion', 'U') IS NOT NULL
 DROP TABLE Calificacion
+
+IF OBJECT_ID('Item_Factura', 'U') IS NOT NULL
+DROP TABLE Item_Factura
 
 IF OBJECT_ID('Publicacion', 'U') IS NOT NULL
 DROP TABLE Publicacion
@@ -37,15 +40,11 @@ DROP TABLE Cliente
 IF OBJECT_ID('Usuario', 'U') IS NOT NULL
 DROP TABLE Usuario
 
-IF OBJECT_ID('Forma_Pago', 'U') IS NOT NULL
-DROP TABLE Forma_Pago
-
 IF OBJECT_ID('Factura', 'U') IS NOT NULL
 DROP TABLE Factura
 
-IF OBJECT_ID('Item_Factura', 'U') IS NOT NULL
-DROP TABLE Item_Factura
-
+IF OBJECT_ID('Forma_Pago', 'U') IS NOT NULL
+DROP TABLE Forma_Pago
 
 create table Usuario
 (
@@ -101,10 +100,11 @@ habilitado bit NOT NULL default 1,
 PRIMARY KEY (id)
 )
 
-create table Rol_Por_Usuario
+create table Rol_x_Usuario
 (
 rol_id numeric(18,0),
 usuario_id numeric(18,0),
+habilitado bit NOT NULL default 1,
 PRIMARY KEY (rol_id, usuario_id),
 FOREIGN KEY (rol_id) REFERENCES Rol (id),
 FOREIGN KEY (usuario_id) REFERENCES Usuario (id),
@@ -207,18 +207,18 @@ FOREIGN KEY (calificacion_id) REFERENCES Calificacion (id),
 create table Forma_Pago
 (
 id numeric(18,0) identity(1,1),
-Descripcion varchar(255),
+descripcion nvarchar(255),
 PRIMARY KEY (id),
 )
 
 create table Factura
 (
-Nro numeric(18,0),
-Fecha DATETIME,
-Total numeric(18,2),
-Forma_Pago_Id numeric(18,0),
-PRIMARY KEY (Nro),
-FOREIGN KEY (Forma_Pago_Id) REFERENCES Forma_Pago (id)
+nro numeric(18,0),
+fecha DATETIME,
+total numeric(18,2),
+forma_pago_id numeric(18,0),
+PRIMARY KEY (nro),
+FOREIGN KEY (forma_pago_id) REFERENCES Forma_Pago (id)
 )
 
 create table Item_Factura
@@ -226,10 +226,10 @@ create table Item_Factura
 id numeric(18,0) identity(1,1),
 monto numeric(18,2),
 cantidad numeric(18,0),
-Factura_Nro numeric(18,0),
-Publicacion_Cod numeric(18,0),
+factura_nro numeric(18,0),
+publicacion_id numeric(18,0),
 PRIMARY KEY (id),
-FOREIGN KEY (Factura_Nro) REFERENCES Factura (Nro),
-FOREIGN KEY (Publicacion_Cod) REFERENCES Publicacion (id)
+FOREIGN KEY (factura_nro) REFERENCES Factura (nro),
+FOREIGN KEY (publicacion_id) REFERENCES Publicacion (id)
 )
 
