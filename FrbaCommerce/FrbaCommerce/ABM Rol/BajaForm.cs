@@ -32,7 +32,13 @@ namespace FrbaCommerce.ABM_Rol
         {
             this.command = new SqlCommand();
             this.command.CommandText = sqlTexto;
-            if (parametros != null) { foreach (SqlParameter parametro in parametros) { this.command.Parameters.Add(parametro); } }
+            if (parametros != null)
+            { 
+                foreach (SqlParameter parametro in parametros)
+                { 
+                    this.command.Parameters.Add(parametro); 
+                }
+            }
             if (this.command.Connection == null) this.command.Connection = conexion.AbrirConexion();
 
             return this.command;
@@ -52,19 +58,42 @@ namespace FrbaCommerce.ABM_Rol
 
         private void button1_Click(object sender, EventArgs e)
         {
+            String rolElegido = this.comboBox2.Text;
+            MessageBox.Show(rolElegido);
             IList<SqlParameter> parametros = new List<SqlParameter>();
-            String rolElegido = this.comboBox2.SelectedValue.ToString();
+            
             parametros.Add(new SqlParameter("@nombre", rolElegido));
 
-            string sql = @"UPDATE Rol SET habilitado = 1 WHERE nombre = @nombre";
-         //   string sql1 = @"SELECT id WHERE nombre = itemRol";
-         //   string sql2 = @"UPDATE Rol_x_Usuario SET Rol_id = null WHERE Rol_id = id";
+            String sql = "UPDATE Rol SET habilitado = 0 WHERE nombre = @nombre";
+            // Esta consulta esta mal hecha. No se puede poner null una PK
+            String sql2 = "UPDATE Rol_x_Usuario SET rol_id = null WHERE rol_id = (SELECT id FROM Rol WHERE nombre = @nombre)";
 
-            conexion.Reader = this.CrearCommand(sql, parametros).ExecuteReader();
-         //   conexion.Reader = this.CrearCommand(sql1, parametros).ExecuteReader();
-         //   conexion.Reader = this.CrearCommand(sql2, parametros).ExecuteReader();
+            int filas_afectadas = 0;
 
-            MessageBox.Show("Deshabilitado rol " + rolElegido + "!");
+            // ExecuteNonQuery devuelve la cantidad de filas que modifico
+            filas_afectadas = this.CrearCommand(sql, parametros).ExecuteNonQuery();
+            if (filas_afectadas != -1)
+            {
+                MessageBox.Show("Deshabilitado rol " + rolElegido + "!" + filas_afectadas);
+            }
+            else
+            {
+                MessageBox.Show("Error");
+            }
+
+            // Es necesario limpiar la lista de parametros
+            parametros.Clear();
+            parametros.Add(new SqlParameter("@nombre", rolElegido));
+
+            filas_afectadas = this.CrearCommand(sql2, parametros).ExecuteNonQuery();
+            if (filas_afectadas != -1)
+            {
+                MessageBox.Show("Deshabilitado rol " + rolElegido + "!" + filas_afectadas);
+            }
+            else
+            {
+                MessageBox.Show("Error");
+            }
         }
 
         private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
