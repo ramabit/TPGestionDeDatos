@@ -64,10 +64,9 @@ namespace FrbaCommerce.ABM_Rol
             
             parametros.Add(new SqlParameter("@nombre", rolElegido));
 
+            // Hacemos la baja logica del rol
             String sql = "UPDATE Rol SET habilitado = 0 WHERE nombre = @nombre";
-            // Esta consulta esta mal hecha. No se puede poner null una PK
-            String sql2 = "UPDATE Rol_x_Usuario SET rol_id = null WHERE rol_id = (SELECT id FROM Rol WHERE nombre = @nombre)";
-
+           
             int filas_afectadas = 0;
 
             // ExecuteNonQuery devuelve la cantidad de filas que modifico
@@ -84,7 +83,10 @@ namespace FrbaCommerce.ABM_Rol
             // Es necesario limpiar la lista de parametros
             parametros.Clear();
             parametros.Add(new SqlParameter("@nombre", rolElegido));
-
+            
+            // Borramos el rol en los usuarios que lo tienen
+            String sql2 = "DELETE Rol_x_Usuario WHERE rol_id = (SELECT id FROM Rol WHERE nombre = @nombre)";
+            
             filas_afectadas = this.CrearCommand(sql2, parametros).ExecuteNonQuery();
             if (filas_afectadas != -1)
             {
