@@ -69,14 +69,14 @@ VALUES('Cliente')
 INSERT INTO Rol(nombre)
 VALUES('Empresa')
 
--- INSERTAR Roles_por_Usuario
-INSERT INTO Rol_Por_Usuario
+-- INSERTAR Roles_x_Usuario
+INSERT INTO Rol_x_Usuario
 (
 	[rol_id],
 	[usuario_id]
 )
 SELECT (SELECT id FROM Rol WHERE nombre = 'Empresa'), usuario_id FROM Empresa
-INSERT INTO Rol_Por_Usuario
+INSERT INTO Rol_x_Usuario
 (
 	[rol_id],
 	[usuario_id]
@@ -239,21 +239,21 @@ WHERE ISNULL(Compra_Cantidad, 0) != 0
 
 -- INSERTAR Formas_Pago
 INSERT INTO Forma_Pago
-   ( [Descripcion])
+   ( [descripcion])
 SELECT DISTINCT Forma_Pago_Desc
 FROM gd_esquema.Maestra 
 WHERE ISNULL(Forma_Pago_Desc,'') != ''
 
 -- INSERTAR Facturas
 INSERT INTO Factura
-   ( [Nro], [Fecha], [Total], [Forma_Pago_Id])
+   ( [nro], [fecha], [total], [forma_pago_id])
 SELECT DISTINCT Factura_Nro, Factura_Fecha, Factura_Total, (SELECT id FROM Forma_Pago WHERE descripcion = Forma_Pago_Desc)
 FROM gd_esquema.Maestra 
 WHERE ISNULL(Factura_Nro,-1) != -1
 
 -- INSERTAR Items_Factura
 INSERT INTO Item_Factura
-   ( [Monto], [Cantidad], [Factura_Nro], [Publicacion_Cod])
+   ( [monto], [cantidad], [factura_nro], [publicacion_id])
 SELECT DISTINCT Item_Factura_Monto, Item_Factura_Cantidad, Factura_Nro, Publicacion_Cod
 FROM gd_esquema.Maestra 
 WHERE ISNULL(Factura_Nro,-1) != -1
