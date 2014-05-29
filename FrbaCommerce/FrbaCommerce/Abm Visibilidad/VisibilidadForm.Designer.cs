@@ -28,18 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.SuspendLayout();
-            // 
-            // VisibilidadForm
-            // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.components = new System.ComponentModel.Container();
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(292, 266);
-            this.Name = "VisibilidadForm";
             this.Text = "VisibilidadForm";
-            this.Load += new System.EventHandler(this.VisibilidadForm_Load);
-            this.ResumeLayout(false);
-
         }
 
         #endregion
