@@ -22,14 +22,14 @@ namespace FrbaCommerce.ABM_Rol
         public BajaRol()
         {
             InitializeComponent();
-            llenacombobox();
         }
 
         private void BajaForm_Load(object sender, EventArgs e)
         {
+            CargarRoles();
         }
 
-        public void llenacombobox()
+        private void CargarRoles()
         {
             DataSet roles = new DataSet();
             SqlDataAdapter adapter = new SqlDataAdapter();
