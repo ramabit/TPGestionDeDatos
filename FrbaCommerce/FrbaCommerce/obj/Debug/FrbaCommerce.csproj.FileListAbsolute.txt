@@ -12,7 +12,6 @@ C:\Users\Fer\Documents\GitHub\gddfer\FrbaCommerce\FrbaCommerce\obj\Debug\FrbaCom
 C:\Users\Fer\Documents\GitHub\gddfer\FrbaCommerce\FrbaCommerce\bin\Debug\FrbaCommerce.exe
 C:\Users\Fer\Documents\GitHub\gddfer\FrbaCommerce\FrbaCommerce\bin\Debug\FrbaCommerce.pdb
 C:\Users\Fer\Documents\GitHub\gddfer\FrbaCommerce\FrbaCommerce\obj\Debug\ResolveAssemblyReference.cache
-C:\Users\Fer\Documents\GitHub\gddfer\FrbaCommerce\FrbaCommerce\obj\Debug\FrbaCommerce.Abm_Cliente.Form1.resources
 C:\Users\Fer\Documents\GitHub\gddfer\FrbaCommerce\FrbaCommerce\obj\Debug\FrbaCommerce.ABM_Rol.RolForm.resources
 C:\Users\Fer\Documents\GitHub\gddfer\FrbaCommerce\FrbaCommerce\obj\Debug\FrbaCommerce.Form1.resources
 C:\Users\Fer\Documents\GitHub\gddfer\FrbaCommerce\FrbaCommerce\obj\Debug\FrbaCommerce.Login.LoginForm.resources

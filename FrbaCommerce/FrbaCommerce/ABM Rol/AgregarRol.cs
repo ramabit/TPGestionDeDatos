@@ -20,6 +20,7 @@ namespace FrbaCommerce.ABM_Rol
         {
             this.Hide();
             new RolForm().Show();
+            this.Close();
         }
     }
 }

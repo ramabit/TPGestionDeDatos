@@ -48,17 +48,53 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ABM Cliente\Form1.cs">
+    <Compile Include="ABM Cliente\AgregarCliente.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ABM Cliente\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="ABM Cliente\AgregarCliente.Designer.cs">
+      <DependentUpon>AgregarCliente.cs</DependentUpon>
     </Compile>
-    <Compile Include="ABM Empresa\Form1.cs">
+    <Compile Include="ABM Cliente\BajaCliente.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ABM Empresa\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="ABM Cliente\BajaCliente.Designer.cs">
+      <DependentUpon>BajaCliente.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ABM Cliente\ClienteForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ABM Cliente\ClienteForm.Designer.cs">
+      <DependentUpon>ClienteForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ABM Cliente\EditarCliente.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ABM Cliente\EditarCliente.Designer.cs">
+      <DependentUpon>EditarCliente.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ABM Empresa\AgregarEmpresa.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ABM Empresa\AgregarEmpresa.Designer.cs">
+      <DependentUpon>AgregarEmpresa.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ABM Empresa\BajaEmpresa.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ABM Empresa\BajaEmpresa.Designer.cs">
+      <DependentUpon>BajaEmpresa.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ABM Empresa\EditarEmpresa.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ABM Empresa\EditarEmpresa.Designer.cs">
+      <DependentUpon>EditarEmpresa.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ABM Empresa\EmpresaForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ABM Empresa\EmpresaForm.Designer.cs">
+      <DependentUpon>EmpresaForm.cs</DependentUpon>
     </Compile>
     <Compile Include="ABM Rol\AgregarRol.cs">
       <SubType>Form</SubType>
@@ -84,17 +120,53 @@
     <Compile Include="ABM Rol\RolForm.Designer.cs">
       <DependentUpon>RolForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="ABM Rubro\Form1.cs">
+    <Compile Include="ABM Rubro\AgregarRubro.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ABM Rubro\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="ABM Rubro\AgregarRubro.Designer.cs">
+      <DependentUpon>AgregarRubro.cs</DependentUpon>
     </Compile>
-    <Compile Include="ABM Visibilidad\Form1.cs">
+    <Compile Include="ABM Rubro\BajaRubro.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ABM Visibilidad\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="ABM Rubro\BajaRubro.Designer.cs">
+      <DependentUpon>BajaRubro.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ABM Rubro\EditarRubro.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ABM Rubro\EditarRubro.Designer.cs">
+      <DependentUpon>EditarRubro.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ABM Rubro\RubroForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ABM Rubro\RubroForm.Designer.cs">
+      <DependentUpon>RubroForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ABM Visibilidad\AgregarVisibilidad.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ABM Visibilidad\AgregarVisibilidad.Designer.cs">
+      <DependentUpon>AgregarVisibilidad.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ABM Visibilidad\BajaVisibilidad.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ABM Visibilidad\BajaVisibilidad.Designer.cs">
+      <DependentUpon>BajaVisibilidad.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ABM Visibilidad\EditarVisibilidad.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ABM Visibilidad\EditarVisibilidad.Designer.cs">
+      <DependentUpon>EditarVisibilidad.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ABM Visibilidad\VisibilidadForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ABM Visibilidad\VisibilidadForm.Designer.cs">
+      <DependentUpon>VisibilidadForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Calificar Vendedor\Form1.cs">
       <SubType>Form</SubType>
@@ -160,10 +232,6 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="ABM Cliente\Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
     <EmbeddedResource Include="ABM Rol\AgregarRol.resx">
       <DependentUpon>AgregarRol.cs</DependentUpon>
     </EmbeddedResource>
