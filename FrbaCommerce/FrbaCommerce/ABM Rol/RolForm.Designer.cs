@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             this.label1 = new System.Windows.Forms.Label();
-            this.button3 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.botonBajaRol = new System.Windows.Forms.Button();
+            this.botonEditarRol = new System.Windows.Forms.Button();
+            this.botonAgregarRol = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -44,36 +44,38 @@
             this.label1.TabIndex = 7;
             this.label1.Text = "Roles";
             // 
-            // button3
+            // botonBajaRol
             // 
-            this.button3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button3.Location = new System.Drawing.Point(83, 228);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(135, 54);
-            this.button3.TabIndex = 6;
-            this.button3.Text = "Eliminar rol";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
+            this.botonBajaRol.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.botonBajaRol.Location = new System.Drawing.Point(83, 228);
+            this.botonBajaRol.Name = "botonBajaRol";
+            this.botonBajaRol.Size = new System.Drawing.Size(135, 54);
+            this.botonBajaRol.TabIndex = 6;
+            this.botonBajaRol.Text = "Eliminar rol";
+            this.botonBajaRol.UseVisualStyleBackColor = true;
+            this.botonBajaRol.Click += new System.EventHandler(this.botonBajaRol_Click);
             // 
-            // button2
+            // botonEditarRol
             // 
-            this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button2.Location = new System.Drawing.Point(83, 148);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(135, 54);
-            this.button2.TabIndex = 5;
-            this.button2.Text = "Editar rol";
-            this.button2.UseVisualStyleBackColor = true;
+            this.botonEditarRol.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.botonEditarRol.Location = new System.Drawing.Point(83, 148);
+            this.botonEditarRol.Name = "botonEditarRol";
+            this.botonEditarRol.Size = new System.Drawing.Size(135, 54);
+            this.botonEditarRol.TabIndex = 5;
+            this.botonEditarRol.Text = "Editar rol";
+            this.botonEditarRol.UseVisualStyleBackColor = true;
+            this.botonEditarRol.Click += new System.EventHandler(this.botonEditarRol_Click);
             // 
-            // button1
+            // botonAgregarRol
             // 
-            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.Location = new System.Drawing.Point(83, 65);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(135, 54);
-            this.button1.TabIndex = 4;
-            this.button1.Text = "Agregar rol";
-            this.button1.UseVisualStyleBackColor = true;
+            this.botonAgregarRol.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.botonAgregarRol.Location = new System.Drawing.Point(83, 65);
+            this.botonAgregarRol.Name = "botonAgregarRol";
+            this.botonAgregarRol.Size = new System.Drawing.Size(135, 54);
+            this.botonAgregarRol.TabIndex = 4;
+            this.botonAgregarRol.Text = "Agregar rol";
+            this.botonAgregarRol.UseVisualStyleBackColor = true;
+            this.botonAgregarRol.Click += new System.EventHandler(this.botonAgregarRol_Click);
             // 
             // RolForm
             // 
@@ -81,9 +83,9 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(302, 311);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.button3);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.botonBajaRol);
+            this.Controls.Add(this.botonEditarRol);
+            this.Controls.Add(this.botonAgregarRol);
             this.Name = "RolForm";
             this.Text = "RolForm";
             this.ResumeLayout(false);
@@ -94,8 +96,8 @@
         #endregion
 
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button botonBajaRol;
+        private System.Windows.Forms.Button botonEditarRol;
+        private System.Windows.Forms.Button botonAgregarRol;
     }
 }

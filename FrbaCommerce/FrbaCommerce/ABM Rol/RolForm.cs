@@ -16,10 +16,22 @@ namespace FrbaCommerce.ABM_Rol
             InitializeComponent();
         }
 
-        private void button3_Click(object sender, EventArgs e)
+        private void botonAgregarRol_Click(object sender, EventArgs e)
         {
             this.Hide();
-            new BajaForm().Show();
+            new AgregarRol().Show();
+        }
+
+        private void botonEditarRol_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            new EditarRol().Show();
+        }
+
+        private void botonBajaRol_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            new BajaRol().Show();
         }
     }
 }

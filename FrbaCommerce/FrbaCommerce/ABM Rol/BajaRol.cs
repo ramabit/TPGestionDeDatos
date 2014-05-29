@@ -11,7 +11,7 @@ using System.Windows.Forms;
 namespace FrbaCommerce.ABM_Rol
 {
 
-    public partial class BajaForm : Form
+    public partial class BajaRol : Form
     {
         private SqlCommand command { get; set; }
         private IList<SqlParameter> parametros = new List<SqlParameter>();
@@ -19,7 +19,7 @@ namespace FrbaCommerce.ABM_Rol
         
         public Object SelectedItem { get; set; }
 
-        public BajaForm()
+        public BajaRol()
         {
             InitializeComponent();
             llenacombobox();
@@ -85,6 +85,12 @@ namespace FrbaCommerce.ABM_Rol
         private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            new RolForm().Show();
         }
         
     }
