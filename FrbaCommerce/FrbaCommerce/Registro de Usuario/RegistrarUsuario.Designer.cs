@@ -42,6 +42,7 @@
             // 
             // botonVolver
             // 
+            this.botonVolver.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.botonVolver.Location = new System.Drawing.Point(21, 276);
             this.botonVolver.Name = "botonVolver";
             this.botonVolver.Size = new System.Drawing.Size(127, 23);
@@ -82,16 +83,18 @@
             // 
             // textBoxUsuario
             // 
+            this.textBoxUsuario.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBoxUsuario.Location = new System.Drawing.Point(114, 92);
             this.textBoxUsuario.Name = "textBoxUsuario";
-            this.textBoxUsuario.Size = new System.Drawing.Size(100, 20);
+            this.textBoxUsuario.Size = new System.Drawing.Size(100, 21);
             this.textBoxUsuario.TabIndex = 9;
             // 
             // textBoxContraseña
             // 
+            this.textBoxContraseña.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBoxContraseña.Location = new System.Drawing.Point(114, 131);
             this.textBoxContraseña.Name = "textBoxContraseña";
-            this.textBoxContraseña.Size = new System.Drawing.Size(100, 20);
+            this.textBoxContraseña.Size = new System.Drawing.Size(100, 21);
             this.textBoxContraseña.TabIndex = 10;
             // 
             // botonSiguiente
@@ -107,10 +110,11 @@
             // 
             // comboBoxRol
             // 
+            this.comboBoxRol.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.comboBoxRol.FormattingEnabled = true;
             this.comboBoxRol.Location = new System.Drawing.Point(114, 168);
             this.comboBoxRol.Name = "comboBoxRol";
-            this.comboBoxRol.Size = new System.Drawing.Size(121, 21);
+            this.comboBoxRol.Size = new System.Drawing.Size(121, 23);
             this.comboBoxRol.TabIndex = 12;
             // 
             // labelRol
@@ -126,9 +130,10 @@
             // labelAclaracion
             // 
             this.labelAclaracion.AutoSize = true;
+            this.labelAclaracion.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelAclaracion.Location = new System.Drawing.Point(18, 217);
             this.labelAclaracion.Name = "labelAclaracion";
-            this.labelAclaracion.Size = new System.Drawing.Size(107, 13);
+            this.labelAclaracion.Size = new System.Drawing.Size(126, 15);
             this.labelAclaracion.TabIndex = 14;
             this.labelAclaracion.Text = "* campos obligatorios";
             // 
