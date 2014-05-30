@@ -58,5 +58,16 @@ namespace FrbaCommerce.Login
         {
 
         }
+
+        private void label4_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            new Registro_de_Usuario.RegistrarUsuario().Show();
+            this.Hide();
+        }
     }
 }

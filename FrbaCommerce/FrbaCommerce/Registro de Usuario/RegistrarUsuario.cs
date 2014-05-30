@@ -9,11 +9,17 @@ using System.Windows.Forms;
 
 namespace FrbaCommerce.Registro_de_Usuario
 {
-    public partial class Form1 : Form
+    public partial class RegistrarUsuario : Form
     {
-        public Form1()
+        public RegistrarUsuario()
         {
             InitializeComponent();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            new Login.LoginForm().Show();
+            this.Close();
         }
     }
 }

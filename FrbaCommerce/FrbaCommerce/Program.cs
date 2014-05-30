@@ -15,7 +15,7 @@ namespace FrbaCommerce
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new ABM_Rol.RolForm());
+            Application.Run(new Login.LoginForm());
         }
     }
 }
