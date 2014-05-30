@@ -13,10 +13,25 @@ BEGIN
 END
 GO
 
+-- INSERTAR Direcciones de Empresas
+INSERT INTO Direccion
+([calle],[numero],[piso],[depto],[cod_postal])
+SELECT DISTINCT Publ_Empresa_Dom_Calle, Publ_Empresa_Nro_Calle, Publ_Empresa_Piso, Publ_Empresa_Depto, Publ_Empresa_Cod_Postal
+FROM gd_esquema.Maestra
+WHERE ISNULL(Publ_Empresa_Dom_Calle,'')!=''
+
+-- INSERTAR Direcciones de Clientes
+INSERT INTO Direccion
+([calle],[numero],[piso],[depto],[cod_postal])
+SELECT DISTINCT Publ_Cli_Dom_Calle, Publ_Cli_Nro_Calle, Publ_Cli_Piso, Publ_Cli_Depto, Publ_Cli_Cod_Postal
+FROM gd_esquema.Maestra
+WHERE ISNULL(Publ_Empresa_Dom_Calle,'')!=''
+
 -- INSERTAR Empresas
 INSERT INTO Empresa
-   ( [razon_social], [cuit], [fecha_creacion], [mail], [domicilio_calle], [domicilio_numero], [domicilio_piso], [domicilio_depto], [domicilio_id_postal])
-SELECT DISTINCT Publ_Empresa_Razon_Social, Publ_Empresa_Cuit, Publ_Empresa_Fecha_Creacion, Publ_Empresa_Mail, Publ_Empresa_Dom_Calle, Publ_Empresa_Nro_Calle, Publ_Empresa_Piso, Publ_Empresa_Depto, Publ_Empresa_Cod_Postal 
+   ( [razon_social], [cuit], [fecha_creacion], [mail], [direccion])
+SELECT DISTINCT Publ_Empresa_Razon_Social, Publ_Empresa_Cuit, Publ_Empresa_Fecha_Creacion, Publ_Empresa_Mail,
+	(SELECT DISTINCT id FROM Direccion d WHERE (Publ_Empresa_Dom_Calle + Publ_Empresa_Nro_Calle + Publ_Empresa_Piso + Publ_Empresa_Depto + Publ_Empresa_Cod_Postal == d.calle + d.numero + d.piso + d.depto + d.cod_postal)) 
 FROM gd_esquema.Maestra 
 WHERE ISNULL(Publ_Empresa_Razon_Social, '') != ''
 
@@ -36,15 +51,17 @@ END
 -- INSERTAR Clientes
 -- Todos los clientes que compraron
 INSERT INTO Cliente
-   ( [dni], [apellido], [nombre], [fecha_nacimiento], [mail], [domicilio_calle], [domicilio_numero], [domicilio_piso], [domicilio_depto], [domicilio_id_postal])
-SELECT DISTINCT Cli_Dni, Cli_Apeliido, Cli_Nombre, Cli_Fecha_Nac, Cli_Mail, Cli_Dom_Calle, Cli_Nro_Calle, Cli_Piso, Cli_Depto, Cli_Cod_Postal 
+   ( [dni], [apellido], [nombre], [fecha_nacimiento], [mail], [direccion])
+SELECT DISTINCT Cli_Dni, Cli_Apeliido, Cli_Nombre, Cli_Fecha_Nac, Cli_Mail,
+	(SELECT DISTINCT id FROM Direccion d WHERE (Cli_Dom_Calle + Cli_Nro_Calle + Cli_Piso + Cli_Depto + Cli_Cod_Postal == d.calle + d.numero + d.piso + d.depto + d.cod_postal)) 
 FROM gd_esquema.Maestra 
 WHERE ISNULL(Cli_DNI, 0) != 0
 
 -- Todos los clientes que vendieron
 INSERT INTO Cliente
-   ( [dni], [apellido], [nombre], [fecha_nacimiento], [mail], [domicilio_calle], [domicilio_numero], [domicilio_piso], [domicilio_depto], [domicilio_id_postal])
-SELECT DISTINCT Publ_Cli_Dni, Publ_Cli_Apeliido, Publ_Cli_Nombre, Publ_Cli_Fecha_Nac, Publ_Cli_Mail, Publ_Cli_Dom_Calle, Publ_Cli_Nro_Calle, Publ_Cli_Piso, Publ_Cli_Depto, Publ_Cli_Cod_Postal 
+   ( [dni], [apellido], [nombre], [fecha_nacimiento], [mail], [direccion])
+SELECT DISTINCT Publ_Cli_Dni, Publ_Cli_Apeliido, Publ_Cli_Nombre, Publ_Cli_Fecha_Nac, Publ_Cli_Mail,
+	(SELECT DISTINCT id FROM Direccion d WHERE (Publ_Cli_Dom_Calle + Publ_Cli_Nro_Calle + Publ_Cli_Piso + Publ_Cli_Depto + Publ_Cli_Cod_Postal == d.calle + d.numero + d.piso + d.depto + d.cod_postal)) 
 FROM gd_esquema.Maestra as m
 WHERE ISNULL(Publ_Cli_DNI, 0) != 0 and not exists (SELECT * FROM Cliente as c WHERE m.Publ_Cli_Dni = c.dni)
 

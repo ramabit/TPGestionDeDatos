@@ -37,6 +37,9 @@ DROP TABLE Empresa
 IF OBJECT_ID('Cliente', 'U') IS NOT NULL
 DROP TABLE Cliente
 
+IF OBJECT_ID('Direccion', 'U') IS NOT NULL
+DROP TABLE Direccion
+
 IF OBJECT_ID('Usuario', 'U') IS NOT NULL
 DROP TABLE Usuario
 
@@ -55,6 +58,17 @@ habilitado bit default 1,
 PRIMARY KEY (id)
 )
 
+create table Direccion
+(
+id numeric(18,0) identity(1,1),
+calle nvarchar(100),
+numero numeric(18,0),
+piso numeric(18,0),
+depto nvarchar(5),
+cod_postal nvarchar(50),
+PRIMARY KEY(id)
+)
+
 create table Empresa
 (
 id numeric(18,0) identity(1,1),
@@ -62,15 +76,12 @@ razon_social nvarchar(255),
 cuit nvarchar(50),
 fecha_creacion datetime,
 mail nvarchar(50),
-domicilio_calle nvarchar(100),
-domicilio_numero numeric(18,0),
-domicilio_piso numeric(18,0),
-domicilio_depto nvarchar(50),
-domicilio_id_postal nvarchar(50),
 habilitado bit default 1,
 usuario_id numeric(18,0),
+direccion numeric(18,0),
 PRIMARY KEY (id),
-FOREIGN KEY (usuario_id) REFERENCES Usuario (id)
+FOREIGN KEY (usuario_id) REFERENCES Usuario (id),
+FOREIGN KEY (direccion) REFERENCES Direccion (id)
 )
 
 create table Cliente
@@ -81,15 +92,12 @@ apellido nvarchar(255),
 nombre nvarchar(255),
 fecha_nacimiento datetime,
 mail nvarchar(255),
-domicilio_calle nvarchar(255),
-domicilio_numero numeric(18,0),
-domicilio_piso numeric(18,0),
-domicilio_depto nvarchar(50),
-domicilio_id_postal nvarchar(50),
 habilitado bit default 1,
 usuario_id numeric(18,0),
+direccion numeric(18,0),
 PRIMARY KEY (id),
-FOREIGN KEY (usuario_id) REFERENCES Usuario (id)
+FOREIGN KEY (usuario_id) REFERENCES Usuario (id),
+FOREIGN KEY (direccion) REFERENCES Direccion (id)
 )
 
 create table Rol
