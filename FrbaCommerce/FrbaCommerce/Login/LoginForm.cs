@@ -20,22 +20,19 @@ namespace FrbaCommerce.Login
             InitializeComponent();
         }
 
-        private void label1_Click(object sender, EventArgs e)
+
+        private void LoginForm_Load(object sender, EventArgs e)
         {
+            
         }
 
-        private void label2_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void oCmbIngresar_Click(object sender, EventArgs e)
+        private void botonIngresar_Click(object sender, EventArgs e)
         {
             String query = "select * from Usuario where username = @username and password = @password";
 
             IList<SqlParameter> parametros = new List<SqlParameter>();
-            parametros.Add(new SqlParameter("@username", this.oTbxUsuario.Text));
-            parametros.Add(new SqlParameter("@password", this.oTbxPass.Text));
+            parametros.Add(new SqlParameter("@username", this.textBoxUsuario.Text));
+            parametros.Add(new SqlParameter("@password", this.textBoxContaseña.Text));
 
             SqlDataReader reader = builderDeComandos.Crear(query, parametros).ExecuteReader();
 
@@ -49,22 +46,17 @@ namespace FrbaCommerce.Login
             }
         }
 
-        private void LoginForm_Load(object sender, EventArgs e)
-        {
-            
-        }
-
-        private void label3_Click(object sender, EventArgs e)
+        private void textBoxContaseña_TextChanged(object sender, EventArgs e)
         {
 
         }
 
-        private void label4_Click(object sender, EventArgs e)
+        private void textBoxUsuario_TextChanged(object sender, EventArgs e)
         {
 
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void botonRegistrarse_Click(object sender, EventArgs e)
         {
             new Registro_de_Usuario.RegistrarUsuario().Show();
             this.Hide();
