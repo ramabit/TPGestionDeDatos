@@ -9,15 +9,15 @@
 - [x] Agregar restriccion de razon social unico -- no se si esta bien esto. Me parece que hay que ponerle un atributo UNIQUE
 - [x] Agregar restriccion de CUIT unico -- no se si esta bien esto
 - [ ] Agregar restriccion de telefono unico e informar
-- [ ] Discutir cual deberia ser la PK -- La PK no es minima
-- [ ] Insertar username por defecto
+- [x] Discutir cual deberia ser la PK -- La PK no es minima
+- [x] Insertar username por defecto
 
 #Tabla de cliente
 - [ ] Preguntar por tipo de documento
 - [ ] Preguntar por telefono
 - [ ] Agregar restriccion de telefono unico
-- [ ] Discutir cual deberia ser la PK
-- [ ] Insertar username por defecto
+- [x] Discutir cual deberia ser la PK
+- [x] Insertar username por defecto
 
 #Tabla de rol
 
