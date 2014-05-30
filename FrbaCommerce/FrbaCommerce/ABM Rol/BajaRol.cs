@@ -37,20 +37,26 @@ namespace FrbaCommerce.ABM_Rol
             command = builderDeComandos.Crear("SELECT distinct nombre FROM Rol  where habilitado = 1", parametros);
             adapter.SelectCommand = command;
             adapter.Fill(roles, "Rol");
-            comboBox2.DataSource = roles.Tables[0].DefaultView;
-            comboBox2.ValueMember = "nombre";
+            comboBoxRol.DataSource = roles.Tables[0].DefaultView;
+            comboBoxRol.ValueMember = "nombre";
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void botonVolver_Click(object sender, EventArgs e)
         {
-            String rolElegido = this.comboBox2.Text;
+            new RolForm().Show();
+            this.Close();
+        }
+
+        private void botonDeshabilitar_Click(object sender, EventArgs e)
+        {
+            String rolElegido = this.comboBoxRol.Text;
 
             parametros.Clear();
             parametros.Add(new SqlParameter("@nombre", rolElegido));
 
             // Hacemos la baja logica del rol
             String sql = "UPDATE Rol SET habilitado = 0 WHERE nombre = @nombre";
-           
+
             int filas_afectadas = 0;
 
             // ExecuteNonQuery devuelve la cantidad de filas que modifico
@@ -67,10 +73,10 @@ namespace FrbaCommerce.ABM_Rol
             // Es necesario limpiar la lista de parametros
             parametros.Clear();
             parametros.Add(new SqlParameter("@nombre", rolElegido));
-            
+
             // Borramos el rol en los usuarios que lo tienen
             String sql2 = "UPDATE Rol_x_Usuario SET habilitado = 0 WHERE rol_id = (SELECT id FROM Rol WHERE nombre = @nombre)";
-            
+
             filas_afectadas = builderDeComandos.Crear(sql2, parametros).ExecuteNonQuery();
             if (filas_afectadas != -1)
             {
@@ -82,17 +88,16 @@ namespace FrbaCommerce.ABM_Rol
             }
         }
 
-        private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
+        private void comboBoxRol_SelectedIndexChanged(object sender, EventArgs e)
         {
 
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void labelRol_Click(object sender, EventArgs e)
         {
-            this.Hide();
-            new RolForm().Show();
-            this.Close();
+
         }
+
         
     }
 }
