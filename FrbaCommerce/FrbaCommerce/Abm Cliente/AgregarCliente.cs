@@ -11,9 +11,14 @@ namespace FrbaCommerce.ABM_Cliente
 {
     public partial class AgregarCliente : Form
     {
-        public AgregarCliente()
+        public AgregarCliente(String usuario, String contraseña)
         {
             InitializeComponent();
+        }
+
+        private void AgregarCliente_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

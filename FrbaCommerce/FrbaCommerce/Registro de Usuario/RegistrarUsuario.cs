@@ -50,19 +50,21 @@ namespace FrbaCommerce.Registro_de_Usuario
             if (usuario == "")
             {
                 MessageBox.Show("Debe completarse el campo Usuario");
+                return;
             }
 
             if (contraseña == "")
             {
                 MessageBox.Show("Debe completarse el campo Contraseña");
+                return;
             }
 
             if (rolElegido == "")
             {
                 MessageBox.Show("Debe seleccionarse un rol");
+                return;
             }
 
-            
             parametros.Clear();
             parametros.Add(new SqlParameter("@username", usuario));
 
@@ -74,6 +76,16 @@ namespace FrbaCommerce.Registro_de_Usuario
             if (reader.Read())
             {
                 MessageBox.Show("Ya existe un usuario con ese nombre");
+                return;
+            }
+
+            if (rolElegido == "Cliente")
+            {
+                new ABM_Cliente.AgregarCliente(usuario,contraseña).Show();
+            }
+            else if (rolElegido == "Empresa")
+            {
+                new ABM_Empresa.AgregarEmpresa(usuario, contraseña).Show();
             }
 
             
