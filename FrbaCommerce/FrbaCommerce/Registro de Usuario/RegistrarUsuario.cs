@@ -43,6 +43,41 @@ namespace FrbaCommerce.Registro_de_Usuario
         private void botonSiguiente_Click(object sender, EventArgs e)
         {
 
+            String rolElegido = this.comboBoxRol.Text;
+            String usuario = this.textBoxUsuario.Text;
+            String contraseña = this.textBoxContraseña.Text;
+
+            if (usuario == "")
+            {
+                MessageBox.Show("Debe completarse el campo Usuario");
+            }
+
+            if (contraseña == "")
+            {
+                MessageBox.Show("Debe completarse el campo Contraseña");
+            }
+
+            if (rolElegido == "")
+            {
+                MessageBox.Show("Debe seleccionarse un rol");
+            }
+
+            
+            parametros.Clear();
+            parametros.Add(new SqlParameter("@username", usuario));
+
+            // Buscamos si el username ya se encuentra registrado
+            String consulta = "SELECT id FROM Usuario WHERE username = @username";
+
+            SqlDataReader reader = builderDeComandos.Crear(consulta, parametros).ExecuteReader();
+
+            if (reader.Read())
+            {
+                MessageBox.Show("Ya existe un usuario con ese nombre");
+            }
+
+            
+
         }
 
         private void botonVolver_Click(object sender, EventArgs e)

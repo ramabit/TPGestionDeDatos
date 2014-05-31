@@ -100,7 +100,7 @@
             // botonSiguiente
             // 
             this.botonSiguiente.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.botonSiguiente.Location = new System.Drawing.Point(216, 197);
+            this.botonSiguiente.Location = new System.Drawing.Point(216, 199);
             this.botonSiguiente.Name = "botonSiguiente";
             this.botonSiguiente.Size = new System.Drawing.Size(108, 50);
             this.botonSiguiente.TabIndex = 11;
