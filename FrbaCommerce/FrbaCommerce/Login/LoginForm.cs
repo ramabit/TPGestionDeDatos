@@ -39,6 +39,24 @@ namespace FrbaCommerce.Login
             if (reader.Read())
             {
                 MessageBox.Show("Bienvenido " + reader["username"] + "!");
+                
+                parametros.Clear();
+                parametros.Add(new SqlParameter("@username", this.textBoxUsuario.Text));
+
+                String consulta = "select count(rol_id) from Rol_x_Usuario where habilitado = 1 and (select id from Usuario where username = @username) = usuario_id";
+                int cantidadDeRoles = (int)builderDeComandos.Crear(consulta, parametros).ExecuteScalar();
+
+                if(cantidadDeRoles > 1)
+                {
+                    new ElegirRol().Show();
+                    this.Hide();
+                }
+                else
+                {
+                    new MenuPrincipal().Show();
+                    this.Hide();
+                }
+
             }
             else
             {
