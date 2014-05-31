@@ -21,7 +21,6 @@ namespace FrbaCommerce.ABM_Rol
             InitializeComponent();
         }
 
-<<<<<<< HEAD
         private void AgregarRol_Load_1(object sender, EventArgs e)
         {
             CargarFuncionalidades();
@@ -39,16 +38,12 @@ namespace FrbaCommerce.ABM_Rol
             checkedListBox1.ValueMember = "nombre";
         }
 
-        private void button1_Click(object sender, EventArgs e)
-=======
         private void botonVolver_Click(object sender, EventArgs e)
->>>>>>> 7151b4edd1c426416de21c3b3362f2a7e2507bc6
         {
             new RolForm().Show();
             this.Close();
         }
 
-<<<<<<< HEAD
         private void button2_Click(object sender, EventArgs e)
         {
             String sql = "INSERT INTO Rol(nombre, habilitado) VALUES (@rol, 1)";
@@ -89,8 +84,6 @@ namespace FrbaCommerce.ABM_Rol
                 checkedListBox1.SetItemChecked(i, false);
             }
         }
-                     
-=======
->>>>>>> 7151b4edd1c426416de21c3b3362f2a7e2507bc6
+
     }
 }
