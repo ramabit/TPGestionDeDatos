@@ -21,9 +21,8 @@ namespace FrbaCommerce.ABM_Rol
 
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void botonVolver_Click(object sender, EventArgs e)
         {
-            this.Hide();
             new RolForm().Show();
             this.Close();
         }

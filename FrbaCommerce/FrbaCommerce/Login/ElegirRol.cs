@@ -7,11 +7,11 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace FrbaCommerce
+namespace FrbaCommerce.Login
 {
-    public partial class Form1 : Form
+    public partial class ElegirRol : Form
     {
-        public Form1()
+        public ElegirRol()
         {
             InitializeComponent();
         }

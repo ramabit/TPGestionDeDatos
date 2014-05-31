@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+<<<<<<< HEAD
             this.button1 = new System.Windows.Forms.Button();
             this.checkedListBox1 = new System.Windows.Forms.CheckedListBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -35,10 +36,14 @@
             this.label2 = new System.Windows.Forms.Label();
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
+=======
+            this.botonVolver = new System.Windows.Forms.Button();
+>>>>>>> 7151b4edd1c426416de21c3b3362f2a7e2507bc6
             this.SuspendLayout();
             // 
-            // button1
+            // botonVolver
             // 
+<<<<<<< HEAD
             this.button1.Location = new System.Drawing.Point(32, 320);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(122, 23);
@@ -46,6 +51,16 @@
             this.button1.Text = "< Volver a menu de rol";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
+=======
+            this.botonVolver.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.botonVolver.Location = new System.Drawing.Point(12, 203);
+            this.botonVolver.Name = "botonVolver";
+            this.botonVolver.Size = new System.Drawing.Size(141, 23);
+            this.botonVolver.TabIndex = 0;
+            this.botonVolver.Text = "< Volver a menu de rol";
+            this.botonVolver.UseVisualStyleBackColor = true;
+            this.botonVolver.Click += new System.EventHandler(this.botonVolver_Click);
+>>>>>>> 7151b4edd1c426416de21c3b3362f2a7e2507bc6
             // 
             // checkedListBox1
             // 
@@ -106,6 +121,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+<<<<<<< HEAD
             this.ClientSize = new System.Drawing.Size(351, 376);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
@@ -114,6 +130,10 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.checkedListBox1);
             this.Controls.Add(this.button1);
+=======
+            this.ClientSize = new System.Drawing.Size(284, 262);
+            this.Controls.Add(this.botonVolver);
+>>>>>>> 7151b4edd1c426416de21c3b3362f2a7e2507bc6
             this.Name = "AgregarRol";
             this.Text = "AgregarRol";
             this.Load += new System.EventHandler(this.AgregarRol_Load_1);
@@ -124,6 +144,7 @@
 
         #endregion
 
+<<<<<<< HEAD
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.CheckedListBox checkedListBox1;
         private System.Windows.Forms.Label label1;
@@ -131,5 +152,8 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button3;
+=======
+        private System.Windows.Forms.Button botonVolver;
+>>>>>>> 7151b4edd1c426416de21c3b3362f2a7e2507bc6
     }
 }
