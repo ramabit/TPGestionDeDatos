@@ -256,6 +256,9 @@
     <EmbeddedResource Include="ABM Rol\RolForm.resx">
       <DependentUpon>RolForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Login\ElegirRol.resx">
+      <DependentUpon>ElegirRol.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Login\LoginForm.resx">
       <DependentUpon>LoginForm.cs</DependentUpon>
     </EmbeddedResource>
