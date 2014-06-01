@@ -213,6 +213,12 @@ INSERT INTO Visibilidad
 SELECT DISTINCT Publicacion_Visibilidad_Cod, Publicacion_Visibilidad_Desc, Publicacion_Visibilidad_Porcentaje, Publicacion_Visibilidad_Precio FROM gd_esquema.Maestra
 GO
 
+-- INSERTAR Rubro
+INSERT INTO Rubro
+([nombre])
+SELECT DISTINCT Publicacion_Rubro_Descripcion FROM gd_esquema.Maestra WHERE ISNULL(Publicacion_Rubro_Descripcion, '') != ''
+GO
+
 -- INSERTAR Publicacion
 IF (OBJECT_ID('agregar_id_publ') IS NOT NULL)
 DROP FUNCTION agregar_id_publ
@@ -240,8 +246,8 @@ END
 GO
 
 INSERT INTO Publicacion
-([id], [descripcion], [stock], [fecha_inicio], [fecha_vencimiento], [precio], [rubro], [visibilidad_id], [usuario_id], [estado], [tipo])
-SELECT DISTINCT Publicacion_Cod, Publicacion_Descripcion, Publicacion_Stock, Publicacion_Fecha, Publicacion_Fecha_Venc, Publicacion_Precio, Publicacion_Rubro_Descripcion, Publicacion_Visibilidad_Cod, dbo.agregar_id_publ(Publ_Cli_Dni, Publ_Empresa_Razon_Social),Publicacion_Estado,Publicacion_Tipo FROM gd_esquema.Maestra
+([id], [descripcion], [stock], [fecha_inicio], [fecha_vencimiento], [precio], [rubro_id], [visibilidad_id], [usuario_id], [estado], [tipo])
+SELECT DISTINCT Publicacion_Cod, Publicacion_Descripcion, Publicacion_Stock, Publicacion_Fecha, Publicacion_Fecha_Venc, Publicacion_Precio, (SELECT id FROM Rubro r WHERE Publicacion_Rubro_Descripcion == r.nombre), Publicacion_Visibilidad_Cod, dbo.agregar_id_publ(Publ_Cli_Dni, Publ_Empresa_Razon_Social),Publicacion_Estado,Publicacion_Tipo FROM gd_esquema.Maestra
 WHERE ISNULL(Publicacion_Rubro_Descripcion, '') != ''
 
 -- INSERTAR Calificaciones

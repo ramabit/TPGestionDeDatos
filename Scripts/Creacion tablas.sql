@@ -22,6 +22,9 @@ DROP TABLE Item_Factura
 IF OBJECT_ID('Publicacion', 'U') IS NOT NULL
 DROP TABLE Publicacion
 
+IF OBJECT_ID('Rubro', 'U') IS NOT NULL
+DROP TABLE Rubro
+
 IF OBJECT_ID('Visibilidad', 'U') IS NOT NULL
 DROP TABLE Visibilidad
 
@@ -144,6 +147,14 @@ habilitado bit default 1,
 PRIMARY KEY (id)
 )
 
+create table Rubro
+(
+id numeric(18,0),
+nombre nvarchar(255),
+habilitado bit default 1,
+PRIMARY KEY(id)
+)
+
 create table Publicacion
 (
 id numeric(18,0),
@@ -152,7 +163,7 @@ stock numeric(18,0),
 fecha_inicio datetime,
 fecha_vencimiento datetime,
 precio numeric(18,0),
-rubro nvarchar(255),
+rubro_id numeric(18,0),
 visibilidad_id numeric(18,0),
 usuario_id numeric(18,0),
 estado nvarchar(255),
@@ -162,6 +173,7 @@ habilitado bit default 1,
 PRIMARY KEY (id),
 FOREIGN KEY (visibilidad_id) REFERENCES Visibilidad (id),
 FOREIGN KEY (usuario_id) REFERENCES Usuario (id),
+FOREIGN KEY (rubro_id) REFERENCES Rubro(id),
 )
 
 create table Pregunta
