@@ -157,7 +157,7 @@ PRIMARY KEY(id)
 
 create table Publicacion
 (
-id numeric(18,0),
+id numeric(18,0) identity(1,1),
 descripcion nvarchar(255),
 stock numeric(18,0),
 fecha_inicio datetime,

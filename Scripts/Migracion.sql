@@ -245,6 +245,10 @@ BEGIN
 END
 GO
 
+-- SET IDENTITY_INSERT to ON.
+SET IDENTITY_INSERT Publicacion ON;
+GO
+
 INSERT INTO Publicacion
 ([id], [descripcion], [stock], [fecha_inicio], [fecha_vencimiento], [precio], [rubro_id], [visibilidad_id], [usuario_id], [estado], [tipo])
 SELECT DISTINCT Publicacion_Cod, Publicacion_Descripcion, Publicacion_Stock, Publicacion_Fecha, Publicacion_Fecha_Venc, Publicacion_Precio, (SELECT id FROM Rubro r WHERE Publicacion_Rubro_Descripcion = r.nombre), Publicacion_Visibilidad_Cod, dbo.agregar_id_publ(Publ_Cli_Dni, Publ_Empresa_Razon_Social),Publicacion_Estado,Publicacion_Tipo FROM gd_esquema.Maestra
