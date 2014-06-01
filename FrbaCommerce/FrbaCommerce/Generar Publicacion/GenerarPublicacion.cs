@@ -25,7 +25,7 @@ namespace FrbaCommerce.Generar_Publicacion
         private void GenerarPublicacion_Load(object sender, EventArgs e)
         {
             CargarTiposDePublicacion();
-            // CargarRubros();
+            CargarRubros();
             CargarVisibilidades();
         }
 
@@ -59,8 +59,64 @@ namespace FrbaCommerce.Generar_Publicacion
             tiposDePublicacion.Columns.Add("tipoDePublicacion");
             tiposDePublicacion.Rows.Add("Compra Inmediata");
             tiposDePublicacion.Rows.Add("Subasta");
-            comboBox_tiposDePublicacion.DataSource = tiposDePublicacion;
-            comboBox_tiposDePublicacion.ValueMember = "tipoDePublicacion";
+            comboBox_TiposDePublicacion.DataSource = tiposDePublicacion;
+            comboBox_TiposDePublicacion.ValueMember = "tipoDePublicacion";
+        }
+
+        private void comboBox_tiposDePublicacion_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            String tipoSeleccionado = comboBox_TiposDePublicacion.Text;
+            if (tipoSeleccionado == "Compra Inmediata")
+            {
+                label_stock.Text = "Stock";
+                label_precio.Text = "Precio por unidad";
+            }
+            else
+            {
+                label_stock.Text = "Cantidad";
+                label_precio.Text = "Precio inicial";
+            }
+        }
+
+        private void button_generar_Click(object sender, EventArgs e)
+        {
+            String tipoSeleccionado = comboBox_TiposDePublicacion.Text;
+            String descripcionSeleccionado = textBox_Descripcion.Text;
+            String rubroSeleccionado = comboBox_Rubro.Text;
+            String visibilidadSeleccionado = comboBox_Visibilidad.Text;
+            Boolean preguntaSeleccionado = radioButton_Pregunta.Checked;
+            Decimal stockSeleccionado = Convert.ToDecimal(textBox_Stock.Text);
+            Double precioSeleccionado = Convert.ToDouble(textBox_Precio.Text);
+            DateTime fecha = DateTime.Now;
+
+            query = "SELECT id FROM Rubro WHERE nombre = @rubroSeleccionado";
+            parametros.Clear();
+            parametros.Add(new SqlParameter("@rubroSeleccionado", rubroSeleccionado));
+            Decimal idRubroSeleccionado = (Decimal)builderDeComandos.Crear(query, parametros).ExecuteScalar();
+
+            query = "SELECT id FROM Visibilidad WHERE descripcion = @visibilidadSeleccionado";
+            parametros.Clear();
+            parametros.Add(new SqlParameter("@visibilidadSeleccionado", visibilidadSeleccionado));
+            Decimal idVisibilidadSeleccionado = (Decimal)builderDeComandos.Crear(query, parametros).ExecuteScalar();
+
+            Int16 bitPregunta = 0;
+            if (preguntaSeleccionado) bitPregunta = 1;
+
+            query = "INSERT INTO Publicacion (descripcion, stock, fecha_inicio, fecha_vencimiento, precio, rubro_id, visibilidad_id, usuario_id, estado, tipo) values (@descripcion, @stock, @fechaInicial, @fechaVencimiento, @precio, @rubroId, @visibilidadId, @usuarioId, 'Borrador', @tipo)";
+
+            parametros.Clear();
+            parametros.Add(new SqlParameter("@descripcion", descripcionSeleccionado));
+            parametros.Add(new SqlParameter("@stock", stockSeleccionado));
+            parametros.Add(new SqlParameter("@fechaInicial", fecha));
+            parametros.Add(new SqlParameter("@fechaVencimiento", fecha));
+            parametros.Add(new SqlParameter("@precio", precioSeleccionado));
+            parametros.Add(new SqlParameter("@rubroId", idRubroSeleccionado));
+            parametros.Add(new SqlParameter("@visibilidadId", idVisibilidadSeleccionado));
+            parametros.Add(new SqlParameter("@usuarioId", 1));
+            parametros.Add(new SqlParameter("@tipo", tipoSeleccionado));
+            int filasAfectadas = builderDeComandos.Crear(query, parametros).ExecuteNonQuery();
+
+            MessageBox.Show(filasAfectadas + "");
         }
     }
 }
