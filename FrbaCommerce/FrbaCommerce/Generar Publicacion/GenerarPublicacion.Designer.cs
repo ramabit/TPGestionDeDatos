@@ -44,7 +44,6 @@
             this.textBox_Stock = new System.Windows.Forms.TextBox();
             this.label_precio = new System.Windows.Forms.Label();
             this.label_stock = new System.Windows.Forms.Label();
-            this.button_Volver = new System.Windows.Forms.Button();
             this.button_Generar = new System.Windows.Forms.Button();
             this.button_Cancelar = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
@@ -203,16 +202,6 @@
             this.label_stock.TabIndex = 0;
             this.label_stock.Text = "Stock";
             // 
-            // button_Volver
-            // 
-            this.button_Volver.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button_Volver.Location = new System.Drawing.Point(12, 331);
-            this.button_Volver.Name = "button_Volver";
-            this.button_Volver.Size = new System.Drawing.Size(141, 23);
-            this.button_Volver.TabIndex = 3;
-            this.button_Volver.Text = "< Volver a menu de rol";
-            this.button_Volver.UseVisualStyleBackColor = true;
-            // 
             // button_Generar
             // 
             this.button_Generar.Location = new System.Drawing.Point(284, 328);
@@ -231,6 +220,7 @@
             this.button_Cancelar.TabIndex = 7;
             this.button_Cancelar.Text = "Cancelar";
             this.button_Cancelar.UseVisualStyleBackColor = true;
+            this.button_Cancelar.Click += new System.EventHandler(this.button_Cancelar_Click);
             // 
             // GenerarPublicacion
             // 
@@ -239,7 +229,6 @@
             this.ClientSize = new System.Drawing.Size(392, 366);
             this.Controls.Add(this.button_Cancelar);
             this.Controls.Add(this.button_Generar);
-            this.Controls.Add(this.button_Volver);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
@@ -274,7 +263,6 @@
         private System.Windows.Forms.Label label_precio;
         private System.Windows.Forms.Label label_stock;
         private System.Windows.Forms.ComboBox comboBox_Rubro;
-        private System.Windows.Forms.Button button_Volver;
         private System.Windows.Forms.Button button_Generar;
         private System.Windows.Forms.Button button_Cancelar;
     }

@@ -92,12 +92,12 @@ namespace FrbaCommerce.Generar_Publicacion
             query = "SELECT id FROM Rubro WHERE nombre = @rubroSeleccionado";
             parametros.Clear();
             parametros.Add(new SqlParameter("@rubroSeleccionado", rubroSeleccionado));
-            Decimal idRubroSeleccionado = (Decimal)builderDeComandos.Crear(query, parametros).ExecuteScalar();
+            Decimal idRubroSeleccionado = (Decimal) builderDeComandos.Crear(query, parametros).ExecuteScalar();
 
             query = "SELECT id FROM Visibilidad WHERE descripcion = @visibilidadSeleccionado";
             parametros.Clear();
             parametros.Add(new SqlParameter("@visibilidadSeleccionado", visibilidadSeleccionado));
-            Decimal idVisibilidadSeleccionado = (Decimal)builderDeComandos.Crear(query, parametros).ExecuteScalar();
+            Decimal idVisibilidadSeleccionado = (Decimal) builderDeComandos.Crear(query, parametros).ExecuteScalar();
 
             Int16 bitPregunta = 0;
             if (preguntaSeleccionado) bitPregunta = 1;
@@ -117,6 +117,11 @@ namespace FrbaCommerce.Generar_Publicacion
             int filasAfectadas = builderDeComandos.Crear(query, parametros).ExecuteNonQuery();
 
             MessageBox.Show(filasAfectadas + "");
+        }
+
+        private void button_Cancelar_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }
