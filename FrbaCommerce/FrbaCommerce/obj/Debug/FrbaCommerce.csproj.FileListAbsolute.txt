@@ -38,3 +38,4 @@ C:\Documents and Settings\Administrador\Mis documentos\Gestion de datos\gddfer\F
 C:\Documents and Settings\Administrador\Mis documentos\Gestion de datos\gddfer\FrbaCommerce\FrbaCommerce\obj\Debug\FrbaCommerce.Properties.Resources.resources
 C:\Documents and Settings\Administrador\Mis documentos\Gestion de datos\gddfer\FrbaCommerce\FrbaCommerce\obj\Debug\FrbaCommerce.Registro_de_Usuario.RegistrarUsuario.resources
 C:\Documents and Settings\Administrador\Mis documentos\Gestion de datos\gddfer\FrbaCommerce\FrbaCommerce\obj\Debug\FrbaCommerce.csproj.GenerateResource.Cache
+C:\Documents and Settings\Administrador\Mis documentos\Gestion de datos\gddfer\FrbaCommerce\FrbaCommerce\obj\Debug\FrbaCommerce.Login.ElegirRol.resources
