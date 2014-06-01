@@ -30,9 +30,12 @@ namespace FrbaCommerce.Login
         {
             String query = "select * from Usuario where username = @username and password = @password";
 
+            String usuario = this.textBoxUsuario.Text;
+            String contraseña = this.textBoxContaseña.Text;
+
             IList<SqlParameter> parametros = new List<SqlParameter>();
-            parametros.Add(new SqlParameter("@username", this.textBoxUsuario.Text));
-            parametros.Add(new SqlParameter("@password", this.textBoxContaseña.Text));
+            parametros.Add(new SqlParameter("@username", usuario));
+            parametros.Add(new SqlParameter("@password", contraseña));
 
             SqlDataReader reader = builderDeComandos.Crear(query, parametros).ExecuteReader();
 
@@ -48,7 +51,7 @@ namespace FrbaCommerce.Login
 
                 if(cantidadDeRoles > 1)
                 {
-                    new ElegirRol().Show();
+                    new ElegirRol(usuario).Show();
                     this.Hide();
                 }
                 else
