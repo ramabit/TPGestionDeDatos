@@ -149,7 +149,7 @@ PRIMARY KEY (id)
 
 create table Rubro
 (
-id numeric(18,0),
+id numeric(18,0) identity(1,1),
 nombre nvarchar(255),
 habilitado bit default 1,
 PRIMARY KEY(id)
