@@ -28,11 +28,13 @@
 #Tabla de funcionalidad_por_rol
 
 #Tabla de visibilidad
+- [ ] Cambiar campo descripcion por nombre
 
 #Tabla de publicacion
-- [ ] Agregar FK a rubro
-- [ ] Separar los rubros y crear una tabla a partir de ellos
+- [x] Agregar FK a rubro
+- [x] Separar los rubros y crear una tabla a partir de ellos
 - [ ] Agregar funcionalidad de fecha_vencimiento automatica
+- [ ] Hay que fijarse el tema de las preguntas
 
 #Tabla de pregunta
 - [ ] Deliberar acerca de si puede tener un campo habilitado
@@ -50,3 +52,6 @@
 - [x] Agregar fecha en der
 - [ ] Cambiar la cardinalidad de la relacion con Calificacion en der-> Una compra tiene una calificacion pero no automaticamenteno, es decir, cuando se crea no tiene calificacion
 - [ ] Deliberar acerca de si puede tener un campo habilitado
+
+#Tabla de Rubro
+- [ ] Fijarse si es necesario un campo habilitado
