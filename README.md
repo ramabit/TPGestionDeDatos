@@ -3,38 +3,30 @@
 - [ ] Fijarse como pasar el usuario
 - [ ] Agregar validaciones
 
-# Filtro Cliente
-- [ ] Agregar tipo de documento
+# General de ABM Filtro
 - [ ] Sacar la columna id
+- [ ] Sacar la columna habilitado
 - [ ] Poner el texto de los headers en mayuscula
-- [ ] Sacar la columna habilitado 
-- [ ] Modificar la columna usuario_id por usuario
-- [ ] Modificar el id usuario por el username
-- [ ] Modificar el id de la direccion por la dirreccion propiamente
 - [ ] Modificar los nombres para que solamente la primera letra quede en mayuscula
-- [ ] Sacar la ultima columna
+- [ ] Sacar la ultima fila
 
-# Editar Cliente
-- [ ] Cargar dirrecion
+# General de ABM Editar
 - [ ] Agregar controlador a seleccionar de fecha de nacimiento
 - [ ] Agregar funcionalidad para los botones
 
-# Agregar Cliente
+# General de ABM Agregar
 - [ ] Agregar funcionalidad a los botones
 
-# Agregar Empresa
-- [ ] Agregar funcionalidad a los botones
-
-# Editar Cliente
-- [ ] Falta agregar el telefono y el nombre de contacto
-- [ ] Agregar controlador a seleccionar de fecha de creacion
-- [ ] Agregar funcionalidad para los botones
-
-# Filtro Cliente
-- [ ] Sacar la columna id
-- [ ] Poner el texto de los headers en mayuscula
-- [ ] Sacar la columna habilitado 
+# Filtro Cliente/Empresa
 - [ ] Modificar la columna usuario_id por usuario
 - [ ] Modificar el id usuario por el username
 - [ ] Modificar el id de la direccion por la dirreccion propiamente
-- [ ] Sacar la ultima columna
+
+# Filtro Cliente
+- [ ] Agregar tipo de documento
+
+# Editar Cliente
+- [ ] Cargar dirrecion
+
+# Editar Empresa
+- [ ] Falta agregar el telefono y el nombre de contacto
