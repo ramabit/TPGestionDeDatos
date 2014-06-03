@@ -61,14 +61,28 @@ namespace FrbaCommerce.ABM_Empresa
             // Controla que la celda que se clickeo fue la de modificar
             if (e.ColumnIndex == dataGridView_Empresa.Columns["modificar"].Index && e.RowIndex >= 0)
             {
-                String idClienteAModificar = dataGridView_Empresa.Rows[e.RowIndex].Cells["id"].Value.ToString();
-                new EditarEmpresa(idClienteAModificar).ShowDialog();
+                String idEmpresaAModificar = dataGridView_Empresa.Rows[e.RowIndex].Cells["id"].Value.ToString();
+                new EditarEmpresa(idEmpresaAModificar).ShowDialog();
             }
         }
 
         private void button_Buscar_Click(object sender, EventArgs e)
         {
+            String filtro = "ISNULL(usuario_id, 0) != 0";
+
+            if (textBox_RazonSocial.Text != "") filtro += " and " + "razon_social like '" + textBox_RazonSocial.Text + "%'";
+            if (textBox_Cuit.Text != "") filtro += " and " + "cuit like '" + textBox_Cuit.Text + "%'";
+            if (textBox_Mail.Text != "") filtro += " and " + "mail like '" + textBox_Mail.Text + "%'";
             
+            query = "SELECT * FROM Empresa WHERE " + filtro;
+
+            command = builderDeComandos.Crear(query, parametros);
+
+            DataSet empresas = new DataSet();
+            SqlDataAdapter adapter = new SqlDataAdapter();
+            adapter.SelectCommand = command;
+            adapter.Fill(empresas);
+            dataGridView_Empresa.DataSource = empresas.Tables[0].DefaultView;
         }
 
         private void button_Limpiar_Click(object sender, EventArgs e)

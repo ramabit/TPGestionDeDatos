@@ -36,7 +36,7 @@ namespace FrbaCommerce.ABM_Empresa
             parametros.Add(new SqlParameter("@idEmpresa", idEmpresa));
             SqlDataReader reader = builderDeComandos.Crear(query, parametros).ExecuteReader();
             // Si no se puede leer tiro una excepcion
-            if (!reader.Read()) throw new Exception("No se puede leer cliente");
+            if (!reader.Read()) throw new Exception("No se puede leer empresa");
             // Si se puede leer cargo los datos
             textBox_RazonSocial.Text = Convert.ToString(reader["razon_social"]);
             // textBox_NombreDeContacto.Text = Convert.ToString(reader[""]);
