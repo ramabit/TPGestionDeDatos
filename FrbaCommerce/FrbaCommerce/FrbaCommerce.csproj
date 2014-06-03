@@ -96,6 +96,12 @@
     <Compile Include="ABM Empresa\EmpresaForm.Designer.cs">
       <DependentUpon>EmpresaForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="ABM Empresa\FiltroEmpresa.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ABM Empresa\FiltroEmpresa.Designer.cs">
+      <DependentUpon>FiltroEmpresa.cs</DependentUpon>
+    </Compile>
     <Compile Include="ABM Rol\AgregarRol.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -249,6 +255,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ABM Empresa\AgregarEmpresa.resx">
       <DependentUpon>AgregarEmpresa.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ABM Empresa\EditarEmpresa.resx">
+      <DependentUpon>EditarEmpresa.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ABM Empresa\FiltroEmpresa.resx">
+      <DependentUpon>FiltroEmpresa.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ABM Rol\AgregarRol.resx">
       <DependentUpon>AgregarRol.cs</DependentUpon>
