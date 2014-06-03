@@ -28,7 +28,7 @@
 #Tabla de funcionalidad_por_rol
 
 #Tabla de visibilidad
-- [ ] Cambiar campo descripcion por nombre
+- [ ] Ojo que puede faltar el campo codigo
 
 #Tabla de publicacion
 - [x] Agregar FK a rubro
@@ -55,3 +55,5 @@
 
 #Tabla de Rubro
 - [ ] Fijarse si es necesario un campo habilitado
+- [ ] Ojo que puede faltar el campo codigo
+- [ ] Cambiar nombre por descripcion
