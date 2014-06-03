@@ -33,11 +33,11 @@ namespace FrbaCommerce.ABM_Visibilidad
         {
             command = builderDeComandos.Crear("SELECT * FROM Visibilidad", parametros);
 
-            DataSet clientes = new DataSet();
+            DataSet visibilidades = new DataSet();
             SqlDataAdapter adapter = new SqlDataAdapter();
             adapter.SelectCommand = command;
-            adapter.Fill(clientes);
-            dataGridView_Visibilidad.DataSource = clientes.Tables[0].DefaultView;
+            adapter.Fill(visibilidades);
+            dataGridView_Visibilidad.DataSource = visibilidades.Tables[0].DefaultView;
         }
 
         private void AgregarColumnaDeModificacion()

@@ -33,11 +33,11 @@ namespace FrbaCommerce.ABM_Empresa
         {
             command = builderDeComandos.Crear("SELECT * FROM Empresa", parametros);
 
-            DataSet clientes = new DataSet();
+            DataSet empresas = new DataSet();
             SqlDataAdapter adapter = new SqlDataAdapter();
             adapter.SelectCommand = command;
-            adapter.Fill(clientes);
-            dataGridView_Empresa.DataSource = clientes.Tables[0].DefaultView;
+            adapter.Fill(empresas);
+            dataGridView_Empresa.DataSource = empresas.Tables[0].DefaultView;
         }
 
         private void AgregarColumnaDeModificacion()
