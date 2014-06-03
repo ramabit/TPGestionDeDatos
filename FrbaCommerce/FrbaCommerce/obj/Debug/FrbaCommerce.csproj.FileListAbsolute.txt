@@ -43,3 +43,6 @@ C:\Documents and Settings\Administrador\Mis documentos\Gestion de datos\gddfer\F
 C:\Documents and Settings\Administrador\Mis documentos\Gestion de datos\gddfer\FrbaCommerce\FrbaCommerce\obj\Debug\FrbaCommerce.ABM_Cliente.EditarCliente.resources
 C:\Documents and Settings\Administrador\Mis documentos\Gestion de datos\gddfer\FrbaCommerce\FrbaCommerce\obj\Debug\FrbaCommerce.ABM_Empresa.EditarEmpresa.resources
 C:\Documents and Settings\Administrador\Mis documentos\Gestion de datos\gddfer\FrbaCommerce\FrbaCommerce\obj\Debug\FrbaCommerce.ABM_Empresa.FiltroEmpresa.resources
+C:\Documents and Settings\Administrador\Mis documentos\Gestion de datos\gddfer\FrbaCommerce\FrbaCommerce\obj\Debug\FrbaCommerce.ABM_Visibilidad.AgregarVisibilidad.resources
+C:\Documents and Settings\Administrador\Mis documentos\Gestion de datos\gddfer\FrbaCommerce\FrbaCommerce\obj\Debug\FrbaCommerce.ABM_Visibilidad.EditarVisibilidad.resources
+C:\Documents and Settings\Administrador\Mis documentos\Gestion de datos\gddfer\FrbaCommerce\FrbaCommerce\obj\Debug\FrbaCommerce.ABM_Visibilidad.FiltroVisibilidad.resources

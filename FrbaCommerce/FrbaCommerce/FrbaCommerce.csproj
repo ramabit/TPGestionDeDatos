@@ -168,6 +168,12 @@
     <Compile Include="ABM Visibilidad\EditarVisibilidad.Designer.cs">
       <DependentUpon>EditarVisibilidad.cs</DependentUpon>
     </Compile>
+    <Compile Include="ABM Visibilidad\FiltroVisibilidad.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ABM Visibilidad\FiltroVisibilidad.Designer.cs">
+      <DependentUpon>FiltroVisibilidad.cs</DependentUpon>
+    </Compile>
     <Compile Include="ABM Visibilidad\VisibilidadForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -273,6 +279,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ABM Rol\RolForm.resx">
       <DependentUpon>RolForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ABM Visibilidad\AgregarVisibilidad.resx">
+      <DependentUpon>AgregarVisibilidad.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ABM Visibilidad\EditarVisibilidad.resx">
+      <DependentUpon>EditarVisibilidad.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ABM Visibilidad\FiltroVisibilidad.resx">
+      <DependentUpon>FiltroVisibilidad.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Generar Publicacion\GenerarPublicacion.resx">
       <DependentUpon>GenerarPublicacion.cs</DependentUpon>
