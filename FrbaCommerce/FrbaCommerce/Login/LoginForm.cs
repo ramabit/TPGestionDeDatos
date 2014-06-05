@@ -66,6 +66,11 @@ namespace FrbaCommerce.Login
             }
             else
             {
+                parametros.Clear();
+                parametros.Add(new SqlParameter("@username", this.textBoxUsuario.Text));
+                String sumaFallido = "update Usuario set login_fallidos = login_fallidos + 1 where username = @username";
+                builderDeComandos.Crear(sumaFallido, parametros).ExecuteNonQuery();
+                
                 MessageBox.Show("Usuario o contraseña incorrectos!");
             }
         }
