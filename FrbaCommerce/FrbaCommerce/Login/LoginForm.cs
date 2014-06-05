@@ -43,9 +43,8 @@ namespace FrbaCommerce.Login
             {
                 MessageBox.Show("Bienvenido " + reader["username"] + "!");
 
-              //  UsuarioSesion user = UsuarioSesion.usuario;
-
-                UsuarioSesion.Usuario.nombre = usuario;
+                UsuarioSesion.Usuario.nombre = (String)reader["username"];
+                UsuarioSesion.Usuario.id = (Decimal)reader["id"];
 
                 parametros.Clear();
                 parametros.Add(new SqlParameter("@username", this.textBoxUsuario.Text));
