@@ -51,6 +51,7 @@
             this.botonAceptar.TabIndex = 1;
             this.botonAceptar.Text = "Aceptar";
             this.botonAceptar.UseVisualStyleBackColor = true;
+            this.botonAceptar.Click += new System.EventHandler(this.botonAceptar_Click);
             // 
             // labelEnunciado
             // 

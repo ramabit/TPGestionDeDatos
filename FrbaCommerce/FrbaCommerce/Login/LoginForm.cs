@@ -42,7 +42,11 @@ namespace FrbaCommerce.Login
             if (reader.Read())
             {
                 MessageBox.Show("Bienvenido " + reader["username"] + "!");
-                
+
+              //  UsuarioSesion user = UsuarioSesion.usuario;
+
+                UsuarioSesion.Usuario.nombre = usuario;
+
                 parametros.Clear();
                 parametros.Add(new SqlParameter("@username", this.textBoxUsuario.Text));
 
@@ -51,7 +55,7 @@ namespace FrbaCommerce.Login
 
                 if(cantidadDeRoles > 1)
                 {
-                    new ElegirRol(usuario).Show();
+                    new ElegirRol().Show();
                     this.Hide();
                 }
                 else

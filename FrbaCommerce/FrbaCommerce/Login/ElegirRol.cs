@@ -17,12 +17,11 @@ namespace FrbaCommerce.Login
         private BuilderDeComandos builderDeComandos = new BuilderDeComandos();
 
         public Object SelectedItem { get; set; }
-        private String username;
 
-        public ElegirRol(String usuario)
+        public ElegirRol()
         {
             InitializeComponent();
-            username = usuario;
+            
         }
 
         private void ElegirRol_Load(object sender, EventArgs e)
@@ -35,12 +34,17 @@ namespace FrbaCommerce.Login
             DataSet roles = new DataSet();
             SqlDataAdapter adapter = new SqlDataAdapter();
             parametros = new List<SqlParameter>();
-            parametros.Add(new SqlParameter("@username", username));
+            parametros.Add(new SqlParameter("@username", UsuarioSesion.usuario.nombre));
             command = builderDeComandos.Crear("select r.nombre from Rol r, Rol_x_Usuario ru where r.habilitado = 1 and ru.habilitado = 1 and (select  id from Usuario where username = @username) = ru.usuario_id and r.id = ru.rol_id ", parametros);
             adapter.SelectCommand = command;
             adapter.Fill(roles, "Rol");
             comboBoxRol.DataSource = roles.Tables[0].DefaultView;
             comboBoxRol.ValueMember = "nombre";
+        }
+
+        private void botonAceptar_Click(object sender, EventArgs e)
+        {
+
         }
 
     }
