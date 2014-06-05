@@ -25,7 +25,7 @@ namespace FrbaCommerce.ABM_Rol
         private void botonEditarRol_Click(object sender, EventArgs e)
         {
             this.Hide();
-            new EditarRol().Show();
+            
         }
 
         private void botonBajaRol_Click(object sender, EventArgs e)

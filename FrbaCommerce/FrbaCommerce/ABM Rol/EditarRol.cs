@@ -17,15 +17,17 @@ namespace FrbaCommerce.ABM_Rol
         private BuilderDeComandos builderDeComandos = new BuilderDeComandos();
 
         public Object SelectedItem { get; set; }
+        private String rolElegido;
 
-        public EditarRol()
+        public EditarRol(String rol)
         {
             InitializeComponent();
+            rolElegido = rol;            
         }
 
         private void EditarRol_Load(object sender, EventArgs e)
         {
-            CargarRoles();
+            this.label3.Text = rolElegido;
             CargarFuncionalidades();
             MarcarLasFuncionalidadesQueTiene();
         }
@@ -33,23 +35,11 @@ namespace FrbaCommerce.ABM_Rol
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             MarcarLasFuncionalidadesQueTiene();
-        }
-
-        private void CargarRoles()
-        {
-            DataSet roles = new DataSet();
-            SqlDataAdapter adapter = new SqlDataAdapter();
-            parametros = new List<SqlParameter>();
-            command = builderDeComandos.Crear("SELECT distinct nombre FROM Rol  where habilitado = 1", parametros);
-            adapter.SelectCommand = command;
-            adapter.Fill(roles,"Rol");            
-            comboBox1.DataSource = roles.Tables[0].DefaultView;
-            comboBox1.ValueMember = "nombre";            
-        }
+        }              
 
         private void botonVolver_Click(object sender, EventArgs e)
         {
-            new RolForm().Show();
+            new BajaRol().Show();
             this.Close();
         }
 
@@ -80,13 +70,12 @@ namespace FrbaCommerce.ABM_Rol
             DesmarcarFuncionalidades();
 
             foreach (DataRowView funcionalidad in this.checkedListBox1.Items)
-            {
-                String rolElegido = this.comboBox1.Text;
+            {                
                 parametros.Clear();
                 parametros.Add(new SqlParameter("@rol", rolElegido));
                 parametros.Add(new SqlParameter("@funcionalidad", funcionalidad.Row["nombre"] as String));
 
-                if (verificarSiLaTiene(this.comboBox1.Text, funcionalidad.Row["nombre"] as String))
+                if (verificarSiLaTiene(funcionalidad.Row["nombre"] as String))
                 {
                     int i = checkedListBox1.Items.IndexOf(funcionalidad);
                     funcionalidadesAMarcar.Add(i);
@@ -116,13 +105,11 @@ namespace FrbaCommerce.ABM_Rol
             if (this.textBox1.Text != "")
             {
                 RenombrarRol();
-            }
-            CargarRoles();
+            }            
         }
 
         private void RenombrarRol()
-        {
-            String rolElegido = this.comboBox1.Text;
+        {            
             String nuevoNombreRol = this.textBox1.Text;
 
             parametros.Clear();
@@ -137,19 +124,18 @@ namespace FrbaCommerce.ABM_Rol
         }
 
         private void AgregarFuncionalidades()
-        {
-            
+        {            
 
             foreach (DataRowView funcionalidad in this.checkedListBox1.CheckedItems)
             {
-                if (verificarSiLaTiene(this.comboBox1.Text, funcionalidad.Row["nombre"] as String))
+                if (verificarSiLaTiene(funcionalidad.Row["nombre"] as String))
                 {
 
                 }
                 else
                 {
                     parametros.Clear();
-                    parametros.Add(new SqlParameter("@rol", this.comboBox1.Text));
+                    parametros.Add(new SqlParameter("@rol", rolElegido));
                     parametros.Add(new SqlParameter("@funcionalidad", funcionalidad.Row["nombre"] as String));
 
                     String sql1 = "INSERT INTO Funcionalidad_x_Rol(funcionalidad_id, rol_id) VALUES ((SELECT id FROM Funcionalidad WHERE nombre = @funcionalidad), (SELECT  id FROM Rol WHERE nombre = @rol))";
@@ -159,10 +145,10 @@ namespace FrbaCommerce.ABM_Rol
             }
         }
 
-        private bool verificarSiLaTiene(String rol, String funcionalidad)
+        private bool verificarSiLaTiene(String funcionalidad)
         {
             parametros.Clear();
-            parametros.Add(new SqlParameter("@rol", rol));
+            parametros.Add(new SqlParameter("@rol", rolElegido));
             parametros.Add(new SqlParameter("@funcionalidad", funcionalidad));
 
             String consulta = "SELECT count(*) FROM Funcionalidad_x_Rol WHERE funcionalidad_id = (SELECT id FROM Funcionalidad WHERE nombre = @funcionalidad) and rol_id = (SELECT  id FROM Rol WHERE nombre = @rol)";
@@ -190,7 +176,7 @@ namespace FrbaCommerce.ABM_Rol
                 if (estado == "Unchecked")
                 {
                     parametros.Clear();
-                    parametros.Add(new SqlParameter("@rol", this.comboBox1.Text));
+                    parametros.Add(new SqlParameter("@rol", rolElegido));
                     parametros.Add(new SqlParameter("@funcionalidad", funcionalidad.Row["nombre"] as String));
 
                     String sql2 = "DELETE Funcionalidad_x_Rol WHERE funcionalidad_id = (SELECT id FROM Funcionalidad WHERE nombre = @funcionalidad) and rol_id = (SELECT  id FROM Rol WHERE nombre = @rol)";

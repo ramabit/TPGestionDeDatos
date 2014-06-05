@@ -17,11 +17,11 @@ namespace FrbaCommerce.ABM_Rol
         private IList<SqlParameter> parametros = new List<SqlParameter>();
         private BuilderDeComandos builderDeComandos = new BuilderDeComandos();
         
-        public Object SelectedItem { get; set; }
+        public Object SelectedItem { get; set; }        
 
         public BajaRol()
         {
-            InitializeComponent();
+            InitializeComponent();            
         }
 
         private void BajaForm_Load(object sender, EventArgs e)
@@ -96,6 +96,18 @@ namespace FrbaCommerce.ABM_Rol
         private void labelRol_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            new AgregarRol().Show();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            new EditarRol(this.comboBoxRol.Text).Show();
         }
 
         

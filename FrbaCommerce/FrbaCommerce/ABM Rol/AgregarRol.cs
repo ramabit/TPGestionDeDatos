@@ -40,7 +40,7 @@ namespace FrbaCommerce.ABM_Rol
 
         private void botonVolver_Click(object sender, EventArgs e)
         {
-            new RolForm().Show();
+            new BajaRol().Show();
             this.Close();
         }
 
