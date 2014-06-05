@@ -44,7 +44,13 @@ namespace FrbaCommerce.Login
 
         private void botonAceptar_Click(object sender, EventArgs e)
         {
+            String rolElegido = comboBoxRol.SelectedValue.ToString();
+            UsuarioSesion.Usuario.rol = rolElegido;
 
+          //  MessageBox.Show("Rol: " + UsuarioSesion.Usuario.rol);
+
+            new MenuPrincipal().ShowDialog();
+            this.Hide();
         }
 
     }

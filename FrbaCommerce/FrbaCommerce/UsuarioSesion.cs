@@ -9,6 +9,7 @@ namespace FrbaCommerce
     {
         public static UsuarioSesion usuario;
         public Decimal id { get; set; }
+        public String rol { get; set; }
         public String nombre { get; set; }
         private UsuarioSesion() { }
         public static UsuarioSesion Usuario

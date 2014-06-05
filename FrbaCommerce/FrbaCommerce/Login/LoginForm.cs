@@ -28,6 +28,7 @@ namespace FrbaCommerce.Login
 
         private void botonIngresar_Click(object sender, EventArgs e)
         {
+            // Nos fijamos si el usuario y contraseña existen y esta habilitado
             String query = "select * from Usuario where username = @username and password = @password and habilitado = 1";
 
             String usuario = this.textBoxUsuario.Text;
@@ -54,12 +55,20 @@ namespace FrbaCommerce.Login
 
                 if(cantidadDeRoles > 1)
                 {
-                    new ElegirRol().Show();
+                    new ElegirRol().ShowDialog();
                     this.Hide();
                 }
                 else
                 {
-                    new MenuPrincipal().Show();
+                    parametros.Clear();
+                    parametros.Add(new SqlParameter("@username", this.textBoxUsuario.Text));
+                    String rolDeUsuario = "select r.nombre from Rol r, Rol_x_Usuario ru, Usuario u where r.id = ru.rol_id and ru.usuario_id = u.id and u.username = @username";
+                    String rolUser = (String)builderDeComandos.Crear(rolDeUsuario, parametros).ExecuteScalar();
+
+                    UsuarioSesion.Usuario.rol = rolUser;
+                  //  MessageBox.Show("Rol: " + UsuarioSesion.Usuario.rol);
+
+                    new MenuPrincipal().ShowDialog();
                     this.Hide();
                 }
 
@@ -74,6 +83,8 @@ namespace FrbaCommerce.Login
 
                 if (lector.Read())
                 {
+
+                    // Se fija si el usuario esta inhabilitado
                     parametros.Clear();
                     parametros.Add(new SqlParameter("@username", usuario));
                     parametros.Add(new SqlParameter("@password", contraseña));
@@ -87,11 +98,14 @@ namespace FrbaCommerce.Login
                         return;
                     }
 
+                    // Suma un fallido
                     parametros.Clear();
                     parametros.Add(new SqlParameter("@username", this.textBoxUsuario.Text));
                     String sumaFallido = "update Usuario set login_fallidos = login_fallidos + 1 where username = @username";
                     builderDeComandos.Crear(sumaFallido, parametros).ExecuteNonQuery();
 
+
+                    // Si es el tercer fallido se deshabilita al usuario
                     parametros.Clear();
                     parametros.Add(new SqlParameter("@username", this.textBoxUsuario.Text));
                     String cantidadFallidos = "select login_fallidos from Usuario where username = @username";
