@@ -28,7 +28,7 @@ namespace FrbaCommerce.Login
 
         private void botonIngresar_Click(object sender, EventArgs e)
         {
-            String query = "select * from Usuario where username = @username and password = @password";
+            String query = "select * from Usuario where username = @username and password = @password and habilitado = 1";
 
             String usuario = this.textBoxUsuario.Text;
             String contraseña = this.textBoxContaseña.Text;
@@ -66,12 +66,52 @@ namespace FrbaCommerce.Login
             }
             else
             {
+                // Se fija si el usuario era correcto
                 parametros.Clear();
                 parametros.Add(new SqlParameter("@username", this.textBoxUsuario.Text));
-                String sumaFallido = "update Usuario set login_fallidos = login_fallidos + 1 where username = @username";
-                builderDeComandos.Crear(sumaFallido, parametros).ExecuteNonQuery();
+                String buscaUsuario = "select * from Usuario where username = @username";
+                SqlDataReader lector = builderDeComandos.Crear(buscaUsuario, parametros).ExecuteReader();
+
+                if (lector.Read())
+                {
+                    parametros.Clear();
+                    parametros.Add(new SqlParameter("@username", usuario));
+                    parametros.Add(new SqlParameter("@password", contraseña));
+                    String estaDeshabilitado = "select * from Usuario where username = @username and habilitado = 0";
+
+                    SqlDataReader leeDeshabilitado = builderDeComandos.Crear(estaDeshabilitado, parametros).ExecuteReader();
+
+                    if (leeDeshabilitado.Read())
+                    {
+                        MessageBox.Show("El usuario esta deshabilitado");
+                        return;
+                    }
+
+                    parametros.Clear();
+                    parametros.Add(new SqlParameter("@username", this.textBoxUsuario.Text));
+                    String sumaFallido = "update Usuario set login_fallidos = login_fallidos + 1 where username = @username";
+                    builderDeComandos.Crear(sumaFallido, parametros).ExecuteNonQuery();
+
+                    parametros.Clear();
+                    parametros.Add(new SqlParameter("@username", this.textBoxUsuario.Text));
+                    String cantidadFallidos = "select login_fallidos from Usuario where username = @username";
+                    int intentosFallidos = (int)builderDeComandos.Crear(cantidadFallidos, parametros).ExecuteScalar();
+
+                    if (intentosFallidos == 3)
+                    {
+                        parametros.Clear();
+                        parametros.Add(new SqlParameter("@username", this.textBoxUsuario.Text));
+                        String deshabilitar = "update Usuario set habilitado = 0 where username = @username";
+                        builderDeComandos.Crear(deshabilitar, parametros).ExecuteNonQuery();
+                    }
+                    MessageBox.Show("Contraseña incorrecta. Fallidos del usuario: " + intentosFallidos);
+                }
+                else 
+                {
+                    MessageBox.Show("El usuario no existe");
+                }
                 
-                MessageBox.Show("Usuario o contraseña incorrectos!");
+                
             }
         }
 
