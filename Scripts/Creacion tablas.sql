@@ -59,6 +59,7 @@ username AS ISNULL('USER' + CAST(ID AS NVARCHAR(10)), 'X'),
 password nvarchar(45) DEFAULT 'A',
 habilitado bit default 1,
 login_fallidos int default 0,
+primera_sesion bit default 0,
 PRIMARY KEY (id)
 )
 

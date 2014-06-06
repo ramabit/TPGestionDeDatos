@@ -86,6 +86,7 @@
             this.textBoxContaseña.Name = "textBoxContaseña";
             this.textBoxContaseña.Size = new System.Drawing.Size(100, 21);
             this.textBoxContaseña.TabIndex = 4;
+            this.textBoxContaseña.UseSystemPasswordChar = true;
             this.textBoxContaseña.TextChanged += new System.EventHandler(this.textBoxContaseña_TextChanged);
             // 
             // labelTitulo

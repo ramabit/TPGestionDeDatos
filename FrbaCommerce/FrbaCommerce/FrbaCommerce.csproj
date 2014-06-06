@@ -230,6 +230,12 @@
     <Compile Include="Listado Estadistico\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Login\CambiarContraseña.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Login\CambiarContraseña.Designer.cs">
+      <DependentUpon>CambiarContraseña.cs</DependentUpon>
+    </Compile>
     <Compile Include="Login\ElegirRol.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -291,6 +297,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Generar Publicacion\GenerarPublicacion.resx">
       <DependentUpon>GenerarPublicacion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Login\CambiarContraseña.resx">
+      <DependentUpon>CambiarContraseña.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Login\ElegirRol.resx">
       <DependentUpon>ElegirRol.cs</DependentUpon>

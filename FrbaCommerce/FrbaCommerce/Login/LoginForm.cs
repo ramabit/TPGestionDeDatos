@@ -48,10 +48,20 @@ namespace FrbaCommerce.Login
                 UsuarioSesion.Usuario.id = (Decimal)reader["id"];
 
                 parametros.Clear();
+                parametros.Add(new SqlParameter("@username", usuario));
+                String sesion = "select primera_sesion from Usuario where username = @username";
+                int primerInicio = (int)builderDeComandos.Crear(sesion, parametros).ExecuteScalar();
+                if (primerInicio == 1)
+                {
+                    new CambiarContraseña().ShowDialog();
+                    this.Hide();
+                }
+
+                parametros.Clear();
                 parametros.Add(new SqlParameter("@username", this.textBoxUsuario.Text));
 
-                String consulta = "select count(rol_id) from Rol_x_Usuario where habilitado = 1 and (select id from Usuario where username = @username) = usuario_id";
-                int cantidadDeRoles = (int)builderDeComandos.Crear(consulta, parametros).ExecuteScalar();
+                String consultaRoles = "select count(rol_id) from Rol_x_Usuario where habilitado = 1 and (select id from Usuario where username = @username) = usuario_id";
+                int cantidadDeRoles = (int)builderDeComandos.Crear(consultaRoles, parametros).ExecuteScalar();
 
                 if(cantidadDeRoles > 1)
                 {
