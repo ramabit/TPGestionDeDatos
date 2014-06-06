@@ -10,11 +10,11 @@ using System.Data.SqlClient;
 
 namespace FrbaCommerce.Login
 {
-    public partial class CambiarContraseña : Form
+    public partial class CambiarContrasena : Form
     {
         private BuilderDeComandos builderDeComandos = new BuilderDeComandos();
 
-        public CambiarContraseña()
+        public CambiarContrasena()
         {
             InitializeComponent();
         }

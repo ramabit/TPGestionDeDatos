@@ -53,7 +53,7 @@ namespace FrbaCommerce.Login
                 int primerInicio = (int)builderDeComandos.Crear(sesion, parametros).ExecuteScalar();
                 if (primerInicio == 1)
                 {
-                    new CambiarContraseña().ShowDialog();
+                    new CambiarContrasena().ShowDialog();
                     this.Hide();
                 }
 

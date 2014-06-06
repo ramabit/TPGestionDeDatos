@@ -1,6 +1,6 @@
 ﻿namespace FrbaCommerce.Login
 {
-    partial class CambiarContraseña
+    partial class CambiarContrasena
     {
         /// <summary>
         /// Required designer variable.
