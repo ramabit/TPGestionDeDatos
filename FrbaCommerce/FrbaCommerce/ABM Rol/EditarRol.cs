@@ -18,36 +18,98 @@ namespace FrbaCommerce.ABM_Rol
 
         public Object SelectedItem { get; set; }
         private String rolElegido;
+        private int estabaDeshabilitado;
 
         public EditarRol(String rol)
         {
             InitializeComponent();
             rolElegido = rol;            
+            
         }
 
         private void EditarRol_Load(object sender, EventArgs e)
         {
-            this.label3.Text = rolElegido;
-            CargarFuncionalidades();
-            MarcarLasFuncionalidadesQueTiene();
+            CargarTodosLosDatos();
         }
 
-        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        private void CargarTodosLosDatos()
         {
-            MarcarLasFuncionalidadesQueTiene();
+            this.label3.Text = rolElegido;
+            CargarFuncionalidades();            
+            if (estaHabilitado())
+            {
+                checkBox1.Checked = true;
+                checkBox1.Enabled = false;
+                estabaDeshabilitado = 0;
+            }
+            else
+            {
+                checkBox1.Checked = false;
+                estabaDeshabilitado = 1;
+            }
         }              
 
         private void botonVolver_Click(object sender, EventArgs e)
         {
-            new BajaRol().Show();
+            new RolForm().Show();
+            this.Close();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            new ListadoEditarRol().Show();
             this.Close();
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
             textBox1.Clear();
-            CargarFuncionalidades();            
-        }                
+            CargarFuncionalidades();
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            if(estabaDeshabilitado == 1 && checkBox1.Checked)
+            {
+                HabilitarRol();
+            }
+
+            AgregarFuncionalidades();
+            QuitarFuncionalidades();
+
+            if (this.textBox1.Text != "")
+            {
+                RenombrarRol();
+                MessageBox.Show("Se modifico correctamente el rol " + rolElegido);
+                rolElegido = this.textBox1.Text;
+            }
+            else
+            {
+                MessageBox.Show("Se modifico correctamente el rol " + rolElegido);
+            }
+
+            CargarTodosLosDatos();
+            textBox1.Clear();
+            
+        }
+
+        private bool estaHabilitado()
+        {
+            parametros.Clear();
+            parametros.Add(new SqlParameter("@rol", rolElegido));
+
+            String consulta = "SELECT count(distinct nombre) FROM Rol WHERE nombre = @rol and habilitado = 1";
+            int estadoRol = (int)builderDeComandos.Crear(consulta, parametros).ExecuteScalar();
+
+            if (estadoRol == 1)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }               
    
         private void CargarFuncionalidades()
         {
@@ -95,19 +157,8 @@ namespace FrbaCommerce.ABM_Rol
             {
                 checkedListBox1.SetItemChecked(i, false);
             }
-        }    
+        }         
         
-
-        private void button3_Click(object sender, EventArgs e)
-        {
-            AgregarFuncionalidades();
-            QuitarFuncionalidades();
-            if (this.textBox1.Text != "")
-            {
-                RenombrarRol();
-            }            
-        }
-
         private void RenombrarRol()
         {            
             String nuevoNombreRol = this.textBox1.Text;
@@ -119,8 +170,7 @@ namespace FrbaCommerce.ABM_Rol
             String sql = "UPDATE Rol SET nombre = @nombre_nuevo WHERE nombre = @nombre_viejo";
             builderDeComandos.Crear(sql, parametros).ExecuteNonQuery();
             
-            MessageBox.Show("El rol " + rolElegido + " fue renombrado como " + nuevoNombreRol);
-            textBox1.Clear();
+            MessageBox.Show("El rol " + rolElegido + " fue renombrado como " + nuevoNombreRol);            
         }
 
         private void AgregarFuncionalidades()
@@ -165,8 +215,7 @@ namespace FrbaCommerce.ABM_Rol
         }
 
         private void QuitarFuncionalidades()
-        {
-            
+        {            
             
             foreach (DataRowView funcionalidad in this.checkedListBox1.Items)
             {
@@ -186,6 +235,16 @@ namespace FrbaCommerce.ABM_Rol
             }
         }
 
+        private void HabilitarRol()
+        {
+            parametros.Clear();
+            parametros.Add(new SqlParameter("@nombre", rolElegido));
+                        
+            String sql = "UPDATE Rol SET habilitado = 1 WHERE nombre = @nombre";
+
+            builderDeComandos.Crear(sql, parametros).ExecuteNonQuery();
+        }
+               
         
     }
 }

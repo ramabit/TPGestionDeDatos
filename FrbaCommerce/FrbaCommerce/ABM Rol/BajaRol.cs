@@ -53,39 +53,37 @@ namespace FrbaCommerce.ABM_Rol
 
             parametros.Clear();
             parametros.Add(new SqlParameter("@nombre", rolElegido));
-
-            // Hacemos la baja logica del rol
+                        
             String sql = "UPDATE Rol SET habilitado = 0 WHERE nombre = @nombre";
 
             int filas_afectadas = 0;
-
-            // ExecuteNonQuery devuelve la cantidad de filas que modifico
+                        
             filas_afectadas = builderDeComandos.Crear(sql, parametros).ExecuteNonQuery();
             if (filas_afectadas != -1)
             {
-                MessageBox.Show("Deshabilitado rol " + rolElegido + "! Filas eliminadas: " + filas_afectadas);
+                MessageBox.Show("Deshabilitado rol " + rolElegido + ". Filas eliminadas: " + filas_afectadas);
             }
             else
             {
                 MessageBox.Show("Error");
             }
 
-            // Es necesario limpiar la lista de parametros
             parametros.Clear();
             parametros.Add(new SqlParameter("@nombre", rolElegido));
 
             // Borramos el rol en los usuarios que lo tienen
-            String sql2 = "UPDATE Rol_x_Usuario SET habilitado = 0 WHERE rol_id = (SELECT id FROM Rol WHERE nombre = @nombre)";
+            String sql2 = "DELETE Rol_Por_Usuario WHERE rol_id = (SELECT id FROM Rol WHERE nombre = @nombre and habilitado = 0)";
 
             filas_afectadas = builderDeComandos.Crear(sql2, parametros).ExecuteNonQuery();
             if (filas_afectadas != -1)
             {
-                MessageBox.Show("Deshabilitado rol " + rolElegido + "! Filas eliminadas: " + filas_afectadas);
+                MessageBox.Show("Deshabilitado rol " + rolElegido + ". Filas eliminadas: " + filas_afectadas);
             }
             else
             {
                 MessageBox.Show("Error");
             }
+            CargarRoles();
         }
 
         private void comboBoxRol_SelectedIndexChanged(object sender, EventArgs e)
@@ -97,19 +95,6 @@ namespace FrbaCommerce.ABM_Rol
         {
 
         }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            this.Hide();
-            new AgregarRol().Show();
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-            this.Hide();
-            new EditarRol(this.comboBoxRol.Text).Show();
-        }
-
         
     }
 }
