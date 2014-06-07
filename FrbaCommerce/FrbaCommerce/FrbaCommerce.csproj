@@ -218,6 +218,7 @@
     <Compile Include="Gestion de Preguntas\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="HashSha256.cs" />
     <Compile Include="Historial Cliente\Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -230,11 +231,11 @@
     <Compile Include="Listado Estadistico\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="Login\CambiarContraseña.cs">
+    <Compile Include="Login\CambiarContrasena.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Login\CambiarContraseña.Designer.cs">
-      <DependentUpon>CambiarContraseña.cs</DependentUpon>
+    <Compile Include="Login\CambiarContrasena.Designer.cs">
+      <DependentUpon>CambiarContrasena.cs</DependentUpon>
     </Compile>
     <Compile Include="Login\ElegirRol.cs">
       <SubType>Form</SubType>
@@ -298,8 +299,8 @@
     <EmbeddedResource Include="Generar Publicacion\GenerarPublicacion.resx">
       <DependentUpon>GenerarPublicacion.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Login\CambiarContraseña.resx">
-      <DependentUpon>CambiarContraseña.cs</DependentUpon>
+    <EmbeddedResource Include="Login\CambiarContrasena.resx">
+      <DependentUpon>CambiarContrasena.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Login\ElegirRol.resx">
       <DependentUpon>ElegirRol.cs</DependentUpon>

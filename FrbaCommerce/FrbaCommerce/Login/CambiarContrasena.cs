@@ -36,7 +36,7 @@ namespace FrbaCommerce.Login
             // Acualiza contraseña
             IList<SqlParameter> parametros = new List<SqlParameter>();
             parametros.Add(new SqlParameter("@username", UsuarioSesion.Usuario.nombre));
-            parametros.Add(new SqlParameter("@pass", textBoxContraseña.Text));
+            parametros.Add(new SqlParameter("@pass", HashSha256.getHash(textBoxContraseña.Text)));
             String nuevaPass = "update Usuario set password = @pass where username = @username";
             builderDeComandos.Crear(nuevaPass, parametros).ExecuteNonQuery();
 
@@ -66,7 +66,6 @@ namespace FrbaCommerce.Login
                 String rolUser = (String)builderDeComandos.Crear(rolDeUsuario, parametros).ExecuteScalar();
 
                 UsuarioSesion.Usuario.rol = rolUser;
-                //  MessageBox.Show("Rol: " + UsuarioSesion.Usuario.rol);
 
                 new MenuPrincipal().ShowDialog();
                 this.Hide();

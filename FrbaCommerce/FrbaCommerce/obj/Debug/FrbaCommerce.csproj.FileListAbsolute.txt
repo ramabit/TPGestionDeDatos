@@ -56,4 +56,4 @@ C:\Users\Fer\Documents\GitHub\gddfer\FrbaCommerce\FrbaCommerce\obj\Debug\FrbaCom
 C:\Users\Fer\Documents\GitHub\gddfer\FrbaCommerce\FrbaCommerce\obj\Debug\FrbaCommerce.Generar_Publicacion.GenerarPublicacion.resources
 C:\Users\Fer\Documents\GitHub\gddfer\FrbaCommerce\FrbaCommerce\obj\Debug\FrbaCommerce.Login.ElegirRol.resources
 C:\Users\Fer\Documents\GitHub\gddfer\FrbaCommerce\FrbaCommerce\obj\Debug\FrbaCommerce.MenuPrincipal.resources
-C:\Users\Fer\Documents\GitHub\gddfer\FrbaCommerce\FrbaCommerce\obj\Debug\FrbaCommerce.Login.CambiarContraseña.resources
+C:\Users\Fer\Documents\GitHub\gddfer\FrbaCommerce\FrbaCommerce\obj\Debug\FrbaCommerce.Login.CambiarContrasena.resources
