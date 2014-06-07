@@ -30,7 +30,7 @@ namespace FrbaCommerce.Login
         {
             if (this.textBoxUsuario.Text == "")
             {
-                MessageBox.Show("Debe ingresar un usario");
+                MessageBox.Show("Debe ingresar un usuario");
                 return;
             }
 
