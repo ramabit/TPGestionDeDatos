@@ -41,7 +41,7 @@ namespace FrbaCommerce.ABM_Visibilidad
             textBox_Descripcion.Text = Convert.ToString(reader["descripcion"]);
             textBox_PrecioPorPublicar.Text = Convert.ToString(reader["precio"]);
             textBox_PorcentajePorVenta.Text = Convert.ToString(reader["porcentaje"]);
-            if (Convert.ToInt32(reader["habilitado"]) == 1) checkBox_Habilitado.Checked = true;
+            if (Convert.ToBoolean(reader["habilitado"])) checkBox_Habilitado.Checked = true;
         }
     }
 }

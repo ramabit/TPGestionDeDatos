@@ -39,7 +39,7 @@ namespace FrbaCommerce.ABM_Rubro
             if (!reader.Read()) throw new Exception("No se puede leer rubro");
             // Si se puede leer, lo muestra en pantalla
             textBox_Descripcion.Text = Convert.ToString(reader["descripcion"]);
-            if (Convert.ToInt32(reader["habilitado"]) == 1) checkBox_Habilitado.Checked = true;
+            if (Convert.ToBoolean(reader["habilitado"])) checkBox_Habilitado.Checked = true;
         }
     }
 }

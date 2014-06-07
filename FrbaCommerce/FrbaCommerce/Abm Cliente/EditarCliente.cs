@@ -46,7 +46,7 @@ namespace FrbaCommerce.ABM_Cliente
             // textBox_Piso.Text = Convert.ToString(reader["nombre"]);
             // textBox_Departamento.Text = Convert.ToString(reader["nombre"]);
             // textBox_CodigoPostal.Text = Convert.ToString(reader["nombre"]);
-            if (Convert.ToInt32(reader["habilitado"]) == 1) checkBox_Habilitado.Checked = true; 
+            if (Convert.ToBoolean(reader["habilitado"])) checkBox_Habilitado.Checked = true; 
         }
     }
 }

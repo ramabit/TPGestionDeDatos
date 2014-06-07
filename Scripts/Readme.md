@@ -1,6 +1,8 @@
 #Tabla de usuario
 - [ ] Agregar restriccion de username unico e informar
 - [ ] Se debe enctriptar la password 
+- [ ] Cambiar la forma de username automatic
+- [ ] Cambiar int a otra cosa
 
 #Tabla de empresa
 - [ ] Preguntar por nombre de contacto
