@@ -61,7 +61,7 @@ namespace FrbaCommerce.ABM_Rol
             filas_afectadas = builderDeComandos.Crear(sql, parametros).ExecuteNonQuery();
             if (filas_afectadas != -1)
             {
-                MessageBox.Show("Deshabilitado rol " + rolElegido + ". Filas eliminadas: " + filas_afectadas);
+                MessageBox.Show("Deshabilitado rol " + rolElegido);
             }
             else
             {
@@ -77,7 +77,7 @@ namespace FrbaCommerce.ABM_Rol
             filas_afectadas = builderDeComandos.Crear(sql2, parametros).ExecuteNonQuery();
             if (filas_afectadas != -1)
             {
-                MessageBox.Show("Deshabilitado rol " + rolElegido + ". Filas eliminadas: " + filas_afectadas);
+                MessageBox.Show("Se quito el rol " + rolElegido + " a " + filas_afectadas + " usuarios porque fue deshabilitado");
             }
             else
             {
