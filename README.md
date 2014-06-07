@@ -21,6 +21,7 @@
 - [ ] Modificar la columna usuario_id por usuario
 - [ ] Modificar el id usuario por el username
 - [ ] Modificar el id de la direccion por la dirreccion propiamente
+- [ ] Informar si el usuario ya esta registrado
 
 # Filtro Cliente
 - [ ] Agregar tipo de documento
