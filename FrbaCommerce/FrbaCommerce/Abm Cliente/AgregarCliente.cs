@@ -16,10 +16,14 @@ namespace FrbaCommerce.ABM_Cliente
         private String query;
         private SqlCommand command;
         private IList<SqlParameter> parametros = new List<SqlParameter>();
+        private String username;
+        private String contrasena;
 
-        public AgregarCliente()
+        public AgregarCliente(String username, String contrasena)
         {
             InitializeComponent();
+            this.username = username;
+            this.contrasena = contrasena;
         }
 
         private void AgregarCliente_Load(object sender, EventArgs e)
@@ -83,10 +87,15 @@ namespace FrbaCommerce.ABM_Cliente
             command.ExecuteNonQuery();
             Decimal idDireccion = (Decimal) parametro6.Value;
 
-            query = "SELECT id FROM LOS_SUPER_AMIGOS.Usuario WHERE username = @usuario";
+            query = "LOS_SUPER_AMIGOS.crear_usuario";
             parametros.Clear();
-            parametros.Add(new SqlParameter("@usuario", usuario));
-            Decimal idUsuario = (Decimal) builderDeComandos.Crear(query, parametros).ExecuteScalar();
+            SqlParameter parametro7 = new SqlParameter("@usuario_id", SqlDbType.Decimal);
+            parametro7.Direction = ParameterDirection.Output;
+            parametros.Add(parametro7);
+            command = builderDeComandos.Crear(query, parametros);
+            command.CommandType = CommandType.StoredProcedure;
+            command.ExecuteNonQuery();
+            Decimal idUsuario = (Decimal)parametro6.Value;
             
             parametros.Clear();
             parametros.Add(new SqlParameter("@nombre", nombre));
