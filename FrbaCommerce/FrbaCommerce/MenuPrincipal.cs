@@ -11,14 +11,13 @@ namespace FrbaCommerce
 {
     public partial class MenuPrincipal : Form
     {
+
+        Dictionary<String, Form> funcionalidades = new Dictionary<String, Form>();
+            
         public MenuPrincipal()
         {
             InitializeComponent();
-        }
 
-        private void MenuPrincipal_Load(object sender, EventArgs e)
-        {
-            Dictionary<String, Form> funcionalidades = new Dictionary<String, Form>();
             funcionalidades.Add("Comprar", new Comprar_Ofertar.Comprar());
             funcionalidades.Add("Generar publicacion", new Generar_Publicacion.GenerarPublicacion());
             funcionalidades.Add("Editar publicacion", new Editar_Publicacion.EditarPublicacion());
@@ -38,6 +37,11 @@ namespace FrbaCommerce
             funcionalidades.Add("Editar rubro", new ABM_Rubro.FiltroRubros());
             funcionalidades.Add("Obtener estadisticas", new Listado_Estadistico.Estadisticas());
             funcionalidades.Add("Ver historial", new Historial_Cliente.Historial());
+        }
+
+        private void MenuPrincipal_Load(object sender, EventArgs e)
+        {
+            
         }
     }
 }

@@ -412,7 +412,7 @@ SELECT (SELECT id FROM LOS_SUPER_AMIGOS.Rol WHERE nombre = 'Cliente'), usuario_i
 -- INSERTAR Funcionalidad
 INSERT INTO LOS_SUPER_AMIGOS.Funcionalidad
 (nombre)
-VALUES ('Comprar'),('Ofertar'),('Generar publicacion'),('Editar publicacion'),
+VALUES ('Comprar / Ofertar'),('Generar publicacion'),('Editar publicacion'),
 ('Calificar vendedor'),('Preguntar'),('Responder preguntas'),('Gestionar roles'),
 ('Gestionar usuarios'),('Generar factura'),('Crear empresa'),('Editar empresa'),
 ('Crear cliente'),('Editar cliente'),('Agregar visibilidad'),('Editar visibilidad'),
@@ -436,8 +436,8 @@ COMMIT
 
 INSERT INTO LOS_SUPER_AMIGOS.Funcionalidad_x_Rol
 (funcionalidad_id,rol_id)
-VALUES(1,2),(2,2),(3,2),(4,2),(5,2),(6,2),(7,2),(10,2),(19,2),(20,2),(3,3),(4,3),
-(7,3),(10,3),(19,3)
+VALUES(1,2),(2,2),(3,2),(4,2),(5,2),(6,2),(9,2),(18,2),(19,2),(2,3),(3,3),
+(6,3),(9,3),(18,3)
 
 -- INSERTAR Visibilidad
 INSERT INTO LOS_SUPER_AMIGOS.Visibilidad
