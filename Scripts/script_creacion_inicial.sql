@@ -387,7 +387,11 @@ VALUES ('Ofertar');
 
 INSERT INTO LOS_SUPER_AMIGOS.Funcionalidad
 (nombre)
-VALUES ('Vender');
+VALUES ('Generar publicacion');
+
+INSERT INTO LOS_SUPER_AMIGOS.Funcionalidad
+(nombre)
+VALUES ('Editar publicacion');
 
 INSERT INTO LOS_SUPER_AMIGOS.Funcionalidad
 (nombre)
@@ -399,35 +403,60 @@ VALUES ('Preguntar');
 
 INSERT INTO LOS_SUPER_AMIGOS.Funcionalidad
 (nombre)
-VALUES ('Agregar rol');
+VALUES ('Responder preguntas');
 
 INSERT INTO LOS_SUPER_AMIGOS.Funcionalidad
 (nombre)
-VALUES ('Deshabilitar rol');
+VALUES ('Gestionar roles');
 
 INSERT INTO LOS_SUPER_AMIGOS.Funcionalidad
 (nombre)
-VALUES ('Editar rol');
-
-INSERT INTO LOS_SUPER_AMIGOS.Funcionalidad
-(nombre)
-VALUES ('Crear usuario');
-
-INSERT INTO LOS_SUPER_AMIGOS.Funcionalidad
-(nombre)
-VALUES ('Editar usuario');
-
-INSERT INTO LOS_SUPER_AMIGOS.Funcionalidad
-(nombre)
-VALUES ('Habilitar usuario');
-
-INSERT INTO LOS_SUPER_AMIGOS.Funcionalidad
-(nombre)
-VALUES ('Deshabilitar usuario');
+VALUES ('Gestionar usuarios');
 
 INSERT INTO LOS_SUPER_AMIGOS.Funcionalidad
 (nombre)
 VALUES ('Generar factura');
+
+INSERT INTO LOS_SUPER_AMIGOS.Funcionalidad
+(nombre)
+VALUES ('Crear empresa');
+
+INSERT INTO LOS_SUPER_AMIGOS.Funcionalidad
+(nombre)
+VALUES ('Editar empresa');
+
+INSERT INTO LOS_SUPER_AMIGOS.Funcionalidad
+(nombre)
+VALUES ('Crear cliente');
+
+INSERT INTO LOS_SUPER_AMIGOS.Funcionalidad
+(nombre)
+VALUES ('Editar cliente');
+
+INSERT INTO LOS_SUPER_AMIGOS.Funcionalidad
+(nombre)
+VALUES ('Agregar visibilidad');
+
+INSERT INTO LOS_SUPER_AMIGOS.Funcionalidad
+(nombre)
+VALUES ('Editar visibilidad');
+
+INSERT INTO LOS_SUPER_AMIGOS.Funcionalidad
+(nombre)
+VALUES ('Agregar rubro');
+
+INSERT INTO LOS_SUPER_AMIGOS.Funcionalidad
+(nombre)
+VALUES ('Editar rubro');
+
+INSERT INTO LOS_SUPER_AMIGOS.Funcionalidad
+(nombre)
+VALUES ('Obtener estadisticas');
+
+INSERT INTO LOS_SUPER_AMIGOS.Funcionalidad
+(nombre)
+VALUES ('Ver historial');
+
 
 -- INSERTAR Funcionalidad_por_Rol
 -- Agrego a administrador todas las funcionalidades
@@ -466,7 +495,23 @@ VALUES(5,2);
 
 INSERT INTO LOS_SUPER_AMIGOS.Funcionalidad_x_Rol
 (funcionalidad_id,rol_id)
-VALUES(13,2);
+VALUES(6,2);
+
+INSERT INTO LOS_SUPER_AMIGOS.Funcionalidad_x_Rol
+(funcionalidad_id,rol_id)
+VALUES(7,2);
+
+INSERT INTO LOS_SUPER_AMIGOS.Funcionalidad_x_Rol
+(funcionalidad_id,rol_id)
+VALUES(10,2);
+
+INSERT INTO LOS_SUPER_AMIGOS.Funcionalidad_x_Rol
+(funcionalidad_id,rol_id)
+VALUES(19,2);
+
+INSERT INTO LOS_SUPER_AMIGOS.Funcionalidad_x_Rol
+(funcionalidad_id,rol_id)
+VALUES(20,2);
 
 INSERT INTO LOS_SUPER_AMIGOS.Funcionalidad_x_Rol
 (funcionalidad_id,rol_id)
@@ -474,7 +519,19 @@ VALUES(3,3);
 
 INSERT INTO LOS_SUPER_AMIGOS.Funcionalidad_x_Rol
 (funcionalidad_id,rol_id)
-VALUES(13,3);
+VALUES(4,3);
+
+INSERT INTO LOS_SUPER_AMIGOS.Funcionalidad_x_Rol
+(funcionalidad_id,rol_id)
+VALUES(7,3);
+
+INSERT INTO LOS_SUPER_AMIGOS.Funcionalidad_x_Rol
+(funcionalidad_id,rol_id)
+VALUES(10,3);
+
+INSERT INTO LOS_SUPER_AMIGOS.Funcionalidad_x_Rol
+(funcionalidad_id,rol_id)
+VALUES(19,3);
 
 -- INSERTAR Visibilidad
 INSERT INTO LOS_SUPER_AMIGOS.Visibilidad
