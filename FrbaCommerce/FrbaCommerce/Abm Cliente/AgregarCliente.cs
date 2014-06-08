@@ -20,5 +20,30 @@ namespace FrbaCommerce.ABM_Cliente
         {
 
         }
+
+        private void button_Guardar_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button_Limpiar_Click(object sender, EventArgs e)
+        {
+            textBox_Nombre.Text = "";
+            textBox_Apellido.Text = "";
+            comboBox_TipoDeDocumento.SelectedIndex = 1;
+            textBox_NumeroDeDoc.Text = "";
+            textBox_FechaDeNacimiento.Text = "";
+            textBox_Mail.Text = "";
+            textBox_Calle.Text = "";
+            textBox_Numero.Text = "";
+            textBox_Piso.Text = "";
+            textBox_Departamento.Text = "";
+            textBox_CodigoPostal.Text = "";
+        }      
+
+        private void button_Cancelar_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
 }
