@@ -65,11 +65,13 @@ IF OBJECT_ID('LOS_SUPER_AMIGOS.crear_usuario', 'P') IS NOT NULL
 DROP PROCEDURE LOS_SUPER_AMIGOS.crear_usuario
 GO
 
+IF OBJECT_ID('LOS_SUPER_AMIGOS.crear_direccion', 'P') IS NOT NULL
+DROP PROCEDURE LOS_SUPER_AMIGOS.crear_direccion
+GO
+
 IF OBJECT_ID('LOS_SUPER_AMIGOS.agregar_id_publ') IS NOT NULL
 DROP FUNCTION LOS_SUPER_AMIGOS.agregar_id_publ
 GO
-
-LOS_SUPER_AMIGOS.agregar_id_publ
 
 CREATE PROCEDURE LOS_SUPER_AMIGOS.crear_usuario
 	@usuario_id numeric(18,0) OUTPUT
@@ -78,6 +80,21 @@ BEGIN
 	SET NOCOUNT ON;
 	INSERT INTO LOS_SUPER_AMIGOS.Usuario default values
 	SET @usuario_id = SCOPE_IDENTITY();
+END
+GO
+
+CREATE PROCEDURE LOS_SUPER_AMIGOS.crear_direccion
+	@calle nvarchar(100),
+	@numero numeric(18,0),
+	@piso numeric(18,0),
+	@depto nvarchar(5),
+	@cod_postal nvarchar(50),
+	@direccion_id numeric(18,0) OUTPUT
+AS
+BEGIN
+	SET NOCOUNT ON;
+	INSERT INTO LOS_SUPER_AMIGOS.Direccion (calle, numero, piso, depto, cod_postal) values (@calle, @numero, @piso, @depto, @cod_postal);
+	SET @direccion_id = SCOPE_IDENTITY();
 END
 GO
 
