@@ -16,12 +16,12 @@
 
 # General de ABM Agregar
 - [ ] Agregar funcionalidad a los botones
+- [ ] Informar por todos los campos unicos
 
 # Filtro Cliente/Empresa
 - [ ] Modificar la columna usuario_id por usuario
 - [ ] Modificar el id usuario por el username
 - [ ] Modificar el id de la direccion por la dirreccion propiamente
-- [ ] Informar si el usuario ya esta registrado
 
 # Filtro Cliente
 - [ ] Agregar tipo de documento
@@ -31,3 +31,6 @@
 
 # Editar Empresa
 - [ ] Falta agregar el telefono y el nombre de contacto
+
+#Registro de Usuario
+- [ ] Informar si el usuario ya esta registrado

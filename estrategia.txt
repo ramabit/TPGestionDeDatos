@@ -1,0 +1,7 @@
+Preguntar:
+	1- Telefono de empresa
+	2- Nombre de contacto de empresa
+	3- Ciudad de empresa
+	4- Telefono de cliente
+	5- Que campos tienen que ser not null obligatoriamente
+	

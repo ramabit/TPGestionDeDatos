@@ -3,19 +3,19 @@
 - [ ] Cambiar int a otra cosa
 
 #Tabla de empresa
-- [ ] Preguntar por nombre de contacto
-- [ ] Preguntar por ciudad
-- [ ] Preguntar por telefono
-- [x] Agregar restriccion de razon social unico -- no se si esta bien esto. Me parece que hay que ponerle un atributo UNIQUE
-- [x] Agregar restriccion de CUIT unico -- no se si esta bien esto
-- [ ] Agregar restriccion de telefono unico e informar
+- [x] Preguntar por nombre de contacto
+- [x] Preguntar por ciudad
+- [x] Preguntar por telefono => Es 0 por default
+- [x] Agregar restriccion de razon social unico 
+- [x] Agregar restriccion de CUIT unico
+- [x] Agregar restriccion de telefono unico e informar
 - [x] Discutir cual deberia ser la PK -- La PK no es minima
 - [x] Insertar username por defecto
 
 #Tabla de cliente
-- [ ] Preguntar por tipo de documento
-- [ ] Preguntar por telefono
-- [ ] Agregar restriccion de telefono unico
+- [x] Preguntar por tipo de documento
+- [x] Preguntar por telefono
+- [x] Agregar restriccion de telefono unico
 - [x] Discutir cual deberia ser la PK
 - [x] Insertar username por defecto
 
@@ -28,32 +28,32 @@
 #Tabla de funcionalidad_por_rol
 
 #Tabla de visibilidad
-- [ ] Ojo que puede faltar el campo codigo
+- [x] Ojo que puede faltar el campo codigo
 
 #Tabla de publicacion
 - [x] Agregar FK a rubro
 - [x] Separar los rubros y crear una tabla a partir de ellos
 - [ ] Agregar funcionalidad de fecha_vencimiento automatica
-- [ ] Hay que fijarse el tema de las preguntas
+- [x] Hay que fijarse el tema de las preguntas
 
 #Tabla de pregunta
-- [ ] Deliberar acerca de si puede tener un campo habilitado
+- [x] Deliberar acerca de si puede tener un campo habilitado
 
 #Tabla de calificacion
-- [ ] Deliberar acerca de si puede tener un campo habilitado
+- [x] Deliberar acerca de si puede tener un campo habilitado
 
 #Tabla de oferta
 - [x] Agregar fecha en der
-- [ ] Cambiar la cardinalidad de la relacion con Calificacion en el der -> Una oferta no necesariamente tiene una calificacion
-- [ ] Deliberar acerca de si puede tener un campo habilitado
+- [x] Cambiar la cardinalidad de la relacion con Calificacion en el der -> Una oferta no necesariamente tiene una calificacion
+- [x] Deliberar acerca de si puede tener un campo habilitado
 
 #Tabla de compra
 - [x] Cambiar monto por cantidad en der
 - [x] Agregar fecha en der
-- [ ] Cambiar la cardinalidad de la relacion con Calificacion en der-> Una compra tiene una calificacion pero no automaticamenteno, es decir, cuando se crea no tiene calificacion
-- [ ] Deliberar acerca de si puede tener un campo habilitado
+- [x] Cambiar la cardinalidad de la relacion con Calificacion en der-> Una compra tiene una calificacion pero no automaticamenteno, es decir, cuando se crea no tiene calificacion
+- [x] Deliberar acerca de si puede tener un campo habilitado
 
 #Tabla de Rubro
-- [ ] Fijarse si es necesario un campo habilitado
-- [ ] Ojo que puede faltar el campo codigo
-- [ ] Cambiar nombre por descripcion
+- [x] Fijarse si es necesario un campo habilitado
+- [x] Ojo que puede faltar el campo codigo
+- [x] Cambiar nombre por descripcion
