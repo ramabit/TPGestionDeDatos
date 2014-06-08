@@ -16,14 +16,10 @@ namespace FrbaCommerce.ABM_Cliente
         private String query;
         private SqlCommand command;
         private IList<SqlParameter> parametros = new List<SqlParameter>();
-        private String usuario;
-        private String contrasena;
 
-        public AgregarCliente(String usuario, String contrasena)
+        public AgregarCliente()
         {
             InitializeComponent();
-            this.usuario = usuario;
-            this.contrasena = contrasena;
         }
 
         private void AgregarCliente_Load(object sender, EventArgs e)

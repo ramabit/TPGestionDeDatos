@@ -1,6 +1,6 @@
-﻿namespace FrbaCommerce.Gestion_de_Preguntas
+﻿namespace FrbaCommerce.Facturar_Publicaciones
 {
-    partial class Form1
+    partial class Facturar
     {
         /// <summary>
         /// Required designer variable.

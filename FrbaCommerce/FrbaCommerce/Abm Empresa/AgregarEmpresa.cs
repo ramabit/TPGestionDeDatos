@@ -11,12 +11,17 @@ namespace FrbaCommerce.ABM_Empresa
 {
     public partial class AgregarEmpresa : Form
     {
-        public AgregarEmpresa(String usuario, String contraseña)
+        public AgregarEmpresa()
         {
             InitializeComponent();
         }
 
         private void AgregarEmpresa_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void AgregarEmpresa_Load_1(object sender, EventArgs e)
         {
 
         }

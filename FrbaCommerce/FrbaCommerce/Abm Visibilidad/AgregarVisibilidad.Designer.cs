@@ -141,7 +141,7 @@
             this.Controls.Add(this.button_Guardar);
             this.Controls.Add(this.groupBox1);
             this.Name = "AgregarVisibilidad";
-            this.Text = "AgregarCliente";
+            this.Text = "AgregarVisibilidad";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);

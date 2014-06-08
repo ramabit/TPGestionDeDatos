@@ -412,83 +412,11 @@ SELECT (SELECT id FROM LOS_SUPER_AMIGOS.Rol WHERE nombre = 'Cliente'), usuario_i
 -- INSERTAR Funcionalidad
 INSERT INTO LOS_SUPER_AMIGOS.Funcionalidad
 (nombre)
-VALUES ('Comprar');
-
-INSERT INTO LOS_SUPER_AMIGOS.Funcionalidad
-(nombre)
-VALUES ('Ofertar');
-
-INSERT INTO LOS_SUPER_AMIGOS.Funcionalidad
-(nombre)
-VALUES ('Generar publicacion');
-
-INSERT INTO LOS_SUPER_AMIGOS.Funcionalidad
-(nombre)
-VALUES ('Editar publicacion');
-
-INSERT INTO LOS_SUPER_AMIGOS.Funcionalidad
-(nombre)
-VALUES ('Calificar vendedor');
-
-INSERT INTO LOS_SUPER_AMIGOS.Funcionalidad
-(nombre)
-VALUES ('Preguntar');
-
-INSERT INTO LOS_SUPER_AMIGOS.Funcionalidad
-(nombre)
-VALUES ('Responder preguntas');
-
-INSERT INTO LOS_SUPER_AMIGOS.Funcionalidad
-(nombre)
-VALUES ('Gestionar roles');
-
-INSERT INTO LOS_SUPER_AMIGOS.Funcionalidad
-(nombre)
-VALUES ('Gestionar usuarios');
-
-INSERT INTO LOS_SUPER_AMIGOS.Funcionalidad
-(nombre)
-VALUES ('Generar factura');
-
-INSERT INTO LOS_SUPER_AMIGOS.Funcionalidad
-(nombre)
-VALUES ('Crear empresa');
-
-INSERT INTO LOS_SUPER_AMIGOS.Funcionalidad
-(nombre)
-VALUES ('Editar empresa');
-
-INSERT INTO LOS_SUPER_AMIGOS.Funcionalidad
-(nombre)
-VALUES ('Crear cliente');
-
-INSERT INTO LOS_SUPER_AMIGOS.Funcionalidad
-(nombre)
-VALUES ('Editar cliente');
-
-INSERT INTO LOS_SUPER_AMIGOS.Funcionalidad
-(nombre)
-VALUES ('Agregar visibilidad');
-
-INSERT INTO LOS_SUPER_AMIGOS.Funcionalidad
-(nombre)
-VALUES ('Editar visibilidad');
-
-INSERT INTO LOS_SUPER_AMIGOS.Funcionalidad
-(nombre)
-VALUES ('Agregar rubro');
-
-INSERT INTO LOS_SUPER_AMIGOS.Funcionalidad
-(nombre)
-VALUES ('Editar rubro');
-
-INSERT INTO LOS_SUPER_AMIGOS.Funcionalidad
-(nombre)
-VALUES ('Obtener estadisticas');
-
-INSERT INTO LOS_SUPER_AMIGOS.Funcionalidad
-(nombre)
-VALUES ('Ver historial');
+VALUES ('Comprar / Ofertar'),('Generar publicacion'),('Editar publicacion'),
+('Calificar vendedor'),('Preguntar'),('Responder preguntas'),('Gestionar roles'),
+('Gestionar usuarios'),('Generar factura'),('Crear empresa'),('Editar empresa'),
+('Crear cliente'),('Editar cliente'),('Agregar visibilidad'),('Editar visibilidad'),
+('Agregar rubro'),('Editar rubro'),('Obtener estadisticas'),('Ver historial')
 
 
 -- INSERTAR Funcionalidad_por_Rol
@@ -508,63 +436,8 @@ COMMIT
 
 INSERT INTO LOS_SUPER_AMIGOS.Funcionalidad_x_Rol
 (funcionalidad_id,rol_id)
-VALUES(1,2);
-
-INSERT INTO LOS_SUPER_AMIGOS.Funcionalidad_x_Rol
-(funcionalidad_id,rol_id)
-VALUES(2,2);
-
-INSERT INTO LOS_SUPER_AMIGOS.Funcionalidad_x_Rol
-(funcionalidad_id,rol_id)
-VALUES(3,2);
-
-INSERT INTO LOS_SUPER_AMIGOS.Funcionalidad_x_Rol
-(funcionalidad_id,rol_id)
-VALUES(4,2);
-
-INSERT INTO LOS_SUPER_AMIGOS.Funcionalidad_x_Rol
-(funcionalidad_id,rol_id)
-VALUES(5,2);
-
-INSERT INTO LOS_SUPER_AMIGOS.Funcionalidad_x_Rol
-(funcionalidad_id,rol_id)
-VALUES(6,2);
-
-INSERT INTO LOS_SUPER_AMIGOS.Funcionalidad_x_Rol
-(funcionalidad_id,rol_id)
-VALUES(7,2);
-
-INSERT INTO LOS_SUPER_AMIGOS.Funcionalidad_x_Rol
-(funcionalidad_id,rol_id)
-VALUES(10,2);
-
-INSERT INTO LOS_SUPER_AMIGOS.Funcionalidad_x_Rol
-(funcionalidad_id,rol_id)
-VALUES(19,2);
-
-INSERT INTO LOS_SUPER_AMIGOS.Funcionalidad_x_Rol
-(funcionalidad_id,rol_id)
-VALUES(20,2);
-
-INSERT INTO LOS_SUPER_AMIGOS.Funcionalidad_x_Rol
-(funcionalidad_id,rol_id)
-VALUES(3,3);
-
-INSERT INTO LOS_SUPER_AMIGOS.Funcionalidad_x_Rol
-(funcionalidad_id,rol_id)
-VALUES(4,3);
-
-INSERT INTO LOS_SUPER_AMIGOS.Funcionalidad_x_Rol
-(funcionalidad_id,rol_id)
-VALUES(7,3);
-
-INSERT INTO LOS_SUPER_AMIGOS.Funcionalidad_x_Rol
-(funcionalidad_id,rol_id)
-VALUES(10,3);
-
-INSERT INTO LOS_SUPER_AMIGOS.Funcionalidad_x_Rol
-(funcionalidad_id,rol_id)
-VALUES(19,3);
+VALUES(1,2),(2,2),(3,2),(4,2),(5,2),(6,2),(9,2),(18,2),(19,2),(2,3),(3,3),
+(6,3),(9,3),(18,3)
 
 -- INSERTAR Visibilidad
 INSERT INTO LOS_SUPER_AMIGOS.Visibilidad
