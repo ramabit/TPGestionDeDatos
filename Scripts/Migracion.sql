@@ -255,6 +255,8 @@ SELECT DISTINCT Publicacion_Cod, Publicacion_Descripcion, Publicacion_Stock, Pub
 WHERE ISNULL(Publicacion_Rubro_Descripcion, '') != ''
 
 -- INSERTAR Calificaciones
+SET IDENTITY_INSERT Calificacion ON;
+GO
 INSERT INTO Calificacion
 ([id], [cantidad_estrellas], [descripcion])
 SELECT DISTINCT Calificacion_Codigo, Calificacion_Cant_Estrellas, Calificacion_Descripcion FROM gd_esquema.Maestra WHERE ISNULL(Calificacion_Codigo, -1) != -1

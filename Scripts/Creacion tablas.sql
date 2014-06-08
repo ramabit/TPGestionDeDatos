@@ -116,7 +116,6 @@ create table Rol_x_Usuario
 (
 rol_id numeric(18,0),
 usuario_id numeric(18,0),
-habilitado bit NOT NULL default 1,
 PRIMARY KEY (rol_id, usuario_id),
 FOREIGN KEY (rol_id) REFERENCES Rol (id),
 FOREIGN KEY (usuario_id) REFERENCES Usuario (id),
@@ -151,7 +150,7 @@ PRIMARY KEY (id)
 create table Rubro
 (
 id numeric(18,0) identity(1,1),
-nombre nvarchar(255),
+descripcion nvarchar(255),
 habilitado bit default 1,
 PRIMARY KEY(id)
 )
@@ -169,7 +168,7 @@ visibilidad_id numeric(18,0),
 usuario_id numeric(18,0),
 estado nvarchar(255),
 tipo nvarchar(255),
-se_realizan_preguntas bit default 0,
+se_realizan_preguntas bit default 1,
 habilitado bit default 1,
 PRIMARY KEY (id),
 FOREIGN KEY (visibilidad_id) REFERENCES Visibilidad (id),
@@ -190,7 +189,7 @@ FOREIGN KEY (publicacion_id) REFERENCES Publicacion (id)
 
 create table Calificacion
 (
-id numeric(18,0),
+id numeric(18,0) identity(1,1),
 cantidad_estrellas numeric(18,0),
 descripcion nvarchar(255),
 PRIMARY KEY (id)
