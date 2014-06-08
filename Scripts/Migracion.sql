@@ -8,7 +8,7 @@ CREATE PROCEDURE crear_usuario
 AS
 BEGIN
 	SET NOCOUNT ON;
-	INSERT INTO Usuario default VALUES
+	INSERT INTO Usuario default values
 	SET @usuario_id = SCOPE_IDENTITY();
 END
 GO

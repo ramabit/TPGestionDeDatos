@@ -61,11 +61,18 @@ namespace FrbaCommerce.Login
                 UsuarioSesion.Usuario.nombre = (String)reader["username"];
                 UsuarioSesion.Usuario.id = (Decimal)reader["id"];
 
+                // Setea fallidos de login de usuario a 0
                 parametros.Clear();
                 parametros.Add(new SqlParameter("@username", usuario));
-                String sesion = "select primera_sesion from Usuario where username = @username";
-                int primerInicio = (int)builderDeComandos.Crear(sesion, parametros).ExecuteScalar();
-                if (primerInicio == 1)
+                String sumaFallido = "update Usuario set login_fallidos = 0 where username = @username";
+                builderDeComandos.Crear(sumaFallido, parametros).ExecuteNonQuery();
+
+                // Se fija si es el primer inicio de sesion del usuario
+                parametros.Clear();
+                parametros.Add(new SqlParameter("@username", usuario));
+                String sesion = "select password from Usuario where username = @username";
+                String primerInicio = (String)builderDeComandos.Crear(sesion, parametros).ExecuteScalar();
+                if (primerInicio == "559aead08264d5795d3909718cdd05abd49572e84fe55590eef31a88a08fdffd")
                 {
                     new CambiarContrasena().ShowDialog();
                     this.Hide();

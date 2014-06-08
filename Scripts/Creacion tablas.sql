@@ -55,11 +55,10 @@ DROP TABLE Forma_Pago
 create table Usuario
 (
 id numeric(18,0) IDENTITY(1,1),
-username AS ISNULL('USER' + CAST(ID AS NVARCHAR(10)), 'X'),
-password nvarchar(150) DEFAULT '559aead08264d5795d3909718cdd05abd49572e84fe55590eef31a88a08fdffd', -- hash de 'A'
+username as isnull('USER' + CAST(ID AS NVARCHAR(10)),'X'),--nvarchar(50)
+password nvarchar(150) default '559aead08264d5795d3909718cdd05abd49572e84fe55590eef31a88a08fdffd', -- hash de 'A'
 habilitado bit default 1,
 login_fallidos int default 0,
-primera_sesion int default 1,
 PRIMARY KEY (id)
 )
 
