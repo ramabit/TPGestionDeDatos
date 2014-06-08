@@ -99,9 +99,6 @@ namespace FrbaCommerce.Generar_Publicacion
             parametros.Add(new SqlParameter("@visibilidadSeleccionado", visibilidadSeleccionado));
             Decimal idVisibilidadSeleccionado = (Decimal) builderDeComandos.Crear(query, parametros).ExecuteScalar();
 
-            Int16 bitPregunta = 0;
-            if (preguntaSeleccionado) bitPregunta = 1;
-
             query = "INSERT INTO LOS_SUPER_AMIGOS.Publicacion (descripcion, stock, fecha_inicio, fecha_vencimiento, precio, rubro_id, visibilidad_id, usuario_id, estado, tipo) values (@descripcion, @stock, @fechaInicial, @fechaVencimiento, @precio, @rubroId, @visibilidadId, @usuarioId, 'Borrador', @tipo)";
 
             parametros.Clear();
@@ -114,9 +111,10 @@ namespace FrbaCommerce.Generar_Publicacion
             parametros.Add(new SqlParameter("@visibilidadId", idVisibilidadSeleccionado));
             parametros.Add(new SqlParameter("@usuarioId", 1));
             parametros.Add(new SqlParameter("@tipo", tipoSeleccionado));
+            
             int filasAfectadas = builderDeComandos.Crear(query, parametros).ExecuteNonQuery();
-
-            MessageBox.Show(filasAfectadas + "");
+            
+            if (filasAfectadas == 1) MessageBox.Show("Se agrego la nueva publicacion correctamente");
         }
 
         private void button_Cancelar_Click(object sender, EventArgs e)
