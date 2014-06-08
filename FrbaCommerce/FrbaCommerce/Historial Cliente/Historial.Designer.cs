@@ -1,6 +1,6 @@
-﻿namespace FrbaCommerce.Listado_Estadistico
+﻿namespace FrbaCommerce.Historial_Cliente
 {
-    partial class Form1
+    partial class Historial
     {
         /// <summary>
         /// Required designer variable.

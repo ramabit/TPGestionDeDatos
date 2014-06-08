@@ -113,7 +113,7 @@
             this.Controls.Add(this.button_Guardar);
             this.Controls.Add(this.groupBox1);
             this.Name = "EditarRubro";
-            this.Text = "EditarCliente";
+            this.Text = "EditarRubro";
             this.Load += new System.EventHandler(this.EditarRubro_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();

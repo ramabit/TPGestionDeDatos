@@ -12,16 +12,16 @@ namespace FrbaCommerce.ABM_Empresa
 {
     public partial class EditarEmpresa : Form
     {
-        private String idEmpresa;
         private BuilderDeComandos builderDeComandos = new BuilderDeComandos();
         private String query;
         private SqlCommand command;
         private IList<SqlParameter> parametros = new List<SqlParameter>();
+        private Decimal idEmpresa;
 
-        public EditarEmpresa(String idEmpresa)
+        public EditarEmpresa(Decimal id)
         {
             InitializeComponent();
-            this.idEmpresa = idEmpresa;
+            idEmpresa = id;
         }
 
         private void EditarEmpresa_Load(object sender, EventArgs e)

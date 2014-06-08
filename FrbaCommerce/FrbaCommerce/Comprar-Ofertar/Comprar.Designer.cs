@@ -1,6 +1,6 @@
-﻿namespace FrbaCommerce.Historial_Cliente
+﻿namespace FrbaCommerce.Comprar_Ofertar
 {
-    partial class Form1
+    partial class Comprar
     {
         /// <summary>
         /// Required designer variable.

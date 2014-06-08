@@ -1,6 +1,6 @@
-﻿namespace FrbaCommerce.Calificar_Vendedor
+﻿namespace FrbaCommerce.Listado_Estadistico
 {
-    partial class Form1
+    partial class Estadisticas
     {
         /// <summary>
         /// Required designer variable.

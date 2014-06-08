@@ -7,11 +7,11 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace FrbaCommerce.Calificar_Vendedor
+namespace FrbaCommerce.Gestion_de_Preguntas
 {
-    public partial class Form1 : Form
+    public partial class ResponderPreguntas : Form
     {
-        public Form1()
+        public ResponderPreguntas()
         {
             InitializeComponent();
         }
