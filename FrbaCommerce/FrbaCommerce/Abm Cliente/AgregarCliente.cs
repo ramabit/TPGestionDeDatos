@@ -29,6 +29,7 @@ namespace FrbaCommerce.ABM_Cliente
         private void AgregarCliente_Load(object sender, EventArgs e)
         {
             CargarTipoDeDocumentos();
+            this.monthCalendar_FechaDeNacimiento.DateSelected += new System.Windows.Forms.DateRangeEventHandler(this.monthCalendar_FechaDeNacimiento_DateSelected);
         }
 
         private void CargarTipoDeDocumentos()
@@ -45,11 +46,12 @@ namespace FrbaCommerce.ABM_Cliente
 
         private void button_Guardar_Click(object sender, EventArgs e)
         {
+            // Guarda en variables todos los campos de entrada
             String nombre = textBox_Nombre.Text;
             String apellido = textBox_Apellido.Text;
             String tipoDeDocumento = comboBox_TipoDeDocumento.Text;
             Decimal numeroDeDocumento = Convert.ToDecimal(textBox_NumeroDeDoc.Text);
-            DateTime fechaDeNacimiento = DateTime.Now; //textBox_FechaDeNacimiento.Text;
+            DateTime fechaDeNacimiento = Convert.ToDateTime(textBox_FechaDeNacimiento.Text);
             String mail = textBox_Mail.Text;
             String calle = textBox_Calle.Text;
             String numero = textBox_Numero.Text;
@@ -57,11 +59,13 @@ namespace FrbaCommerce.ABM_Cliente
             String departamento = textBox_Departamento.Text;
             String codigoPostal = textBox_CodigoPostal.Text;
 
+            // Averigua el id del tipo de documento a partir del nombre del tipo de documento
             query = "SELECT id FROM LOS_SUPER_AMIGOS.TipoDeDocumento WHERE nombre = @tipoDeDocumento";
             parametros.Clear();
             parametros.Add(new SqlParameter("@tipoDeDocumento", tipoDeDocumento));
             Decimal idTipoDeDocumento = (Decimal) builderDeComandos.Crear(query, parametros).ExecuteScalar();
 
+            // Crea una direccion y se guarda su id. Usa un stored procedure del script
             query = "LOS_SUPER_AMIGOS.crear_direccion";
             parametros.Clear();
             SqlParameter parametro1 = new SqlParameter("@calle", SqlDbType.NVarChar, 100);
@@ -87,6 +91,7 @@ namespace FrbaCommerce.ABM_Cliente
             command.ExecuteNonQuery();
             Decimal idDireccion = (Decimal) parametro6.Value;
 
+            // Crea un nuevo usuario y se guarda su id. Usa un stored procedure del script
             query = "LOS_SUPER_AMIGOS.crear_usuario_con_valores";
             parametros.Clear();
             SqlParameter parametro7 = new SqlParameter("@username", SqlDbType.NVarChar, 50);
@@ -139,6 +144,17 @@ namespace FrbaCommerce.ABM_Cliente
         private void button_Cancelar_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void button_FechaDeNacimiento_Click(object sender, EventArgs e)
+        {
+            monthCalendar_FechaDeNacimiento.Visible = true;
+        }
+
+        private void monthCalendar_FechaDeNacimiento_DateSelected(object sender, System.Windows.Forms.DateRangeEventArgs e)
+        {
+            textBox_FechaDeNacimiento.Text = e.Start.ToShortDateString();
+            monthCalendar_FechaDeNacimiento.Visible = false;
         }
     }
 }

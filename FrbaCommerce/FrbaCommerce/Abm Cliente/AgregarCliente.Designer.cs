@@ -29,12 +29,16 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.monthCalendar_FechaDeNacimiento = new System.Windows.Forms.MonthCalendar();
+            this.label11 = new System.Windows.Forms.Label();
+            this.comboBox_TipoDeDocumento = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
             this.textBox_Mail = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
+            this.button_FechaDeNacimiento = new System.Windows.Forms.Button();
             this.textBox_FechaDeNacimiento = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
+            this.textBox_NumeroDeDoc = new System.Windows.Forms.TextBox();
             this.textBox_Apellido = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.textBox_Nombre = new System.Windows.Forms.TextBox();
@@ -53,21 +57,19 @@
             this.button_Guardar = new System.Windows.Forms.Button();
             this.button_Cancelar = new System.Windows.Forms.Button();
             this.button_Limpiar = new System.Windows.Forms.Button();
-            this.textBox_NumeroDeDoc = new System.Windows.Forms.TextBox();
-            this.comboBox_TipoDeDocumento = new System.Windows.Forms.ComboBox();
-            this.label11 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.monthCalendar_FechaDeNacimiento);
             this.groupBox1.Controls.Add(this.label11);
             this.groupBox1.Controls.Add(this.comboBox_TipoDeDocumento);
             this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Controls.Add(this.textBox_Mail);
             this.groupBox1.Controls.Add(this.label4);
-            this.groupBox1.Controls.Add(this.button1);
+            this.groupBox1.Controls.Add(this.button_FechaDeNacimiento);
             this.groupBox1.Controls.Add(this.textBox_FechaDeNacimiento);
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.textBox_NumeroDeDoc);
@@ -81,6 +83,30 @@
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Datos personales";
+            // 
+            // monthCalendar_FechaDeNacimiento
+            // 
+            this.monthCalendar_FechaDeNacimiento.Location = new System.Drawing.Point(198, 18);
+            this.monthCalendar_FechaDeNacimiento.Name = "monthCalendar_FechaDeNacimiento";
+            this.monthCalendar_FechaDeNacimiento.TabIndex = 13;
+            this.monthCalendar_FechaDeNacimiento.Visible = false;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(6, 74);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(99, 13);
+            this.label11.TabIndex = 12;
+            this.label11.Text = "Tipo de documento";
+            // 
+            // comboBox_TipoDeDocumento
+            // 
+            this.comboBox_TipoDeDocumento.FormattingEnabled = true;
+            this.comboBox_TipoDeDocumento.Location = new System.Drawing.Point(112, 71);
+            this.comboBox_TipoDeDocumento.Name = "comboBox_TipoDeDocumento";
+            this.comboBox_TipoDeDocumento.Size = new System.Drawing.Size(250, 21);
+            this.comboBox_TipoDeDocumento.TabIndex = 11;
             // 
             // label5
             // 
@@ -107,14 +133,15 @@
             this.label4.TabIndex = 8;
             this.label4.Text = "Fecha de nacimiento";
             // 
-            // button1
+            // button_FechaDeNacimiento
             // 
-            this.button1.Location = new System.Drawing.Point(282, 126);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(80, 20);
-            this.button1.TabIndex = 7;
-            this.button1.Text = "Seleccionar";
-            this.button1.UseVisualStyleBackColor = true;
+            this.button_FechaDeNacimiento.Location = new System.Drawing.Point(282, 126);
+            this.button_FechaDeNacimiento.Name = "button_FechaDeNacimiento";
+            this.button_FechaDeNacimiento.Size = new System.Drawing.Size(80, 20);
+            this.button_FechaDeNacimiento.TabIndex = 7;
+            this.button_FechaDeNacimiento.Text = "Seleccionar";
+            this.button_FechaDeNacimiento.UseVisualStyleBackColor = true;
+            this.button_FechaDeNacimiento.Click += new System.EventHandler(this.button_FechaDeNacimiento_Click);
             // 
             // textBox_FechaDeNacimiento
             // 
@@ -131,6 +158,13 @@
             this.label3.Size = new System.Drawing.Size(80, 13);
             this.label3.TabIndex = 5;
             this.label3.Text = "Numero de doc";
+            // 
+            // textBox_NumeroDeDoc
+            // 
+            this.textBox_NumeroDeDoc.Location = new System.Drawing.Point(112, 100);
+            this.textBox_NumeroDeDoc.Name = "textBox_NumeroDeDoc";
+            this.textBox_NumeroDeDoc.Size = new System.Drawing.Size(250, 20);
+            this.textBox_NumeroDeDoc.TabIndex = 4;
             // 
             // textBox_Apellido
             // 
@@ -293,30 +327,6 @@
             this.button_Limpiar.UseVisualStyleBackColor = true;
             this.button_Limpiar.Click += new System.EventHandler(this.button_Limpiar_Click);
             // 
-            // textBox_NumeroDeDoc
-            // 
-            this.textBox_NumeroDeDoc.Location = new System.Drawing.Point(112, 100);
-            this.textBox_NumeroDeDoc.Name = "textBox_NumeroDeDoc";
-            this.textBox_NumeroDeDoc.Size = new System.Drawing.Size(250, 20);
-            this.textBox_NumeroDeDoc.TabIndex = 4;
-            // 
-            // comboBox_TipoDeDocumento
-            // 
-            this.comboBox_TipoDeDocumento.FormattingEnabled = true;
-            this.comboBox_TipoDeDocumento.Location = new System.Drawing.Point(112, 71);
-            this.comboBox_TipoDeDocumento.Name = "comboBox_TipoDeDocumento";
-            this.comboBox_TipoDeDocumento.Size = new System.Drawing.Size(250, 21);
-            this.comboBox_TipoDeDocumento.TabIndex = 11;
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(6, 74);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(99, 13);
-            this.label11.TabIndex = 12;
-            this.label11.Text = "Tipo de documento";
-            // 
             // AgregarCliente
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -350,7 +360,7 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox textBox_Mail;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button button_FechaDeNacimiento;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label6;
@@ -368,5 +378,6 @@
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.ComboBox comboBox_TipoDeDocumento;
         private System.Windows.Forms.TextBox textBox_NumeroDeDoc;
+        private System.Windows.Forms.MonthCalendar monthCalendar_FechaDeNacimiento;
     }
 }
