@@ -31,7 +31,7 @@ namespace FrbaCommerce.ABM_Rol
             DataSet funcionalidades = new DataSet();
             SqlDataAdapter adapter = new SqlDataAdapter();
             parametros = new List<SqlParameter>();
-            command = builderDeComandos.Crear("SELECT distinct nombre FROM Funcionalidad", parametros);
+            command = builderDeComandos.Crear("SELECT DISTINCT nombre FROM LOS_SUPER_AMIGOS.Funcionalidad", parametros);
             adapter.SelectCommand = command;
             adapter.Fill(funcionalidades);
             checkedListBoxFuncionalidades.DataSource = funcionalidades.Tables[0].DefaultView;
@@ -46,7 +46,7 @@ namespace FrbaCommerce.ABM_Rol
 
         private void botonGuardar_Click(object sender, EventArgs e)
         {
-            String sql = "INSERT INTO Rol(nombre, habilitado) VALUES (@rol, 1)";
+            String sql = "INSERT INTO LOS_SUPER_AMIGOS.Rol(nombre, habilitado) VALUES (@rol, 1)";
             parametros.Clear();
             parametros.Add(new SqlParameter("@rol", this.textBoxRol.Text));
             builderDeComandos.Crear(sql, parametros).ExecuteNonQuery();
@@ -57,8 +57,8 @@ namespace FrbaCommerce.ABM_Rol
                 parametros.Add(new SqlParameter("@rol", this.textBoxRol.Text));
 
                 parametros.Add(new SqlParameter("@funcionalidad", funcionalidad.Row["nombre"] as String));
-                                                
-                String sql2 = "INSERT INTO Funcionalidad_x_Rol(funcionalidad_id, rol_id) VALUES ((SELECT id FROM Funcionalidad WHERE nombre = @funcionalidad), (SELECT  id FROM Rol WHERE nombre = @rol))";
+
+                String sql2 = "INSERT INTO LOS_SUPER_AMIGOS.Funcionalidad_x_Rol(funcionalidad_id, rol_id) VALUES ((SELECT id FROM LOS_SUPER_AMIGOS.Funcionalidad WHERE nombre = @funcionalidad), (SELECT  id FROM Rol WHERE nombre = @rol))";
                                 
                 builderDeComandos.Crear(sql2, parametros).ExecuteNonQuery();                                
             }

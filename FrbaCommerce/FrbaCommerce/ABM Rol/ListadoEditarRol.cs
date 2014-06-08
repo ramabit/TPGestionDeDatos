@@ -45,7 +45,7 @@ namespace FrbaCommerce.ABM_Rol
             parametros.Clear();
             parametros.Add(new SqlParameter("@habilitado", estadoRol));
 
-            command = builderDeComandos.Crear("SELECT distinct * FROM Rol WHERE habilitado = @habilitado", parametros);
+            command = builderDeComandos.Crear("SELECT DISTINCT * FROM LOS_SUPER_AMIGOS.Rol WHERE habilitado = @habilitado", parametros);
             adapter.SelectCommand = command;
             adapter.Fill(roles);
             dataGridViewResultadosBusqueda.DataSource = roles.Tables[0].DefaultView;            

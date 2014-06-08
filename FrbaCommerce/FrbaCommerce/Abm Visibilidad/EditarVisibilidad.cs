@@ -31,7 +31,7 @@ namespace FrbaCommerce.ABM_Visibilidad
 
         private void CargarDatos()
         {
-            query = "SELECT * FROM Visibilidad WHERE id = @idVisibilidad";
+            query = "SELECT * FROM LOS_SUPER_AMIGOS.Visibilidad WHERE id = @idVisibilidad";
             parametros.Clear();
             parametros.Add(new SqlParameter("@idVisibilidad", idVisibilidad));
             SqlDataReader reader = builderDeComandos.Crear(query, parametros).ExecuteReader();

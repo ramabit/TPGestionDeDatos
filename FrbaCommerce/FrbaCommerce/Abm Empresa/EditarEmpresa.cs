@@ -31,7 +31,7 @@ namespace FrbaCommerce.ABM_Empresa
 
         private void CargarDatos()
         {
-            query = "SELECT * FROM Empresa WHERE id = @idEmpresa";
+            query = "SELECT * FROM LOS_SUPER_AMIGOS.Empresa WHERE id = @idEmpresa";
             parametros.Clear();
             parametros.Add(new SqlParameter("@idEmpresa", idEmpresa));
             SqlDataReader reader = builderDeComandos.Crear(query, parametros).ExecuteReader();

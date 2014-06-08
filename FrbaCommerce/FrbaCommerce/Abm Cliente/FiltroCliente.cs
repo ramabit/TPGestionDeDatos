@@ -31,7 +31,7 @@ namespace FrbaCommerce.ABM_Cliente
 
         private void CargarClientes()
         {
-            command = builderDeComandos.Crear("SELECT * FROM Cliente", parametros);
+            command = builderDeComandos.Crear("SELECT * FROM LOS_SUPER_AMIGOS.Cliente", parametros);
 
             DataSet clientes = new DataSet();
             SqlDataAdapter adapter = new SqlDataAdapter();
@@ -76,7 +76,7 @@ namespace FrbaCommerce.ABM_Cliente
             if (textBox_NumeroDeDoc.Text != "") filtro += " and " + "dni like '" + textBox_NumeroDeDoc.Text + "%'";
             // TODO: agregar el filtro del documento
 
-            query = "SELECT * FROM Cliente WHERE " + filtro;
+            query = "SELECT * FROM LOS_SUPER_AMIGOSCliente WHERE " + filtro;
 
             command = builderDeComandos.Crear(query, parametros);
 

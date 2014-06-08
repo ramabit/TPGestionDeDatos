@@ -42,7 +42,7 @@ namespace FrbaCommerce.Login
 
 
             // Nos fijamos si el usuario y contraseña existen y esta habilitado
-            String query = "select * from Usuario where username = @username and password = @password and habilitado = 1";
+            String query = "SELECT * FROM LOS_SUPER_AMIGOS.Usuario WHERE username = @username AND password = @password AND habilitado = 1";
 
             String usuario = this.textBoxUsuario.Text;
             // encripta contraseña
@@ -64,13 +64,13 @@ namespace FrbaCommerce.Login
                 // Setea fallidos de login de usuario a 0
                 parametros.Clear();
                 parametros.Add(new SqlParameter("@username", usuario));
-                String sumaFallido = "update Usuario set login_fallidos = 0 where username = @username";
+                String sumaFallido = "UPDATE LOS_SUPER_AMIGOS.Usuario SET login_fallidos = 0 WHERE username = @username";
                 builderDeComandos.Crear(sumaFallido, parametros).ExecuteNonQuery();
 
                 // Se fija si es el primer inicio de sesion del usuario
                 parametros.Clear();
                 parametros.Add(new SqlParameter("@username", usuario));
-                String sesion = "select password from Usuario where username = @username";
+                String sesion = "SELECT password FROM Usuario WHERE username = @username";
                 String primerInicio = (String)builderDeComandos.Crear(sesion, parametros).ExecuteScalar();
                 if (primerInicio == "559aead08264d5795d3909718cdd05abd49572e84fe55590eef31a88a08fdffd")
                 {
@@ -81,7 +81,7 @@ namespace FrbaCommerce.Login
                 parametros.Clear();
                 parametros.Add(new SqlParameter("@username", usuario));
 
-                String consultaRoles = "select count(rol_id) from Rol_x_Usuario where habilitado = 1 and (select id from Usuario where username = @username) = usuario_id";
+                String consultaRoles = "SELECT COUNT(rol_id) FROM LOS_SUPER_AMIGOS.Rol_x_Usuario WHERE habilitado = 1 AND (SELECT id FROM LOS_SUPER_AMIGOS.Usuario WHERE username = @username) = usuario_id";
                 int cantidadDeRoles = (int)builderDeComandos.Crear(consultaRoles, parametros).ExecuteScalar();
 
                 if(cantidadDeRoles > 1)
@@ -93,7 +93,7 @@ namespace FrbaCommerce.Login
                 {
                     parametros.Clear();
                     parametros.Add(new SqlParameter("@username", usuario));
-                    String rolDeUsuario = "select r.nombre from Rol r, Rol_x_Usuario ru, Usuario u where r.id = ru.rol_id and ru.usuario_id = u.id and u.username = @username";
+                    String rolDeUsuario = "SELECT r.nombre FROM LOS_SUPER_AMIGOS.Rol r, LOS_SUPER_AMIGOS.Rol_x_Usuario ru, LOS_SUPER_AMIGOS.Usuario u WHERE r.id = ru.rol_id AND ru.usuario_id = u.id AND u.username = @username";
                     String rolUser = (String)builderDeComandos.Crear(rolDeUsuario, parametros).ExecuteScalar();
 
                     UsuarioSesion.Usuario.rol = rolUser;
@@ -109,7 +109,7 @@ namespace FrbaCommerce.Login
                 // Se fija si el usuario era correcto
                 parametros.Clear();
                 parametros.Add(new SqlParameter("@username", usuario));
-                String buscaUsuario = "select * from Usuario where username = @username";
+                String buscaUsuario = "SELECT * FROM LOS_SUPER_AMIGOS.Usuario WHERE username = @username";
                 SqlDataReader lector = builderDeComandos.Crear(buscaUsuario, parametros).ExecuteReader();
 
                 if (lector.Read())
@@ -119,7 +119,7 @@ namespace FrbaCommerce.Login
                     parametros.Clear();
                     parametros.Add(new SqlParameter("@username", usuario));
                     parametros.Add(new SqlParameter("@password", contraseña));
-                    String estaDeshabilitado = "select * from Usuario where username = @username and habilitado = 0";
+                    String estaDeshabilitado = "SELECT * FROM LOS_SUPER_AMIGOS.Usuario WHERE username = @username AND habilitado = 0";
 
                     SqlDataReader leeDeshabilitado = builderDeComandos.Crear(estaDeshabilitado, parametros).ExecuteReader();
 
@@ -132,21 +132,21 @@ namespace FrbaCommerce.Login
                     // Suma un fallido
                     parametros.Clear();
                     parametros.Add(new SqlParameter("@username", usuario));
-                    String sumaFallido = "update Usuario set login_fallidos = login_fallidos + 1 where username = @username";
+                    String sumaFallido = "UPDATE LOS_SUPER_AMIGOS.Usuario SET login_fallidos = login_fallidos + 1 WHERE username = @username";
                     builderDeComandos.Crear(sumaFallido, parametros).ExecuteNonQuery();
 
 
                     // Si es el tercer fallido se deshabilita al usuario
                     parametros.Clear();
                     parametros.Add(new SqlParameter("@username", usuario));
-                    String cantidadFallidos = "select login_fallidos from Usuario where username = @username";
+                    String cantidadFallidos = "SELECT login_fallidos FROM LOS_SUPER_AMIGOS.Usuario WHERE username = @username";
                     int intentosFallidos = (int)builderDeComandos.Crear(cantidadFallidos, parametros).ExecuteScalar();
 
                     if (intentosFallidos == 3)
                     {
                         parametros.Clear();
                         parametros.Add(new SqlParameter("@username", usuario));
-                        String deshabilitar = "update Usuario set habilitado = 0 where username = @username";
+                        String deshabilitar = "UPDATE LOS_SUPER_AMIGOS.Usuario SET habilitado = 0 WHERE username = @username";
                         builderDeComandos.Crear(deshabilitar, parametros).ExecuteNonQuery();
                     }
                     MessageBox.Show("Contraseña incorrecta. Fallidos del usuario: " + intentosFallidos);

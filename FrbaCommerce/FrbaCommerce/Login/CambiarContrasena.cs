@@ -37,20 +37,20 @@ namespace FrbaCommerce.Login
             IList<SqlParameter> parametros = new List<SqlParameter>();
             parametros.Add(new SqlParameter("@username", UsuarioSesion.Usuario.nombre));
             parametros.Add(new SqlParameter("@pass", HashSha256.getHash(textBoxContraseña.Text)));
-            String nuevaPass = "update Usuario set password = @pass where username = @username";
+            String nuevaPass = "UPDATE LOS_SUPER_AMIGOS.Usuario SET password = @pass WHERE username = @username";
             builderDeComandos.Crear(nuevaPass, parametros).ExecuteNonQuery();
 
             // Cambio el valor de primera sesion
             parametros.Clear();
             parametros.Add(new SqlParameter("@username", UsuarioSesion.Usuario.nombre));
-            String primeraSesion = "update Usuario set primera_sesion = 0 where username = @username";
+            String primeraSesion = "UPDATE ULOS_SUPER_AMIGOS.suario SET primera_sesion = 0 WHERE username = @username";
             builderDeComandos.Crear(primeraSesion, parametros).ExecuteNonQuery();
 
             // Asigna rol
             parametros.Clear();
             parametros.Add(new SqlParameter("@username", UsuarioSesion.Usuario.nombre));
 
-            String consultaRoles = "select count(rol_id) from Rol_x_Usuario where habilitado = 1 and (select id from Usuario where username = @username) = usuario_id";
+            String consultaRoles = "SELECT COUNT(rol_id) from LOS_SUPER_AMIGOS.Rol_x_Usuario WHERE habilitado = 1 AND (SELECT id FROM LOS_SUPER_AMIGOS.Usuario WHERE username = @username) = usuario_id";
             int cantidadDeRoles = (int)builderDeComandos.Crear(consultaRoles, parametros).ExecuteScalar();
 
             if (cantidadDeRoles > 1)
@@ -62,7 +62,7 @@ namespace FrbaCommerce.Login
             {
                 parametros.Clear();
                 parametros.Add(new SqlParameter("@username", UsuarioSesion.Usuario.nombre));
-                String rolDeUsuario = "select r.nombre from Rol r, Rol_x_Usuario ru, Usuario u where r.id = ru.rol_id and ru.usuario_id = u.id and u.username = @username";
+                String rolDeUsuario = "SELECT r.nombre FROM LOS_SUPER_AMIGOS.Rol r, LOS_SUPER_AMIGOS.Rol_x_Usuario ru, LOS_SUPER_AMIGOS.Usuario u WHERE r.id = ru.rol_id and ru.usuario_id = u.id and u.username = @username";
                 String rolUser = (String)builderDeComandos.Crear(rolDeUsuario, parametros).ExecuteScalar();
 
                 UsuarioSesion.Usuario.rol = rolUser;
@@ -70,6 +70,11 @@ namespace FrbaCommerce.Login
                 new MenuPrincipal().ShowDialog();
                 this.Hide();
             }
+
+        }
+
+        private void CambiarContrasena_Load(object sender, EventArgs e)
+        {
 
         }
 

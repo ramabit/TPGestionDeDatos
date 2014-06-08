@@ -95,7 +95,7 @@
             this.botonContinuar.UseVisualStyleBackColor = true;
             this.botonContinuar.Click += new System.EventHandler(this.botonContinuar_Click);
             // 
-            // CambiarContraseña
+            // CambiarContrasena
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -106,8 +106,9 @@
             this.Controls.Add(this.textBoxRepetirContraseña);
             this.Controls.Add(this.textBoxContraseña);
             this.Controls.Add(this.labelTitulo);
-            this.Name = "CambiarContraseña";
+            this.Name = "CambiarContrasena";
             this.Text = "CambiarContraseña";
+            this.Load += new System.EventHandler(this.CambiarContrasena_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

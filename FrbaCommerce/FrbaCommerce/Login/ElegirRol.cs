@@ -35,7 +35,7 @@ namespace FrbaCommerce.Login
             SqlDataAdapter adapter = new SqlDataAdapter();
             parametros = new List<SqlParameter>();
             parametros.Add(new SqlParameter("@username", UsuarioSesion.usuario.nombre));
-            command = builderDeComandos.Crear("select r.nombre from Rol r, Rol_x_Usuario ru where r.habilitado = 1 and ru.habilitado = 1 and (select  id from Usuario where username = @username) = ru.usuario_id and r.id = ru.rol_id ", parametros);
+            command = builderDeComandos.Crear("SELECT r.nombre from LOS_SUPER_AMIGOS.Rol r, LOS_SUPER_AMIGOS.Rol_x_Usuario ru WHERE r.habilitado = 1 AND ru.habilitado = 1 AND (SELECT id FROM LOS_SUPER_AMIGOS.Usuario WHERE username = @username) = ru.usuario_id and r.id = ru.rol_id ", parametros);
             adapter.SelectCommand = command;
             adapter.Fill(roles, "Rol");
             comboBoxRol.DataSource = roles.Tables[0].DefaultView;
@@ -46,8 +46,6 @@ namespace FrbaCommerce.Login
         {
             String rolElegido = comboBoxRol.SelectedValue.ToString();
             UsuarioSesion.Usuario.rol = rolElegido;
-
-          //  MessageBox.Show("Rol: " + UsuarioSesion.Usuario.rol);
 
             new MenuPrincipal().ShowDialog();
             this.Hide();

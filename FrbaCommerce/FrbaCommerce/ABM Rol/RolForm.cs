@@ -33,5 +33,10 @@ namespace FrbaCommerce.ABM_Rol
             this.Hide();
             new BajaRol().Show();
         }
+
+        private void RolForm_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

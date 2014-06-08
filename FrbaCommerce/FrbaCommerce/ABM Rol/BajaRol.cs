@@ -34,7 +34,7 @@ namespace FrbaCommerce.ABM_Rol
             DataSet roles = new DataSet();
             SqlDataAdapter adapter = new SqlDataAdapter();
             parametros = new List<SqlParameter>();
-            command = builderDeComandos.Crear("SELECT distinct nombre FROM Rol  where habilitado = 1", parametros);
+            command = builderDeComandos.Crear("SELECT DISTINCT nombre FROM LOS_SUPER_AMIGOS.Rol  where habilitado = 1", parametros);
             adapter.SelectCommand = command;
             adapter.Fill(roles);
             comboBoxRol.DataSource = roles.Tables[0].DefaultView;
@@ -53,8 +53,8 @@ namespace FrbaCommerce.ABM_Rol
 
             parametros.Clear();
             parametros.Add(new SqlParameter("@nombre", rolElegido));
-                        
-            String sql = "UPDATE Rol SET habilitado = 0 WHERE nombre = @nombre";
+
+            String sql = "UPDATE LOS_SUPER_AMIGOS.Rol SET habilitado = 0 WHERE nombre = @nombre";
 
             int filas_afectadas = 0;
                         
@@ -72,7 +72,7 @@ namespace FrbaCommerce.ABM_Rol
             parametros.Add(new SqlParameter("@nombre", rolElegido));
 
             // Borramos el rol en los usuarios que lo tienen
-            String sql2 = "DELETE Rol_x_Usuario WHERE rol_id = (SELECT id FROM Rol WHERE nombre = @nombre and habilitado = 0)";
+            String sql2 = "DELETE LOS_SUPER_AMIGOS.Rol_x_Usuario WHERE rol_id = (SELECT id FROM LOS_SUPER_AMIGOS.Rol WHERE nombre = @nombre and habilitado = 0)";
 
             filas_afectadas = builderDeComandos.Crear(sql2, parametros).ExecuteNonQuery();
             if (filas_afectadas != -1)

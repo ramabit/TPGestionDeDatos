@@ -33,7 +33,7 @@ namespace FrbaCommerce.Registro_de_Usuario
             DataSet roles = new DataSet();
             SqlDataAdapter adapter = new SqlDataAdapter();
             parametros = new List<SqlParameter>();
-            command = builderDeComandos.Crear("SELECT distinct nombre FROM Rol  where habilitado = 1 and nombre != 'Administrador'", parametros);
+            command = builderDeComandos.Crear("SELECT DISTINCT nombre FROM LOS_SUPER_AMIGOS.Rol WHERE habilitado = 1 AND nombre != 'Administrador'", parametros);
             adapter.SelectCommand = command;
             adapter.Fill(roles, "Rol");
             comboBoxRol.DataSource = roles.Tables[0].DefaultView;
@@ -69,7 +69,7 @@ namespace FrbaCommerce.Registro_de_Usuario
             parametros.Add(new SqlParameter("@username", usuario));
 
             // Buscamos si el username ya se encuentra registrado
-            String consulta = "SELECT id FROM Usuario WHERE username = @username";
+            String consulta = "SELECT id FROM LOS_SUPER_AMIGOS.Usuario WHERE username = @username";
 
             SqlDataReader reader = builderDeComandos.Crear(consulta, parametros).ExecuteReader();
 

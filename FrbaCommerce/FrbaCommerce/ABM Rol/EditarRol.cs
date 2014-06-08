@@ -98,7 +98,7 @@ namespace FrbaCommerce.ABM_Rol
             parametros.Clear();
             parametros.Add(new SqlParameter("@rol", rolElegido));
 
-            String consulta = "SELECT count(distinct nombre) FROM Rol WHERE nombre = @rol and habilitado = 1";
+            String consulta = "SELECT COUNT(DISTINCT nombre) FROM LOS_SUPER_AMIGOS.Rol WHERE nombre = @rol and habilitado = 1";
             int estadoRol = (int)builderDeComandos.Crear(consulta, parametros).ExecuteScalar();
 
             if (estadoRol == 1)
@@ -116,7 +116,7 @@ namespace FrbaCommerce.ABM_Rol
             DataSet funcionalidades = new DataSet();
             SqlDataAdapter adapter = new SqlDataAdapter();
             parametros = new List<SqlParameter>();
-            command = builderDeComandos.Crear("SELECT distinct nombre FROM Funcionalidad", parametros);
+            command = builderDeComandos.Crear("SELECT DISTINCT nombre FROM LOS_SUPER_AMIGOS.Funcionalidad", parametros);
             adapter.SelectCommand = command;
             adapter.Fill(funcionalidades);
             checkedListBoxFuncionalidades.DataSource = funcionalidades.Tables[0].DefaultView;
@@ -167,7 +167,7 @@ namespace FrbaCommerce.ABM_Rol
             parametros.Add(new SqlParameter("@nombre_viejo", rolElegido));
             parametros.Add(new SqlParameter("@nombre_nuevo", nuevoNombreRol));
 
-            String sql = "UPDATE Rol SET nombre = @nombre_nuevo WHERE nombre = @nombre_viejo";
+            String sql = "UPDATE LOS_SUPER_AMIGOS.Rol SET nombre = @nombre_nuevo WHERE nombre = @nombre_viejo";
             builderDeComandos.Crear(sql, parametros).ExecuteNonQuery();
             
             MessageBox.Show("El rol " + rolElegido + " fue renombrado como " + nuevoNombreRol);            
@@ -188,7 +188,7 @@ namespace FrbaCommerce.ABM_Rol
                     parametros.Add(new SqlParameter("@rol", rolElegido));
                     parametros.Add(new SqlParameter("@funcionalidad", funcionalidad.Row["nombre"] as String));
 
-                    String sql1 = "INSERT INTO Funcionalidad_x_Rol(funcionalidad_id, rol_id) VALUES ((SELECT id FROM Funcionalidad WHERE nombre = @funcionalidad), (SELECT  id FROM Rol WHERE nombre = @rol))";
+                    String sql1 = "INSERT INTO LOS_SUPER_AMIGOS.Funcionalidad_x_Rol(funcionalidad_id, rol_id) VALUES ((SELECT id FROM LOS_SUPER_AMIGOS.Funcionalidad WHERE nombre = @funcionalidad), (SELECT  id FROM Rol WHERE nombre = @rol))";
 
                     builderDeComandos.Crear(sql1, parametros).ExecuteNonQuery();
                 }
@@ -201,7 +201,7 @@ namespace FrbaCommerce.ABM_Rol
             parametros.Add(new SqlParameter("@rol", rolElegido));
             parametros.Add(new SqlParameter("@funcionalidad", funcionalidad));
 
-            String consulta = "SELECT count(*) FROM Funcionalidad_x_Rol WHERE funcionalidad_id = (SELECT id FROM Funcionalidad WHERE nombre = @funcionalidad) and rol_id = (SELECT  id FROM Rol WHERE nombre = @rol)";
+            String consulta = "SELECT COUNT(*) FROM LOS_SUPER_AMIGOS.Funcionalidad_x_Rol WHERE funcionalidad_id = (SELECT id FROM LOS_SUPER_AMIGOS.Funcionalidad WHERE nombre = @funcionalidad) and rol_id = (SELECT  id FROM LOS_SUPER_AMIGOS.Rol WHERE nombre = @rol)";
             int tieneLaFuncionalidad = (int)builderDeComandos.Crear(consulta, parametros).ExecuteScalar();
 
                 if (tieneLaFuncionalidad == 1)
@@ -228,7 +228,7 @@ namespace FrbaCommerce.ABM_Rol
                     parametros.Add(new SqlParameter("@rol", rolElegido));
                     parametros.Add(new SqlParameter("@funcionalidad", funcionalidad.Row["nombre"] as String));
 
-                    String sql2 = "DELETE Funcionalidad_x_Rol WHERE funcionalidad_id = (SELECT id FROM Funcionalidad WHERE nombre = @funcionalidad) and rol_id = (SELECT  id FROM Rol WHERE nombre = @rol)";
+                    String sql2 = "DELETE LOS_SUPER_AMIGOS.Funcionalidad_x_Rol WHERE funcionalidad_id = (SELECT id FROM LOS_SUPER_AMIGOS.Funcionalidad WHERE nombre = @funcionalidad) and rol_id = (SELECT  id FROM LOS_SUPER_AMIGOS.Rol WHERE nombre = @rol)";
 
                     builderDeComandos.Crear(sql2, parametros).ExecuteNonQuery();
                 }
@@ -239,8 +239,8 @@ namespace FrbaCommerce.ABM_Rol
         {
             parametros.Clear();
             parametros.Add(new SqlParameter("@nombre", rolElegido));
-                        
-            String sql = "UPDATE Rol SET habilitado = 1 WHERE nombre = @nombre";
+
+            String sql = "UPDATE LOS_SUPER_AMIGOS.Rol SET habilitado = 1 WHERE nombre = @nombre";
 
             builderDeComandos.Crear(sql, parametros).ExecuteNonQuery();
         }

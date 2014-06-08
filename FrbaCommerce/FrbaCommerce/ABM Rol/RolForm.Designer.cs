@@ -34,12 +34,12 @@
             this.botonAgregarRol = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // label1
+            // labelRoles
             // 
             this.labelRoles.AutoSize = true;
             this.labelRoles.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelRoles.Location = new System.Drawing.Point(122, 9);
-            this.labelRoles.Name = "label1";
+            this.labelRoles.Name = "labelRoles";
             this.labelRoles.Size = new System.Drawing.Size(61, 25);
             this.labelRoles.TabIndex = 7;
             this.labelRoles.Text = "Roles";
@@ -88,6 +88,7 @@
             this.Controls.Add(this.botonAgregarRol);
             this.Name = "RolForm";
             this.Text = "RolForm";
+            this.Load += new System.EventHandler(this.RolForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

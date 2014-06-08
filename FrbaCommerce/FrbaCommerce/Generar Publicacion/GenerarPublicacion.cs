@@ -30,8 +30,8 @@ namespace FrbaCommerce.Generar_Publicacion
         }
 
         private void CargarVisibilidades()
-        {         
-            command = builderDeComandos.Crear("SELECT descripcion FROM Visibilidad", parametros);
+        {
+            command = builderDeComandos.Crear("SELECT descripcion FROM LOS_SUPER_AMIGOS.Visibilidad", parametros);
             
             DataSet visibilidades = new DataSet();
             SqlDataAdapter adapter = new SqlDataAdapter();
@@ -43,7 +43,7 @@ namespace FrbaCommerce.Generar_Publicacion
 
         private void CargarRubros()
         {
-            command = builderDeComandos.Crear("SELECT nombre FROM Rubro", parametros);
+            command = builderDeComandos.Crear("SELECT nombre FROM LOS_SUPER_AMIGOS.Rubro", parametros);
 
             DataSet rubros = new DataSet();
             SqlDataAdapter adapter = new SqlDataAdapter();
@@ -89,12 +89,12 @@ namespace FrbaCommerce.Generar_Publicacion
             Double precioSeleccionado = Convert.ToDouble(textBox_Precio.Text);
             DateTime fecha = DateTime.Now;
 
-            query = "SELECT id FROM Rubro WHERE nombre = @rubroSeleccionado";
+            query = "SELECT id FROM LOS_SUPER_AMIGOS.Rubro WHERE nombre = @rubroSeleccionado";
             parametros.Clear();
             parametros.Add(new SqlParameter("@rubroSeleccionado", rubroSeleccionado));
             Decimal idRubroSeleccionado = (Decimal) builderDeComandos.Crear(query, parametros).ExecuteScalar();
 
-            query = "SELECT id FROM Visibilidad WHERE descripcion = @visibilidadSeleccionado";
+            query = "SELECT id FROM LOS_SUPER_AMIGOS.Visibilidad WHERE descripcion = @visibilidadSeleccionado";
             parametros.Clear();
             parametros.Add(new SqlParameter("@visibilidadSeleccionado", visibilidadSeleccionado));
             Decimal idVisibilidadSeleccionado = (Decimal) builderDeComandos.Crear(query, parametros).ExecuteScalar();
@@ -102,7 +102,7 @@ namespace FrbaCommerce.Generar_Publicacion
             Int16 bitPregunta = 0;
             if (preguntaSeleccionado) bitPregunta = 1;
 
-            query = "INSERT INTO Publicacion (descripcion, stock, fecha_inicio, fecha_vencimiento, precio, rubro_id, visibilidad_id, usuario_id, estado, tipo) values (@descripcion, @stock, @fechaInicial, @fechaVencimiento, @precio, @rubroId, @visibilidadId, @usuarioId, 'Borrador', @tipo)";
+            query = "INSERT INTO LOS_SUPER_AMIGOS.Publicacion (descripcion, stock, fecha_inicio, fecha_vencimiento, precio, rubro_id, visibilidad_id, usuario_id, estado, tipo) values (@descripcion, @stock, @fechaInicial, @fechaVencimiento, @precio, @rubroId, @visibilidadId, @usuarioId, 'Borrador', @tipo)";
 
             parametros.Clear();
             parametros.Add(new SqlParameter("@descripcion", descripcionSeleccionado));

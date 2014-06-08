@@ -31,7 +31,7 @@ namespace FrbaCommerce.ABM_Empresa
 
         private void CargarEmpresas()
         {
-            command = builderDeComandos.Crear("SELECT * FROM Empresa", parametros);
+            command = builderDeComandos.Crear("SELECT * FROM LOS_SUPER_AMIGOS.Empresa", parametros);
 
             DataSet empresas = new DataSet();
             SqlDataAdapter adapter = new SqlDataAdapter();
@@ -73,8 +73,8 @@ namespace FrbaCommerce.ABM_Empresa
             if (textBox_RazonSocial.Text != "") filtro += " and " + "razon_social like '" + textBox_RazonSocial.Text + "%'";
             if (textBox_Cuit.Text != "") filtro += " and " + "cuit like '" + textBox_Cuit.Text + "%'";
             if (textBox_Mail.Text != "") filtro += " and " + "mail like '" + textBox_Mail.Text + "%'";
-            
-            query = "SELECT * FROM Empresa WHERE " + filtro;
+
+            query = "SELECT * FROM LOS_SUPER_AMIGOS.Empresa WHERE " + filtro;
 
             command = builderDeComandos.Crear(query, parametros);
 

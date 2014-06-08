@@ -31,7 +31,7 @@ namespace FrbaCommerce.ABM_Visibilidad
 
         private void CargarVisibilidad()
         {
-            command = builderDeComandos.Crear("SELECT * FROM Visibilidad", parametros);
+            command = builderDeComandos.Crear("SELECT * FROM LOS_SUPER_AMIGOS.Visibilidad", parametros);
 
             DataSet visibilidades = new DataSet();
             SqlDataAdapter adapter = new SqlDataAdapter();
@@ -72,7 +72,7 @@ namespace FrbaCommerce.ABM_Visibilidad
 
             if (textBox_Descripcion.Text != "") filtro += "descripcion like '" + textBox_Descripcion.Text + "%'";
 
-            query = "SELECT * FROM Visibilidad WHERE " + filtro;
+            query = "SELECT * FROM LOS_SUPER_AMIGOS.Visibilidad WHERE " + filtro;
 
             command = builderDeComandos.Crear(query, parametros);
 
