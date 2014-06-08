@@ -78,8 +78,10 @@ CREATE PROCEDURE LOS_SUPER_AMIGOS.crear_usuario
 AS
 BEGIN
 	SET NOCOUNT ON;
-	INSERT INTO LOS_SUPER_AMIGOS.Usuario default values
-	SET @usuario_id = SCOPE_IDENTITY();
+	INSERT INTO LOS_SUPER_AMIGOS.Usuario
+	(username) 
+	values (isnull('USER' + CAST(((select COUNT(*) from LOS_SUPER_AMIGOS.Usuario)+ 1) AS NVARCHAR(10)),''))
+	SET @usuario_id = SCOPE_IDENTITY();	
 END
 GO
 
@@ -102,7 +104,7 @@ GO
 create table LOS_SUPER_AMIGOS.Usuario
 (
 id numeric(18,0) IDENTITY(1,1),
-username as isnull('USER' + CAST(ID AS NVARCHAR(10)),'X'),--nvarchar(50)
+username nvarchar(50) ,--
 password nvarchar(150) default '559aead08264d5795d3909718cdd05abd49572e84fe55590eef31a88a08fdffd', -- hash de 'A'
 habilitado bit default 1,
 login_fallidos int default 0,
@@ -360,7 +362,7 @@ INSERT INTO LOS_SUPER_AMIGOS.TipoDeDocumento (nombre) values ('DNI'), ('OTRO')
 -- INSERTAR Clientes
 -- Todos los clientes que compraron
 INSERT INTO LOS_SUPER_AMIGOS.Cliente
-   ( [tipo_de_documento_id], [documento], [apellido], [nombre], [fecha_nacimiento], [mail], [direccion])
+   ( [tipo_de_documento_id], [documento], [apellido], [nombre], [fecha_nacimiento], [mail], [direccion_id])
 SELECT DISTINCT 1, Cli_Dni, Cli_Apeliido, Cli_Nombre, Cli_Fecha_Nac, Cli_Mail,
 	(SELECT DISTINCT id FROM LOS_SUPER_AMIGOS.Direccion d WHERE (Cli_Dom_Calle = d.calle and Cli_Nro_Calle = d.numero and Cli_Piso = d.piso and Cli_Depto = d.depto and Cli_Cod_Postal = d.cod_postal)) 
 FROM gd_esquema.Maestra 
@@ -368,7 +370,7 @@ WHERE ISNULL(Cli_DNI, 0) != 0
 
 -- Todos los clientes que vendieron
 INSERT INTO LOS_SUPER_AMIGOS.Cliente
-   ( [tipo_de_documento_id], [documento], [apellido], [nombre], [fecha_nacimiento], [mail], [direccion])
+   ( [tipo_de_documento_id], [documento], [apellido], [nombre], [fecha_nacimiento], [mail], [direccion_id])
 SELECT DISTINCT 1, Publ_Cli_Dni, Publ_Cli_Apeliido, Publ_Cli_Nombre, Publ_Cli_Fecha_Nac, Publ_Cli_Mail,
 	(SELECT DISTINCT id FROM LOS_SUPER_AMIGOS.Direccion d WHERE (Publ_Cli_Dom_Calle = d.calle and Publ_Cli_Nro_Calle = d.numero and Publ_Cli_Piso = d.piso and Publ_Cli_Depto = d.depto and Publ_Cli_Cod_Postal = d.cod_postal)) 
 FROM gd_esquema.Maestra as m

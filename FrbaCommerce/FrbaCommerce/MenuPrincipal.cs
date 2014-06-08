@@ -41,6 +41,7 @@ namespace FrbaCommerce
 
         private void MenuPrincipal_Load(object sender, EventArgs e)
         {
+            String funcionalidadesUsuario = "select f.nombre from LOS_SUPER_AMIGOS.Rol r, LOS_SUPER_AMIGOS.Funcionalidad_x_Rol fr,LOS_SUPER_AMIGOS.Funcionalidad f where r.id = fr.rol_id and f.id = fr.funcionalidad_id and r.nombre = @unRol";
             
         }
     }
