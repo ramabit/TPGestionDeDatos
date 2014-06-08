@@ -46,6 +46,9 @@ DROP TABLE LOS_SUPER_AMIGOS.Empresa
 IF OBJECT_ID('LOS_SUPER_AMIGOS.Cliente', 'U') IS NOT NULL
 DROP TABLE LOS_SUPER_AMIGOS.Cliente
 
+IF OBJECT_ID('LOS_SUPER_AMIGOS.TipoDeDocumento', 'U') IS NOT NULL
+DROP TABLE LOS_SUPER_AMIGOS.TipoDeDocumento
+
 IF OBJECT_ID('LOS_SUPER_AMIGOS.Direccion', 'U') IS NOT NULL
 DROP TABLE LOS_SUPER_AMIGOS.Direccion
 
@@ -62,9 +65,11 @@ IF OBJECT_ID('LOS_SUPER_AMIGOS.crear_usuario', 'P') IS NOT NULL
 DROP PROCEDURE LOS_SUPER_AMIGOS.crear_usuario
 GO
 
-IF OBJECT_ID('LOS_SUPER_AMIGOS.agregar_id_publ', 'P') IS NOT NULL
+IF OBJECT_ID('LOS_SUPER_AMIGOS.agregar_id_publ') IS NOT NULL
 DROP FUNCTION LOS_SUPER_AMIGOS.agregar_id_publ
 GO
+
+LOS_SUPER_AMIGOS.agregar_id_publ
 
 CREATE PROCEDURE LOS_SUPER_AMIGOS.crear_usuario
 	@usuario_id numeric(18,0) OUTPUT
@@ -113,10 +118,18 @@ FOREIGN KEY (usuario_id) REFERENCES LOS_SUPER_AMIGOS.Usuario (id),
 FOREIGN KEY (direccion) REFERENCES LOS_SUPER_AMIGOS.Direccion (id)
 )
 
+create table LOS_SUPER_AMIGOS.TipoDeDocumento
+(
+id numeric(18,0) identity(1,1),
+nombre nvarchar(50),
+PRIMARY KEY(id)
+)
+
 create table LOS_SUPER_AMIGOS.Cliente
 (
 id numeric(18,0) identity(1,1),
-dni numeric(18,0),
+tipo_de_documento_id numeric(18,0),
+documento numeric(18,0),
 apellido nvarchar(255),
 nombre nvarchar(255),
 fecha_nacimiento datetime,
@@ -125,6 +138,7 @@ habilitado bit default 1,
 usuario_id numeric(18,0),
 direccion numeric(18,0),
 PRIMARY KEY (id),
+FOREIGN KEY (tipo_de_documento_id) REFERENCES LOS_SUPER_AMIGOS.TipoDeDocumento (id),
 FOREIGN KEY (usuario_id) REFERENCES LOS_SUPER_AMIGOS.Usuario (id),
 FOREIGN KEY (direccion) REFERENCES LOS_SUPER_AMIGOS.Direccion (id)
 )
@@ -323,22 +337,25 @@ BEGIN
 	SET @row_pos = @row_pos + 1
 END
 
+-- INSERTAR Tipo de documentos
+INSERT INTO LOS_SUPER_AMIGOS.TipoDeDocumento (nombre) values ('DNI'), ('OTRO')
+
 -- INSERTAR Clientes
 -- Todos los clientes que compraron
 INSERT INTO LOS_SUPER_AMIGOS.Cliente
-   ( [dni], [apellido], [nombre], [fecha_nacimiento], [mail], [direccion])
-SELECT DISTINCT Cli_Dni, Cli_Apeliido, Cli_Nombre, Cli_Fecha_Nac, Cli_Mail,
+   ( [tipo_de_documento_id], [documento], [apellido], [nombre], [fecha_nacimiento], [mail], [direccion])
+SELECT DISTINCT 1, Cli_Dni, Cli_Apeliido, Cli_Nombre, Cli_Fecha_Nac, Cli_Mail,
 	(SELECT DISTINCT id FROM LOS_SUPER_AMIGOS.Direccion d WHERE (Cli_Dom_Calle = d.calle and Cli_Nro_Calle = d.numero and Cli_Piso = d.piso and Cli_Depto = d.depto and Cli_Cod_Postal = d.cod_postal)) 
 FROM gd_esquema.Maestra 
 WHERE ISNULL(Cli_DNI, 0) != 0
 
 -- Todos los clientes que vendieron
 INSERT INTO LOS_SUPER_AMIGOS.Cliente
-   ( [dni], [apellido], [nombre], [fecha_nacimiento], [mail], [direccion])
-SELECT DISTINCT Publ_Cli_Dni, Publ_Cli_Apeliido, Publ_Cli_Nombre, Publ_Cli_Fecha_Nac, Publ_Cli_Mail,
+   ( [tipo_de_documento_id], [documento], [apellido], [nombre], [fecha_nacimiento], [mail], [direccion])
+SELECT DISTINCT 1, Publ_Cli_Dni, Publ_Cli_Apeliido, Publ_Cli_Nombre, Publ_Cli_Fecha_Nac, Publ_Cli_Mail,
 	(SELECT DISTINCT id FROM LOS_SUPER_AMIGOS.Direccion d WHERE (Publ_Cli_Dom_Calle = d.calle and Publ_Cli_Nro_Calle = d.numero and Publ_Cli_Piso = d.piso and Publ_Cli_Depto = d.depto and Publ_Cli_Cod_Postal = d.cod_postal)) 
 FROM gd_esquema.Maestra as m
-WHERE ISNULL(Publ_Cli_DNI, 0) != 0 and not exists (SELECT * FROM LOS_SUPER_AMIGOS.Cliente as c WHERE m.Publ_Cli_Dni = c.dni)
+WHERE ISNULL(Publ_Cli_DNI, 0) != 0 and not exists (SELECT * FROM LOS_SUPER_AMIGOS.Cliente as c WHERE m.Publ_Cli_Dni = c.documento)
 
 SELECT @row_count = COUNT(*) FROM LOS_SUPER_AMIGOS.Cliente
 SET @row_pos = 1
@@ -547,20 +564,20 @@ GO
 -- INSERTAR Publicacion
 CREATE FUNCTION LOS_SUPER_AMIGOS.agregar_id_publ
 (
-	@dni numeric(18,0),
+	@documento numeric(18,0),
 	@razon_social nvarchar(255)
 )
 RETURNS numeric(18,0)
 AS
 BEGIN
 	DECLARE @id numeric(18,0)
-	IF @dni IS NULL
+	IF @documento IS NULL
 		BEGIN
 			SELECT @id = usuario_id FROM LOS_SUPER_AMIGOS.Empresa WHERE razon_social = @razon_social
 		END
 	ELSE
 		BEGIN
-			SELECT @id = usuario_id FROM LOS_SUPER_AMIGOS.Cliente WHERE dni = @dni
+			SELECT @id = usuario_id FROM LOS_SUPER_AMIGOS.Cliente WHERE documento = @documento
 		END
 	RETURN @id
 END
@@ -592,13 +609,13 @@ GO
 -- INSERTAR Ofertas
 INSERT INTO LOS_SUPER_AMIGOS.Oferta
 ([monto], [fecha], [usuario_id], [publicacion_id], [calificacion_id])
-SELECT Oferta_Monto, Oferta_Fecha, (SELECT usuario_id FROM LOS_SUPER_AMIGOS.Cliente WHERE dni = Cli_Dni), Publicacion_Cod, Calificacion_Codigo FROM gd_esquema.Maestra
+SELECT Oferta_Monto, Oferta_Fecha, (SELECT usuario_id FROM LOS_SUPER_AMIGOS.Cliente WHERE documento = Cli_Dni), Publicacion_Cod, Calificacion_Codigo FROM gd_esquema.Maestra
 WHERE ISNULL(Oferta_Monto, 0) != 0
 
 -- INSERTAR Compras
 INSERT INTO LOS_SUPER_AMIGOS.Compra
 ([cantidad], [fecha], [usuario_id], [publicacion_id], [calificacion_id])
-SELECT Compra_Cantidad, Compra_Fecha, (SELECT usuario_id FROM LOS_SUPER_AMIGOS.Cliente WHERE dni = Cli_Dni), Publicacion_Cod, Calificacion_Codigo FROM gd_esquema.Maestra
+SELECT Compra_Cantidad, Compra_Fecha, (SELECT usuario_id FROM LOS_SUPER_AMIGOS.Cliente WHERE documento = Cli_Dni), Publicacion_Cod, Calificacion_Codigo FROM gd_esquema.Maestra
 WHERE ISNULL(Compra_Cantidad, 0) != 0
 
 -- INSERTAR Formas_Pago
