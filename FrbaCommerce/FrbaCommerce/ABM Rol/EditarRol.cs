@@ -34,17 +34,17 @@ namespace FrbaCommerce.ABM_Rol
 
         private void CargarTodosLosDatos()
         {
-            this.label3.Text = rolElegido;
+            this.labelRolElegido.Text = rolElegido;
             CargarFuncionalidades();            
             if (estaHabilitado())
             {
-                checkBox1.Checked = true;
-                checkBox1.Enabled = false;
+                checkBoxEstadoRol.Checked = true;
+                checkBoxEstadoRol.Enabled = false;
                 estabaDeshabilitado = 0;
             }
             else
             {
-                checkBox1.Checked = false;
+                checkBoxEstadoRol.Checked = false;
                 estabaDeshabilitado = 1;
             }
         }              
@@ -55,21 +55,21 @@ namespace FrbaCommerce.ABM_Rol
             this.Close();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void botonVolverBusqueda_Click(object sender, EventArgs e)
         {
             new ListadoEditarRol().Show();
             this.Close();
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void botonLimpiar_Click(object sender, EventArgs e)
         {
-            textBox1.Clear();
+            textBoxRol.Clear();
             CargarFuncionalidades();
         }
 
-        private void button3_Click(object sender, EventArgs e)
+        private void botonGuardar_Click(object sender, EventArgs e)
         {
-            if(estabaDeshabilitado == 1 && checkBox1.Checked)
+            if(estabaDeshabilitado == 1 && checkBoxEstadoRol.Checked)
             {
                 HabilitarRol();
             }
@@ -77,11 +77,11 @@ namespace FrbaCommerce.ABM_Rol
             AgregarFuncionalidades();
             QuitarFuncionalidades();
 
-            if (this.textBox1.Text != "")
+            if (this.textBoxRol.Text != "")
             {
                 RenombrarRol();
                 MessageBox.Show("Se modifico correctamente el rol " + rolElegido);
-                rolElegido = this.textBox1.Text;
+                rolElegido = this.textBoxRol.Text;
             }
             else
             {
@@ -89,7 +89,7 @@ namespace FrbaCommerce.ABM_Rol
             }
 
             CargarTodosLosDatos();
-            textBox1.Clear();
+            textBoxRol.Clear();
             
         }
 
@@ -119,8 +119,8 @@ namespace FrbaCommerce.ABM_Rol
             command = builderDeComandos.Crear("SELECT distinct nombre FROM Funcionalidad", parametros);
             adapter.SelectCommand = command;
             adapter.Fill(funcionalidades);
-            checkedListBox1.DataSource = funcionalidades.Tables[0].DefaultView;
-            checkedListBox1.ValueMember = "nombre";
+            checkedListBoxFuncionalidades.DataSource = funcionalidades.Tables[0].DefaultView;
+            checkedListBoxFuncionalidades.ValueMember = "nombre";
             MarcarLasFuncionalidadesQueTiene();            
         }
 
@@ -131,7 +131,7 @@ namespace FrbaCommerce.ABM_Rol
             List<int> funcionalidadesAMarcar = new List<int>();
             DesmarcarFuncionalidades();
 
-            foreach (DataRowView funcionalidad in this.checkedListBox1.Items)
+            foreach (DataRowView funcionalidad in this.checkedListBoxFuncionalidades.Items)
             {                
                 parametros.Clear();
                 parametros.Add(new SqlParameter("@rol", rolElegido));
@@ -139,7 +139,7 @@ namespace FrbaCommerce.ABM_Rol
 
                 if (verificarSiLaTiene(funcionalidad.Row["nombre"] as String))
                 {
-                    int i = checkedListBox1.Items.IndexOf(funcionalidad);
+                    int i = checkedListBoxFuncionalidades.Items.IndexOf(funcionalidad);
                     funcionalidadesAMarcar.Add(i);
                     
                 }                
@@ -147,21 +147,21 @@ namespace FrbaCommerce.ABM_Rol
 
             foreach (int index in funcionalidadesAMarcar)
             {
-                checkedListBox1.SetItemChecked(index, true);
+                checkedListBoxFuncionalidades.SetItemChecked(index, true);
             }
         }
 
         private void DesmarcarFuncionalidades()
         {
-            for (int i = 0; i < checkedListBox1.Items.Count; i++)
+            for (int i = 0; i < checkedListBoxFuncionalidades.Items.Count; i++)
             {
-                checkedListBox1.SetItemChecked(i, false);
+                checkedListBoxFuncionalidades.SetItemChecked(i, false);
             }
         }         
         
         private void RenombrarRol()
         {            
-            String nuevoNombreRol = this.textBox1.Text;
+            String nuevoNombreRol = this.textBoxRol.Text;
 
             parametros.Clear();
             parametros.Add(new SqlParameter("@nombre_viejo", rolElegido));
@@ -176,7 +176,7 @@ namespace FrbaCommerce.ABM_Rol
         private void AgregarFuncionalidades()
         {            
 
-            foreach (DataRowView funcionalidad in this.checkedListBox1.CheckedItems)
+            foreach (DataRowView funcionalidad in this.checkedListBoxFuncionalidades.CheckedItems)
             {
                 if (verificarSiLaTiene(funcionalidad.Row["nombre"] as String))
                 {
@@ -217,10 +217,10 @@ namespace FrbaCommerce.ABM_Rol
         private void QuitarFuncionalidades()
         {            
             
-            foreach (DataRowView funcionalidad in this.checkedListBox1.Items)
+            foreach (DataRowView funcionalidad in this.checkedListBoxFuncionalidades.Items)
             {
-                int index = checkedListBox1.Items.IndexOf(funcionalidad);
-                String estado = this.checkedListBox1.GetItemCheckState(index).ToString();
+                int index = checkedListBoxFuncionalidades.Items.IndexOf(funcionalidad);
+                String estado = this.checkedListBoxFuncionalidades.GetItemCheckState(index).ToString();
 
                 if (estado == "Unchecked")
                 {

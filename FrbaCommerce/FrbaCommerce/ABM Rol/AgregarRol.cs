@@ -34,8 +34,8 @@ namespace FrbaCommerce.ABM_Rol
             command = builderDeComandos.Crear("SELECT distinct nombre FROM Funcionalidad", parametros);
             adapter.SelectCommand = command;
             adapter.Fill(funcionalidades);
-            checkedListBox1.DataSource = funcionalidades.Tables[0].DefaultView;
-            checkedListBox1.ValueMember = "nombre";
+            checkedListBoxFuncionalidades.DataSource = funcionalidades.Tables[0].DefaultView;
+            checkedListBoxFuncionalidades.ValueMember = "nombre";
         }
 
         private void botonVolver_Click(object sender, EventArgs e)
@@ -44,17 +44,17 @@ namespace FrbaCommerce.ABM_Rol
             this.Close();
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void botonGuardar_Click(object sender, EventArgs e)
         {
             String sql = "INSERT INTO Rol(nombre, habilitado) VALUES (@rol, 1)";
             parametros.Clear();
-            parametros.Add(new SqlParameter("@rol", this.textBox1.Text));
+            parametros.Add(new SqlParameter("@rol", this.textBoxRol.Text));
             builderDeComandos.Crear(sql, parametros).ExecuteNonQuery();
 
-            foreach (DataRowView funcionalidad in this.checkedListBox1.CheckedItems)
+            foreach (DataRowView funcionalidad in this.checkedListBoxFuncionalidades.CheckedItems)
             {
                 parametros.Clear();
-                parametros.Add(new SqlParameter("@rol", this.textBox1.Text));
+                parametros.Add(new SqlParameter("@rol", this.textBoxRol.Text));
 
                 parametros.Add(new SqlParameter("@funcionalidad", funcionalidad.Row["nombre"] as String));
                                                 
@@ -62,26 +62,26 @@ namespace FrbaCommerce.ABM_Rol
                                 
                 builderDeComandos.Crear(sql2, parametros).ExecuteNonQuery();                                
             }
-            MessageBox.Show("Se creo el rol " + this.textBox1.Text);
+            MessageBox.Show("Se creo el rol " + this.textBoxRol.Text);
             BorrarDatosIngresados();
         }
 
-        private void checkedListBox1_SelectedIndexChanged(object sender, EventArgs e)
+        private void checkedListBoxFuncionalidades_SelectedIndexChanged(object sender, EventArgs e)
         {
 
         }
 
-        private void button3_Click(object sender, EventArgs e)
+        private void botonLimpiar_Click(object sender, EventArgs e)
         {
             BorrarDatosIngresados();            
         }
 
         private void BorrarDatosIngresados()
         {
-            textBox1.Clear();
-            for (int i = 0; i < checkedListBox1.Items.Count; i++)
+            textBoxRol.Clear();
+            for (int i = 0; i < checkedListBoxFuncionalidades.Items.Count; i++)
             {
-                checkedListBox1.SetItemChecked(i, false);
+                checkedListBoxFuncionalidades.SetItemChecked(i, false);
             }
         }
 

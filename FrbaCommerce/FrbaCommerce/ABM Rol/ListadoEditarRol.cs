@@ -25,13 +25,13 @@ namespace FrbaCommerce.ABM_Rol
 
         private void ListadoEditarRol_Load(object sender, EventArgs e)
         {
-            comboBox1.Items.Add("Habilitado");
-            comboBox1.Items.Add("Deshabilitado");
+            comboBoxEstadoRoles.Items.Add("Habilitado");
+            comboBoxEstadoRoles.Items.Add("Deshabilitado");
             AgregarBotonEditar();
             AgregarListenerBotonEditar();
         }
 
-        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        private void comboBoxEstadoRoles_SelectedIndexChanged(object sender, EventArgs e)
         {
             
         }
@@ -48,12 +48,12 @@ namespace FrbaCommerce.ABM_Rol
             command = builderDeComandos.Crear("SELECT distinct * FROM Rol WHERE habilitado = @habilitado", parametros);
             adapter.SelectCommand = command;
             adapter.Fill(roles);
-            dataGridView1.DataSource = roles.Tables[0].DefaultView;            
+            dataGridViewResultadosBusqueda.DataSource = roles.Tables[0].DefaultView;            
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void botonBuscar_Click(object sender, EventArgs e)
         {
-            if (this.comboBox1.Text == "Habilitado")
+            if (this.comboBoxEstadoRoles.Text == "Habilitado")
             {
                 CargarRoles(1);
             }
@@ -77,27 +77,27 @@ namespace FrbaCommerce.ABM_Rol
                 buttons.CellTemplate.Style.BackColor = Color.Honeydew;                
             }
 
-            dataGridView1.Columns.Add(buttons);
+            dataGridViewResultadosBusqueda.Columns.Add(buttons);
 
 
         }
 
         private void AgregarListenerBotonEditar()
         {
-            dataGridView1.CellClick +=
+            dataGridViewResultadosBusqueda.CellClick +=
                 new DataGridViewCellEventHandler(dataGridView1_CellClick);
         }
 
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
 
-            String nombreRolAEditar = dataGridView1.Rows[e.RowIndex].Cells["nombre"].Value.ToString();
+            String nombreRolAEditar = dataGridViewResultadosBusqueda.Rows[e.RowIndex].Cells["nombre"].Value.ToString();
             this.Hide();
             new EditarRol(nombreRolAEditar).Show();
             
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void botonCancelar_Click(object sender, EventArgs e)
         {
             new RolForm().Show();
             this.Close();
