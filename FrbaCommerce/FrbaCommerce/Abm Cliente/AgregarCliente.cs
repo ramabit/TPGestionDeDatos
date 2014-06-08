@@ -87,15 +87,22 @@ namespace FrbaCommerce.ABM_Cliente
             command.ExecuteNonQuery();
             Decimal idDireccion = (Decimal) parametro6.Value;
 
-            query = "LOS_SUPER_AMIGOS.crear_usuario";
+            query = "LOS_SUPER_AMIGOS.crear_usuario_con_valores";
             parametros.Clear();
-            SqlParameter parametro7 = new SqlParameter("@usuario_id", SqlDbType.Decimal);
-            parametro7.Direction = ParameterDirection.Output;
+            SqlParameter parametro7 = new SqlParameter("@username", SqlDbType.NVarChar, 50);
+            parametro7.Value = username;
+            SqlParameter parametro8 = new SqlParameter("@password", SqlDbType.NVarChar, 150);
+            String contrasenaEncriptada = HashSha256.getHash(contrasena);
+            parametro8.Value = contrasenaEncriptada;
+            SqlParameter parametro9 = new SqlParameter("@usuario_id", SqlDbType.Decimal);
+            parametro9.Direction = ParameterDirection.Output;
             parametros.Add(parametro7);
+            parametros.Add(parametro8);
+            parametros.Add(parametro9);
             command = builderDeComandos.Crear(query, parametros);
             command.CommandType = CommandType.StoredProcedure;
             command.ExecuteNonQuery();
-            Decimal idUsuario = (Decimal)parametro6.Value;
+            Decimal idUsuario = (Decimal)parametro9.Value;
             
             parametros.Clear();
             parametros.Add(new SqlParameter("@nombre", nombre));

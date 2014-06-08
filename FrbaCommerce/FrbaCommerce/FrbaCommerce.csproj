@@ -192,7 +192,6 @@
     <Compile Include="ABM Visibilidad\VisibilidadForm.Designer.cs">
       <DependentUpon>VisibilidadForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="BuilderDeComandos.cs" />
     <Compile Include="Calificar Vendedor\Calificar.cs">
       <SubType>Form</SubType>
     </Compile>
