@@ -15,5 +15,10 @@ namespace FrbaCommerce.Editar_Publicacion
         {
             InitializeComponent();
         }
+
+        private void EditarPublicacion_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

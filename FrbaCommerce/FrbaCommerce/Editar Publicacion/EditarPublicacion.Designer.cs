@@ -29,6 +29,15 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.checkBox_Preguntas = new System.Windows.Forms.CheckBox();
+            this.comboBox_rubro = new System.Windows.Forms.ComboBox();
+            this.comboBox_visibilidad = new System.Windows.Forms.ComboBox();
+            this.comboBox_estado = new System.Windows.Forms.ComboBox();
+            this.comboBox_tipo = new System.Windows.Forms.ComboBox();
             this.textBox_Mail = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
@@ -43,15 +52,6 @@
             this.button_Cancelar = new System.Windows.Forms.Button();
             this.button_Limpiar = new System.Windows.Forms.Button();
             this.checkBox_Habilitado = new System.Windows.Forms.CheckBox();
-            this.comboBox_tipo = new System.Windows.Forms.ComboBox();
-            this.comboBox_estado = new System.Windows.Forms.ComboBox();
-            this.comboBox_visibilidad = new System.Windows.Forms.ComboBox();
-            this.comboBox_rubro = new System.Windows.Forms.ComboBox();
-            this.checkBox_Preguntas = new System.Windows.Forms.CheckBox();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -82,6 +82,84 @@
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Datos personales";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(6, 233);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(36, 13);
+            this.label9.TabIndex = 18;
+            this.label9.Text = "Rubro";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(6, 206);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(53, 13);
+            this.label8.TabIndex = 17;
+            this.label8.Text = "Visibilidad";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(6, 179);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(40, 13);
+            this.label7.TabIndex = 16;
+            this.label7.Text = "Estado";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(6, 152);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(28, 13);
+            this.label6.TabIndex = 15;
+            this.label6.Text = "Tipo";
+            // 
+            // checkBox_Preguntas
+            // 
+            this.checkBox_Preguntas.AutoSize = true;
+            this.checkBox_Preguntas.Location = new System.Drawing.Point(9, 259);
+            this.checkBox_Preguntas.Name = "checkBox_Preguntas";
+            this.checkBox_Preguntas.Size = new System.Drawing.Size(74, 17);
+            this.checkBox_Preguntas.TabIndex = 6;
+            this.checkBox_Preguntas.Text = "Preguntas";
+            this.checkBox_Preguntas.UseVisualStyleBackColor = true;
+            // 
+            // comboBox_rubro
+            // 
+            this.comboBox_rubro.FormattingEnabled = true;
+            this.comboBox_rubro.Location = new System.Drawing.Point(112, 230);
+            this.comboBox_rubro.Name = "comboBox_rubro";
+            this.comboBox_rubro.Size = new System.Drawing.Size(250, 21);
+            this.comboBox_rubro.TabIndex = 14;
+            // 
+            // comboBox_visibilidad
+            // 
+            this.comboBox_visibilidad.FormattingEnabled = true;
+            this.comboBox_visibilidad.Location = new System.Drawing.Point(112, 203);
+            this.comboBox_visibilidad.Name = "comboBox_visibilidad";
+            this.comboBox_visibilidad.Size = new System.Drawing.Size(250, 21);
+            this.comboBox_visibilidad.TabIndex = 13;
+            // 
+            // comboBox_estado
+            // 
+            this.comboBox_estado.FormattingEnabled = true;
+            this.comboBox_estado.Location = new System.Drawing.Point(112, 176);
+            this.comboBox_estado.Name = "comboBox_estado";
+            this.comboBox_estado.Size = new System.Drawing.Size(250, 21);
+            this.comboBox_estado.TabIndex = 12;
+            // 
+            // comboBox_tipo
+            // 
+            this.comboBox_tipo.FormattingEnabled = true;
+            this.comboBox_tipo.Location = new System.Drawing.Point(112, 149);
+            this.comboBox_tipo.Name = "comboBox_tipo";
+            this.comboBox_tipo.Size = new System.Drawing.Size(250, 21);
+            this.comboBox_tipo.TabIndex = 11;
             // 
             // textBox_Mail
             // 
@@ -200,84 +278,6 @@
             this.checkBox_Habilitado.Text = "Habilitado";
             this.checkBox_Habilitado.UseVisualStyleBackColor = true;
             // 
-            // comboBox_tipo
-            // 
-            this.comboBox_tipo.FormattingEnabled = true;
-            this.comboBox_tipo.Location = new System.Drawing.Point(112, 149);
-            this.comboBox_tipo.Name = "comboBox_tipo";
-            this.comboBox_tipo.Size = new System.Drawing.Size(250, 21);
-            this.comboBox_tipo.TabIndex = 11;
-            // 
-            // comboBox_estado
-            // 
-            this.comboBox_estado.FormattingEnabled = true;
-            this.comboBox_estado.Location = new System.Drawing.Point(112, 176);
-            this.comboBox_estado.Name = "comboBox_estado";
-            this.comboBox_estado.Size = new System.Drawing.Size(250, 21);
-            this.comboBox_estado.TabIndex = 12;
-            // 
-            // comboBox_visibilidad
-            // 
-            this.comboBox_visibilidad.FormattingEnabled = true;
-            this.comboBox_visibilidad.Location = new System.Drawing.Point(112, 203);
-            this.comboBox_visibilidad.Name = "comboBox_visibilidad";
-            this.comboBox_visibilidad.Size = new System.Drawing.Size(250, 21);
-            this.comboBox_visibilidad.TabIndex = 13;
-            // 
-            // comboBox_rubro
-            // 
-            this.comboBox_rubro.FormattingEnabled = true;
-            this.comboBox_rubro.Location = new System.Drawing.Point(112, 230);
-            this.comboBox_rubro.Name = "comboBox_rubro";
-            this.comboBox_rubro.Size = new System.Drawing.Size(250, 21);
-            this.comboBox_rubro.TabIndex = 14;
-            // 
-            // checkBox_Preguntas
-            // 
-            this.checkBox_Preguntas.AutoSize = true;
-            this.checkBox_Preguntas.Location = new System.Drawing.Point(9, 259);
-            this.checkBox_Preguntas.Name = "checkBox_Preguntas";
-            this.checkBox_Preguntas.Size = new System.Drawing.Size(74, 17);
-            this.checkBox_Preguntas.TabIndex = 6;
-            this.checkBox_Preguntas.Text = "Preguntas";
-            this.checkBox_Preguntas.UseVisualStyleBackColor = true;
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(6, 152);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(28, 13);
-            this.label6.TabIndex = 15;
-            this.label6.Text = "Tipo";
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(6, 179);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(40, 13);
-            this.label7.TabIndex = 16;
-            this.label7.Text = "Estado";
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(6, 206);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(53, 13);
-            this.label8.TabIndex = 17;
-            this.label8.Text = "Visibilidad";
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(6, 233);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(36, 13);
-            this.label9.TabIndex = 18;
-            this.label9.Text = "Rubro";
-            // 
             // EditarPublicacion
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -290,6 +290,7 @@
             this.Controls.Add(this.groupBox1);
             this.Name = "EditarPublicacion";
             this.Text = "EditarCliente";
+            this.Load += new System.EventHandler(this.EditarPublicacion_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);

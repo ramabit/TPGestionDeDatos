@@ -20,10 +20,5 @@ namespace FrbaCommerce.ABM_Empresa
         {
 
         }
-
-        private void AgregarEmpresa_Load_1(object sender, EventArgs e)
-        {
-
-        }
     }
 }
