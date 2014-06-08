@@ -1,6 +1,6 @@
 ﻿namespace FrbaCommerce.Comprar_Ofertar
 {
-    partial class Comprar
+    partial class ComprarOfertar
     {
         /// <summary>
         /// Required designer variable.

@@ -9,9 +9,9 @@ using System.Windows.Forms;
 
 namespace FrbaCommerce.Comprar_Ofertar
 {
-    public partial class Comprar : Form
+    public partial class ComprarOfertar : Form
     {
-        public Comprar()
+        public ComprarOfertar()
         {
             InitializeComponent();
         }
