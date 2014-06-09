@@ -55,6 +55,9 @@ namespace FrbaCommerce.ABM_Cliente
 
             textBox_Nombre.Text = Convert.ToString(reader["nombre"]);
             textBox_Apellido.Text = Convert.ToString(reader["apellido"]);
+<<<<<<< HEAD
+         //   textBox_Dni.Text = Convert.ToString(reader["dni"]);
+=======
 
             query = "SELECT nombre FROM LOS_SUPER_AMIGOS.TipoDeDocumento WHERE id = @idTipoDeDocumento";
             parametros.Clear();
@@ -63,6 +66,7 @@ namespace FrbaCommerce.ABM_Cliente
             comboBox_TipoDeDocumento.SelectedValue = tipoDeDocumento;
 
             textBox_NumeroDeDoc.Text = Convert.ToString(reader["documento"]);
+>>>>>>> 061fa6155146604dad6d26cd87611355cad6c212
             textBox_FechaDeNacimiento.Text = Convert.ToString(reader["fecha_nacimiento"]);
             textBox_Mail.Text = Convert.ToString(reader["mail"]);
             textBox_Mail.Text = Convert.ToString(reader["telefono"]);

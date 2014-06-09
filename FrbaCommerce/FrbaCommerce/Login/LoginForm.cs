@@ -74,8 +74,9 @@ namespace FrbaCommerce.Login
                 String primerInicio = (String)builderDeComandos.Crear(sesion, parametros).ExecuteScalar();
                 if (primerInicio == "559aead08264d5795d3909718cdd05abd49572e84fe55590eef31a88a08fdffd")
                 {
-                    new CambiarContrasena().ShowDialog();
                     this.Hide();
+                    new CambiarContrasena().ShowDialog();
+                    this.Close();
                 }
 
                 parametros.Clear();
@@ -86,8 +87,9 @@ namespace FrbaCommerce.Login
 
                 if(cantidadDeRoles > 1)
                 {
-                    new ElegirRol().ShowDialog();
                     this.Hide();
+                    new ElegirRol().ShowDialog();
+                    this.Close();
                 }
                 else
                 {
@@ -99,8 +101,9 @@ namespace FrbaCommerce.Login
                     UsuarioSesion.Usuario.rol = rolUser;
                   //  MessageBox.Show("Rol: " + UsuarioSesion.Usuario.rol);
 
-                    new MenuPrincipal().ShowDialog();
                     this.Hide();
+                    new MenuPrincipal().ShowDialog();
+                    this.Close();
                 }
 
             }
@@ -172,8 +175,9 @@ namespace FrbaCommerce.Login
 
         private void botonRegistrarse_Click(object sender, EventArgs e)
         {
-            new Registro_de_Usuario.RegistrarUsuario().Show();
             this.Hide();
+            new Registro_de_Usuario.RegistrarUsuario().Show();
+            this.Close();
         }
     }
 }

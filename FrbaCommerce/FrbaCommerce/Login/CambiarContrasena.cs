@@ -49,8 +49,9 @@ namespace FrbaCommerce.Login
 
             if (cantidadDeRoles > 1)
             {
-                new ElegirRol().ShowDialog();
                 this.Hide();
+                new ElegirRol().ShowDialog();
+                this.Close();
             }
             else
             {
@@ -61,8 +62,9 @@ namespace FrbaCommerce.Login
 
                 UsuarioSesion.Usuario.rol = rolUser;
 
-                new MenuPrincipal().ShowDialog();
                 this.Hide();
+                new MenuPrincipal().ShowDialog();
+                this.Close();
             }
 
         }
