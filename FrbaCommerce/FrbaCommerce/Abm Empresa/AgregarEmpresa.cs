@@ -18,6 +18,16 @@ namespace FrbaCommerce.ABM_Empresa
 
         private void AgregarEmpresa_Load(object sender, EventArgs e)
         {
+            AgregarListenerACalendario();
+        }
+
+        private void AgregarListenerACalendario()
+        {
+            this.monthCalendar_FechaDeCreacion.DateSelected += new System.Windows.Forms.DateRangeEventHandler(this.monthCalendar_FechaDeNacimiento_DateSelected);
+        }
+
+        private void button_FechaDeCreacion_Click(object sender, EventArgs e)
+        {
 
         }
     }
