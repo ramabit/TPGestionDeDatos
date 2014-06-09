@@ -29,6 +29,11 @@ namespace FrbaCommerce.ABM_Cliente
         private void AgregarCliente_Load(object sender, EventArgs e)
         {
             CargarTipoDeDocumentos();
+            AgregarListenerACalendario();
+        }
+
+        private void AgregarListenerACalendario()
+        {
             this.monthCalendar_FechaDeNacimiento.DateSelected += new System.Windows.Forms.DateRangeEventHandler(this.monthCalendar_FechaDeNacimiento_DateSelected);
         }
 
@@ -53,11 +58,13 @@ namespace FrbaCommerce.ABM_Cliente
             Decimal numeroDeDocumento = Convert.ToDecimal(textBox_NumeroDeDoc.Text);
             DateTime fechaDeNacimiento = Convert.ToDateTime(textBox_FechaDeNacimiento.Text);
             String mail = textBox_Mail.Text;
+            Decimal telefono = Convert.ToDecimal(textBox_Telefono.Text);
             String calle = textBox_Calle.Text;
             String numero = textBox_Numero.Text;
             String piso = textBox_Piso.Text;
             String departamento = textBox_Departamento.Text;
             String codigoPostal = textBox_CodigoPostal.Text;
+            String localidad = textBox_CodigoPostal.Text;
 
             // Averigua el id del tipo de documento a partir del nombre del tipo de documento
             query = "SELECT id FROM LOS_SUPER_AMIGOS.TipoDeDocumento WHERE nombre = @tipoDeDocumento";
@@ -68,8 +75,9 @@ namespace FrbaCommerce.ABM_Cliente
             // Crea una direccion y se guarda su id. Usa un stored procedure del script
             query = "LOS_SUPER_AMIGOS.crear_direccion";
             parametros.Clear();
-            SqlParameter parametro1 = new SqlParameter("@calle", SqlDbType.NVarChar, 100);
-            parametro1.Value = calle;
+            //SqlParameter parametro1 = new SqlParameter("@calle", SqlDbType.NVarChar, 100);
+            SqlParameter parametro1 = new SqlParameter("@calle", calle);
+            //parametro1.Value = calle;
             SqlParameter parametro2 = new SqlParameter("@numero", SqlDbType.Decimal);
             parametro2.Value = numero;
             SqlParameter parametro3 = new SqlParameter("@piso", SqlDbType.Decimal);
@@ -78,6 +86,8 @@ namespace FrbaCommerce.ABM_Cliente
             parametro4.Value = departamento;
             SqlParameter parametro5 = new SqlParameter("@cod_postal", SqlDbType.NVarChar, 50);
             parametro5.Value = codigoPostal;
+            SqlParameter parametro10 = new SqlParameter("@localidad", SqlDbType.NVarChar, 50);
+            parametro10.Value = codigoPostal;
             SqlParameter parametro6 = new SqlParameter("@direccion_id", SqlDbType.Decimal);
             parametro6.Direction = ParameterDirection.Output;
             parametros.Add(parametro1);
@@ -85,6 +95,7 @@ namespace FrbaCommerce.ABM_Cliente
             parametros.Add(parametro3);
             parametros.Add(parametro4);
             parametros.Add(parametro5);
+            parametros.Add(parametro10);
             parametros.Add(parametro6);
             command = builderDeComandos.Crear(query, parametros);
             command.CommandType = CommandType.StoredProcedure;
@@ -116,10 +127,11 @@ namespace FrbaCommerce.ABM_Cliente
             parametros.Add(new SqlParameter("@numeroDeDocumento", numeroDeDocumento));
             parametros.Add(new SqlParameter("@fechaDeNacimiento", fechaDeNacimiento));
             parametros.Add(new SqlParameter("@mail", mail));
+            parametros.Add(new SqlParameter("@telefono", telefono));
             parametros.Add(new SqlParameter("@idDireccion", idDireccion));
             parametros.Add(new SqlParameter("@idUsuario", idUsuario));
 
-            query = "INSERT INTO LOS_SUPER_AMIGOS.Cliente (nombre, apellido, fecha_nacimiento, tipo_de_documento_id, documento, mail, direccion_id, usuario_id) values (@nombre, @apellido, @fechaDeNacimiento, @idTipoDeDocumento, @numeroDeDocumento, @mail, @idDireccion, @idUsuario)";
+            query = "INSERT INTO LOS_SUPER_AMIGOS.Cliente (nombre, apellido, fecha_nacimiento, tipo_de_documento_id, documento, mail, telefono, direccion_id, usuario_id) values (@nombre, @apellido, @fechaDeNacimiento, @idTipoDeDocumento, @numeroDeDocumento, @mail, @telefono, @idDireccion, @idUsuario)";
 
             int filasAfectadas = builderDeComandos.Crear(query, parametros).ExecuteNonQuery();
 
@@ -134,11 +146,13 @@ namespace FrbaCommerce.ABM_Cliente
             textBox_NumeroDeDoc.Text = "";
             textBox_FechaDeNacimiento.Text = "";
             textBox_Mail.Text = "";
+            textBox_Telefono.Text = "";
             textBox_Calle.Text = "";
             textBox_Numero.Text = "";
             textBox_Piso.Text = "";
             textBox_Departamento.Text = "";
             textBox_CodigoPostal.Text = "";
+            textBox_Localidad.Text = "";
         }      
 
         private void button_Cancelar_Click(object sender, EventArgs e)
