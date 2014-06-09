@@ -28,19 +28,30 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.button_Guardar = new System.Windows.Forms.Button();
+            this.button_Cancelar = new System.Windows.Forms.Button();
+            this.button_Limpiar = new System.Windows.Forms.Button();
+            this.checkBox_Habilitado = new System.Windows.Forms.CheckBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label13 = new System.Windows.Forms.Label();
+            this.textBox_Ciudad = new System.Windows.Forms.TextBox();
+            this.monthCalendar_FechaDeCreacion = new System.Windows.Forms.MonthCalendar();
+            this.label2 = new System.Windows.Forms.Label();
+            this.textBox_Telefono = new System.Windows.Forms.TextBox();
+            this.label11 = new System.Windows.Forms.Label();
+            this.textBox_NombreDeContacto = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.textBox_Mail = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
+            this.button_FechaDeCreacion = new System.Windows.Forms.Button();
             this.textBox_FechaDeCreacion = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.textBox_Cuit = new System.Windows.Forms.TextBox();
-            this.textBox_NombreDeContacto = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
+            this.textBox_CUIT = new System.Windows.Forms.TextBox();
             this.textBox_RazonSocial = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.label12 = new System.Windows.Forms.Label();
+            this.textBox_Localidad = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
@@ -51,33 +62,129 @@
             this.textBox_Piso = new System.Windows.Forms.TextBox();
             this.textBox_Numero = new System.Windows.Forms.TextBox();
             this.textBox_Calle = new System.Windows.Forms.TextBox();
-            this.button_Guardar = new System.Windows.Forms.Button();
-            this.button_Cancelar = new System.Windows.Forms.Button();
-            this.button_Limpiar = new System.Windows.Forms.Button();
-            this.checkBox_Habilitado = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
+            // button_Guardar
+            // 
+            this.button_Guardar.Location = new System.Drawing.Point(280, 444);
+            this.button_Guardar.Name = "button_Guardar";
+            this.button_Guardar.Size = new System.Drawing.Size(100, 30);
+            this.button_Guardar.TabIndex = 2;
+            this.button_Guardar.Text = "Guardar";
+            this.button_Guardar.UseVisualStyleBackColor = true;
+            this.button_Guardar.Click += new System.EventHandler(this.button_Guardar_Click);
+            // 
+            // button_Cancelar
+            // 
+            this.button_Cancelar.Location = new System.Drawing.Point(12, 444);
+            this.button_Cancelar.Name = "button_Cancelar";
+            this.button_Cancelar.Size = new System.Drawing.Size(100, 30);
+            this.button_Cancelar.TabIndex = 3;
+            this.button_Cancelar.Text = "Cancelar";
+            this.button_Cancelar.UseVisualStyleBackColor = true;
+            this.button_Cancelar.Click += new System.EventHandler(this.button_Cancelar_Click);
+            // 
+            // button_Limpiar
+            // 
+            this.button_Limpiar.Location = new System.Drawing.Point(174, 444);
+            this.button_Limpiar.Name = "button_Limpiar";
+            this.button_Limpiar.Size = new System.Drawing.Size(100, 30);
+            this.button_Limpiar.TabIndex = 4;
+            this.button_Limpiar.Text = "Limpiar";
+            this.button_Limpiar.UseVisualStyleBackColor = true;
+            this.button_Limpiar.Click += new System.EventHandler(this.button_Limpiar_Click);
+            // 
+            // checkBox_Habilitado
+            // 
+            this.checkBox_Habilitado.AutoSize = true;
+            this.checkBox_Habilitado.Location = new System.Drawing.Point(12, 414);
+            this.checkBox_Habilitado.Name = "checkBox_Habilitado";
+            this.checkBox_Habilitado.Size = new System.Drawing.Size(73, 17);
+            this.checkBox_Habilitado.TabIndex = 5;
+            this.checkBox_Habilitado.Text = "Habilitado";
+            this.checkBox_Habilitado.UseVisualStyleBackColor = true;
+            // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.label13);
+            this.groupBox1.Controls.Add(this.textBox_Ciudad);
+            this.groupBox1.Controls.Add(this.monthCalendar_FechaDeCreacion);
+            this.groupBox1.Controls.Add(this.label2);
+            this.groupBox1.Controls.Add(this.textBox_Telefono);
+            this.groupBox1.Controls.Add(this.label11);
+            this.groupBox1.Controls.Add(this.textBox_NombreDeContacto);
             this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Controls.Add(this.textBox_Mail);
             this.groupBox1.Controls.Add(this.label4);
-            this.groupBox1.Controls.Add(this.button1);
+            this.groupBox1.Controls.Add(this.button_FechaDeCreacion);
             this.groupBox1.Controls.Add(this.textBox_FechaDeCreacion);
             this.groupBox1.Controls.Add(this.label3);
-            this.groupBox1.Controls.Add(this.textBox_Cuit);
-            this.groupBox1.Controls.Add(this.textBox_NombreDeContacto);
-            this.groupBox1.Controls.Add(this.label2);
+            this.groupBox1.Controls.Add(this.textBox_CUIT);
             this.groupBox1.Controls.Add(this.textBox_RazonSocial);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(368, 151);
-            this.groupBox1.TabIndex = 0;
+            this.groupBox1.Size = new System.Drawing.Size(368, 209);
+            this.groupBox1.TabIndex = 6;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Datos personales";
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(6, 178);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(40, 13);
+            this.label13.TabIndex = 16;
+            this.label13.Text = "Ciudad";
+            // 
+            // textBox_Ciudad
+            // 
+            this.textBox_Ciudad.Location = new System.Drawing.Point(112, 175);
+            this.textBox_Ciudad.Name = "textBox_Ciudad";
+            this.textBox_Ciudad.Size = new System.Drawing.Size(250, 20);
+            this.textBox_Ciudad.TabIndex = 15;
+            // 
+            // monthCalendar_FechaDeCreacion
+            // 
+            this.monthCalendar_FechaDeCreacion.Location = new System.Drawing.Point(198, 19);
+            this.monthCalendar_FechaDeCreacion.Name = "monthCalendar_FechaDeCreacion";
+            this.monthCalendar_FechaDeCreacion.TabIndex = 5;
+            this.monthCalendar_FechaDeCreacion.Visible = false;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(6, 152);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(49, 13);
+            this.label2.TabIndex = 14;
+            this.label2.Text = "Telefono";
+            // 
+            // textBox_Telefono
+            // 
+            this.textBox_Telefono.Location = new System.Drawing.Point(112, 149);
+            this.textBox_Telefono.Name = "textBox_Telefono";
+            this.textBox_Telefono.Size = new System.Drawing.Size(250, 20);
+            this.textBox_Telefono.TabIndex = 13;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(6, 48);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(105, 13);
+            this.label11.TabIndex = 12;
+            this.label11.Text = "Nombre de Contacto";
+            // 
+            // textBox_NombreDeContacto
+            // 
+            this.textBox_NombreDeContacto.Location = new System.Drawing.Point(112, 45);
+            this.textBox_NombreDeContacto.Name = "textBox_NombreDeContacto";
+            this.textBox_NombreDeContacto.Size = new System.Drawing.Size(250, 20);
+            this.textBox_NombreDeContacto.TabIndex = 11;
             // 
             // label5
             // 
@@ -104,14 +211,15 @@
             this.label4.TabIndex = 8;
             this.label4.Text = "Fecha de Creacion";
             // 
-            // button1
+            // button_FechaDeCreacion
             // 
-            this.button1.Location = new System.Drawing.Point(282, 97);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(80, 20);
-            this.button1.TabIndex = 7;
-            this.button1.Text = "Seleccionar";
-            this.button1.UseVisualStyleBackColor = true;
+            this.button_FechaDeCreacion.Location = new System.Drawing.Point(282, 97);
+            this.button_FechaDeCreacion.Name = "button_FechaDeCreacion";
+            this.button_FechaDeCreacion.Size = new System.Drawing.Size(80, 20);
+            this.button_FechaDeCreacion.TabIndex = 7;
+            this.button_FechaDeCreacion.Text = "Seleccionar";
+            this.button_FechaDeCreacion.UseVisualStyleBackColor = true;
+            this.button_FechaDeCreacion.Click += new System.EventHandler(this.button_FechaDeCreacion_Click);
             // 
             // textBox_FechaDeCreacion
             // 
@@ -129,28 +237,12 @@
             this.label3.TabIndex = 5;
             this.label3.Text = "CUIT";
             // 
-            // textBox_Cuit
+            // textBox_CUIT
             // 
-            this.textBox_Cuit.Location = new System.Drawing.Point(112, 71);
-            this.textBox_Cuit.Name = "textBox_Cuit";
-            this.textBox_Cuit.Size = new System.Drawing.Size(250, 20);
-            this.textBox_Cuit.TabIndex = 4;
-            // 
-            // textBox_NombreDeContacto
-            // 
-            this.textBox_NombreDeContacto.Location = new System.Drawing.Point(112, 45);
-            this.textBox_NombreDeContacto.Name = "textBox_NombreDeContacto";
-            this.textBox_NombreDeContacto.Size = new System.Drawing.Size(250, 20);
-            this.textBox_NombreDeContacto.TabIndex = 3;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(6, 48);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(105, 13);
-            this.label2.TabIndex = 2;
-            this.label2.Text = "Nombre de Contacto";
+            this.textBox_CUIT.Location = new System.Drawing.Point(112, 71);
+            this.textBox_CUIT.Name = "textBox_CUIT";
+            this.textBox_CUIT.Size = new System.Drawing.Size(250, 20);
+            this.textBox_CUIT.TabIndex = 4;
             // 
             // textBox_RazonSocial
             // 
@@ -170,6 +262,8 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.label12);
+            this.groupBox2.Controls.Add(this.textBox_Localidad);
             this.groupBox2.Controls.Add(this.label10);
             this.groupBox2.Controls.Add(this.label9);
             this.groupBox2.Controls.Add(this.label8);
@@ -180,12 +274,28 @@
             this.groupBox2.Controls.Add(this.textBox_Piso);
             this.groupBox2.Controls.Add(this.textBox_Numero);
             this.groupBox2.Controls.Add(this.textBox_Calle);
-            this.groupBox2.Location = new System.Drawing.Point(12, 169);
+            this.groupBox2.Location = new System.Drawing.Point(12, 227);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(368, 151);
-            this.groupBox2.TabIndex = 1;
+            this.groupBox2.Size = new System.Drawing.Size(368, 181);
+            this.groupBox2.TabIndex = 17;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Direccion";
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(6, 152);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(53, 13);
+            this.label12.TabIndex = 21;
+            this.label12.Text = "Localidad";
+            // 
+            // textBox_Localidad
+            // 
+            this.textBox_Localidad.Location = new System.Drawing.Point(112, 149);
+            this.textBox_Localidad.Name = "textBox_Localidad";
+            this.textBox_Localidad.Size = new System.Drawing.Size(250, 20);
+            this.textBox_Localidad.TabIndex = 20;
             // 
             // label10
             // 
@@ -267,54 +377,17 @@
             this.textBox_Calle.Size = new System.Drawing.Size(250, 20);
             this.textBox_Calle.TabIndex = 11;
             // 
-            // button_Guardar
-            // 
-            this.button_Guardar.Location = new System.Drawing.Point(280, 354);
-            this.button_Guardar.Name = "button_Guardar";
-            this.button_Guardar.Size = new System.Drawing.Size(100, 30);
-            this.button_Guardar.TabIndex = 2;
-            this.button_Guardar.Text = "Guardar";
-            this.button_Guardar.UseVisualStyleBackColor = true;
-            // 
-            // button_Cancelar
-            // 
-            this.button_Cancelar.Location = new System.Drawing.Point(68, 354);
-            this.button_Cancelar.Name = "button_Cancelar";
-            this.button_Cancelar.Size = new System.Drawing.Size(100, 30);
-            this.button_Cancelar.TabIndex = 3;
-            this.button_Cancelar.Text = "Cancelar";
-            this.button_Cancelar.UseVisualStyleBackColor = true;
-            // 
-            // button_Limpiar
-            // 
-            this.button_Limpiar.Location = new System.Drawing.Point(174, 354);
-            this.button_Limpiar.Name = "button_Limpiar";
-            this.button_Limpiar.Size = new System.Drawing.Size(100, 30);
-            this.button_Limpiar.TabIndex = 4;
-            this.button_Limpiar.Text = "Limpiar";
-            this.button_Limpiar.UseVisualStyleBackColor = true;
-            // 
-            // checkBox_Habilitado
-            // 
-            this.checkBox_Habilitado.AutoSize = true;
-            this.checkBox_Habilitado.Location = new System.Drawing.Point(21, 326);
-            this.checkBox_Habilitado.Name = "checkBox_Habilitado";
-            this.checkBox_Habilitado.Size = new System.Drawing.Size(73, 17);
-            this.checkBox_Habilitado.TabIndex = 5;
-            this.checkBox_Habilitado.Text = "Habilitado";
-            this.checkBox_Habilitado.UseVisualStyleBackColor = true;
-            // 
             // EditarEmpresa
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(392, 396);
+            this.ClientSize = new System.Drawing.Size(392, 486);
+            this.Controls.Add(this.groupBox2);
+            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.checkBox_Habilitado);
             this.Controls.Add(this.button_Limpiar);
             this.Controls.Add(this.button_Cancelar);
             this.Controls.Add(this.button_Guardar);
-            this.Controls.Add(this.groupBox2);
-            this.Controls.Add(this.groupBox1);
             this.Name = "EditarEmpresa";
             this.Text = "EditarEmpresa";
             this.Load += new System.EventHandler(this.EditarEmpresa_Load);
@@ -329,19 +402,33 @@
 
         #endregion
 
+        private System.Windows.Forms.Button button_Guardar;
+        private System.Windows.Forms.Button button_Cancelar;
+        private System.Windows.Forms.Button button_Limpiar;
+        private System.Windows.Forms.CheckBox checkBox_Habilitado;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox textBox_RazonSocial;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox textBox_Cuit;
-        private System.Windows.Forms.TextBox textBox_NombreDeContacto;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.TextBox textBox_Ciudad;
+        private System.Windows.Forms.MonthCalendar monthCalendar_FechaDeCreacion;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox textBox_FechaDeCreacion;
+        private System.Windows.Forms.TextBox textBox_Telefono;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.TextBox textBox_NombreDeContacto;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox textBox_Mail;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button button_FechaDeCreacion;
+        private System.Windows.Forms.TextBox textBox_FechaDeCreacion;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TextBox textBox_CUIT;
+        private System.Windows.Forms.TextBox textBox_RazonSocial;
+        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.TextBox textBox_Localidad;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox textBox_CodigoPostal;
@@ -349,12 +436,5 @@
         private System.Windows.Forms.TextBox textBox_Piso;
         private System.Windows.Forms.TextBox textBox_Numero;
         private System.Windows.Forms.TextBox textBox_Calle;
-        private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Button button_Guardar;
-        private System.Windows.Forms.Button button_Cancelar;
-        private System.Windows.Forms.Button button_Limpiar;
-        private System.Windows.Forms.CheckBox checkBox_Habilitado;
     }
 }

@@ -131,7 +131,6 @@ namespace FrbaCommerce.ABM_Empresa
 
         private void monthCalendar_FechaDeCreacion_DateSelected(object sender, System.Windows.Forms.DateRangeEventArgs e)
         {
-            MessageBox.Show("OK");
             textBox_FechaDeCreacion.Text = e.Start.ToShortDateString();
             monthCalendar_FechaDeCreacion.Visible = false;
         }

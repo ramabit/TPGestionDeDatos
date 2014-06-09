@@ -16,39 +16,132 @@ namespace FrbaCommerce.ABM_Empresa
         private String query;
         private SqlCommand command;
         private IList<SqlParameter> parametros = new List<SqlParameter>();
-        private Decimal idEmpresa;
+        private String idEmpresa;
+        private String idDireccion;
 
-        public EditarEmpresa(Decimal id)
+        public EditarEmpresa(String idEmpresa)
         {
             InitializeComponent();
-            idEmpresa = id;
+            this.idEmpresa = idEmpresa;
         }
 
         private void EditarEmpresa_Load(object sender, EventArgs e)
         {
             CargarDatos();
+            AgregarListenerACalendario();
         }
 
         private void CargarDatos()
         {
             query = "SELECT * FROM LOS_SUPER_AMIGOS.Empresa WHERE id = @idEmpresa";
+
             parametros.Clear();
             parametros.Add(new SqlParameter("@idEmpresa", idEmpresa));
             SqlDataReader reader = builderDeComandos.Crear(query, parametros).ExecuteReader();
+
             // Si no se puede leer tiro una excepcion
             if (!reader.Read()) throw new Exception("No se puede leer empresa");
+
             // Si se puede leer cargo los datos
             textBox_RazonSocial.Text = Convert.ToString(reader["razon_social"]);
-            // textBox_NombreDeContacto.Text = Convert.ToString(reader[""]);
-            textBox_Cuit.Text = Convert.ToString(reader["cuit"]);
+            textBox_NombreDeContacto.Text = Convert.ToString(reader["nombre_de_contacto"]);
+            textBox_CUIT.Text = Convert.ToString(reader["cuit"]);
             textBox_FechaDeCreacion.Text = Convert.ToString(reader["fecha_creacion"]);
             textBox_Mail.Text = Convert.ToString(reader["mail"]);
-            // textBox_Calle.Text = Convert.ToString(reader["nombre"]);
-            // textBox_Numero.Text = Convert.ToString(reader["nombre"]);
-            // textBox_Piso.Text = Convert.ToString(reader["nombre"]);
-            // textBox_Departamento.Text = Convert.ToString(reader["nombre"]);
-            // textBox_CodigoPostal.Text = Convert.ToString(reader["nombre"]);
+            textBox_Telefono.Text = Convert.ToString(reader["telefono"]);
+            textBox_Ciudad.Text = Convert.ToString(reader["ciudad"]);
+
+            query = "SELECT calle, numero, piso, depto, cod_postal, localidad FROM LOS_SUPER_AMIGOS.Direccion WHERE id = @idDireccion";
+            parametros.Clear();
+            parametros.Add(new SqlParameter("@idDireccion", Convert.ToDecimal(reader["direccion_id"])));
+            idDireccion = Convert.ToString(reader["direccion_id"]);
+            SqlDataReader readerDireccion = builderDeComandos.Crear(query, parametros).ExecuteReader();
+
+            // Si no encuentra la direccion, tira error
+            if (!readerDireccion.Read()) throw new Exception("No existe la direccion");
+
+            textBox_Calle.Text = Convert.ToString(readerDireccion["calle"]);
+            textBox_Numero.Text = Convert.ToString(readerDireccion["numero"]);
+            textBox_Piso.Text = Convert.ToString(readerDireccion["piso"]);
+            textBox_Departamento.Text = Convert.ToString(readerDireccion["depto"]);
+            textBox_CodigoPostal.Text = Convert.ToString(readerDireccion["cod_postal"]);
+            textBox_Localidad.Text = Convert.ToString(readerDireccion["localidad"]);
             if (Convert.ToBoolean(reader["habilitado"])) checkBox_Habilitado.Checked = true;
+        }
+
+        private void button_Guardar_Click(object sender, EventArgs e)
+        {
+            // Guarda en variables todos los campos de entrada
+            String razonSocial = textBox_RazonSocial.Text;
+            String nombreDeContacto = textBox_NombreDeContacto.Text;
+            String cuit = textBox_CUIT.Text;
+            DateTime fechaDeCreacion = Convert.ToDateTime(textBox_FechaDeCreacion.Text);
+            String mail = textBox_Mail.Text;
+            Decimal telefono = Convert.ToDecimal(textBox_Telefono.Text);
+            String ciudad = textBox_Ciudad.Text;
+            String calle = textBox_Calle.Text;
+            String numero = textBox_Numero.Text;
+            String piso = textBox_Piso.Text;
+            String departamento = textBox_Departamento.Text;
+            String codigoPostal = textBox_CodigoPostal.Text;
+            String localidad = textBox_Localidad.Text;
+
+            // Update direccion
+            query = "UPDATE LOS_SUPER_AMIGOS.Direccion SET calle = @calle, numero = @numero, piso = @piso, depto = @departamento, cod_postal = @codigoPostal, localidad = @localidad WHERE id = @idDireccion";
+            parametros.Clear();
+            parametros.Add(new SqlParameter("@calle", calle));
+            parametros.Add(new SqlParameter("@numero", numero));
+            parametros.Add(new SqlParameter("@piso", piso));
+            parametros.Add(new SqlParameter("@departamento", departamento));
+            parametros.Add(new SqlParameter("@codigoPostal", codigoPostal));
+            parametros.Add(new SqlParameter("@localidad", localidad));
+            parametros.Add(new SqlParameter("@idDireccion", idDireccion));
+
+            int filasAfectadas = builderDeComandos.Crear(query, parametros).ExecuteNonQuery();
+
+            if (filasAfectadas == 1) MessageBox.Show("La direccion se modifico correctamente");
+
+            parametros.Clear();
+            parametros.Add(new SqlParameter("@razonSocial", razonSocial));
+            parametros.Add(new SqlParameter("@nombreDeContacto", nombreDeContacto));
+            parametros.Add(new SqlParameter("@cuit", cuit));
+            parametros.Add(new SqlParameter("@fechaDeCreacion", fechaDeCreacion));
+            parametros.Add(new SqlParameter("@mail", mail));
+            parametros.Add(new SqlParameter("@telefono", telefono));
+            parametros.Add(new SqlParameter("@ciudad", ciudad));
+            parametros.Add(new SqlParameter("@idEmpresa", idEmpresa));
+
+            query = "UPDATE LOS_SUPER_AMIGOS.Empresa SET razon_social = @razonSocial, nombre_de_contacto = @nombreDeContacto, cuit = @cuit, fecha_creacion = @fechaDeCreacion, mail = @mail, telefono = @telefono, ciudad = @ciudad  WHERE id = @idEmpresa";
+
+            filasAfectadas = builderDeComandos.Crear(query, parametros).ExecuteNonQuery();
+
+            if (filasAfectadas == 1) MessageBox.Show("El cliente se modifico correctamente");
+        }
+
+        private void button_Limpiar_Click(object sender, EventArgs e)
+        {
+            CargarDatos();
+        }
+
+        private void button_Cancelar_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void button_FechaDeCreacion_Click(object sender, EventArgs e)
+        {
+            monthCalendar_FechaDeCreacion.Visible = true;
+        }
+
+        private void AgregarListenerACalendario()
+        {
+            this.monthCalendar_FechaDeCreacion.DateSelected += new System.Windows.Forms.DateRangeEventHandler(this.monthCalendar_FechaDeCreacion_DateSelected);
+        }
+
+        private void monthCalendar_FechaDeCreacion_DateSelected(object sender, System.Windows.Forms.DateRangeEventArgs e)
+        {
+            textBox_FechaDeCreacion.Text = e.Start.ToShortDateString();
+            monthCalendar_FechaDeCreacion.Visible = false;
         }
     }
 }

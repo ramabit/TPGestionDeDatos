@@ -62,7 +62,7 @@ namespace FrbaCommerce.ABM_Empresa
             if (e.ColumnIndex == dataGridView_Empresa.Columns["modificar"].Index && e.RowIndex >= 0)
             {
                 String idEmpresaAModificar = dataGridView_Empresa.Rows[e.RowIndex].Cells["id"].Value.ToString();
-                new EditarEmpresa(Convert.ToDecimal(idEmpresaAModificar)).ShowDialog();
+                new EditarEmpresa(idEmpresaAModificar).ShowDialog();
             }
         }
 
