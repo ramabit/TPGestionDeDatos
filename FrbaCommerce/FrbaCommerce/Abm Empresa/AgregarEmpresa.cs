@@ -42,7 +42,7 @@ namespace FrbaCommerce.ABM_Empresa
             String razonSocial = textBox_RazonSocial.Text;
             String nombreDeContacto = textBox_NombreDeContacto.Text;
             String cuit = textBox_CUIT.Text;
-            DateTime fechaDeCreacion = DateTime.Now;//Convert.ToDateTime(textBox_FechaDeCreacion.Text);
+            DateTime fechaDeCreacion = Convert.ToDateTime(textBox_FechaDeCreacion.Text);
             String mail = textBox_Mail.Text;
             Decimal telefono = Convert.ToDecimal(textBox_Telefono.Text);
             String ciudad = textBox_Ciudad.Text;
@@ -131,6 +131,7 @@ namespace FrbaCommerce.ABM_Empresa
 
         private void monthCalendar_FechaDeCreacion_DateSelected(object sender, System.Windows.Forms.DateRangeEventArgs e)
         {
+            MessageBox.Show("OK");
             textBox_FechaDeCreacion.Text = e.Start.ToShortDateString();
             monthCalendar_FechaDeCreacion.Visible = false;
         }

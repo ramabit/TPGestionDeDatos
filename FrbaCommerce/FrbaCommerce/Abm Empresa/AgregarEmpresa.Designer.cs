@@ -378,6 +378,7 @@
             this.Controls.Add(this.groupBox1);
             this.Name = "AgregarEmpresa";
             this.Text = "Agregar Empresa";
+            this.Load += new System.EventHandler(this.AgregarEmpresa_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
