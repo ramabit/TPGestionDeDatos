@@ -71,11 +71,9 @@ namespace FrbaCommerce.Comprar_Ofertar
             // No lo hice xq lo estoy probando directamente desde este form
 
             if (textBoxDescripcion.Text != "")
-            {
-                
+            {                
                 filtro += " and " + "descripcion like '%" + textBoxDescripcion.Text + "%'";                
-            }
-            //Tira error el like
+            }            
 
             if (comboBoxRubro.Text != "")
             {
