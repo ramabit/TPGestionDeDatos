@@ -137,6 +137,7 @@ numero numeric(18,0),
 piso numeric(18,0),
 depto nvarchar(5),
 cod_postal nvarchar(50),
+localidad nvarchar(50),
 PRIMARY KEY(id)
 )
 
@@ -165,7 +166,6 @@ PRIMARY KEY(id)
 create table LOS_SUPER_AMIGOS.Cliente
 (
 id numeric(18,0) identity(1,1),
-
 nombre nvarchar(255),
 apellido nvarchar(255),
 tipo_de_documento_id numeric(18,0),
