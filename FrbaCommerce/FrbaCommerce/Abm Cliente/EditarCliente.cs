@@ -26,7 +26,20 @@ namespace FrbaCommerce.ABM_Cliente
 
         private void EditarCliente_Load(object sender, EventArgs e)
         {
+            CargarTipoDeDocumentos(); 
             CargarDatos();
+        }
+
+        private void CargarTipoDeDocumentos()
+        {
+            command = builderDeComandos.Crear("SELECT nombre FROM LOS_SUPER_AMIGOS.TipoDeDocumento", parametros);
+
+            DataSet rubros = new DataSet();
+            SqlDataAdapter adapter = new SqlDataAdapter();
+            adapter.SelectCommand = command;
+            adapter.Fill(rubros);
+            comboBox_TipoDeDocumento.DataSource = rubros.Tables[0].DefaultView;
+            comboBox_TipoDeDocumento.ValueMember = "nombre";
         }
 
         private void CargarDatos()
@@ -49,6 +62,8 @@ namespace FrbaCommerce.ABM_Cliente
             query = "SELECT nombre FROM LOS_SUPER_AMIGOS.TipoDeDocumento WHERE id = @idTipoDeDocumento";
             parametros.Clear();
             parametros.Add(new SqlParameter("@idTipoDeDocumento", reader["tipo_de_documento_id"]));
+            String tipoDeDocumento = (String) builderDeComandos.Crear(query, parametros).ExecuteScalar();
+            comboBox_TipoDeDocumento.SelectedValue = tipoDeDocumento;
 
             textBox_NumeroDeDoc.Text = Convert.ToString(reader["documento"]);
 >>>>>>> 061fa6155146604dad6d26cd87611355cad6c212
@@ -80,19 +95,7 @@ namespace FrbaCommerce.ABM_Cliente
 
         private void button_Limpiar_Click(object sender, EventArgs e)
         {
-            textBox_Nombre.Text = "";
-            textBox_Apellido.Text = "";
-            comboBox_TipoDeDocumento.SelectedIndex = 0;
-            textBox_NumeroDeDoc.Text = "";
-            textBox_FechaDeNacimiento.Text = "";
-            textBox_Mail.Text = "";
-            textBox_Telefono.Text = "";
-            textBox_Calle.Text = "";
-            textBox_Numero.Text = "";
-            textBox_Piso.Text = "";
-            textBox_Departamento.Text = "";
-            textBox_CodigoPostal.Text = "";
-            textBox_Localidad.Text = "";
+            CargarDatos();
         }
 
         private void button_Cancelar_Click(object sender, EventArgs e)
