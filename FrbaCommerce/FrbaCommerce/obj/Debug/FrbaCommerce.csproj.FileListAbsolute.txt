@@ -63,7 +63,4 @@ C:\Documents and Settings\Administrador\Mis documentos\Gestion de datos\gddfer\F
 C:\Documents and Settings\Administrador\Mis documentos\Gestion de datos\gddfer\FrbaCommerce\FrbaCommerce\obj\Debug\FrbaCommerce.Editar_Publicacion.EditarPublicacion.resources
 C:\Documents and Settings\Administrador\Mis documentos\Gestion de datos\gddfer\FrbaCommerce\FrbaCommerce\obj\Debug\FrbaCommerce.Editar_Publicacion.FiltrarPublicacion.resources
 C:\Documents and Settings\Administrador\Mis documentos\Gestion de datos\gddfer\FrbaCommerce\FrbaCommerce\obj\Debug\FrbaCommerce.ABM_Rubro.EditarRubro.resources
-C:\Users\Fer\Documents\GitHub\gddfer\FrbaCommerce\FrbaCommerce\obj\Debug\FrbaCommerce.ABM_Rol.ListadoEditarRol.resources
-C:\Users\Fer\Documents\GitHub\gddfer\FrbaCommerce\FrbaCommerce\obj\Debug\FrbaCommerce.ABM_Rubro.EditarRubro.resources
-C:\Users\Fer\Documents\GitHub\gddfer\FrbaCommerce\FrbaCommerce\obj\Debug\FrbaCommerce.Editar_Publicacion.EditarPublicacion.resources
-C:\Users\Fer\Documents\GitHub\gddfer\FrbaCommerce\FrbaCommerce\obj\Debug\FrbaCommerce.Editar_Publicacion.FiltrarPublicacion.resources
+C:\Documents and Settings\Administrador\Mis documentos\Gestion de datos\gddfer\FrbaCommerce\FrbaCommerce\obj\Debug\FrbaCommerce.ABM_Rubro.FiltroRubros.resources

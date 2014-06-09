@@ -323,6 +323,9 @@
     <EmbeddedResource Include="ABM Rubro\EditarRubro.resx">
       <DependentUpon>EditarRubro.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ABM Rubro\FiltroRubros.resx">
+      <DependentUpon>FiltroRubros.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ABM Visibilidad\AgregarVisibilidad.resx">
       <DependentUpon>AgregarVisibilidad.cs</DependentUpon>
     </EmbeddedResource>
