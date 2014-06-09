@@ -165,12 +165,14 @@ PRIMARY KEY(id)
 create table LOS_SUPER_AMIGOS.Cliente
 (
 id numeric(18,0) identity(1,1),
+
+nombre nvarchar(255),
+apellido nvarchar(255),
 tipo_de_documento_id numeric(18,0),
 documento numeric(18,0),
-apellido nvarchar(255),
-nombre nvarchar(255),
 fecha_nacimiento datetime,
 mail nvarchar(255),
+telefono numeric(18,0),
 habilitado bit default 1,
 usuario_id numeric(18,0),
 direccion_id numeric(18,0),
