@@ -13,6 +13,7 @@ namespace FrbaCommerce.ABM_Cliente
     public partial class EditarCliente : Form
     {
         private String idCliente;
+        private String idDireccion;
         private BuilderDeComandos builderDeComandos = new BuilderDeComandos();
         private String query;
         private SqlCommand command;
@@ -65,11 +66,12 @@ namespace FrbaCommerce.ABM_Cliente
 
             textBox_FechaDeNacimiento.Text = Convert.ToString(reader["fecha_nacimiento"]);
             textBox_Mail.Text = Convert.ToString(reader["mail"]);
-            textBox_Mail.Text = Convert.ToString(reader["telefono"]);
+            textBox_Telefono.Text = Convert.ToString(reader["telefono"]);
 
             query = "SELECT calle, numero, piso, depto, cod_postal, localidad FROM LOS_SUPER_AMIGOS.Direccion WHERE id = @idDireccion";
             parametros.Clear();
             parametros.Add(new SqlParameter("@idDireccion", reader["direccion_id"]));
+            idDireccion = Convert.ToString(reader["direccion_id"]);
             SqlDataReader readerDireccion = builderDeComandos.Crear(query, parametros).ExecuteReader();
 
             // Si no encuentra la direccion, tira error
@@ -95,12 +97,11 @@ namespace FrbaCommerce.ABM_Cliente
             String mail = textBox_Mail.Text;
             Decimal telefono = Convert.ToDecimal(textBox_Telefono.Text);
             String calle = textBox_Calle.Text;
-            String numero = textBox_Numero.Text;
-            String piso = textBox_Piso.Text;
+            Decimal numero = Convert.ToDecimal(textBox_Numero.Text);
+            Decimal piso = Convert.ToDecimal(textBox_Piso.Text);
             String departamento = textBox_Departamento.Text;
             String codigoPostal = textBox_CodigoPostal.Text;
             String localidad = textBox_Localidad.Text;
-            SqlParameter parametroOutput;
 
             // Averigua el id del tipo de documento a partir del nombre del tipo de documento
             query = "SELECT id FROM LOS_SUPER_AMIGOS.TipoDeDocumento WHERE nombre = @tipoDeDocumento";
@@ -108,22 +109,20 @@ namespace FrbaCommerce.ABM_Cliente
             parametros.Add(new SqlParameter("@tipoDeDocumento", tipoDeDocumento));
             Decimal idTipoDeDocumento = (Decimal)builderDeComandos.Crear(query, parametros).ExecuteScalar();
 
-            // Crea una direccion y se guarda su id. Usa un stored procedure del script
-            query = "LOS_SUPER_AMIGOS.crear_direccion";
+            // Update direccion
+            query = "UPDATE LOS_SUPER_AMIGOS.Direccion SET calle = @calle, numero = @numero, piso = @piso, depto = @departamento, cod_postal = @codigoPostal, localidad = @localidad WHERE id = @idDireccion";
             parametros.Clear();
-            parametroOutput = new SqlParameter("@direccion_id", SqlDbType.Decimal);
-            parametroOutput.Direction = ParameterDirection.Output;
             parametros.Add(new SqlParameter("@calle", calle));
             parametros.Add(new SqlParameter("@numero", numero));
             parametros.Add(new SqlParameter("@piso", piso));
-            parametros.Add(new SqlParameter("@depto", departamento));
-            parametros.Add(new SqlParameter("@cod_postal", codigoPostal));
+            parametros.Add(new SqlParameter("@departamento", departamento));
+            parametros.Add(new SqlParameter("@codigoPostal", codigoPostal));
             parametros.Add(new SqlParameter("@localidad", localidad));
-            parametros.Add(parametroOutput);
-            command = builderDeComandos.Crear(query, parametros);
-            command.CommandType = CommandType.StoredProcedure;
-            command.ExecuteNonQuery();
-            Decimal idDireccion = (Decimal)parametroOutput.Value;
+            parametros.Add(new SqlParameter("@idDireccion", idDireccion));
+
+            int filasAfectadas = builderDeComandos.Crear(query, parametros).ExecuteNonQuery();
+
+            if (filasAfectadas == 1) MessageBox.Show("La direccion se modifico correctamente");
 
             parametros.Clear();
             parametros.Add(new SqlParameter("@nombre", nombre));
@@ -133,14 +132,13 @@ namespace FrbaCommerce.ABM_Cliente
             parametros.Add(new SqlParameter("@fechaDeNacimiento", fechaDeNacimiento));
             parametros.Add(new SqlParameter("@mail", mail));
             parametros.Add(new SqlParameter("@telefono", telefono));
-            parametros.Add(new SqlParameter("@idDireccion", idDireccion));
             parametros.Add(new SqlParameter("@idCliente", idCliente));
 
-            query = "UPDATE LOS_SUPER_AMIGOS.Cliente set nombre = @nombre, apellido = @apellido, tipo_de_documento_id = @idTipoDeDocumento, documento = @numeroDeDocumento, fecha_nacimiento = @fechaDeNacimiento, mail = @mail, telefono = @telefono, direccion_id = @idDireccion, usuario_id WHERE id = @idCliente";
+            query = "UPDATE LOS_SUPER_AMIGOS.Cliente SET nombre = @nombre, apellido = @apellido, tipo_de_documento_id = @idTipoDeDocumento, documento = @numeroDeDocumento, fecha_nacimiento = @fechaDeNacimiento, mail = @mail, telefono = @telefono WHERE id = @idCliente";
 
-            int filasAfectadas = builderDeComandos.Crear(query, parametros).ExecuteNonQuery();
+            filasAfectadas = builderDeComandos.Crear(query, parametros).ExecuteNonQuery();
 
-            if (filasAfectadas == 1) MessageBox.Show("Se agrego el cliente correctamente");
+            if (filasAfectadas == 1) MessageBox.Show("El cliente se modifico correctamente");
         }
 
         private void button_Limpiar_Click(object sender, EventArgs e)
