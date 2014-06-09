@@ -72,8 +72,8 @@ namespace FrbaCommerce.Comprar_Ofertar
 
             if (textBoxDescripcion.Text != "")
             {
-                parametros.Add(new SqlParameter("@descripcionParcial", textBoxDescripcion.Text));
-                filtro += " and " + "descripcion like '%@DescripcionParcial%'";                
+                
+                filtro += " and " + "descripcion like '%" + textBoxDescripcion.Text + "%'";                
             }
             //Tira error el like
 
@@ -83,7 +83,7 @@ namespace FrbaCommerce.Comprar_Ofertar
                 filtro += " and " + "rubro_id = (SELECT id FROM LOS_SUPER_AMIGOS.Rubro WHERE descripcion = @rubro)";                
             }
 
-            String query = "SELECT descripcion, precio, tipo FROM LOS_SUPER_AMIGOS.Publicacion WHERE (estado = 'Publicada' or estado = 'Pausada') " + filtro;
+            String query = "SELECT descripcion, precio, tipo FROM LOS_SUPER_AMIGOS.Publicacion WHERE (estado = 'Publicada' or estado = 'Pausada') " + filtro + " ORDER BY visibilidad_id";
             
             command = builderDeComandos.Crear(query, parametros);
             adapter.SelectCommand = command;            
