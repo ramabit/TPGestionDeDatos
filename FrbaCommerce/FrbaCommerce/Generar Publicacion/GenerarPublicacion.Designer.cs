@@ -46,6 +46,13 @@
             this.label_stock = new System.Windows.Forms.Label();
             this.button_Generar = new System.Windows.Forms.Button();
             this.button_Cancelar = new System.Windows.Forms.Button();
+            this.button_Limpiar = new System.Windows.Forms.Button();
+            this.textBox_FechaDeInicio = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.button_FechaDeInicio = new System.Windows.Forms.Button();
+            this.monthCalendar_FechaDeInicio = new System.Windows.Forms.MonthCalendar();
+            this.comboBox_Estado = new System.Windows.Forms.ComboBox();
+            this.label6 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -53,11 +60,13 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.label6);
+            this.groupBox1.Controls.Add(this.comboBox_Estado);
             this.groupBox1.Controls.Add(this.comboBox_TiposDePublicacion);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(368, 44);
+            this.groupBox1.Size = new System.Drawing.Size(368, 72);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Tipo de publicacion";
@@ -82,6 +91,10 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.monthCalendar_FechaDeInicio);
+            this.groupBox2.Controls.Add(this.button_FechaDeInicio);
+            this.groupBox2.Controls.Add(this.label5);
+            this.groupBox2.Controls.Add(this.textBox_FechaDeInicio);
             this.groupBox2.Controls.Add(this.comboBox_Rubro);
             this.groupBox2.Controls.Add(this.radioButton_Pregunta);
             this.groupBox2.Controls.Add(this.comboBox_Visibilidad);
@@ -89,9 +102,9 @@
             this.groupBox2.Controls.Add(this.label3);
             this.groupBox2.Controls.Add(this.textBox_Descripcion);
             this.groupBox2.Controls.Add(this.label2);
-            this.groupBox2.Location = new System.Drawing.Point(12, 62);
+            this.groupBox2.Location = new System.Drawing.Point(12, 90);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(368, 126);
+            this.groupBox2.Size = new System.Drawing.Size(368, 167);
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Caracterisiticas comunes";
@@ -99,7 +112,7 @@
             // comboBox_Rubro
             // 
             this.comboBox_Rubro.FormattingEnabled = true;
-            this.comboBox_Rubro.Location = new System.Drawing.Point(112, 48);
+            this.comboBox_Rubro.Location = new System.Drawing.Point(112, 74);
             this.comboBox_Rubro.Name = "comboBox_Rubro";
             this.comboBox_Rubro.Size = new System.Drawing.Size(250, 21);
             this.comboBox_Rubro.TabIndex = 8;
@@ -107,7 +120,7 @@
             // radioButton_Pregunta
             // 
             this.radioButton_Pregunta.AutoSize = true;
-            this.radioButton_Pregunta.Location = new System.Drawing.Point(9, 100);
+            this.radioButton_Pregunta.Location = new System.Drawing.Point(6, 127);
             this.radioButton_Pregunta.Name = "radioButton_Pregunta";
             this.radioButton_Pregunta.Size = new System.Drawing.Size(110, 17);
             this.radioButton_Pregunta.TabIndex = 7;
@@ -118,7 +131,7 @@
             // comboBox_Visibilidad
             // 
             this.comboBox_Visibilidad.FormattingEnabled = true;
-            this.comboBox_Visibilidad.Location = new System.Drawing.Point(112, 75);
+            this.comboBox_Visibilidad.Location = new System.Drawing.Point(112, 100);
             this.comboBox_Visibilidad.Name = "comboBox_Visibilidad";
             this.comboBox_Visibilidad.Size = new System.Drawing.Size(250, 21);
             this.comboBox_Visibilidad.TabIndex = 5;
@@ -126,7 +139,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(6, 78);
+            this.label4.Location = new System.Drawing.Point(6, 103);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(53, 13);
             this.label4.TabIndex = 4;
@@ -135,7 +148,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(6, 51);
+            this.label3.Location = new System.Drawing.Point(6, 77);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(36, 13);
             this.label3.TabIndex = 2;
@@ -163,7 +176,7 @@
             this.groupBox3.Controls.Add(this.textBox_Stock);
             this.groupBox3.Controls.Add(this.label_precio);
             this.groupBox3.Controls.Add(this.label_stock);
-            this.groupBox3.Location = new System.Drawing.Point(12, 194);
+            this.groupBox3.Location = new System.Drawing.Point(12, 263);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(368, 74);
             this.groupBox3.TabIndex = 2;
@@ -204,7 +217,7 @@
             // 
             // button_Generar
             // 
-            this.button_Generar.Location = new System.Drawing.Point(284, 328);
+            this.button_Generar.Location = new System.Drawing.Point(284, 354);
             this.button_Generar.Name = "button_Generar";
             this.button_Generar.Size = new System.Drawing.Size(96, 30);
             this.button_Generar.TabIndex = 6;
@@ -214,7 +227,7 @@
             // 
             // button_Cancelar
             // 
-            this.button_Cancelar.Location = new System.Drawing.Point(182, 328);
+            this.button_Cancelar.Location = new System.Drawing.Point(12, 354);
             this.button_Cancelar.Name = "button_Cancelar";
             this.button_Cancelar.Size = new System.Drawing.Size(96, 30);
             this.button_Cancelar.TabIndex = 7;
@@ -222,11 +235,72 @@
             this.button_Cancelar.UseVisualStyleBackColor = true;
             this.button_Cancelar.Click += new System.EventHandler(this.button_Cancelar_Click);
             // 
+            // button_Limpiar
+            // 
+            this.button_Limpiar.Location = new System.Drawing.Point(182, 354);
+            this.button_Limpiar.Name = "button_Limpiar";
+            this.button_Limpiar.Size = new System.Drawing.Size(96, 30);
+            this.button_Limpiar.TabIndex = 8;
+            this.button_Limpiar.Text = "Limpiar";
+            this.button_Limpiar.UseVisualStyleBackColor = true;
+            this.button_Limpiar.Click += new System.EventHandler(this.button_Limpiar_Click);
+            // 
+            // textBox_FechaDeInicio
+            // 
+            this.textBox_FechaDeInicio.Location = new System.Drawing.Point(112, 48);
+            this.textBox_FechaDeInicio.Name = "textBox_FechaDeInicio";
+            this.textBox_FechaDeInicio.Size = new System.Drawing.Size(164, 20);
+            this.textBox_FechaDeInicio.TabIndex = 9;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(6, 51);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(79, 13);
+            this.label5.TabIndex = 10;
+            this.label5.Text = "Fecha de inicio";
+            // 
+            // button_FechaDeInicio
+            // 
+            this.button_FechaDeInicio.Location = new System.Drawing.Point(282, 48);
+            this.button_FechaDeInicio.Name = "button_FechaDeInicio";
+            this.button_FechaDeInicio.Size = new System.Drawing.Size(80, 20);
+            this.button_FechaDeInicio.TabIndex = 11;
+            this.button_FechaDeInicio.Text = "Seleccionar";
+            this.button_FechaDeInicio.UseVisualStyleBackColor = true;
+            this.button_FechaDeInicio.Click += new System.EventHandler(this.button_FechaDeInicio_Click);
+            // 
+            // monthCalendar_FechaDeInicio
+            // 
+            this.monthCalendar_FechaDeInicio.Location = new System.Drawing.Point(198, 6);
+            this.monthCalendar_FechaDeInicio.Name = "monthCalendar_FechaDeInicio";
+            this.monthCalendar_FechaDeInicio.TabIndex = 14;
+            this.monthCalendar_FechaDeInicio.Visible = false;
+            // 
+            // comboBox_Estado
+            // 
+            this.comboBox_Estado.FormattingEnabled = true;
+            this.comboBox_Estado.Location = new System.Drawing.Point(112, 40);
+            this.comboBox_Estado.Name = "comboBox_Estado";
+            this.comboBox_Estado.Size = new System.Drawing.Size(250, 21);
+            this.comboBox_Estado.TabIndex = 2;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(6, 43);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(40, 13);
+            this.label6.TabIndex = 3;
+            this.label6.Text = "Estado";
+            // 
             // GenerarPublicacion
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(392, 366);
+            this.ClientSize = new System.Drawing.Size(392, 396);
+            this.Controls.Add(this.button_Limpiar);
             this.Controls.Add(this.button_Cancelar);
             this.Controls.Add(this.button_Generar);
             this.Controls.Add(this.groupBox3);
@@ -265,5 +339,12 @@
         private System.Windows.Forms.ComboBox comboBox_Rubro;
         private System.Windows.Forms.Button button_Generar;
         private System.Windows.Forms.Button button_Cancelar;
+        private System.Windows.Forms.Button button_Limpiar;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.TextBox textBox_FechaDeInicio;
+        private System.Windows.Forms.Button button_FechaDeInicio;
+        private System.Windows.Forms.MonthCalendar monthCalendar_FechaDeInicio;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.ComboBox comboBox_Estado;
     }
 }
