@@ -47,8 +47,9 @@ namespace FrbaCommerce.Login
             String rolElegido = comboBoxRol.SelectedValue.ToString();
             UsuarioSesion.Usuario.rol = rolElegido;
 
-            new MenuPrincipal().ShowDialog();
             this.Hide();
+            new MenuPrincipal().ShowDialog();
+            this.Close();
         }
 
     }

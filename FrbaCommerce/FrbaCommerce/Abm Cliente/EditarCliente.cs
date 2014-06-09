@@ -38,7 +38,7 @@ namespace FrbaCommerce.ABM_Cliente
             if (!reader.Read()) throw new Exception("No se puede leer cliente");
             textBox_Nombre.Text = Convert.ToString(reader["nombre"]);
             textBox_Apellido.Text = Convert.ToString(reader["apellido"]);
-            textBox_Dni.Text = Convert.ToString(reader["dni"]);
+         //   textBox_Dni.Text = Convert.ToString(reader["dni"]);
             textBox_FechaDeNacimiento.Text = Convert.ToString(reader["fecha_nacimiento"]);
             textBox_Mail.Text = Convert.ToString(reader["mail"]);
             // textBox_Calle.Text = Convert.ToString(reader["nombre"]);

@@ -62,10 +62,10 @@ namespace FrbaCommerce
         {
             String accionElegida = comboBoxAccion.SelectedValue.ToString();
             
-            funcionalidades[accionElegida].ShowDialog();
-
             this.Hide();
-
+            funcionalidades[accionElegida].ShowDialog();
+            this.Close();
+          
         }
     }
 }
