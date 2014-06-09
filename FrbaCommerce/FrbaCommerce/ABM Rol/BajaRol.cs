@@ -39,6 +39,7 @@ namespace FrbaCommerce.ABM_Rol
             adapter.Fill(roles);
             comboBoxRol.DataSource = roles.Tables[0].DefaultView;
             comboBoxRol.ValueMember = "nombre";
+            comboBoxRol.SelectedIndex = -1;
         }
 
         private void botonVolver_Click(object sender, EventArgs e)

@@ -1,0 +1,257 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Data.SqlClient;
+using System.Windows.Forms;
+
+namespace FrbaCommerce.Comprar_Ofertar
+{
+    public partial class BuscardorPublicaciones : Form
+    {
+        private SqlCommand command { get; set; }
+        private IList<SqlParameter> parametros = new List<SqlParameter>();
+        private BuilderDeComandos builderDeComandos = new BuilderDeComandos();
+        public Object SelectedItem { get; set; }
+        decimal idUsuarioActual = UsuarioSesion.Usuario.id;
+
+        DataTable tablaTemporal;
+        int totalPaginas;
+        int totalPublicaciones;
+        int publicacionesPorPagina = 10;
+        int paginaActual;
+        int ini;
+        int fin;
+
+        public BuscardorPublicaciones()
+        {
+            InitializeComponent();
+        }
+                
+        private void BuscardorPublicaciones_Load(object sender, EventArgs e)
+        {            
+            CargarRubros();
+            AgregarBotonVerPublicacion();
+            AgregarListenerBotonVerPublicacion();
+        }
+
+        private void CargarRubros()
+        {
+            DataSet rubros = new DataSet();
+            SqlDataAdapter adapter = new SqlDataAdapter();
+            parametros = new List<SqlParameter>();
+            command = builderDeComandos.Crear("SELECT DISTINCT descripcion FROM LOS_SUPER_AMIGOS.Rubro  where habilitado = 1", parametros);
+            adapter.SelectCommand = command;
+            adapter.Fill(rubros);            
+            comboBoxRubro.DataSource = rubros.Tables[0].DefaultView;
+            comboBoxRubro.ValueMember = "descripcion";
+            comboBoxRubro.SelectedIndex = -1;
+        }
+
+        private void botonLimpiar_Click(object sender, EventArgs e)
+        {
+            textBoxDescripcion.Clear();
+            comboBoxRubro.SelectedIndex = -1;            
+            labelNrosPagina.Text = "";
+            //Ver como vaciar la datagridview
+        }
+
+        private void botonBuscar_Click(object sender, EventArgs e)
+        {
+            SqlDataAdapter adapter = new SqlDataAdapter();
+            parametros = new List<SqlParameter>();
+            parametros.Clear();
+            parametros.Add(new SqlParameter("@usuario", idUsuarioActual));
+            DataTable busquedaTemporal = new DataTable();
+            String filtro = "";
+            // Falta que verifique que no busque las publicaciones del usuario conectado
+            // No lo hice xq lo estoy probando directamente desde este form
+
+            if (textBoxDescripcion.Text != "")
+            {
+                parametros.Add(new SqlParameter("@descripcionParcial", textBoxDescripcion.Text));
+                filtro += " and " + "descripcion like '%@DescripcionParcial%'";                
+            }
+            //Tira error el like
+
+            if (comboBoxRubro.Text != "")
+            {
+                parametros.Add(new SqlParameter("@rubro", comboBoxRubro.Text));
+                filtro += " and " + "rubro_id = (SELECT id FROM LOS_SUPER_AMIGOS.Rubro WHERE descripcion = @rubro)";                
+            }
+
+            String query = "SELECT descripcion, precio, tipo FROM LOS_SUPER_AMIGOS.Publicacion WHERE (estado = 'Publicada' or estado = 'Pausada') " + filtro;
+            
+            command = builderDeComandos.Crear(query, parametros);
+            adapter.SelectCommand = command;            
+            adapter.Fill(busquedaTemporal);
+            tablaTemporal = busquedaTemporal;
+
+            ini = 0;
+            fin = 9; 
+            calcularPaginas();
+            dataGridView1.DataSource = paginarDataGridView(ini, fin);
+            mostrarNrosPaginas(ini);            
+        }
+
+        private void calcularPaginas()
+        {
+            totalPublicaciones = tablaTemporal.Rows.Count - 1;
+            totalPaginas = totalPublicaciones / publicacionesPorPagina;
+            if ((totalPublicaciones / publicacionesPorPagina) > 0)
+            {
+                totalPaginas += 1;
+            }
+        }
+
+        private DataTable paginarDataGridView(int ini, int fin)
+        {
+            DataTable publicacionesDeUnaPagina = new DataTable();
+            publicacionesDeUnaPagina = tablaTemporal.Clone();
+            for (int i = ini; i <= fin; i++)
+            {
+                publicacionesDeUnaPagina.ImportRow(tablaTemporal.Rows[i]);
+            }
+            return publicacionesDeUnaPagina;
+        }
+
+        private void mostrarNrosPaginas(int ini)
+        {
+            paginaActual = (ini / publicacionesPorPagina) + 1;
+            labelNrosPagina.Text = "Pagina " + paginaActual + "/" + totalPaginas;
+        }        
+
+        private bool VerificarSiSeBusco()
+        {
+            if (totalPaginas == 0)
+            {
+                MessageBox.Show("Aun no buscaste nada");
+                return false;
+                //Devuelve null, ver como solucionar
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        private void sePuedeRetrocederPaginas()
+        {
+            if (VerificarSiSeBusco() == false)
+            {
+                return;
+            }
+
+            if (paginaActual == 1)
+            {
+                MessageBox.Show("Ya estas en la 1º pagina");
+                return;
+            }
+        }
+
+        private void botonPrimeraPagina_Click(object sender, EventArgs e)
+        {
+            sePuedeRetrocederPaginas();
+
+            ini = 0;
+            fin = 9;
+            dataGridView1.DataSource = paginarDataGridView(ini, fin);
+            mostrarNrosPaginas(ini); 
+        }
+
+        private void botonPaginaAnterior_Click(object sender, EventArgs e)
+        {
+            sePuedeRetrocederPaginas();
+
+            ini -= publicacionesPorPagina;
+            if (fin != totalPublicaciones)
+            {
+                fin -= publicacionesPorPagina;
+            }
+            else
+            {
+                fin = ini + 9;
+            }
+
+            dataGridView1.DataSource = paginarDataGridView(ini, fin);
+            mostrarNrosPaginas(ini);
+        }
+
+        private void sePuedeAvanzarPaginas()
+        {
+            if (VerificarSiSeBusco() == false)
+            {
+                return;
+            }
+
+            if (paginaActual == totalPaginas)
+            {
+                MessageBox.Show("Ya estas en la ultima pagina");
+                return;
+            }
+        }
+
+        private void botonPaginaSiguiente_Click(object sender, EventArgs e)
+        {
+            sePuedeAvanzarPaginas();
+
+            ini += publicacionesPorPagina;
+            if ((fin + publicacionesPorPagina) != totalPublicaciones)
+            {
+                fin += publicacionesPorPagina;
+            }
+            else
+            {
+                fin = totalPublicaciones;
+            }
+
+            dataGridView1.DataSource = paginarDataGridView(ini, fin);
+            mostrarNrosPaginas(ini);
+        }
+
+        private void botonUltimaPagina_Click(object sender, EventArgs e)
+        {
+            sePuedeAvanzarPaginas();
+
+            ini = (totalPaginas - 1) * publicacionesPorPagina;
+            fin = totalPublicaciones;
+            dataGridView1.DataSource = paginarDataGridView(ini, fin);
+            mostrarNrosPaginas(ini); 
+        }
+
+        private void AgregarBotonVerPublicacion()
+        {
+            DataGridViewButtonColumn buttons = new DataGridViewButtonColumn();
+            {
+                buttons.HeaderText = "Ver Publicacion";
+                buttons.Text = "Ver Publicacion";
+                buttons.UseColumnTextForButtonValue = true;
+                buttons.AutoSizeMode =
+                    DataGridViewAutoSizeColumnMode.AllCells;
+                buttons.FlatStyle = FlatStyle.Standard;
+                buttons.CellTemplate.Style.BackColor = Color.Honeydew;
+            }
+
+            dataGridView1.Columns.Add(buttons);
+
+
+        }
+
+        private void AgregarListenerBotonVerPublicacion()
+        {
+            dataGridView1.CellClick +=
+                new DataGridViewCellEventHandler(dataGridView1_CellClick);
+        }
+
+        private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
+        {            
+            this.Hide();
+            new ComprarOfertar().Show();
+
+        }
+                
+    }
+}
