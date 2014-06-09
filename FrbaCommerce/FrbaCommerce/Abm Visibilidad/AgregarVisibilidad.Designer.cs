@@ -30,10 +30,10 @@
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.textBox3 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.textBox_PorcentajePorVenta = new System.Windows.Forms.TextBox();
+            this.textBox_PrecioPorPublicar = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.textBox_Descripcion = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.button_Guardar = new System.Windows.Forms.Button();
             this.button_Cancelar = new System.Windows.Forms.Button();
@@ -44,10 +44,10 @@
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.label3);
-            this.groupBox1.Controls.Add(this.textBox3);
-            this.groupBox1.Controls.Add(this.textBox2);
+            this.groupBox1.Controls.Add(this.textBox_PorcentajePorVenta);
+            this.groupBox1.Controls.Add(this.textBox_PrecioPorPublicar);
             this.groupBox1.Controls.Add(this.label2);
-            this.groupBox1.Controls.Add(this.textBox1);
+            this.groupBox1.Controls.Add(this.textBox_Descripcion);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
@@ -65,19 +65,19 @@
             this.label3.TabIndex = 5;
             this.label3.Text = "Porcentaje de venta";
             // 
-            // textBox3
+            // textBox_PorcentajePorVenta
             // 
-            this.textBox3.Location = new System.Drawing.Point(112, 71);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(250, 20);
-            this.textBox3.TabIndex = 4;
+            this.textBox_PorcentajePorVenta.Location = new System.Drawing.Point(112, 71);
+            this.textBox_PorcentajePorVenta.Name = "textBox_PorcentajePorVenta";
+            this.textBox_PorcentajePorVenta.Size = new System.Drawing.Size(250, 20);
+            this.textBox_PorcentajePorVenta.TabIndex = 4;
             // 
-            // textBox2
+            // textBox_PrecioPorPublicar
             // 
-            this.textBox2.Location = new System.Drawing.Point(112, 45);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(250, 20);
-            this.textBox2.TabIndex = 3;
+            this.textBox_PrecioPorPublicar.Location = new System.Drawing.Point(112, 45);
+            this.textBox_PrecioPorPublicar.Name = "textBox_PrecioPorPublicar";
+            this.textBox_PrecioPorPublicar.Size = new System.Drawing.Size(250, 20);
+            this.textBox_PrecioPorPublicar.TabIndex = 3;
             // 
             // label2
             // 
@@ -88,12 +88,12 @@
             this.label2.TabIndex = 2;
             this.label2.Text = "Precio por publicar";
             // 
-            // textBox1
+            // textBox_Descripcion
             // 
-            this.textBox1.Location = new System.Drawing.Point(112, 19);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(250, 20);
-            this.textBox1.TabIndex = 1;
+            this.textBox_Descripcion.Location = new System.Drawing.Point(112, 19);
+            this.textBox_Descripcion.Name = "textBox_Descripcion";
+            this.textBox_Descripcion.Size = new System.Drawing.Size(250, 20);
+            this.textBox_Descripcion.TabIndex = 1;
             // 
             // label1
             // 
@@ -112,6 +112,7 @@
             this.button_Guardar.TabIndex = 2;
             this.button_Guardar.Text = "Guardar";
             this.button_Guardar.UseVisualStyleBackColor = true;
+            this.button_Guardar.Click += new System.EventHandler(this.button_Guardar_Click);
             // 
             // button_Cancelar
             // 
@@ -121,6 +122,7 @@
             this.button_Cancelar.TabIndex = 3;
             this.button_Cancelar.Text = "Cancelar";
             this.button_Cancelar.UseVisualStyleBackColor = true;
+            this.button_Cancelar.Click += new System.EventHandler(this.button_Cancelar_Click);
             // 
             // button_Limpiar
             // 
@@ -130,6 +132,7 @@
             this.button_Limpiar.TabIndex = 4;
             this.button_Limpiar.Text = "Limpiar";
             this.button_Limpiar.UseVisualStyleBackColor = true;
+            this.button_Limpiar.Click += new System.EventHandler(this.button_Limpiar_Click);
             // 
             // AgregarVisibilidad
             // 
@@ -142,6 +145,7 @@
             this.Controls.Add(this.groupBox1);
             this.Name = "AgregarVisibilidad";
             this.Text = "AgregarVisibilidad";
+            this.Load += new System.EventHandler(this.AgregarVisibilidad_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
@@ -152,10 +156,10 @@
 
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox textBox_Descripcion;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox textBox_PorcentajePorVenta;
+        private System.Windows.Forms.TextBox textBox_PrecioPorPublicar;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button button_Guardar;
         private System.Windows.Forms.Button button_Cancelar;
