@@ -146,15 +146,18 @@ create table LOS_SUPER_AMIGOS.Empresa
 (
 id numeric(18,0) identity(1,1),
 razon_social nvarchar(255),
+nombre_de_contacto nvarchar(50),
 cuit nvarchar(50),
 fecha_creacion datetime,
 mail nvarchar(50),
+telefono numeric(18,0),
+ciudad nvarchar(50),
+direccion_id numeric(18,0),
 habilitado bit default 1,
 usuario_id numeric(18,0),
-direccion numeric(18,0),
 PRIMARY KEY (id),
 FOREIGN KEY (usuario_id) REFERENCES LOS_SUPER_AMIGOS.Usuario (id),
-FOREIGN KEY (direccion) REFERENCES LOS_SUPER_AMIGOS.Direccion (id)
+FOREIGN KEY (direccion_id) REFERENCES LOS_SUPER_AMIGOS.Direccion (id)
 )
 
 create table LOS_SUPER_AMIGOS.TipoDeDocumento
@@ -174,9 +177,9 @@ documento numeric(18,0),
 fecha_nacimiento datetime,
 mail nvarchar(255),
 telefono numeric(18,0),
+direccion_id numeric(18,0),
 habilitado bit default 1,
 usuario_id numeric(18,0),
-direccion_id numeric(18,0),
 PRIMARY KEY (id),
 FOREIGN KEY (tipo_de_documento_id) REFERENCES LOS_SUPER_AMIGOS.TipoDeDocumento (id),
 FOREIGN KEY (usuario_id) REFERENCES LOS_SUPER_AMIGOS.Usuario (id),
@@ -358,7 +361,7 @@ WHERE ISNULL(Cli_Dom_Calle,'')!='' and not exists (SELECT * FROM LOS_SUPER_AMIGO
 
 -- INSERTAR Empresas
 INSERT INTO LOS_SUPER_AMIGOS.Empresa
-   ( [razon_social], [cuit], [fecha_creacion], [mail], [direccion])
+   ( [razon_social], [cuit], [fecha_creacion], [mail], [direccion_id])
 SELECT DISTINCT Publ_Empresa_Razon_Social, Publ_Empresa_Cuit, Publ_Empresa_Fecha_Creacion, Publ_Empresa_Mail,
 	(SELECT DISTINCT id FROM LOS_SUPER_AMIGOS.Direccion d WHERE (Publ_Empresa_Dom_Calle = d.calle and Publ_Empresa_Nro_Calle = d.numero and Publ_Empresa_Piso = d.piso and Publ_Empresa_Depto = d.depto and Publ_Empresa_Cod_Postal = d.cod_postal)) 
 FROM gd_esquema.Maestra 
