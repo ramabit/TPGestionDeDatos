@@ -62,7 +62,7 @@ namespace FrbaCommerce.Editar_Publicacion
             if (e.ColumnIndex == dataGridView_Publicacion.Columns["modificar"].Index && e.RowIndex >= 0)
             {
                 String idPublicacionAModificiar = dataGridView_Publicacion.Rows[e.RowIndex].Cells["id"].Value.ToString();
-                new Editar_Publicacion.EditarPublicacion().ShowDialog();
+                new Editar_Publicacion.EditarPublicacion(idPublicacionAModificiar).ShowDialog();
             }
         }
 

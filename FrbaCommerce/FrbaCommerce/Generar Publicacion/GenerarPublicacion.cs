@@ -46,7 +46,7 @@ namespace FrbaCommerce.Generar_Publicacion
             DataTable estados = new DataTable();
             estados.Columns.Add("estados");
             estados.Rows.Add("Borrador");
-            estados.Rows.Add("Activa");
+            estados.Rows.Add("Publicada");
             comboBox_Estado.DataSource = estados;
             comboBox_Estado.ValueMember = "estados";
         }

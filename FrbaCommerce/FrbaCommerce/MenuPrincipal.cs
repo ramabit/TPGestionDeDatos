@@ -22,7 +22,7 @@ namespace FrbaCommerce
 
             funcionalidades.Add("Comprar / Ofertar", new Comprar_Ofertar.ComprarOfertar());
             funcionalidades.Add("Generar publicacion", new Generar_Publicacion.GenerarPublicacion());
-            funcionalidades.Add("Editar publicacion", new Editar_Publicacion.EditarPublicacion());
+            funcionalidades.Add("Editar publicacion", new Editar_Publicacion.EditarPublicacion("idPublicacion"));
             funcionalidades.Add("Calificar vendedor", new Calificar_Vendedor.Calificar());
             funcionalidades.Add("Preguntar", new Gestion_de_Preguntas.Preguntar());
             funcionalidades.Add("Responder preguntas", new Gestion_de_Preguntas.ResponderPreguntas());
