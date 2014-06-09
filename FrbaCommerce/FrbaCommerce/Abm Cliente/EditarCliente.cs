@@ -86,7 +86,61 @@ namespace FrbaCommerce.ABM_Cliente
 
         private void button_Guardar_Click(object sender, EventArgs e)
         {
+            // Guarda en variables todos los campos de entrada
+            String nombre = textBox_Nombre.Text;
+            String apellido = textBox_Apellido.Text;
+            String tipoDeDocumento = comboBox_TipoDeDocumento.Text;
+            Decimal numeroDeDocumento = Convert.ToDecimal(textBox_NumeroDeDoc.Text);
+            DateTime fechaDeNacimiento = Convert.ToDateTime(textBox_FechaDeNacimiento.Text);
+            String mail = textBox_Mail.Text;
+            Decimal telefono = Convert.ToDecimal(textBox_Telefono.Text);
+            String calle = textBox_Calle.Text;
+            String numero = textBox_Numero.Text;
+            String piso = textBox_Piso.Text;
+            String departamento = textBox_Departamento.Text;
+            String codigoPostal = textBox_CodigoPostal.Text;
+            String localidad = textBox_Localidad.Text;
+            SqlParameter parametroOutput;
 
+            // Averigua el id del tipo de documento a partir del nombre del tipo de documento
+            query = "SELECT id FROM LOS_SUPER_AMIGOS.TipoDeDocumento WHERE nombre = @tipoDeDocumento";
+            parametros.Clear();
+            parametros.Add(new SqlParameter("@tipoDeDocumento", tipoDeDocumento));
+            Decimal idTipoDeDocumento = (Decimal)builderDeComandos.Crear(query, parametros).ExecuteScalar();
+
+            // Crea una direccion y se guarda su id. Usa un stored procedure del script
+            query = "LOS_SUPER_AMIGOS.crear_direccion";
+            parametros.Clear();
+            parametroOutput = new SqlParameter("@direccion_id", SqlDbType.Decimal);
+            parametroOutput.Direction = ParameterDirection.Output;
+            parametros.Add(new SqlParameter("@calle", calle));
+            parametros.Add(new SqlParameter("@numero", numero));
+            parametros.Add(new SqlParameter("@piso", piso));
+            parametros.Add(new SqlParameter("@depto", departamento));
+            parametros.Add(new SqlParameter("@cod_postal", codigoPostal));
+            parametros.Add(new SqlParameter("@localidad", localidad));
+            parametros.Add(parametroOutput);
+            command = builderDeComandos.Crear(query, parametros);
+            command.CommandType = CommandType.StoredProcedure;
+            command.ExecuteNonQuery();
+            Decimal idDireccion = (Decimal)parametroOutput.Value;
+
+            parametros.Clear();
+            parametros.Add(new SqlParameter("@nombre", nombre));
+            parametros.Add(new SqlParameter("@apellido", apellido));
+            parametros.Add(new SqlParameter("@idTipoDeDocumento", idTipoDeDocumento));
+            parametros.Add(new SqlParameter("@numeroDeDocumento", numeroDeDocumento));
+            parametros.Add(new SqlParameter("@fechaDeNacimiento", fechaDeNacimiento));
+            parametros.Add(new SqlParameter("@mail", mail));
+            parametros.Add(new SqlParameter("@telefono", telefono));
+            parametros.Add(new SqlParameter("@idDireccion", idDireccion));
+            parametros.Add(new SqlParameter("@idCliente", idCliente));
+
+            query = "UPDATE LOS_SUPER_AMIGOS.Cliente set nombre = @nombre, apellido = @apellido, tipo_de_documento_id = @idTipoDeDocumento, documento = @numeroDeDocumento, fecha_nacimiento = @fechaDeNacimiento, mail = @mail, telefono = @telefono, direccion_id = @idDireccion, usuario_id WHERE id = @idCliente";
+
+            int filasAfectadas = builderDeComandos.Crear(query, parametros).ExecuteNonQuery();
+
+            if (filasAfectadas == 1) MessageBox.Show("Se agrego el cliente correctamente");
         }
 
         private void button_Limpiar_Click(object sender, EventArgs e)
