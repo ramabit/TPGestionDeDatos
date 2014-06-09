@@ -64,7 +64,8 @@ namespace FrbaCommerce.ABM_Cliente
             String piso = textBox_Piso.Text;
             String departamento = textBox_Departamento.Text;
             String codigoPostal = textBox_CodigoPostal.Text;
-            String localidad = textBox_CodigoPostal.Text;
+            String localidad = textBox_Localidad.Text;
+            SqlParameter parametroOutput;
 
             // Averigua el id del tipo de documento a partir del nombre del tipo de documento
             query = "SELECT id FROM LOS_SUPER_AMIGOS.TipoDeDocumento WHERE nombre = @tipoDeDocumento";
@@ -75,50 +76,32 @@ namespace FrbaCommerce.ABM_Cliente
             // Crea una direccion y se guarda su id. Usa un stored procedure del script
             query = "LOS_SUPER_AMIGOS.crear_direccion";
             parametros.Clear();
-            //SqlParameter parametro1 = new SqlParameter("@calle", SqlDbType.NVarChar, 100);
-            SqlParameter parametro1 = new SqlParameter("@calle", calle);
-            //parametro1.Value = calle;
-            SqlParameter parametro2 = new SqlParameter("@numero", SqlDbType.Decimal);
-            parametro2.Value = numero;
-            SqlParameter parametro3 = new SqlParameter("@piso", SqlDbType.Decimal);
-            parametro3.Value = piso;
-            SqlParameter parametro4 = new SqlParameter("@depto", SqlDbType.NVarChar, 5);
-            parametro4.Value = departamento;
-            SqlParameter parametro5 = new SqlParameter("@cod_postal", SqlDbType.NVarChar, 50);
-            parametro5.Value = codigoPostal;
-            SqlParameter parametro10 = new SqlParameter("@localidad", SqlDbType.NVarChar, 50);
-            parametro10.Value = codigoPostal;
-            SqlParameter parametro6 = new SqlParameter("@direccion_id", SqlDbType.Decimal);
-            parametro6.Direction = ParameterDirection.Output;
-            parametros.Add(parametro1);
-            parametros.Add(parametro2);
-            parametros.Add(parametro3);
-            parametros.Add(parametro4);
-            parametros.Add(parametro5);
-            parametros.Add(parametro10);
-            parametros.Add(parametro6);
+            parametroOutput = new SqlParameter("@direccion_id", SqlDbType.Decimal);
+            parametroOutput.Direction = ParameterDirection.Output;
+            parametros.Add(new SqlParameter("@calle", calle));
+            parametros.Add(new SqlParameter("@numero", numero));
+            parametros.Add(new SqlParameter("@piso", piso));
+            parametros.Add(new SqlParameter("@depto", departamento));
+            parametros.Add(new SqlParameter("@cod_postal", codigoPostal));
+            parametros.Add(new SqlParameter("@localidad", localidad));
+            parametros.Add(parametroOutput);
             command = builderDeComandos.Crear(query, parametros);
             command.CommandType = CommandType.StoredProcedure;
             command.ExecuteNonQuery();
-            Decimal idDireccion = (Decimal) parametro6.Value;
+            Decimal idDireccion = (Decimal) parametroOutput.Value;
 
             // Crea un nuevo usuario y se guarda su id. Usa un stored procedure del script
             query = "LOS_SUPER_AMIGOS.crear_usuario_con_valores";
             parametros.Clear();
-            SqlParameter parametro7 = new SqlParameter("@username", SqlDbType.NVarChar, 50);
-            parametro7.Value = username;
-            SqlParameter parametro8 = new SqlParameter("@password", SqlDbType.NVarChar, 150);
-            String contrasenaEncriptada = HashSha256.getHash(contrasena);
-            parametro8.Value = contrasenaEncriptada;
-            SqlParameter parametro9 = new SqlParameter("@usuario_id", SqlDbType.Decimal);
-            parametro9.Direction = ParameterDirection.Output;
-            parametros.Add(parametro7);
-            parametros.Add(parametro8);
-            parametros.Add(parametro9);
+            parametroOutput = new SqlParameter("@usuario_id", SqlDbType.Decimal);
+            parametroOutput.Direction = ParameterDirection.Output;
+            parametros.Add(new SqlParameter("@username", username));
+            parametros.Add(new SqlParameter("@password", HashSha256.getHash(contrasena)));
+            parametros.Add(parametroOutput);
             command = builderDeComandos.Crear(query, parametros);
             command.CommandType = CommandType.StoredProcedure;
             command.ExecuteNonQuery();
-            Decimal idUsuario = (Decimal)parametro9.Value;
+            Decimal idUsuario = (Decimal) parametroOutput.Value;
             
             parametros.Clear();
             parametros.Add(new SqlParameter("@nombre", nombre));
