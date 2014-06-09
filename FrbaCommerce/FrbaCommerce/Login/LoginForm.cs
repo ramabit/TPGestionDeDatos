@@ -70,7 +70,7 @@ namespace FrbaCommerce.Login
                 // Se fija si es el primer inicio de sesion del usuario
                 parametros.Clear();
                 parametros.Add(new SqlParameter("@username", usuario));
-                String sesion = "SELECT password FROM Usuario WHERE username = @username";
+                String sesion = "SELECT password FROM LOS_SUPER_AMIGOS.Usuario WHERE username = @username";
                 String primerInicio = (String)builderDeComandos.Crear(sesion, parametros).ExecuteScalar();
                 if (primerInicio == "559aead08264d5795d3909718cdd05abd49572e84fe55590eef31a88a08fdffd")
                 {
@@ -81,7 +81,7 @@ namespace FrbaCommerce.Login
                 parametros.Clear();
                 parametros.Add(new SqlParameter("@username", usuario));
 
-                String consultaRoles = "SELECT COUNT(rol_id) FROM LOS_SUPER_AMIGOS.Rol_x_Usuario WHERE habilitado = 1 AND (SELECT id FROM LOS_SUPER_AMIGOS.Usuario WHERE username = @username) = usuario_id";
+                String consultaRoles = "SELECT COUNT(rol_id) FROM LOS_SUPER_AMIGOS.Rol_x_Usuario WHERE (SELECT id FROM LOS_SUPER_AMIGOS.Usuario WHERE username = @username) = usuario_id";
                 int cantidadDeRoles = (int)builderDeComandos.Crear(consultaRoles, parametros).ExecuteScalar();
 
                 if(cantidadDeRoles > 1)

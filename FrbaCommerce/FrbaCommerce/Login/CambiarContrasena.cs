@@ -40,17 +40,11 @@ namespace FrbaCommerce.Login
             String nuevaPass = "UPDATE LOS_SUPER_AMIGOS.Usuario SET password = @pass WHERE username = @username";
             builderDeComandos.Crear(nuevaPass, parametros).ExecuteNonQuery();
 
-            // Cambio el valor de primera sesion
-            parametros.Clear();
-            parametros.Add(new SqlParameter("@username", UsuarioSesion.Usuario.nombre));
-            String primeraSesion = "UPDATE ULOS_SUPER_AMIGOS.suario SET primera_sesion = 0 WHERE username = @username";
-            builderDeComandos.Crear(primeraSesion, parametros).ExecuteNonQuery();
-
             // Asigna rol
             parametros.Clear();
             parametros.Add(new SqlParameter("@username", UsuarioSesion.Usuario.nombre));
 
-            String consultaRoles = "SELECT COUNT(rol_id) from LOS_SUPER_AMIGOS.Rol_x_Usuario WHERE habilitado = 1 AND (SELECT id FROM LOS_SUPER_AMIGOS.Usuario WHERE username = @username) = usuario_id";
+            String consultaRoles = "SELECT COUNT(rol_id) from LOS_SUPER_AMIGOS.Rol_x_Usuario WHERE (SELECT id FROM LOS_SUPER_AMIGOS.Usuario WHERE username = @username) = usuario_id";
             int cantidadDeRoles = (int)builderDeComandos.Crear(consultaRoles, parametros).ExecuteScalar();
 
             if (cantidadDeRoles > 1)

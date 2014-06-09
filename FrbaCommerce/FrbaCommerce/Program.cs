@@ -15,11 +15,11 @@ namespace FrbaCommerce
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            //Application.Run(new Login.LoginForm());
+            Application.Run(new Login.LoginForm());
             //Application.Run(new ABM_Cliente.AgregarCliente("USER101", "hola"));
             //Application.Run(new ABM_Empresa.AgregarEmpresa("USER102", "hola"));
             //Application.Run(new ABM_Visibilidad.AgregarVisibilidad());
-            Application.Run(new Generar_Publicacion.GenerarPublicacion());
+            //Application.Run(new Generar_Publicacion.GenerarPublicacion());
         }
     }
 }
