@@ -74,6 +74,7 @@
             this.button_Guardar.TabIndex = 2;
             this.button_Guardar.Text = "Guardar";
             this.button_Guardar.UseVisualStyleBackColor = true;
+            this.button_Guardar.Click += new System.EventHandler(this.button_Guardar_Click);
             // 
             // button_Cancelar
             // 
@@ -83,6 +84,7 @@
             this.button_Cancelar.TabIndex = 3;
             this.button_Cancelar.Text = "Cancelar";
             this.button_Cancelar.UseVisualStyleBackColor = true;
+            this.button_Cancelar.Click += new System.EventHandler(this.button_Cancelar_Click);
             // 
             // button_Limpiar
             // 
@@ -92,6 +94,7 @@
             this.button_Limpiar.TabIndex = 4;
             this.button_Limpiar.Text = "Limpiar";
             this.button_Limpiar.UseVisualStyleBackColor = true;
+            this.button_Limpiar.Click += new System.EventHandler(this.button_Limpiar_Click);
             // 
             // checkBox_Habilitado
             // 
@@ -146,7 +149,7 @@
             // 
             // monthCalendar_FechaDeNacimiento
             // 
-            this.monthCalendar_FechaDeNacimiento.Location = new System.Drawing.Point(198, 18);
+            this.monthCalendar_FechaDeNacimiento.Location = new System.Drawing.Point(198, 19);
             this.monthCalendar_FechaDeNacimiento.Name = "monthCalendar_FechaDeNacimiento";
             this.monthCalendar_FechaDeNacimiento.TabIndex = 13;
             this.monthCalendar_FechaDeNacimiento.Visible = false;
@@ -201,6 +204,7 @@
             this.button_FechaDeNacimiento.TabIndex = 7;
             this.button_FechaDeNacimiento.Text = "Seleccionar";
             this.button_FechaDeNacimiento.UseVisualStyleBackColor = true;
+            this.button_FechaDeNacimiento.Click += new System.EventHandler(this.button_FechaDeNacimiento_Click);
             // 
             // textBox_FechaDeNacimiento
             // 

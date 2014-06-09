@@ -48,5 +48,37 @@ namespace FrbaCommerce.ABM_Cliente
             // textBox_CodigoPostal.Text = Convert.ToString(reader["nombre"]);
             if (Convert.ToBoolean(reader["habilitado"])) checkBox_Habilitado.Checked = true; 
         }
+
+        private void button_Guardar_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button_Limpiar_Click(object sender, EventArgs e)
+        {
+            textBox_Nombre.Text = "";
+            textBox_Apellido.Text = "";
+            comboBox_TipoDeDocumento.SelectedIndex = 0;
+            textBox_NumeroDeDoc.Text = "";
+            textBox_FechaDeNacimiento.Text = "";
+            textBox_Mail.Text = "";
+            textBox_Telefono.Text = "";
+            textBox_Calle.Text = "";
+            textBox_Numero.Text = "";
+            textBox_Piso.Text = "";
+            textBox_Departamento.Text = "";
+            textBox_CodigoPostal.Text = "";
+            textBox_Localidad.Text = "";
+        }
+
+        private void button_Cancelar_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void button_FechaDeNacimiento_Click(object sender, EventArgs e)
+        {
+            this.monthCalendar_FechaDeNacimiento.Visible = true;
+        }
     }
 }
