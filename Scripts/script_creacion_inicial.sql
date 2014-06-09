@@ -221,7 +221,7 @@ FOREIGN KEY (rol_id) REFERENCES LOS_SUPER_AMIGOS.Rol (id)
 
 create table LOS_SUPER_AMIGOS.Visibilidad
 (
-id numeric(18,0),
+id numeric(18,0) identity(1,1),
 descripcion nvarchar(255),
 precio numeric(18,2),
 porcentaje numeric(18,0),
@@ -466,9 +466,15 @@ VALUES(1,2),(2,2),(3,2),(4,2),(5,2),(6,2),(9,2),(18,2),(19,2),(2,3),(3,3),
 (6,3),(9,3),(18,3)
 
 -- INSERTAR Visibilidad
+SET IDENTITY_INSERT LOS_SUPER_AMIGOS.Visibilidad ON;
+GO
+
 INSERT INTO LOS_SUPER_AMIGOS.Visibilidad
 ([id],[descripcion],[precio],[porcentaje])
 SELECT DISTINCT Publicacion_Visibilidad_Cod, Publicacion_Visibilidad_Desc, Publicacion_Visibilidad_Porcentaje, Publicacion_Visibilidad_Precio FROM gd_esquema.Maestra
+GO
+
+SET IDENTITY_INSERT LOS_SUPER_AMIGOS.Visibilidad OFF;
 GO
 
 -- INSERTAR Rubro
