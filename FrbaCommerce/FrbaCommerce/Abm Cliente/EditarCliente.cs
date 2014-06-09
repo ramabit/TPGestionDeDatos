@@ -32,20 +32,40 @@ namespace FrbaCommerce.ABM_Cliente
         private void CargarDatos()
         {
             query = "SELECT * FROM LOS_SUPER_AMIGOS.Cliente WHERE id = @idCliente";
+
             parametros.Clear();
             parametros.Add(new SqlParameter("@idCliente", idCliente));
             SqlDataReader reader = builderDeComandos.Crear(query, parametros).ExecuteReader();
-            if (!reader.Read()) throw new Exception("No se puede leer cliente");
+
+            // Si no existe el id, tira error
+            if (!reader.Read()) throw new Exception("No existe el cliente");
+
             textBox_Nombre.Text = Convert.ToString(reader["nombre"]);
             textBox_Apellido.Text = Convert.ToString(reader["apellido"]);
-            textBox_Dni.Text = Convert.ToString(reader["dni"]);
+
+            query = "SELECT nombre FROM LOS_SUPER_AMIGOS.TipoDeDocumento WHERE id = @idTipoDeDocumento";
+            parametros.Clear();
+            parametros.Add(new SqlParameter("@idTipoDeDocumento", reader["tipo_de_documento_id"]));
+
+            textBox_NumeroDeDoc.Text = Convert.ToString(reader["documento"]);
             textBox_FechaDeNacimiento.Text = Convert.ToString(reader["fecha_nacimiento"]);
             textBox_Mail.Text = Convert.ToString(reader["mail"]);
-            // textBox_Calle.Text = Convert.ToString(reader["nombre"]);
-            // textBox_Numero.Text = Convert.ToString(reader["nombre"]);
-            // textBox_Piso.Text = Convert.ToString(reader["nombre"]);
-            // textBox_Departamento.Text = Convert.ToString(reader["nombre"]);
-            // textBox_CodigoPostal.Text = Convert.ToString(reader["nombre"]);
+            textBox_Mail.Text = Convert.ToString(reader["telefono"]);
+
+            query = "SELECT calle, numero, piso, depto, cod_postal, localidad FROM LOS_SUPER_AMIGOS.Direccion WHERE id = @idDireccion";
+            parametros.Clear();
+            parametros.Add(new SqlParameter("@idDireccion", reader["direccion_id"]));
+            SqlDataReader readerDireccion = builderDeComandos.Crear(query, parametros).ExecuteReader();
+
+            // Si no encuentra la direccion, tira error
+            if (!readerDireccion.Read()) throw new Exception("No existe la direccion");
+
+            textBox_Calle.Text = Convert.ToString(readerDireccion["calle"]);
+            textBox_Numero.Text = Convert.ToString(readerDireccion["numero"]);
+            textBox_Piso.Text = Convert.ToString(readerDireccion["piso"]);
+            textBox_Departamento.Text = Convert.ToString(readerDireccion["depto"]);
+            textBox_CodigoPostal.Text = Convert.ToString(readerDireccion["cod_postal"]);
+            textBox_Localidad.Text = Convert.ToString(readerDireccion["localidad"]);
             if (Convert.ToBoolean(reader["habilitado"])) checkBox_Habilitado.Checked = true; 
         }
 
