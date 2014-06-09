@@ -29,7 +29,11 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label13 = new System.Windows.Forms.Label();
+            this.textBox_Ciudad = new System.Windows.Forms.TextBox();
             this.monthCalendar_FechaDeCreacion = new System.Windows.Forms.MonthCalendar();
+            this.label2 = new System.Windows.Forms.Label();
+            this.textBox_Telefono = new System.Windows.Forms.TextBox();
             this.label11 = new System.Windows.Forms.Label();
             this.textBox_NombreDeContacto = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
@@ -42,6 +46,8 @@
             this.textBox_RazonSocial = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.label12 = new System.Windows.Forms.Label();
+            this.textBox_Localidad = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
@@ -55,12 +61,6 @@
             this.button_Guardar = new System.Windows.Forms.Button();
             this.button_Cancelar = new System.Windows.Forms.Button();
             this.button_Limpiar = new System.Windows.Forms.Button();
-            this.textBox_Telefono = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.textBox_Localidad = new System.Windows.Forms.TextBox();
-            this.label12 = new System.Windows.Forms.Label();
-            this.textBox_Ciudad = new System.Windows.Forms.TextBox();
-            this.label13 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
@@ -90,12 +90,44 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Datos personales";
             // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(6, 178);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(40, 13);
+            this.label13.TabIndex = 16;
+            this.label13.Text = "Ciudad";
+            // 
+            // textBox_Ciudad
+            // 
+            this.textBox_Ciudad.Location = new System.Drawing.Point(112, 175);
+            this.textBox_Ciudad.Name = "textBox_Ciudad";
+            this.textBox_Ciudad.Size = new System.Drawing.Size(250, 20);
+            this.textBox_Ciudad.TabIndex = 15;
+            // 
             // monthCalendar_FechaDeCreacion
             // 
             this.monthCalendar_FechaDeCreacion.Location = new System.Drawing.Point(198, 18);
             this.monthCalendar_FechaDeCreacion.Name = "monthCalendar_FechaDeCreacion";
             this.monthCalendar_FechaDeCreacion.TabIndex = 5;
             this.monthCalendar_FechaDeCreacion.Visible = false;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(6, 152);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(49, 13);
+            this.label2.TabIndex = 14;
+            this.label2.Text = "Telefono";
+            // 
+            // textBox_Telefono
+            // 
+            this.textBox_Telefono.Location = new System.Drawing.Point(112, 149);
+            this.textBox_Telefono.Name = "textBox_Telefono";
+            this.textBox_Telefono.Size = new System.Drawing.Size(250, 20);
+            this.textBox_Telefono.TabIndex = 13;
             // 
             // label11
             // 
@@ -208,6 +240,22 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Direccion";
             // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(6, 152);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(53, 13);
+            this.label12.TabIndex = 21;
+            this.label12.Text = "Localidad";
+            // 
+            // textBox_Localidad
+            // 
+            this.textBox_Localidad.Location = new System.Drawing.Point(112, 149);
+            this.textBox_Localidad.Name = "textBox_Localidad";
+            this.textBox_Localidad.Size = new System.Drawing.Size(250, 20);
+            this.textBox_Localidad.TabIndex = 20;
+            // 
             // label10
             // 
             this.label10.AutoSize = true;
@@ -296,6 +344,7 @@
             this.button_Guardar.TabIndex = 2;
             this.button_Guardar.Text = "Guardar";
             this.button_Guardar.UseVisualStyleBackColor = true;
+            this.button_Guardar.Click += new System.EventHandler(this.button_Guardar_Click);
             // 
             // button_Cancelar
             // 
@@ -305,6 +354,7 @@
             this.button_Cancelar.TabIndex = 3;
             this.button_Cancelar.Text = "Cancelar";
             this.button_Cancelar.UseVisualStyleBackColor = true;
+            this.button_Cancelar.Click += new System.EventHandler(this.button_Cancelar_Click);
             // 
             // button_Limpiar
             // 
@@ -314,54 +364,7 @@
             this.button_Limpiar.TabIndex = 4;
             this.button_Limpiar.Text = "Limpiar";
             this.button_Limpiar.UseVisualStyleBackColor = true;
-            // 
-            // textBox_Telefono
-            // 
-            this.textBox_Telefono.Location = new System.Drawing.Point(112, 149);
-            this.textBox_Telefono.Name = "textBox_Telefono";
-            this.textBox_Telefono.Size = new System.Drawing.Size(250, 20);
-            this.textBox_Telefono.TabIndex = 13;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(6, 152);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(49, 13);
-            this.label2.TabIndex = 14;
-            this.label2.Text = "Telefono";
-            // 
-            // textBox_Localidad
-            // 
-            this.textBox_Localidad.Location = new System.Drawing.Point(112, 149);
-            this.textBox_Localidad.Name = "textBox_Localidad";
-            this.textBox_Localidad.Size = new System.Drawing.Size(250, 20);
-            this.textBox_Localidad.TabIndex = 20;
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(6, 152);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(53, 13);
-            this.label12.TabIndex = 21;
-            this.label12.Text = "Localidad";
-            // 
-            // textBox_Ciudad
-            // 
-            this.textBox_Ciudad.Location = new System.Drawing.Point(112, 175);
-            this.textBox_Ciudad.Name = "textBox_Ciudad";
-            this.textBox_Ciudad.Size = new System.Drawing.Size(250, 20);
-            this.textBox_Ciudad.TabIndex = 15;
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(6, 178);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(40, 13);
-            this.label13.TabIndex = 16;
-            this.label13.Text = "Ciudad";
+            this.button_Limpiar.Click += new System.EventHandler(this.button_Limpiar_Click);
             // 
             // AgregarEmpresa
             // 
