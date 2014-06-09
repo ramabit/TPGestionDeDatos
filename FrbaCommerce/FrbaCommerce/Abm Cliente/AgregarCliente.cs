@@ -118,7 +118,7 @@ namespace FrbaCommerce.ABM_Cliente
 
             int filasAfectadas = builderDeComandos.Crear(query, parametros).ExecuteNonQuery();
 
-            if (filasAfectadas == 1) MessageBox.Show("Se agrego la nueva publicacion correctamente");
+            if (filasAfectadas == 1) MessageBox.Show("Se agrego el cliente correctamente");
         }
 
         private void button_Limpiar_Click(object sender, EventArgs e)
