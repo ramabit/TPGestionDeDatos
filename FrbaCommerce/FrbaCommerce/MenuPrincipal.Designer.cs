@@ -31,7 +31,7 @@
             this.labelTitulo = new System.Windows.Forms.Label();
             this.comboBoxAccion = new System.Windows.Forms.ComboBox();
             this.botonAceptar = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            this.botonCerrarSesion = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // labelTitulo
@@ -66,23 +66,24 @@
             this.botonAceptar.UseVisualStyleBackColor = true;
             this.botonAceptar.Click += new System.EventHandler(this.botonAceptar_Click);
             // 
-            // button2
+            // botonCerrarSesion
             // 
-            this.button2.ForeColor = System.Drawing.Color.Red;
-            this.button2.Location = new System.Drawing.Point(312, 14);
-            this.button2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(118, 35);
-            this.button2.TabIndex = 3;
-            this.button2.Text = "Cerrar Sesion";
-            this.button2.UseVisualStyleBackColor = true;
+            this.botonCerrarSesion.ForeColor = System.Drawing.Color.Red;
+            this.botonCerrarSesion.Location = new System.Drawing.Point(312, 14);
+            this.botonCerrarSesion.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.botonCerrarSesion.Name = "botonCerrarSesion";
+            this.botonCerrarSesion.Size = new System.Drawing.Size(118, 35);
+            this.botonCerrarSesion.TabIndex = 3;
+            this.botonCerrarSesion.Text = "Cerrar Sesion";
+            this.botonCerrarSesion.UseVisualStyleBackColor = true;
+            this.botonCerrarSesion.Click += new System.EventHandler(this.botonCerrarSesion_Click);
             // 
             // MenuPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(443, 255);
-            this.Controls.Add(this.button2);
+            this.Controls.Add(this.botonCerrarSesion);
             this.Controls.Add(this.botonAceptar);
             this.Controls.Add(this.comboBoxAccion);
             this.Controls.Add(this.labelTitulo);
@@ -101,7 +102,7 @@
         private System.Windows.Forms.Label labelTitulo;
         private System.Windows.Forms.ComboBox comboBoxAccion;
         private System.Windows.Forms.Button botonAceptar;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button botonCerrarSesion;
 
 
 

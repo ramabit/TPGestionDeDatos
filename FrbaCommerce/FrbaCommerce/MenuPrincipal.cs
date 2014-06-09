@@ -67,5 +67,17 @@ namespace FrbaCommerce
             this.Close();
           
         }
+
+        private void botonCerrarSesion_Click(object sender, EventArgs e)
+        {
+            UsuarioSesion.Usuario.id = 0;
+            UsuarioSesion.Usuario.nombre = null;
+            UsuarioSesion.Usuario.rol = null;
+
+            this.Hide();
+            new Login.LoginForm().ShowDialog();
+            this.Close();
+
+        }
     }
 }
