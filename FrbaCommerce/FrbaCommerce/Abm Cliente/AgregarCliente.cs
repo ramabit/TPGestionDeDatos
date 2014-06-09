@@ -39,7 +39,7 @@ namespace FrbaCommerce.ABM_Cliente
 
         private void CargarTipoDeDocumentos()
         {
-            command = builderDeComandos.Crear("SELECT nombre FROM LOS_SUPER_AMIGOS.TipoDeDocumento tipoDoc", parametros);
+            command = builderDeComandos.Crear("SELECT nombre FROM LOS_SUPER_AMIGOS.TipoDeDocumento", parametros);
 
             DataSet rubros = new DataSet();
             SqlDataAdapter adapter = new SqlDataAdapter();
