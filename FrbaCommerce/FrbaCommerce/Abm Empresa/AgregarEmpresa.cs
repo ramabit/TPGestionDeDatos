@@ -118,10 +118,10 @@ namespace FrbaCommerce.ABM_Empresa
             parametros.Clear();
             parametros.Add(new SqlParameter("@razonSocial", razonSocial));
             parametros.Add(new SqlParameter("@nombreDeContacto", nombreDeContacto));
-            parametros.Add(new SqlParameter("@cuit", cuit));
-            parametros.Add(new SqlParameter("@fechaDeCreacion", this.siEstaVacioDevuelveDBNullSinoDecimal(fechaDeCreacion)));
+            parametros.Add(new SqlParameter("@cuit", this.siEstaVacioDevuelveDBNullSinoDecimal(cuit)));
+            parametros.Add(new SqlParameter("@fechaDeCreacion", fechaDeCreacion));
             parametros.Add(new SqlParameter("@mail", mail));
-            parametros.Add(new SqlParameter("@telefono", telefono));
+            parametros.Add(new SqlParameter("@telefono", this.siEstaVacioDevuelveDBNullSinoDecimal(telefono)));
             parametros.Add(new SqlParameter("@ciudad", ciudad));
             parametros.Add(new SqlParameter("@idDireccion", idDireccion));
             parametros.Add(new SqlParameter("@idUsuario", idUsuario));
@@ -151,11 +151,11 @@ namespace FrbaCommerce.ABM_Empresa
         {
             query = "SELECT COUNT(*) FROM LOS_SUPER_AMIGOS.Empresa WHERE razon_social = @razonSocial";
             parametros.Clear();
-            parametros.Add(new SqlParameter("@razonSocial", razonSocial);
+            parametros.Add(new SqlParameter("@razonSocial", razonSocial));
             int cantidad = (int)builderDeComandos.Crear(query, parametros).ExecuteScalar();
             if (cantidad > 0)
             {
-                MessageBox.Show("Ya existe esa razonSocial");
+                MessageBox.Show("Ya existe esa razon social");
                 return false;
             }
             return true;
@@ -179,7 +179,7 @@ namespace FrbaCommerce.ABM_Empresa
         {
             if (valor == "")
             {
-                MessageBox.Show("No se ingreso un " + valor);
+                MessageBox.Show("Faltan datos");
                 return false;
             }
             return true;

@@ -136,7 +136,7 @@ namespace FrbaCommerce.ABM_Cliente
             parametros.Add(new SqlParameter("@numeroDeDocumento", numeroDeDocumento));
             parametros.Add(new SqlParameter("@fechaDeNacimiento", fechaDeNacimiento));
             parametros.Add(new SqlParameter("@mail", mail));
-            parametros.Add(new SqlParameter("@telefono", telefono));
+            parametros.Add(new SqlParameter("@telefono", this.siEstaVacioDevuelveDBNullSinoDecimal(telefono)));
             parametros.Add(new SqlParameter("@idDireccion", idDireccion));
             parametros.Add(new SqlParameter("@idUsuario", idUsuario));
 
@@ -180,7 +180,7 @@ namespace FrbaCommerce.ABM_Cliente
         {
             if (valor == "")
             {
-                MessageBox.Show("No se ingreso un " + valor);
+                MessageBox.Show("Faltan datos");
                 return false;
             }
             return true;

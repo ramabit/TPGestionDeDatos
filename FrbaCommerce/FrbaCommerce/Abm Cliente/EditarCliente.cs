@@ -184,7 +184,7 @@ namespace FrbaCommerce.ABM_Cliente
         {
             if (valor == "")
             {
-                MessageBox.Show("No se ingreso un " + valor);
+                MessageBox.Show("Faltan datos");
                 return false;
             }
             return true;
