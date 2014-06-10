@@ -93,16 +93,20 @@ namespace FrbaCommerce.ABM_Cliente
             String nombre = textBox_Nombre.Text;
             String apellido = textBox_Apellido.Text;
             String tipoDeDocumento = comboBox_TipoDeDocumento.Text;
-            Decimal numeroDeDocumento = Convert.ToDecimal(textBox_NumeroDeDoc.Text);
-            DateTime fechaDeNacimiento = Convert.ToDateTime(textBox_FechaDeNacimiento.Text);
+            String numeroDeDocumento = textBox_NumeroDeDoc.Text;
+            String fechaDeNacimiento = textBox_FechaDeNacimiento.Text;
             String mail = textBox_Mail.Text;
-            Decimal telefono = Convert.ToDecimal(textBox_Telefono.Text);
+            String telefono = textBox_Telefono.Text;
             String calle = textBox_Calle.Text;
-            Decimal numero = Convert.ToDecimal(textBox_Numero.Text);
-            Decimal piso = Convert.ToDecimal(textBox_Piso.Text);
+            String numero = textBox_Numero.Text;
+            String piso = textBox_Piso.Text;
             String departamento = textBox_Departamento.Text;
             String codigoPostal = textBox_CodigoPostal.Text;
             String localidad = textBox_Localidad.Text;
+
+            // Controla que esten los campos numeroDeDocumento y telefono
+            if (!this.pasoControlDeNoVacio(numeroDeDocumento)) return;
+            if (!this.pasoControlDeNoVacio(telefono)) return;
 
             // Averigua el id del tipo de documento a partir del nombre del tipo de documento
             query = "SELECT id FROM LOS_SUPER_AMIGOS.TipoDeDocumento WHERE nombre = @tipoDeDocumento";
@@ -110,12 +114,15 @@ namespace FrbaCommerce.ABM_Cliente
             parametros.Add(new SqlParameter("@tipoDeDocumento", tipoDeDocumento));
             Decimal idTipoDeDocumento = (Decimal)builderDeComandos.Crear(query, parametros).ExecuteScalar();
 
+            // Controla que tipo y numero de documento ya se haya registrado en el sistema
+            if (!this.pasoControlDeRegistro(idTipoDeDocumento, numeroDeDocumento)) return;
+
             // Update direccion
             query = "UPDATE LOS_SUPER_AMIGOS.Direccion SET calle = @calle, numero = @numero, piso = @piso, depto = @departamento, cod_postal = @codigoPostal, localidad = @localidad WHERE id = @idDireccion";
             parametros.Clear();
             parametros.Add(new SqlParameter("@calle", calle));
-            parametros.Add(new SqlParameter("@numero", numero));
-            parametros.Add(new SqlParameter("@piso", piso));
+            parametros.Add(new SqlParameter("@numero", this.siEstaVacioDevuelveDBNullSinoDecimal(numero)));
+            parametros.Add(new SqlParameter("@piso", this.siEstaVacioDevuelveDBNullSinoDecimal(piso)));
             parametros.Add(new SqlParameter("@departamento", departamento));
             parametros.Add(new SqlParameter("@codigoPostal", codigoPostal));
             parametros.Add(new SqlParameter("@localidad", localidad));
@@ -130,9 +137,9 @@ namespace FrbaCommerce.ABM_Cliente
             parametros.Add(new SqlParameter("@apellido", apellido));
             parametros.Add(new SqlParameter("@idTipoDeDocumento", idTipoDeDocumento));
             parametros.Add(new SqlParameter("@numeroDeDocumento", numeroDeDocumento));
-            parametros.Add(new SqlParameter("@fechaDeNacimiento", fechaDeNacimiento));
+            parametros.Add(new SqlParameter("@fechaDeNacimiento", this.siEstaVacioDevuelveDBNullSinoDecimal(fechaDeNacimiento)));
             parametros.Add(new SqlParameter("@mail", mail));
-            parametros.Add(new SqlParameter("@telefono", telefono));
+            parametros.Add(new SqlParameter("@telefono", this.siEstaVacioDevuelveDBNullSinoDecimal(telefono)));
             parametros.Add(new SqlParameter("@idCliente", idCliente));
 
             query = "UPDATE LOS_SUPER_AMIGOS.Cliente SET nombre = @nombre, apellido = @apellido, tipo_de_documento_id = @idTipoDeDocumento, documento = @numeroDeDocumento, fecha_nacimiento = @fechaDeNacimiento, mail = @mail, telefono = @telefono WHERE id = @idCliente";
@@ -140,6 +147,43 @@ namespace FrbaCommerce.ABM_Cliente
             filasAfectadas = builderDeComandos.Crear(query, parametros).ExecuteNonQuery();
 
             if (filasAfectadas == 1) MessageBox.Show("El cliente se modifico correctamente");
+        }
+
+        private bool pasoControlDeRegistro(Decimal tipoDeDocumento, String numeroDeDocumento)
+        {
+            query = "SELECT COUNT(*) FROM LOS_SUPER_AMIGOS.Cliente WHERE tipo_de_documento_id = @tipoDeDocumento AND documento = @numeroDeDocumento";
+            parametros.Clear();
+            parametros.Add(new SqlParameter("@tipoDeDocumento", tipoDeDocumento));
+            parametros.Add(new SqlParameter("@numeroDeDocumento", Convert.ToDecimal(numeroDeDocumento)));
+            int cantidad = (int)builderDeComandos.Crear(query, parametros).ExecuteScalar();
+            if (cantidad > 0)
+            {
+                MessageBox.Show("Ya existe ese numero de documento");
+                return false;
+            }
+            return true;
+        }
+
+        private bool pasoControlDeNoVacio(string valor)
+        {
+            if (valor == "")
+            {
+                MessageBox.Show("No se ingreso un " + valor);
+                return false;
+            }
+            return true;
+        }
+
+        private object siEstaVacioDevuelveDBNullSinoDecimal(string valor)
+        {
+            if (valor == "")
+            {
+                return DBNull.Value;
+            }
+            else
+            {
+                return Convert.ToDecimal(valor);
+            }
         }
 
         private void button_Limpiar_Click(object sender, EventArgs e)
