@@ -4,19 +4,18 @@
 - [ ] Agregar validaciones
 
 # General de ABM Filtro
-- [ ] Sacar la columna id
-- [ ] Sacar la columna habilitado
+- [x] Sacar la columna id
+- [x] Sacar la columna habilitado
 - [ ] Poner el texto de los headers en mayuscula
-- [ ] Modificar los nombres para que solamente la primera letra quede en mayuscula
-- [ ] Sacar la ultima fila
+- [x] Sacar la ultima fila
 
 # General de ABM Editar
-- [ ] Agregar controlador a seleccionar de fecha de nacimiento
-- [ ] Agregar funcionalidad para los botones
+- [x] Agregar controlador a seleccionar de fecha de nacimiento
+- [x] Agregar funcionalidad para los botones
 
 # General de ABM Agregar
-- [ ] Agregar funcionalidad a los botones
-- [ ] Informar por todos los campos unicos
+- [x] Agregar funcionalidad a los botones
+- [ ] Informar si se crea un cliente/empresa con un campo que ya existe y debe ser unico
 
 # Filtro Cliente/Empresa
 - [ ] Modificar la columna usuario_id por usuario
@@ -34,3 +33,11 @@
 
 #Registro de Usuario
 - [ ] Informar si el usuario ya esta registrado
+
+#Otros
+- [ ] Cambiar en script la forma de agregar direcciones
+- [ ] Tener en cuenta que pasa si se no se completan los campos
+- [ ] Agregar rubro_id en visibilidad en DER
+- [ ] Modificar el usuario_id en generar_publicacion
+- [ ] Modificar la fecha de vencimiento en generar_publicacion
+- [ ] Agregar restriccion de borrador y activa
