@@ -41,11 +41,11 @@ namespace FrbaCommerce.ABM_Cliente
         {
             command = builderDeComandos.Crear("SELECT nombre FROM LOS_SUPER_AMIGOS.TipoDeDocumento", parametros);
 
-            DataSet rubros = new DataSet();
+            DataSet tiposDeDocumento = new DataSet();
             SqlDataAdapter adapter = new SqlDataAdapter();
             adapter.SelectCommand = command;
-            adapter.Fill(rubros);
-            comboBox_TipoDeDocumento.DataSource = rubros.Tables[0].DefaultView;
+            adapter.Fill(tiposDeDocumento);
+            comboBox_TipoDeDocumento.DataSource = tiposDeDocumento.Tables[0].DefaultView;
             comboBox_TipoDeDocumento.ValueMember = "nombre";
         }
 

@@ -24,9 +24,24 @@ namespace FrbaCommerce.ABM_Cliente
 
         private void FiltroCliente_Load(object sender, EventArgs e)
         {
+            CargarTiposDeDocumento();
             CargarClientes();
             OcultarColumnasQueNoDebenVerse();
             ModificarHeaders();
+        }
+
+        private void CargarTiposDeDocumento()
+        {
+            query = "SELECT nombre FROM LOS_SUPER_AMIGOS.TipoDeDocumento";
+            parametros.Clear();
+            command = builderDeComandos.Crear(query, parametros);
+
+            DataSet tiposDeDocumentos = new DataSet();
+            SqlDataAdapter adapter = new SqlDataAdapter();
+            adapter.SelectCommand = command;
+            adapter.Fill(tiposDeDocumentos);
+            comboBox_TipoDeDoc.DataSource = tiposDeDocumentos.Tables[0].DefaultView;
+            comboBox_TipoDeDoc.ValueMember = "nombre";
         }
 
         private void ModificarHeaders()
