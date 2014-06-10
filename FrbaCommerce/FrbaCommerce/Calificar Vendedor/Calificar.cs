@@ -11,9 +11,14 @@ namespace FrbaCommerce.Calificar_Vendedor
 {
     public partial class Calificar : Form
     {
-        public Calificar()
+        public Calificar(String idCompraParaCalificar, String tipoCompraParaCalificar)
         {
             InitializeComponent();
+        }
+
+        private void Calificar_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
