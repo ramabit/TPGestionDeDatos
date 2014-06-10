@@ -94,7 +94,8 @@ namespace FrbaCommerce.Registro_de_Usuario
 
         private void botonVolver_Click(object sender, EventArgs e)
         {
-            new Login.LoginForm().Show();
+            this.Hide();
+            new Login.LoginForm().ShowDialog();
             this.Close();
         }
 

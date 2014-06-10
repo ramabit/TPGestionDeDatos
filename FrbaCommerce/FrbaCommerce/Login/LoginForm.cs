@@ -176,7 +176,7 @@ namespace FrbaCommerce.Login
         private void botonRegistrarse_Click(object sender, EventArgs e)
         {
             this.Hide();
-            new Registro_de_Usuario.RegistrarUsuario().Show();
+            new Registro_de_Usuario.RegistrarUsuario().ShowDialog();
             this.Close();
         }
     }
