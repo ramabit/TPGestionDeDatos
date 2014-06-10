@@ -136,88 +136,104 @@ namespace FrbaCommerce.Comprar_Ofertar
             }
         }
 
-        private void sePuedeRetrocederPaginas()
+        private bool sePuedeRetrocederPaginas()
         {
             if (VerificarSiSeBusco() == false)
             {
-                return;
+                return false;
             }
-
-            if (paginaActual == 1)
+            else
             {
-                MessageBox.Show("Ya estas en la 1º pagina");
-                return;
+                if (paginaActual == 1)
+                {
+                    MessageBox.Show("Ya estas en la 1º pagina");
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
             }
         }
 
         private void botonPrimeraPagina_Click(object sender, EventArgs e)
         {
-            sePuedeRetrocederPaginas();
-
-            ini = 0;
-            fin = 9;
-            dataGridView1.DataSource = paginarDataGridView(ini, fin);
-            mostrarNrosPaginas(ini); 
+            if (sePuedeRetrocederPaginas())
+            {
+                ini = 0;
+                fin = 9;
+                dataGridView1.DataSource = paginarDataGridView(ini, fin);
+                mostrarNrosPaginas(ini);
+            }
         }
 
         private void botonPaginaAnterior_Click(object sender, EventArgs e)
         {
-            sePuedeRetrocederPaginas();
-
-            ini -= publicacionesPorPagina;
-            if (fin != totalPublicaciones)
+            if (sePuedeRetrocederPaginas())
             {
-                fin -= publicacionesPorPagina;
-            }
-            else
-            {
-                fin = ini + 9;
-            }
+                ini -= publicacionesPorPagina;
+                if (fin != totalPublicaciones)
+                {
+                    fin -= publicacionesPorPagina;
+                }
+                else
+                {
+                    fin = ini + 9;
+                }
 
-            dataGridView1.DataSource = paginarDataGridView(ini, fin);
-            mostrarNrosPaginas(ini);
+                dataGridView1.DataSource = paginarDataGridView(ini, fin);
+                mostrarNrosPaginas(ini);
+            }
         }
 
-        private void sePuedeAvanzarPaginas()
+        private bool sePuedeAvanzarPaginas()
         {
             if (VerificarSiSeBusco() == false)
             {
-                return;
+                return false;
             }
-
-            if (paginaActual == totalPaginas)
+            else
             {
-                MessageBox.Show("Ya estas en la ultima pagina");
-                return;
+                if (paginaActual == totalPaginas)
+                {
+                    MessageBox.Show("Ya estas en la ultima pagina");
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
             }
         }
 
         private void botonPaginaSiguiente_Click(object sender, EventArgs e)
         {
-            sePuedeAvanzarPaginas();
-
-            ini += publicacionesPorPagina;
-            if ((fin + publicacionesPorPagina) != totalPublicaciones)
+            if (sePuedeAvanzarPaginas())
             {
-                fin += publicacionesPorPagina;
-            }
-            else
-            {
-                fin = totalPublicaciones;
-            }
+                ini += publicacionesPorPagina;
+                if ((fin + publicacionesPorPagina) != totalPublicaciones)
+                {
+                    fin += publicacionesPorPagina;
+                }
+                else
+                {
+                    fin = totalPublicaciones;
+                }
 
-            dataGridView1.DataSource = paginarDataGridView(ini, fin);
-            mostrarNrosPaginas(ini);
+                dataGridView1.DataSource = paginarDataGridView(ini, fin);
+                mostrarNrosPaginas(ini);
+            }
         }
 
         private void botonUltimaPagina_Click(object sender, EventArgs e)
         {
-            sePuedeAvanzarPaginas();
-
-            ini = (totalPaginas - 1) * publicacionesPorPagina;
-            fin = totalPublicaciones;
-            dataGridView1.DataSource = paginarDataGridView(ini, fin);
-            mostrarNrosPaginas(ini); 
+            if (sePuedeAvanzarPaginas())
+            {
+                ini = (totalPaginas - 1) * publicacionesPorPagina;
+                fin = totalPublicaciones;
+                dataGridView1.DataSource = paginarDataGridView(ini, fin);
+                mostrarNrosPaginas(ini);
+            }
         }
 
         private void AgregarBotonVerPublicacion()
