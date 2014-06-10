@@ -69,7 +69,6 @@ namespace FrbaCommerce.ABM_Cliente
 
             // Controla que esten los campos numeroDeDocumento y telefono
             if (!this.pasoControlDeNoVacio(numeroDeDocumento)) return;
-            if (!this.pasoControlDeNoVacio(telefono)) return;
 
             // Averigua el id del tipo de documento a partir del nombre del tipo de documento
             query = "SELECT id FROM LOS_SUPER_AMIGOS.TipoDeDocumento WHERE nombre = @tipoDeDocumento";
@@ -77,11 +76,11 @@ namespace FrbaCommerce.ABM_Cliente
             parametros.Add(new SqlParameter("@tipoDeDocumento", tipoDeDocumento));
             Decimal idTipoDeDocumento = (Decimal)builderDeComandos.Crear(query, parametros).ExecuteScalar();
 
-            // Controla que tipo y numero de documento ya se haya registrado en el sistema
+            // Controla que tipo y numero de documento no se encuentren registrado en el sistema
             if (!this.pasoControlDeRegistro(idTipoDeDocumento, numeroDeDocumento)) return;
 
             // Controla que telefono sea unico
-            if (!this.pasoControlDeUnicidad(telefono)) return;
+            if (telefono != "" && !this.pasoControlDeUnicidad(telefono)) return;
 
             // Crea una direccion y se guarda su id. Usa un stored procedure del script
             query = "LOS_SUPER_AMIGOS.crear_direccion";
@@ -135,7 +134,7 @@ namespace FrbaCommerce.ABM_Cliente
             parametros.Add(new SqlParameter("@apellido", apellido));
             parametros.Add(new SqlParameter("@idTipoDeDocumento", idTipoDeDocumento));
             parametros.Add(new SqlParameter("@numeroDeDocumento", numeroDeDocumento));
-            parametros.Add(new SqlParameter("@fechaDeNacimiento", this.siEstaVacioDevuelveDBNullSinoDecimal(fechaDeNacimiento)));
+            parametros.Add(new SqlParameter("@fechaDeNacimiento", fechaDeNacimiento));
             parametros.Add(new SqlParameter("@mail", mail));
             parametros.Add(new SqlParameter("@telefono", telefono));
             parametros.Add(new SqlParameter("@idDireccion", idDireccion));
