@@ -50,20 +50,52 @@ namespace FrbaCommerce.ABM_Visibilidad
         private void button_Guardar_Click(object sender, EventArgs e)
         {
             String descripcion = textBox_Descripcion.Text;
-            Double precioPorPublicar = Convert.ToDouble(textBox_PrecioPorPublicar.Text);
-            Decimal porcentajePorVenta = Convert.ToDecimal(textBox_PorcentajePorVenta.Text);
+            String precioPorPublicar = textBox_PrecioPorPublicar.Text;
+            String porcentajePorVenta = textBox_PorcentajePorVenta.Text;
+
+            // Controla que esten los campos numeroDeDocumento y telefono
+            if (!this.pasoControlDeNoVacio(descripcion)) return;
+            if (!this.pasoControlDeNoVacio(precioPorPublicar)) return;
+            if (!this.pasoControlDeNoVacio(porcentajePorVenta)) return;
+
+            // Controla que descripcion no se encuentren registrado en el sistema
+            if (!this.pasoControlDeRegistro(descripcion)) return;
 
             query = "UPDATE LOS_SUPER_AMIGOS.Visibilidad SET descripcion = @descripcion, precio = @precioporPublicar, porcentaje = @porcentajeDeVenta WHERE id = idVisibilidad";
             
             parametros.Clear();
             parametros.Add(new SqlParameter("@descripcion", descripcion));
-            parametros.Add(new SqlParameter("@precioPorPublicar", precioPorPublicar));
-            parametros.Add(new SqlParameter("@porcentajePorVenta", porcentajePorVenta));
+            parametros.Add(new SqlParameter("@precioPorPublicar", Convert.ToDouble(precioPorPublicar)));
+            parametros.Add(new SqlParameter("@porcentajePorVenta", Convert.ToDecimal(porcentajePorVenta)));
             parametros.Add(new SqlParameter("@idVisibilidad", idVisibilidad));
 
             int filasAfectadas = builderDeComandos.Crear(query, parametros).ExecuteNonQuery();
 
             if (filasAfectadas == 1) MessageBox.Show("Se modifico la visiblidad correctamente");
+        }
+
+        private bool pasoControlDeNoVacio(string valor)
+        {
+            if (valor == "")
+            {
+                MessageBox.Show("Faltan datos");
+                return false;
+            }
+            return true;
+        }
+
+        private bool pasoControlDeRegistro(String descripcion)
+        {
+            query = "SELECT COUNT(*) FROM LOS_SUPER_AMIGOS.Visibilidad WHERE descripcion = @descripcion";
+            parametros.Clear();
+            parametros.Add(new SqlParameter("@descripcion", descripcion));
+            int cantidad = (int)builderDeComandos.Crear(query, parametros).ExecuteScalar();
+            if (cantidad > 0)
+            {
+                MessageBox.Show("Ya existe es descripcion");
+                return false;
+            }
+            return true;
         }
 
         private void button_Limpiar_Click(object sender, EventArgs e)
