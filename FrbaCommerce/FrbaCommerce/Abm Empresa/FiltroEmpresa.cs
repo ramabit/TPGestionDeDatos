@@ -25,8 +25,6 @@ namespace FrbaCommerce.ABM_Empresa
         private void FiltroEmpresa_Load(object sender, EventArgs e)
         {
             CargarEmpresas();
-            AgregarColumnaDeModificacion();
-            AgregarListenerBotonDeModificacion();
             OcultarColumnasQueNoDebenVerse();
         }
 
@@ -44,6 +42,10 @@ namespace FrbaCommerce.ABM_Empresa
             adapter.SelectCommand = command;
             adapter.Fill(empresas);
             dataGridView_Empresa.DataSource = empresas.Tables[0].DefaultView;
+            if (dataGridView_Empresa.Columns.Contains("modificar"))
+                dataGridView_Empresa.Columns.Remove("modificar");
+            AgregarColumnaDeModificacion();
+            AgregarListenerBotonDeModificacion();
         }
 
         private void AgregarColumnaDeModificacion()

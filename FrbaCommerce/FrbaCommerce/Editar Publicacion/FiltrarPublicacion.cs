@@ -25,8 +25,6 @@ namespace FrbaCommerce.Editar_Publicacion
         private void FiltrarPublicacion_Load(object sender, EventArgs e)
         {
             CargarPublicacion();
-            AgregarColumnaDeModificacion();
-            AgregarListenerBotonDeModificacion();
             OcultarColumnasQueNoDebenVerse();
         }
 
@@ -44,6 +42,10 @@ namespace FrbaCommerce.Editar_Publicacion
             adapter.SelectCommand = command;
             adapter.Fill(publicaciones);
             dataGridView_Publicacion.DataSource = publicaciones.Tables[0].DefaultView;
+            if (dataGridView_Publicacion.Columns.Contains("modificar"))
+                dataGridView_Publicacion.Columns.Remove("modificar");
+            AgregarColumnaDeModificacion();
+            AgregarListenerBotonDeModificacion();
         }
 
         private void AgregarColumnaDeModificacion()

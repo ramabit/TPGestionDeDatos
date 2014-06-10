@@ -25,8 +25,6 @@ namespace FrbaCommerce.ABM_Visibilidad
         private void FiltroVisibilidad_Load(object sender, EventArgs e)
         {
             CargarVisibilidad();
-            AgregarColumnaDeModificacion();
-            AgregarListenerBotonDeModificacion();
         }
 
         private void CargarVisibilidad()
@@ -38,6 +36,10 @@ namespace FrbaCommerce.ABM_Visibilidad
             adapter.SelectCommand = command;
             adapter.Fill(visibilidades);
             dataGridView_Visibilidad.DataSource = visibilidades.Tables[0].DefaultView;
+            if (dataGridView_Visibilidad.Columns.Contains("modificar"))
+                dataGridView_Visibilidad.Columns.Remove("modificar");
+            AgregarColumnaDeModificacion();
+            AgregarListenerBotonDeModificacion();
         }
 
         private void AgregarColumnaDeModificacion()

@@ -25,8 +25,6 @@ namespace FrbaCommerce.ABM_Cliente
         private void FiltroCliente_Load(object sender, EventArgs e)
         {
             CargarClientes();
-            AgregarColumnaDeModificacion();
-            AgregarListenerBotonDeModificacion();
             OcultarColumnasQueNoDebenVerse();
             ModificarHeaders();
         }
@@ -50,6 +48,10 @@ namespace FrbaCommerce.ABM_Cliente
             adapter.SelectCommand = command;
             adapter.Fill(clientes);
             dataGridView_Cliente.DataSource = clientes.Tables[0].DefaultView;
+            if (dataGridView_Cliente.Columns.Contains("modificar")) 
+                dataGridView_Cliente.Columns.Remove("modificar");
+            AgregarColumnaDeModificacion();
+            AgregarListenerBotonDeModificacion();
         }
 
         private void AgregarColumnaDeModificacion()
@@ -89,7 +91,7 @@ namespace FrbaCommerce.ABM_Cliente
             if (textBox_NumeroDeDoc.Text != "") filtro += " and " + "dni like '" + textBox_NumeroDeDoc.Text + "%'";
             // TODO: agregar el filtro del documento
 
-            query = "SELECT * FROM LOS_SUPER_AMIGOSCliente WHERE " + filtro;
+            query = "SELECT * FROM LOS_SUPER_AMIGOS.Cliente WHERE " + filtro;
 
             command = builderDeComandos.Crear(query, parametros);
 
