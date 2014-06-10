@@ -56,7 +56,7 @@ namespace FrbaCommerce.Comprar_Ofertar
             textBoxDescripcion.Clear();
             comboBoxRubro.SelectedIndex = -1;            
             labelNrosPagina.Text = "";
-            //Ver como vaciar la datagridview
+            dataGridView1.DataSource = null;            
         }
 
         private void botonBuscar_Click(object sender, EventArgs e)
@@ -86,13 +86,22 @@ namespace FrbaCommerce.Comprar_Ofertar
             command = builderDeComandos.Crear(query, parametros);
             adapter.SelectCommand = command;            
             adapter.Fill(busquedaTemporal);
-            tablaTemporal = busquedaTemporal;
 
-            ini = 0;
-            fin = 9; 
-            calcularPaginas();
-            dataGridView1.DataSource = paginarDataGridView(ini, fin);
-            mostrarNrosPaginas(ini);            
+            int cantFilas = busquedaTemporal.Rows.Count;
+            if (cantFilas == 0)
+            {
+                MessageBox.Show("No hay resultados");
+            }
+            else
+            {
+                tablaTemporal = busquedaTemporal;
+
+                ini = 0;
+                fin = 9;
+                calcularPaginas();
+                dataGridView1.DataSource = paginarDataGridView(ini, fin);
+                mostrarNrosPaginas(ini);
+            }
         }
 
         private void calcularPaginas()
@@ -128,7 +137,6 @@ namespace FrbaCommerce.Comprar_Ofertar
             {
                 MessageBox.Show("Aun no buscaste nada");
                 return false;
-                //Devuelve null, ver como solucionar
             }
             else
             {
