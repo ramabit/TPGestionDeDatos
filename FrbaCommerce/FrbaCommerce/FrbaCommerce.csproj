@@ -168,6 +168,12 @@
     <Compile Include="Calificar Vendedor\Calificar.Designer.cs">
       <DependentUpon>Calificar.cs</DependentUpon>
     </Compile>
+    <Compile Include="Calificar Vendedor\Listado.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Calificar Vendedor\Listado.Designer.cs">
+      <DependentUpon>Listado.cs</DependentUpon>
+    </Compile>
     <Compile Include="BuilderDeComandos.cs" />
     <Compile Include="Comprar-Ofertar\BuscardorPublicaciones.cs">
       <SubType>Form</SubType>
@@ -304,6 +310,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ABM Visibilidad\FiltroVisibilidad.resx">
       <DependentUpon>FiltroVisibilidad.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Calificar Vendedor\Calificar.resx">
+      <DependentUpon>Calificar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Calificar Vendedor\Listado.resx">
+      <DependentUpon>Listado.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Comprar-Ofertar\BuscardorPublicaciones.resx">
       <DependentUpon>BuscardorPublicaciones.cs</DependentUpon>
