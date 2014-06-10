@@ -71,18 +71,30 @@ namespace FrbaCommerce.ABM_Empresa
             command.ExecuteNonQuery();
             Decimal idDireccion = (Decimal)parametroOutput.Value;
 
-            // Crea un nuevo usuario y se guarda su id. Usa un stored procedure del script
-            query = "LOS_SUPER_AMIGOS.crear_usuario_con_valores";
-            parametros.Clear();
-            parametroOutput = new SqlParameter("@usuario_id", SqlDbType.Decimal);
-            parametroOutput.Direction = ParameterDirection.Output;
-            parametros.Add(new SqlParameter("@username", username));
-            parametros.Add(new SqlParameter("@password", HashSha256.getHash(contrasena)));
-            parametros.Add(parametroOutput);
-            command = builderDeComandos.Crear(query, parametros);
-            command.CommandType = CommandType.StoredProcedure;
-            command.ExecuteNonQuery();
-            Decimal idUsuario = (Decimal)parametroOutput.Value;
+
+            // Si el cliente lo crea el admin, crea un nuevo usuario. Si lo crea un nuevo registro de usuario, usa el que viene por parametro
+            Decimal idUsuario;
+            if (username == "empresaCreadaPorAdmin")
+            {
+                query = "LOS_SUPER_AMIGOS.crear_usuario_con_valores";
+                parametros.Clear();
+                parametroOutput = new SqlParameter("@usuario_id", SqlDbType.Decimal);
+                parametroOutput.Direction = ParameterDirection.Output;
+                parametros.Add(new SqlParameter("@username", username));
+                parametros.Add(new SqlParameter("@password", HashSha256.getHash(contrasena)));
+                parametros.Add(parametroOutput);
+                command = builderDeComandos.Crear(query, parametros);
+                command.CommandType = CommandType.StoredProcedure;
+                command.ExecuteNonQuery();
+                idUsuario = (Decimal)parametroOutput.Value;
+            }
+            else
+            {
+                query = "SELECT id FROM LOS_SUPER_AMIGOS.Usuario WHERE nombre = @username";
+                parametros.Clear();
+                parametros.Add(new SqlParameter("@username", username));
+                idUsuario = (Decimal) builderDeComandos.Crear(query, parametros).ExecuteScalar();
+            }
 
             parametros.Clear();
             parametros.Add(new SqlParameter("@razonSocial", razonSocial));
