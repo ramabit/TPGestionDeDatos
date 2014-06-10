@@ -316,6 +316,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Calificar Vendedor\Listado.resx">
       <DependentUpon>Listado.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Comprar-Ofertar\BuscardorPublicaciones.resx">
       <DependentUpon>BuscardorPublicaciones.cs</DependentUpon>
     </EmbeddedResource>

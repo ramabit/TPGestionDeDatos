@@ -106,9 +106,9 @@ namespace FrbaCommerce.Calificar_Vendedor
             // Controla que la celda que se clickeo calificar vendedor
             if (e.ColumnIndex == dataGridViewCompras.Columns["Calificar vendedor"].Index && e.RowIndex >= 0)
             {
-                String idCompraParaCalificar = dataGridViewCompras.Rows[e.RowIndex].Cells["id"].Value.ToString();
-                String tipoCompraParaCalificar = dataGridViewCompras.Rows[e.RowIndex].Cells["Tipo"].Value.ToString();
-                new Calificar(idCompraParaCalificar, tipoCompraParaCalificar).ShowDialog();
+             //   String idCompraParaCalificar = dataGridViewCompras.Rows[e.RowIndex].Cells["id"].Value.ToString();
+             //   String tipoCompraParaCalificar = dataGridViewCompras.Rows[e.RowIndex].Cells["Tipo"].Value.ToString();
+             //   new Calificar(idCompraParaCalificar, tipoCompraParaCalificar).ShowDialog();
             }
         }
 
