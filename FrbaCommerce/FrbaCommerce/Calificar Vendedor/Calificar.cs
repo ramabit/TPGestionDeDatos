@@ -6,21 +6,28 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Data.SqlClient;
 
 namespace FrbaCommerce.Calificar_Vendedor
 {
     public partial class Calificar : Form
     {
+        private SqlCommand command { get; set; }
+        private IList<SqlParameter> parametros = new List<SqlParameter>();
+        private BuilderDeComandos builderDeComandos = new BuilderDeComandos();
+
         private Decimal id;
         private String tipo;
-        private int calificacion = 0;
-        private string descripcion = "";
+        private int calificacion { get; set;}
+        private string descripcion {get; set;}
 
         public Calificar(Decimal idCompraParaCalificar, String tipoCompraParaCalificar)
         {
             InitializeComponent();
             id = idCompraParaCalificar;
             tipo = tipoCompraParaCalificar;
+            calificacion = 0;
+            descripcion = "";
         }
 
         private void Calificar_Load(object sender, EventArgs e)
@@ -71,15 +78,53 @@ namespace FrbaCommerce.Calificar_Vendedor
             {
                 descripcion = textBoxDescripcion.Text;
             }
-
-            if(calificacion==0)
+            
+            if(this.calificacion==0)
             {
-                MessageBox.Show("Seleccione una calificacion");
+                MessageBox.Show("Seleccione una cantidad de estrellas");
                 return;
             }
 
-            MessageBox.Show("Calificacion: " + calificacion + " Descripcion: " + descripcion);
+            parametros.Add(new SqlParameter("@estrellas", this.calificacion));
+            parametros.Add(new SqlParameter("@descripcion", descripcion));
 
+            // inserta nueva calificacion
+            String nuevaCalificacion = "insert LOS_SUPER_AMIGOS.Calificacion"
+                                + " (cantidad_estrellas, descripcion)"
+                                + " values(@estrellas,@descripcion)";
+            builderDeComandos.Crear(nuevaCalificacion, parametros).ExecuteNonQuery();
+
+            parametros.Clear();
+            String idCalificacion = "select top 1 id"
+                                + " from LOS_SUPER_AMIGOS.Calificacion"
+                                + " order by id DESC";
+            Decimal elId = (Decimal)builderDeComandos.Crear(idCalificacion, parametros).ExecuteScalar();
+
+            parametros.Clear();
+            parametros.Add(new SqlParameter("@idCalif", elId));
+            parametros.Add(new SqlParameter("@id", id));
+
+            // referencia en compra u oferta a la calificacion
+            if (tipo == "Compra")
+            {
+                String compraAct = "update LOS_SUPER_AMIGOS.Compra"
+                                 + " set calificacion_id = @idCalif"
+                                 + " where id = @id";
+                builderDeComandos.Crear(compraAct, parametros).ExecuteNonQuery();
+            }
+            else if (tipo == "Oferta")
+            {
+                String compraAct = "update LOS_SUPER_AMIGOS.Oferta"
+                                 + " set calificacion_id = @idCalif"
+                                 + " where id = @id";
+                builderDeComandos.Crear(compraAct, parametros).ExecuteNonQuery();
+            }
+
+            MessageBox.Show("Calificacion hecha correctamente");
+
+            this.Hide();
+            new Listado().ShowDialog();
+            this.Close();
         }
 
         private void botonCancelar_Click(object sender, EventArgs e)

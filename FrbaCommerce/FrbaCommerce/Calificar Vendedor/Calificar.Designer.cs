@@ -44,9 +44,9 @@
             this.labelTituloNumero.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelTituloNumero.Location = new System.Drawing.Point(28, 49);
             this.labelTituloNumero.Name = "labelTituloNumero";
-            this.labelTituloNumero.Size = new System.Drawing.Size(216, 15);
+            this.labelTituloNumero.Size = new System.Drawing.Size(244, 15);
             this.labelTituloNumero.TabIndex = 10;
-            this.labelTituloNumero.Text = "Seleccione una calificacion del 1 al 10";
+            this.labelTituloNumero.Text = "Seleccione cantidad de estrellas del 1 al 10";
             // 
             // labelTituloDescripcion
             // 
@@ -110,7 +110,7 @@
             // 
             // dropdownCalificacion
             // 
-            this.dropdownCalificacion.Location = new System.Drawing.Point(250, 49);
+            this.dropdownCalificacion.Location = new System.Drawing.Point(278, 49);
             this.dropdownCalificacion.Name = "dropdownCalificacion";
             this.dropdownCalificacion.Size = new System.Drawing.Size(120, 20);
             this.dropdownCalificacion.TabIndex = 17;
