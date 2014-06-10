@@ -534,11 +534,20 @@ INSERT INTO LOS_SUPER_AMIGOS.Oferta
 SELECT Oferta_Monto, Oferta_Fecha, (SELECT usuario_id FROM LOS_SUPER_AMIGOS.Cliente WHERE documento = Cli_Dni), Publicacion_Cod, Calificacion_Codigo FROM gd_esquema.Maestra
 WHERE ISNULL(Oferta_Monto, 0) != 0
 
+-- Marcar gano_subasta = 1 en aquellas ofertas que ganaron
+update LOS_SUPER_AMIGOS.Oferta
+set gano_subasta = 1
+from LOS_SUPER_AMIGOS.Compra c, LOS_SUPER_AMIGOS.Oferta o, LOS_SUPER_AMIGOS.Publicacion p
+where o.usuario_id = C.usuario_id and
+	o.publicacion_id = c.publicacion_id and
+	o.publicacion_id = p.id and
+	p.tipo = 'Subasta'
+
 -- INSERTAR Compras
 INSERT INTO LOS_SUPER_AMIGOS.Compra
 ([cantidad], [fecha], [usuario_id], [publicacion_id], [calificacion_id])
 SELECT Compra_Cantidad, Compra_Fecha, (SELECT usuario_id FROM LOS_SUPER_AMIGOS.Cliente WHERE documento = Cli_Dni), Publicacion_Cod, Calificacion_Codigo FROM gd_esquema.Maestra
-WHERE ISNULL(Compra_Cantidad, 0) != 0
+WHERE ISNULL(Compra_Cantidad, 0) != 0 and Publicacion_Tipo = 'Compra Inmediata'
 
 -- INSERTAR Formas_Pago
 INSERT INTO LOS_SUPER_AMIGOS.Forma_Pago
