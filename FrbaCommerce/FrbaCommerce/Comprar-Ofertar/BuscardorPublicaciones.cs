@@ -66,9 +66,7 @@ namespace FrbaCommerce.Comprar_Ofertar
             parametros.Clear();
             parametros.Add(new SqlParameter("@usuario", idUsuarioActual));
             DataTable busquedaTemporal = new DataTable();
-            String filtro = "";
-            // Falta que verifique que no busque las publicaciones del usuario conectado
-            // No lo hice xq lo estoy probando directamente desde este form
+            String filtro = "and usuario_id = @usuario";            
 
             if (textBoxDescripcion.Text != "")
             {                
