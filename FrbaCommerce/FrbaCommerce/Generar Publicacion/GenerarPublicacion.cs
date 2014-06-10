@@ -85,12 +85,18 @@ namespace FrbaCommerce.Generar_Publicacion
             String tipoSeleccionado = comboBox_TiposDePublicacion.Text;
             String estado = comboBox_Estado.Text;
             String descripcionSeleccionado = textBox_Descripcion.Text;
-            DateTime fechaDeInicio = Convert.ToDateTime(textBox_FechaDeInicio.Text);
+            String fechaDeInicio = textBox_FechaDeInicio.Text;
             String rubroSeleccionado = comboBox_Rubro.Text;
             String visibilidadSeleccionado = comboBox_Visibilidad.Text;
             Boolean preguntaSeleccionado = radioButton_Pregunta.Checked;
-            Decimal stockSeleccionado = Convert.ToDecimal(textBox_Stock.Text);
-            Double precioSeleccionado = Convert.ToDouble(textBox_Precio.Text);
+            String stockSeleccionado = textBox_Stock.Text;
+            String precioSeleccionado = textBox_Precio.Text;
+
+            // Controla que esten los campos numeroDeDocumento y telefono
+            if (!this.pasoControlDeNoVacio(descripcionSeleccionado)) return;
+            if (!this.pasoControlDeNoVacio(fechaDeInicio)) return;
+            if (!this.pasoControlDeNoVacio(stockSeleccionado)) return;
+            if (!this.pasoControlDeNoVacio(precioSeleccionado)) return;
 
             query = "SELECT id FROM LOS_SUPER_AMIGOS.Rubro WHERE descripcion = @rubroSeleccionado";
             parametros.Clear();
@@ -107,10 +113,10 @@ namespace FrbaCommerce.Generar_Publicacion
             parametros.Clear();
             parametros.Add(new SqlParameter("@estado", estado));
             parametros.Add(new SqlParameter("@descripcion", descripcionSeleccionado));
-            parametros.Add(new SqlParameter("@stock", stockSeleccionado));
+            parametros.Add(new SqlParameter("@stock", Convert.ToDecimal(stockSeleccionado)));
             parametros.Add(new SqlParameter("@fechaInicial", fechaDeInicio));
             parametros.Add(new SqlParameter("@fechaVencimiento", fechaDeInicio)); // OJO ACA
-            parametros.Add(new SqlParameter("@precio", precioSeleccionado));
+            parametros.Add(new SqlParameter("@precio", Convert.ToDouble(precioSeleccionado)));
             parametros.Add(new SqlParameter("@rubroId", idRubroSeleccionado));
             parametros.Add(new SqlParameter("@visibilidadId", idVisibilidadSeleccionado));
             parametros.Add(new SqlParameter("@usuarioId", 1));//UsuarioSesion.usuario));
@@ -119,6 +125,16 @@ namespace FrbaCommerce.Generar_Publicacion
             int filasAfectadas = builderDeComandos.Crear(query, parametros).ExecuteNonQuery();
             
             if (filasAfectadas == 1) MessageBox.Show("Se agrego la nueva publicacion correctamente");
+        }
+
+        private bool pasoControlDeNoVacio(string valor)
+        {
+            if (valor == "")
+            {
+                MessageBox.Show("Faltan datos");
+                return false;
+            }
+            return true;
         }
 
         private void button_Limpiar_Click(object sender, EventArgs e)
