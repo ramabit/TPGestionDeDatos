@@ -25,19 +25,27 @@ namespace FrbaCommerce.Editar_Publicacion
         private void FiltrarPublicacion_Load(object sender, EventArgs e)
         {
             CargarPublicacion();
-            AgregarColumnaDeModificacion();
-            AgregarListenerBotonDeModificacion();
+            OcultarColumnasQueNoDebenVerse();
+        }
+
+        private void OcultarColumnasQueNoDebenVerse()
+        {
+            dataGridView_Publicacion.Columns["id"].Visible = false;
         }
 
         private void CargarPublicacion()
         {
-            command = builderDeComandos.Crear("SELECT * FROM Publicacion", parametros);
+            command = builderDeComandos.Crear("SELECT p.id, u.username, p.tipo, p.estado, p.descripcion, p.fecha_inicio, p.fecha_vencimiento, r.descripcion, v.descripcion, p.se_realizan_preguntas, p.stock, p.precio FROM LOS_SUPER_AMIGOS.Publicacion p, LOS_SUPER_AMIGOS.Rubro r, LOS_SUPER_AMIGOS.Visibilidad v, LOS_SUPER_AMIGOS.Usuario u WHERE p.rubro_id = r.id AND p.visibilidad_id = v.id AND p.usuario_id = u.id", parametros);
 
             DataSet publicaciones = new DataSet();
             SqlDataAdapter adapter = new SqlDataAdapter();
             adapter.SelectCommand = command;
             adapter.Fill(publicaciones);
             dataGridView_Publicacion.DataSource = publicaciones.Tables[0].DefaultView;
+            if (dataGridView_Publicacion.Columns.Contains("modificar"))
+                dataGridView_Publicacion.Columns.Remove("modificar");
+            AgregarColumnaDeModificacion();
+            AgregarListenerBotonDeModificacion();
         }
 
         private void AgregarColumnaDeModificacion()
@@ -62,7 +70,8 @@ namespace FrbaCommerce.Editar_Publicacion
             if (e.ColumnIndex == dataGridView_Publicacion.Columns["modificar"].Index && e.RowIndex >= 0)
             {
                 String idPublicacionAModificiar = dataGridView_Publicacion.Rows[e.RowIndex].Cells["id"].Value.ToString();
-                new Editar_Publicacion.EditarPublicacion().ShowDialog();
+                new Editar_Publicacion.EditarPublicacion(idPublicacionAModificiar).ShowDialog();
+                CargarPublicacion();
             }
         }
 

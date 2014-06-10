@@ -25,19 +25,21 @@ namespace FrbaCommerce.ABM_Visibilidad
         private void FiltroVisibilidad_Load(object sender, EventArgs e)
         {
             CargarVisibilidad();
-            AgregarColumnaDeModificacion();
-            AgregarListenerBotonDeModificacion();
         }
 
         private void CargarVisibilidad()
         {
-            command = builderDeComandos.Crear("SELECT * FROM LOS_SUPER_AMIGOS.Visibilidad", parametros);
+            command = builderDeComandos.Crear("SELECT v.id, v.descripcion, v.precio, v.porcentaje FROM LOS_SUPER_AMIGOS.Visibilidad v", parametros);
 
             DataSet visibilidades = new DataSet();
             SqlDataAdapter adapter = new SqlDataAdapter();
             adapter.SelectCommand = command;
             adapter.Fill(visibilidades);
             dataGridView_Visibilidad.DataSource = visibilidades.Tables[0].DefaultView;
+            if (dataGridView_Visibilidad.Columns.Contains("modificar"))
+                dataGridView_Visibilidad.Columns.Remove("modificar");
+            AgregarColumnaDeModificacion();
+            AgregarListenerBotonDeModificacion();
         }
 
         private void AgregarColumnaDeModificacion()
@@ -63,6 +65,7 @@ namespace FrbaCommerce.ABM_Visibilidad
             {
                 String idVisibilidadAModificiar = dataGridView_Visibilidad.Rows[e.RowIndex].Cells["id"].Value.ToString();
                 new EditarVisibilidad(idVisibilidadAModificiar).ShowDialog();
+                CargarVisibilidad();
             }
         }
 

@@ -25,19 +25,27 @@ namespace FrbaCommerce.ABM_Empresa
         private void FiltroEmpresa_Load(object sender, EventArgs e)
         {
             CargarEmpresas();
-            AgregarColumnaDeModificacion();
-            AgregarListenerBotonDeModificacion();
+            OcultarColumnasQueNoDebenVerse();
+        }
+
+        private void OcultarColumnasQueNoDebenVerse()
+        {
+            dataGridView_Empresa.Columns["id"].Visible = false;
         }
 
         private void CargarEmpresas()
         {
-            command = builderDeComandos.Crear("SELECT * FROM LOS_SUPER_AMIGOS.Empresa", parametros);
+            command = builderDeComandos.Crear("SELECT e.id, u.username, e.razon_social, e.nombre_de_contacto, e.cuit, e.fecha_creacion, e.mail, e.telefono, e.ciudad, d.calle, d.numero, d.piso, d.depto, d.cod_postal, d.localidad FROM LOS_SUPER_AMIGOS.Empresa e, LOS_SUPER_AMIGOS.Direccion d, LOS_SUPER_AMIGOS.Usuario u WHERE e.direccion_id = d.id AND e.usuario_id = u.id", parametros);
 
             DataSet empresas = new DataSet();
             SqlDataAdapter adapter = new SqlDataAdapter();
             adapter.SelectCommand = command;
             adapter.Fill(empresas);
             dataGridView_Empresa.DataSource = empresas.Tables[0].DefaultView;
+            if (dataGridView_Empresa.Columns.Contains("modificar"))
+                dataGridView_Empresa.Columns.Remove("modificar");
+            AgregarColumnaDeModificacion();
+            AgregarListenerBotonDeModificacion();
         }
 
         private void AgregarColumnaDeModificacion()
@@ -63,6 +71,7 @@ namespace FrbaCommerce.ABM_Empresa
             {
                 String idEmpresaAModificar = dataGridView_Empresa.Rows[e.RowIndex].Cells["id"].Value.ToString();
                 new EditarEmpresa(idEmpresaAModificar).ShowDialog();
+                CargarEmpresas();
             }
         }
 

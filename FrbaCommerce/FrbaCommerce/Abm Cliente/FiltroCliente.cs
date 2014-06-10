@@ -25,19 +25,33 @@ namespace FrbaCommerce.ABM_Cliente
         private void FiltroCliente_Load(object sender, EventArgs e)
         {
             CargarClientes();
-            AgregarColumnaDeModificacion();
-            AgregarListenerBotonDeModificacion();
+            OcultarColumnasQueNoDebenVerse();
+            ModificarHeaders();
+        }
+
+        private void ModificarHeaders()
+        {
+            dataGridView_Cliente.Columns["nombre1"].HeaderText = "Tipo de documento";
+        }
+
+        private void OcultarColumnasQueNoDebenVerse()
+        {
+            dataGridView_Cliente.Columns["id"].Visible = false;
         }
 
         private void CargarClientes()
         {
-            command = builderDeComandos.Crear("SELECT * FROM LOS_SUPER_AMIGOS.Cliente", parametros);
+            command = builderDeComandos.Crear("SELECT c.id, u.username, c.nombre, c.apellido, td.nombre, c.documento, c.fecha_nacimiento, c.mail, c.telefono, d.calle, d.numero, d.piso, d.depto, d.cod_postal, d.localidad FROM LOS_SUPER_AMIGOS.Cliente c, LOS_SUPER_AMIGOS.TipoDeDocumento td, LOS_SUPER_AMIGOS.Direccion d, LOS_SUPER_AMIGOS.Usuario u WHERE c.tipo_de_documento_id = td.id AND c.direccion_id = d.id AND c.usuario_id = u.id", parametros);
 
             DataSet clientes = new DataSet();
             SqlDataAdapter adapter = new SqlDataAdapter();
             adapter.SelectCommand = command;
             adapter.Fill(clientes);
             dataGridView_Cliente.DataSource = clientes.Tables[0].DefaultView;
+            if (dataGridView_Cliente.Columns.Contains("modificar")) 
+                dataGridView_Cliente.Columns.Remove("modificar");
+            AgregarColumnaDeModificacion();
+            AgregarListenerBotonDeModificacion();
         }
 
         private void AgregarColumnaDeModificacion()
@@ -63,6 +77,7 @@ namespace FrbaCommerce.ABM_Cliente
             {
                 String idClienteAModificar = dataGridView_Cliente.Rows[e.RowIndex].Cells["id"].Value.ToString();
                 new EditarCliente(idClienteAModificar).ShowDialog();
+                CargarClientes();
             }
         }
 
@@ -76,7 +91,7 @@ namespace FrbaCommerce.ABM_Cliente
             if (textBox_NumeroDeDoc.Text != "") filtro += " and " + "dni like '" + textBox_NumeroDeDoc.Text + "%'";
             // TODO: agregar el filtro del documento
 
-            query = "SELECT * FROM LOS_SUPER_AMIGOSCliente WHERE " + filtro;
+            query = "SELECT * FROM LOS_SUPER_AMIGOS.Cliente WHERE " + filtro;
 
             command = builderDeComandos.Crear(query, parametros);
 
