@@ -175,17 +175,29 @@
       <DependentUpon>Listado.cs</DependentUpon>
     </Compile>
     <Compile Include="BuilderDeComandos.cs" />
-    <Compile Include="Comprar-Ofertar\BuscardorPublicaciones.cs">
+    <Compile Include="Comprar-Ofertar\BuscadorPublicaciones.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Comprar-Ofertar\BuscardorPublicaciones.Designer.cs">
-      <DependentUpon>BuscardorPublicaciones.cs</DependentUpon>
+    <Compile Include="Comprar-Ofertar\BuscadorPublicaciones.designer.cs">
+      <DependentUpon>BuscadorPublicaciones.cs</DependentUpon>
     </Compile>
-    <Compile Include="Comprar-Ofertar\ComprarOfertar.cs">
+    <Compile Include="Comprar-Ofertar\Comprar.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Comprar-Ofertar\ComprarOfertar.Designer.cs">
-      <DependentUpon>ComprarOfertar.cs</DependentUpon>
+    <Compile Include="Comprar-Ofertar\Comprar.designer.cs">
+      <DependentUpon>Comprar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Comprar-Ofertar\Ofertar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Comprar-Ofertar\Ofertar.designer.cs">
+      <DependentUpon>Ofertar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Comprar-Ofertar\VerPublicacion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Comprar-Ofertar\VerPublicacion.designer.cs">
+      <DependentUpon>VerPublicacion.cs</DependentUpon>
     </Compile>
     <Compile Include="ConexionDB.cs" />
     <Compile Include="Editar Publicacion\EditarPublicacion.cs">
@@ -317,11 +329,11 @@
     <EmbeddedResource Include="Calificar Vendedor\Listado.resx">
       <DependentUpon>Listado.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Comprar-Ofertar\BuscardorPublicaciones.resx">
-      <DependentUpon>BuscardorPublicaciones.cs</DependentUpon>
+    <EmbeddedResource Include="Comprar-Ofertar\BuscadorPublicaciones.resx">
+      <DependentUpon>BuscadorPublicaciones.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Comprar-Ofertar\ComprarOfertar.resx">
-      <DependentUpon>ComprarOfertar.cs</DependentUpon>
+    <EmbeddedResource Include="Comprar-Ofertar\VerPublicacion.resx">
+      <DependentUpon>VerPublicacion.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Editar Publicacion\EditarPublicacion.resx">
       <DependentUpon>EditarPublicacion.cs</DependentUpon>
