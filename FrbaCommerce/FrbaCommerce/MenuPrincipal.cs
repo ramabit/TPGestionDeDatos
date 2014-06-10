@@ -22,16 +22,16 @@ namespace FrbaCommerce
 
             funcionalidades.Add("Comprar / Ofertar", new Comprar_Ofertar.ComprarOfertar());
             funcionalidades.Add("Generar publicacion", new Generar_Publicacion.GenerarPublicacion());
-            funcionalidades.Add("Editar publicacion", new Editar_Publicacion.EditarPublicacion("idPublicacion"));
+            funcionalidades.Add("Editar publicacion", new Editar_Publicacion.FiltrarPublicacion());
             funcionalidades.Add("Calificar vendedor", new Calificar_Vendedor.Calificar());
             funcionalidades.Add("Preguntar", new Gestion_de_Preguntas.Preguntar());
             funcionalidades.Add("Responder preguntas", new Gestion_de_Preguntas.ResponderPreguntas());
             funcionalidades.Add("Gestionar roles", new ABM_Rol.RolForm());
             funcionalidades.Add("Gestionar usuarios", null);
             funcionalidades.Add("Generar factura", new Facturar_Publicaciones.Facturar());
-            funcionalidades.Add("Crear empresa", new ABM_Empresa.AgregarEmpresa("username", "password"));
+            funcionalidades.Add("Crear empresa", new ABM_Empresa.AgregarEmpresa("empresaCreadoPorAdmin", "password"));
             funcionalidades.Add("Editar empresa", new ABM_Empresa.FiltroEmpresa());
-            funcionalidades.Add("Crear cliente", new ABM_Cliente.AgregarCliente("clienteCreadoPorAdmin", "A"));
+            funcionalidades.Add("Crear cliente", new ABM_Cliente.AgregarCliente("clienteCreadoPorAdmin", "password"));
             funcionalidades.Add("Editar cliente", new ABM_Cliente.FiltroCliente());
             funcionalidades.Add("Crear visibilidad", new ABM_Visibilidad.AgregarVisibilidad());
             funcionalidades.Add("Editar visibilidad", new ABM_Visibilidad.FiltroVisibilidad());
