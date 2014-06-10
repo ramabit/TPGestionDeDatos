@@ -75,9 +75,9 @@ namespace FrbaCommerce.ABM_Empresa
             String razonSocial = textBox_RazonSocial.Text;
             String nombreDeContacto = textBox_NombreDeContacto.Text;
             String cuit = textBox_CUIT.Text;
-            DateTime fechaDeCreacion = Convert.ToDateTime(textBox_FechaDeCreacion.Text);
+            String fechaDeCreacion = textBox_FechaDeCreacion.Text;
             String mail = textBox_Mail.Text;
-            Decimal telefono = Convert.ToDecimal(textBox_Telefono.Text);
+            String telefono = textBox_Telefono.Text;
             String ciudad = textBox_Ciudad.Text;
             String calle = textBox_Calle.Text;
             String numero = textBox_Numero.Text;
@@ -86,12 +86,25 @@ namespace FrbaCommerce.ABM_Empresa
             String codigoPostal = textBox_CodigoPostal.Text;
             String localidad = textBox_Localidad.Text;
 
+            // Controla que esten los campos numeroDeDocumento y telefono
+            if (!this.pasoControlDeNoVacio(razonSocial)) return;
+            if (!this.pasoControlDeNoVacio(cuit)) return;
+
+            // Controla que el cuit no se haya registrado en el sistema
+            if (!this.pasoControlDeRegistroDeCuit(cuit)) return;
+
+            // Controla que la razon social no se encuentren registrado en el sistema
+            if (!this.pasoControlDeRegistroDeRazonSocial(razonSocial)) return;
+
+            // Controla que telefono sea unico
+            if (telefono != "" && !this.pasoControlDeUnicidad(telefono)) return;
+
             // Update direccion
             query = "UPDATE LOS_SUPER_AMIGOS.Direccion SET calle = @calle, numero = @numero, piso = @piso, depto = @departamento, cod_postal = @codigoPostal, localidad = @localidad WHERE id = @idDireccion";
             parametros.Clear();
             parametros.Add(new SqlParameter("@calle", calle));
-            parametros.Add(new SqlParameter("@numero", numero));
-            parametros.Add(new SqlParameter("@piso", piso));
+            parametros.Add(new SqlParameter("@numero", this.siEstaVacioDevuelveDBNullSinoDecimal(numero)));
+            parametros.Add(new SqlParameter("@piso", this.siEstaVacioDevuelveDBNullSinoDecimal(piso)));
             parametros.Add(new SqlParameter("@departamento", departamento));
             parametros.Add(new SqlParameter("@codigoPostal", codigoPostal));
             parametros.Add(new SqlParameter("@localidad", localidad));
@@ -116,6 +129,70 @@ namespace FrbaCommerce.ABM_Empresa
             filasAfectadas = builderDeComandos.Crear(query, parametros).ExecuteNonQuery();
 
             if (filasAfectadas == 1) MessageBox.Show("El cliente se modifico correctamente");
+        }
+
+        private bool pasoControlDeUnicidad(string telefono)
+        {
+            query = "SELECT COUNT(*) FROM LOS_SUPER_AMIGOS.Cliente WHERE telefono = @telefono";
+            parametros.Clear();
+            parametros.Add(new SqlParameter("@telefono", telefono));
+            int cantidad = (int)builderDeComandos.Crear(query, parametros).ExecuteScalar();
+            if (cantidad > 0)
+            {
+                MessageBox.Show("Ya existe ese telefono");
+                return false;
+            }
+            return true;
+        }
+
+        private bool pasoControlDeRegistroDeRazonSocial(String razonSocial)
+        {
+            query = "SELECT COUNT(*) FROM LOS_SUPER_AMIGOS.Empresa WHERE razon_social = @razonSocial";
+            parametros.Clear();
+            parametros.Add(new SqlParameter("@razonSocial", razonSocial);
+            int cantidad = (int)builderDeComandos.Crear(query, parametros).ExecuteScalar();
+            if (cantidad > 0)
+            {
+                MessageBox.Show("Ya existe esa razonSocial");
+                return false;
+            }
+            return true;
+        }
+
+        private bool pasoControlDeRegistroDeCuit(String cuit)
+        {
+            query = "SELECT COUNT(*) FROM LOS_SUPER_AMIGOS.Empresa WHERE cuit = @cuit";
+            parametros.Clear();
+            parametros.Add(new SqlParameter("@cuit", cuit));
+            int cantidad = (int)builderDeComandos.Crear(query, parametros).ExecuteScalar();
+            if (cantidad > 0)
+            {
+                MessageBox.Show("Ya existe ese cuit");
+                return false;
+            }
+            return true;
+        }
+
+        private bool pasoControlDeNoVacio(string valor)
+        {
+            if (valor == "")
+            {
+                MessageBox.Show("No se ingreso un " + valor);
+                return false;
+            }
+            return true;
+        }
+
+        private object siEstaVacioDevuelveDBNullSinoDecimal(string valor)
+        {
+            if (valor == "")
+            {
+                return DBNull.Value;
+            }
+            else
+            {
+                return Convert.ToDecimal(valor);
+            }
         }
 
         private void button_Limpiar_Click(object sender, EventArgs e)

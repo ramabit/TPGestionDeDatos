@@ -42,9 +42,9 @@ namespace FrbaCommerce.ABM_Empresa
             String razonSocial = textBox_RazonSocial.Text;
             String nombreDeContacto = textBox_NombreDeContacto.Text;
             String cuit = textBox_CUIT.Text;
-            DateTime fechaDeCreacion = Convert.ToDateTime(textBox_FechaDeCreacion.Text);
+            String fechaDeCreacion = textBox_FechaDeCreacion.Text;
             String mail = textBox_Mail.Text;
-            Decimal telefono = Convert.ToDecimal(textBox_Telefono.Text);
+            String telefono = textBox_Telefono.Text;
             String ciudad = textBox_Ciudad.Text;
             String calle = textBox_Calle.Text;
             String numero = textBox_Numero.Text;
@@ -54,14 +54,27 @@ namespace FrbaCommerce.ABM_Empresa
             String localidad = textBox_Localidad.Text;
             SqlParameter parametroOutput;
 
+            // Controla que esten los campos numeroDeDocumento y telefono
+            if (!this.pasoControlDeNoVacio(razonSocial)) return;
+            if (!this.pasoControlDeNoVacio(cuit)) return;
+
+            // Controla que el cuit no se haya registrado en el sistema
+            if (!this.pasoControlDeRegistroDeCuit(cuit)) return;
+
+            // Controla que la razon social no se encuentren registrado en el sistema
+            if (!this.pasoControlDeRegistroDeRazonSocial(razonSocial)) return;
+
+            // Controla que telefono sea unico
+            if (telefono != "" && !this.pasoControlDeUnicidad(telefono)) return;
+
             // Crea una direccion y se guarda su id. Usa un stored procedure del script
             query = "LOS_SUPER_AMIGOS.crear_direccion";
             parametros.Clear();
             parametroOutput = new SqlParameter("@direccion_id", SqlDbType.Decimal);
             parametroOutput.Direction = ParameterDirection.Output;
             parametros.Add(new SqlParameter("@calle", calle));
-            parametros.Add(new SqlParameter("@numero", numero));
-            parametros.Add(new SqlParameter("@piso", piso));
+            parametros.Add(new SqlParameter("@numero", this.siEstaVacioDevuelveDBNullSinoDecimal(numero)));
+            parametros.Add(new SqlParameter("@piso", this.siEstaVacioDevuelveDBNullSinoDecimal(piso)));
             parametros.Add(new SqlParameter("@depto", departamento));
             parametros.Add(new SqlParameter("@cod_postal", codigoPostal));
             parametros.Add(new SqlParameter("@localidad", localidad));
@@ -72,9 +85,21 @@ namespace FrbaCommerce.ABM_Empresa
             Decimal idDireccion = (Decimal)parametroOutput.Value;
 
 
-            // Si el cliente lo crea el admin, crea un nuevo usuario. Si lo crea un nuevo registro de usuario, usa el que viene por parametro
+            // Si la empresa lo crea el admin, crea un nuevo usuario predeterminado. Si lo crea un nuevo registro de usuario, usa el que viene por parametro
             Decimal idUsuario;
-            if (username == "empresaCreadaPorAdmin")
+            if (username == "empresaCreadoPorAdmin")
+            {
+                query = "LOS_SUPER_AMIGOS.crear_usuario";
+                parametros.Clear();
+                parametroOutput = new SqlParameter("@usuario_id", SqlDbType.Decimal);
+                parametroOutput.Direction = ParameterDirection.Output;
+                parametros.Add(parametroOutput);
+                command = builderDeComandos.Crear(query, parametros);
+                command.CommandType = CommandType.StoredProcedure;
+                command.ExecuteNonQuery();
+                idUsuario = (Decimal)parametroOutput.Value;
+            }
+            else
             {
                 query = "LOS_SUPER_AMIGOS.crear_usuario_con_valores";
                 parametros.Clear();
@@ -88,19 +113,13 @@ namespace FrbaCommerce.ABM_Empresa
                 command.ExecuteNonQuery();
                 idUsuario = (Decimal)parametroOutput.Value;
             }
-            else
-            {
-                query = "SELECT id FROM LOS_SUPER_AMIGOS.Usuario WHERE nombre = @username";
-                parametros.Clear();
-                parametros.Add(new SqlParameter("@username", username));
-                idUsuario = (Decimal) builderDeComandos.Crear(query, parametros).ExecuteScalar();
-            }
 
+            // Hace el INSERT en Empresa
             parametros.Clear();
             parametros.Add(new SqlParameter("@razonSocial", razonSocial));
             parametros.Add(new SqlParameter("@nombreDeContacto", nombreDeContacto));
             parametros.Add(new SqlParameter("@cuit", cuit));
-            parametros.Add(new SqlParameter("@fechaDeCreacion", fechaDeCreacion));
+            parametros.Add(new SqlParameter("@fechaDeCreacion", this.siEstaVacioDevuelveDBNullSinoDecimal(fechaDeCreacion)));
             parametros.Add(new SqlParameter("@mail", mail));
             parametros.Add(new SqlParameter("@telefono", telefono));
             parametros.Add(new SqlParameter("@ciudad", ciudad));
@@ -112,6 +131,70 @@ namespace FrbaCommerce.ABM_Empresa
             int filasAfectadas = builderDeComandos.Crear(query, parametros).ExecuteNonQuery();
 
             if (filasAfectadas == 1) MessageBox.Show("Se agrego la empresa correctamente");
+        }
+
+        private bool pasoControlDeUnicidad(string telefono)
+        {
+            query = "SELECT COUNT(*) FROM LOS_SUPER_AMIGOS.Cliente WHERE telefono = @telefono";
+            parametros.Clear();
+            parametros.Add(new SqlParameter("@telefono", telefono));
+            int cantidad = (int)builderDeComandos.Crear(query, parametros).ExecuteScalar();
+            if (cantidad > 0)
+            {
+                MessageBox.Show("Ya existe ese telefono");
+                return false;
+            }
+            return true;
+        }
+
+        private bool pasoControlDeRegistroDeRazonSocial(String razonSocial)
+        {
+            query = "SELECT COUNT(*) FROM LOS_SUPER_AMIGOS.Empresa WHERE razon_social = @razonSocial";
+            parametros.Clear();
+            parametros.Add(new SqlParameter("@razonSocial", razonSocial);
+            int cantidad = (int)builderDeComandos.Crear(query, parametros).ExecuteScalar();
+            if (cantidad > 0)
+            {
+                MessageBox.Show("Ya existe esa razonSocial");
+                return false;
+            }
+            return true;
+        }
+
+        private bool pasoControlDeRegistroDeCuit(String cuit)
+        {
+            query = "SELECT COUNT(*) FROM LOS_SUPER_AMIGOS.Empresa WHERE cuit = @cuit";
+            parametros.Clear();
+            parametros.Add(new SqlParameter("@cuit", cuit));
+            int cantidad = (int)builderDeComandos.Crear(query, parametros).ExecuteScalar();
+            if (cantidad > 0)
+            {
+                MessageBox.Show("Ya existe ese cuit");
+                return false;
+            }
+            return true;
+        }
+
+        private bool pasoControlDeNoVacio(string valor)
+        {
+            if (valor == "")
+            {
+                MessageBox.Show("No se ingreso un " + valor);
+                return false;
+            }
+            return true;
+        }
+
+        private object siEstaVacioDevuelveDBNullSinoDecimal(string valor)
+        {
+            if (valor == "")
+            {
+                return DBNull.Value;
+            }
+            else
+            {
+                return Convert.ToDecimal(valor);
+            }
         }
 
         private void button_Limpiar_Click(object sender, EventArgs e)
