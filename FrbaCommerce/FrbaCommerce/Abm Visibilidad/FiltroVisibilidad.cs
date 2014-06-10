@@ -31,7 +31,7 @@ namespace FrbaCommerce.ABM_Visibilidad
 
         private void CargarVisibilidad()
         {
-            command = builderDeComandos.Crear("SELECT * FROM LOS_SUPER_AMIGOS.Visibilidad", parametros);
+            command = builderDeComandos.Crear("SELECT v.id, v.descripcion, v.precio, v.porcentaje FROM LOS_SUPER_AMIGOS.Visibilidad v", parametros);
 
             DataSet visibilidades = new DataSet();
             SqlDataAdapter adapter = new SqlDataAdapter();

@@ -27,11 +27,17 @@ namespace FrbaCommerce.ABM_Empresa
             CargarEmpresas();
             AgregarColumnaDeModificacion();
             AgregarListenerBotonDeModificacion();
+            OcultarColumnasQueNoDebenVerse();
+        }
+
+        private void OcultarColumnasQueNoDebenVerse()
+        {
+            dataGridView_Empresa.Columns["id"].Visible = false;
         }
 
         private void CargarEmpresas()
         {
-            command = builderDeComandos.Crear("SELECT * FROM LOS_SUPER_AMIGOS.Empresa", parametros);
+            command = builderDeComandos.Crear("SELECT e.id, u.username, e.razon_social, e.nombre_de_contacto, e.cuit, e.fecha_creacion, e.mail, e.telefono, e.ciudad, d.calle, d.numero, d.piso, d.depto, d.cod_postal, d.localidad FROM LOS_SUPER_AMIGOS.Empresa e, LOS_SUPER_AMIGOS.Direccion d, LOS_SUPER_AMIGOS.Usuario u WHERE e.direccion_id = d.id AND e.usuario_id = u.id", parametros);
 
             DataSet empresas = new DataSet();
             SqlDataAdapter adapter = new SqlDataAdapter();

@@ -27,11 +27,23 @@ namespace FrbaCommerce.ABM_Cliente
             CargarClientes();
             AgregarColumnaDeModificacion();
             AgregarListenerBotonDeModificacion();
+            OcultarColumnasQueNoDebenVerse();
+            ModificarHeaders();
+        }
+
+        private void ModificarHeaders()
+        {
+            dataGridView_Cliente.Columns["nombre1"].HeaderText = "Tipo de documento";
+        }
+
+        private void OcultarColumnasQueNoDebenVerse()
+        {
+            dataGridView_Cliente.Columns["id"].Visible = false;
         }
 
         private void CargarClientes()
         {
-            command = builderDeComandos.Crear("SELECT * FROM LOS_SUPER_AMIGOS.Cliente", parametros);
+            command = builderDeComandos.Crear("SELECT c.id, u.username, c.nombre, c.apellido, td.nombre, c.documento, c.fecha_nacimiento, c.mail, c.telefono, d.calle, d.numero, d.piso, d.depto, d.cod_postal, d.localidad FROM LOS_SUPER_AMIGOS.Cliente c, LOS_SUPER_AMIGOS.TipoDeDocumento td, LOS_SUPER_AMIGOS.Direccion d, LOS_SUPER_AMIGOS.Usuario u WHERE c.tipo_de_documento_id = td.id AND c.direccion_id = d.id AND c.usuario_id = u.id", parametros);
 
             DataSet clientes = new DataSet();
             SqlDataAdapter adapter = new SqlDataAdapter();
