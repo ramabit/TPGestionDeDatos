@@ -63,6 +63,7 @@ namespace FrbaCommerce.ABM_Visibilidad
             {
                 String idVisibilidadAModificiar = dataGridView_Visibilidad.Rows[e.RowIndex].Cells["id"].Value.ToString();
                 new EditarVisibilidad(idVisibilidadAModificiar).ShowDialog();
+                CargarVisibilidad();
             }
         }
 

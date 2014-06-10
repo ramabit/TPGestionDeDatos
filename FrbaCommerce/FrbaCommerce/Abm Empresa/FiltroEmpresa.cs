@@ -69,6 +69,7 @@ namespace FrbaCommerce.ABM_Empresa
             {
                 String idEmpresaAModificar = dataGridView_Empresa.Rows[e.RowIndex].Cells["id"].Value.ToString();
                 new EditarEmpresa(idEmpresaAModificar).ShowDialog();
+                CargarEmpresas();
             }
         }
 

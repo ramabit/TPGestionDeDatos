@@ -75,6 +75,7 @@ namespace FrbaCommerce.ABM_Cliente
             {
                 String idClienteAModificar = dataGridView_Cliente.Rows[e.RowIndex].Cells["id"].Value.ToString();
                 new EditarCliente(idClienteAModificar).ShowDialog();
+                CargarClientes();
             }
         }
 
