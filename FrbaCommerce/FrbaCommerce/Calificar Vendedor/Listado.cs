@@ -115,5 +115,12 @@ namespace FrbaCommerce.Calificar_Vendedor
             }
         }
 
+        private void buttonVolver_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            new MenuPrincipal().ShowDialog();
+            this.Close();
+        }
+
     }
 }

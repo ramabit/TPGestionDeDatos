@@ -61,8 +61,9 @@
             this.buttonVolver.TabIndex = 2;
             this.buttonVolver.Text = "< Volver al menu principal";
             this.buttonVolver.UseVisualStyleBackColor = true;
+            this.buttonVolver.Click += new System.EventHandler(this.buttonVolver_Click);
             // 
-            // Calificar
+            // Listado
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -70,7 +71,7 @@
             this.Controls.Add(this.buttonVolver);
             this.Controls.Add(this.labelTitulo);
             this.Controls.Add(this.dataGridViewCompras);
-            this.Name = "Calificar";
+            this.Name = "Listado";
             this.Text = "Calificar vendedor";
             this.Load += new System.EventHandler(this.Calificar_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewCompras)).EndInit();

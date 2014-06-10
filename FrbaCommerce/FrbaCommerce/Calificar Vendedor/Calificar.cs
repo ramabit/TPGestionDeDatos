@@ -13,8 +13,8 @@ namespace FrbaCommerce.Calificar_Vendedor
     {
         private Decimal id;
         private String tipo;
-        private int calificacion;
-        private String descripcion;
+        private int calificacion = 0;
+        private string descripcion = "";
 
         public Calificar(Decimal idCompraParaCalificar, String tipoCompraParaCalificar)
         {
@@ -25,8 +25,17 @@ namespace FrbaCommerce.Calificar_Vendedor
 
         private void Calificar_Load(object sender, EventArgs e)
         {
-         //   var checkedButton = this.Controls.OfType<RadioButton>().FirstOrDefault(r => r.Checked);
-         //   calificacion = Convert.ToInt16(checkedButton.Text);
+            dropdownCalificacion.Items.Add(10);
+            dropdownCalificacion.Items.Add(9);
+            dropdownCalificacion.Items.Add(8);
+            dropdownCalificacion.Items.Add(7);
+            dropdownCalificacion.Items.Add(6);
+            dropdownCalificacion.Items.Add(5);
+            dropdownCalificacion.Items.Add(4);
+            dropdownCalificacion.Items.Add(3);
+            dropdownCalificacion.Items.Add(2);
+            dropdownCalificacion.Items.Add(1);
+
             checkBoxPredeterminado.Checked = true;
 
             comboBoxDescripciones.Items.Add("Vendedor muy confiable");
@@ -53,12 +62,24 @@ namespace FrbaCommerce.Calificar_Vendedor
         {
             if (checkBoxPredeterminado.Checked)
             {
-                descripcion = comboBoxDescripciones.SelectedValue.ToString();
+                if(comboBoxDescripciones.SelectedItem != null)
+                {
+                    descripcion = comboBoxDescripciones.SelectedItem.ToString();
+                } 
             }
             else
             {
                 descripcion = textBoxDescripcion.Text;
             }
+
+            if(calificacion==0)
+            {
+                MessageBox.Show("Seleccione una calificacion");
+                return;
+            }
+
+            MessageBox.Show("Calificacion: " + calificacion + " Descripcion: " + descripcion);
+
         }
 
         private void botonCancelar_Click(object sender, EventArgs e)
@@ -66,6 +87,11 @@ namespace FrbaCommerce.Calificar_Vendedor
             this.Hide();
             new Listado().ShowDialog();
             this.Close();
+        }
+
+        private void dropdownCalificacion_SelectedItemChanged(object sender, EventArgs e)
+        {
+            calificacion = (int)dropdownCalificacion.SelectedItem;
         }
         
     }
