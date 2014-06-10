@@ -16,7 +16,7 @@
 - [ ] No dejar crear usuarios que empiecen con USER
 - [ ] Incluir CUIL en Cliente: https://groups.google.com/forum/#!topic/gestiondedatos/qxvswJBzfIk
 - [ ] Diferencia entre dado de baja e inhabilitado: https://groups.google.com/forum/#!topic/gestiondedatos/TM9z10uu934
-- [ ] Hay ofertas que no aparecen en la tabla de oferta ya que fueron migradas mal: https://groups.google.com/forum/#!topic/gestiondedatos/OFREB0hWfnc
+- [x] Hay ofertas que no aparecen en la tabla de oferta ya que fueron migradas mal: https://groups.google.com/forum/#!topic/gestiondedatos/OFREB0hWfnc [RESUELTO]
 - [ ] Sacar tiempo de visibilidad de tabla maestra: https://groups.google.com/forum/#!topic/gestiondedatos/ULqWLhcPpfk
 - [ ] Stock de las publicaciones de la tabla maestra: https://groups.google.com/forum/#!topic/gestiondedatos/_x2giGarVD4
 - [ ] Trigger para cuando se inhabilita un vendedor
