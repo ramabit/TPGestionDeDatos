@@ -1,6 +1,6 @@
 ﻿namespace FrbaCommerce.Comprar_Ofertar
 {
-    partial class BuscardorPublicaciones
+    partial class BuscadorPublicaciones
     {
         /// <summary>
         /// Required designer variable.

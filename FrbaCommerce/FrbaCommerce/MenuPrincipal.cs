@@ -20,7 +20,7 @@ namespace FrbaCommerce
         {
             InitializeComponent();
 
-            funcionalidades.Add("Comprar / Ofertar", new Comprar_Ofertar.ComprarOfertar());
+            funcionalidades.Add("Comprar / Ofertar", new Comprar_Ofertar.BuscadorPublicaciones());
             funcionalidades.Add("Generar publicacion", new Generar_Publicacion.GenerarPublicacion());
             funcionalidades.Add("Editar publicacion", new Editar_Publicacion.FiltrarPublicacion());
             funcionalidades.Add("Calificar vendedor", new Calificar_Vendedor.Listado());

@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace FrbaCommerce.Comprar_Ofertar
 {
-    public partial class BuscardorPublicaciones : Form
+    public partial class BuscadorPublicaciones : Form
     {
         private SqlCommand command { get; set; }
         private IList<SqlParameter> parametros = new List<SqlParameter>();
@@ -26,7 +26,7 @@ namespace FrbaCommerce.Comprar_Ofertar
         int ini;
         int fin;
 
-        public BuscardorPublicaciones()
+        public BuscadorPublicaciones()
         {
             InitializeComponent();
         }
@@ -267,10 +267,10 @@ namespace FrbaCommerce.Comprar_Ofertar
         }
 
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
-        {            
+        {
+            String publicacionElegida = dataGridView1.Rows[e.RowIndex].Cells["descripcion"].Value.ToString();
             this.Hide();
-            new ComprarOfertar().Show();
-
+            new VerPublicacion(publicacionElegida).Show();
         }
                 
     }

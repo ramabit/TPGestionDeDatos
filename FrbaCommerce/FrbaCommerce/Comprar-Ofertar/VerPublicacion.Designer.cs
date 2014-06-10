@@ -1,6 +1,6 @@
 ﻿namespace FrbaCommerce.Comprar_Ofertar
 {
-    partial class ComprarOfertar
+    partial class VerPublicacion
     {
         /// <summary>
         /// Required designer variable.
@@ -34,10 +34,15 @@
             this.labelStock = new System.Windows.Forms.Label();
             this.labelPrecio = new System.Windows.Forms.Label();
             this.botonPreguntar = new System.Windows.Forms.Button();
-            this.botonComprar = new System.Windows.Forms.Button();
-            this.botonOfertar = new System.Windows.Forms.Button();
+            this.botonComprarOfertar = new System.Windows.Forms.Button();
             this.labelVencimiento = new System.Windows.Forms.Label();
             this.buttonVolver = new System.Windows.Forms.Button();
+            this.labelVendedorDatos = new System.Windows.Forms.Label();
+            this.labelRubroDatos = new System.Windows.Forms.Label();
+            this.labelVencimientoDatos = new System.Windows.Forms.Label();
+            this.labelProductoDatos = new System.Windows.Forms.Label();
+            this.labelStockDatos = new System.Windows.Forms.Label();
+            this.labelPrecioDatos = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // labelVendedor
@@ -94,23 +99,14 @@
             this.botonPreguntar.Text = "Preguntar";
             this.botonPreguntar.UseVisualStyleBackColor = true;
             // 
-            // botonComprar
+            // botonComprarOfertar
             // 
-            this.botonComprar.Location = new System.Drawing.Point(114, 208);
-            this.botonComprar.Name = "botonComprar";
-            this.botonComprar.Size = new System.Drawing.Size(58, 24);
-            this.botonComprar.TabIndex = 6;
-            this.botonComprar.Text = "Comprar";
-            this.botonComprar.UseVisualStyleBackColor = true;
-            // 
-            // botonOfertar
-            // 
-            this.botonOfertar.Location = new System.Drawing.Point(195, 210);
-            this.botonOfertar.Name = "botonOfertar";
-            this.botonOfertar.Size = new System.Drawing.Size(61, 22);
-            this.botonOfertar.TabIndex = 7;
-            this.botonOfertar.Text = "Ofertar";
-            this.botonOfertar.UseVisualStyleBackColor = true;
+            this.botonComprarOfertar.Location = new System.Drawing.Point(187, 207);
+            this.botonComprarOfertar.Name = "botonComprarOfertar";
+            this.botonComprarOfertar.Size = new System.Drawing.Size(58, 24);
+            this.botonComprarOfertar.TabIndex = 6;
+            this.botonComprarOfertar.UseVisualStyleBackColor = true;
+            this.botonComprarOfertar.Click += new System.EventHandler(this.botonComprarOfertar_Click);
             // 
             // labelVencimiento
             // 
@@ -121,24 +117,83 @@
             this.labelVencimiento.TabIndex = 8;
             this.labelVencimiento.Text = "Vencimiento";
             // 
-            // button1
+            // buttonVolver
             // 
             this.buttonVolver.Location = new System.Drawing.Point(16, 244);
-            this.buttonVolver.Name = "button1";
+            this.buttonVolver.Name = "buttonVolver";
             this.buttonVolver.Size = new System.Drawing.Size(107, 20);
             this.buttonVolver.TabIndex = 9;
             this.buttonVolver.Text = "Volver al Buscador";
             this.buttonVolver.UseVisualStyleBackColor = true;
+            // 
+            // labelVendedorDatos
+            // 
+            this.labelVendedorDatos.AutoSize = true;
+            this.labelVendedorDatos.Location = new System.Drawing.Point(132, 27);
+            this.labelVendedorDatos.Name = "labelVendedorDatos";
+            this.labelVendedorDatos.Size = new System.Drawing.Size(35, 13);
+            this.labelVendedorDatos.TabIndex = 10;
+            this.labelVendedorDatos.Text = "label1";
+            // 
+            // labelRubroDatos
+            // 
+            this.labelRubroDatos.AutoSize = true;
+            this.labelRubroDatos.Location = new System.Drawing.Point(127, 51);
+            this.labelRubroDatos.Name = "labelRubroDatos";
+            this.labelRubroDatos.Size = new System.Drawing.Size(35, 13);
+            this.labelRubroDatos.TabIndex = 11;
+            this.labelRubroDatos.Text = "label2";
+            // 
+            // labelVencimientoDatos
+            // 
+            this.labelVencimientoDatos.AutoSize = true;
+            this.labelVencimientoDatos.Location = new System.Drawing.Point(131, 73);
+            this.labelVencimientoDatos.Name = "labelVencimientoDatos";
+            this.labelVencimientoDatos.Size = new System.Drawing.Size(35, 13);
+            this.labelVencimientoDatos.TabIndex = 12;
+            this.labelVencimientoDatos.Text = "label3";
+            // 
+            // labelProductoDatos
+            // 
+            this.labelProductoDatos.AutoSize = true;
+            this.labelProductoDatos.Location = new System.Drawing.Point(133, 102);
+            this.labelProductoDatos.Name = "labelProductoDatos";
+            this.labelProductoDatos.Size = new System.Drawing.Size(35, 13);
+            this.labelProductoDatos.TabIndex = 13;
+            this.labelProductoDatos.Text = "label4";
+            // 
+            // labelStockDatos
+            // 
+            this.labelStockDatos.AutoSize = true;
+            this.labelStockDatos.Location = new System.Drawing.Point(141, 131);
+            this.labelStockDatos.Name = "labelStockDatos";
+            this.labelStockDatos.Size = new System.Drawing.Size(35, 13);
+            this.labelStockDatos.TabIndex = 14;
+            this.labelStockDatos.Text = "label5";
+            // 
+            // labelPrecioDatos
+            // 
+            this.labelPrecioDatos.AutoSize = true;
+            this.labelPrecioDatos.Location = new System.Drawing.Point(145, 157);
+            this.labelPrecioDatos.Name = "labelPrecioDatos";
+            this.labelPrecioDatos.Size = new System.Drawing.Size(35, 13);
+            this.labelPrecioDatos.TabIndex = 15;
+            this.labelPrecioDatos.Text = "label6";
             // 
             // ComprarOfertar
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(292, 270);
+            this.Controls.Add(this.labelPrecioDatos);
+            this.Controls.Add(this.labelStockDatos);
+            this.Controls.Add(this.labelProductoDatos);
+            this.Controls.Add(this.labelVencimientoDatos);
+            this.Controls.Add(this.labelRubroDatos);
+            this.Controls.Add(this.labelVendedorDatos);
             this.Controls.Add(this.buttonVolver);
             this.Controls.Add(this.labelVencimiento);
-            this.Controls.Add(this.botonOfertar);
-            this.Controls.Add(this.botonComprar);
+            this.Controls.Add(this.botonComprarOfertar);
             this.Controls.Add(this.botonPreguntar);
             this.Controls.Add(this.labelPrecio);
             this.Controls.Add(this.labelStock);
@@ -147,6 +202,7 @@
             this.Controls.Add(this.labelVendedor);
             this.Name = "ComprarOfertar";
             this.Text = "Form1";
+            this.Load += new System.EventHandler(this.ComprarOfertar_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -160,9 +216,14 @@
         private System.Windows.Forms.Label labelStock;
         private System.Windows.Forms.Label labelPrecio;
         private System.Windows.Forms.Button botonPreguntar;
-        private System.Windows.Forms.Button botonComprar;
-        private System.Windows.Forms.Button botonOfertar;
+        private System.Windows.Forms.Button botonComprarOfertar;
         private System.Windows.Forms.Label labelVencimiento;
         private System.Windows.Forms.Button buttonVolver;
+        private System.Windows.Forms.Label labelVendedorDatos;
+        private System.Windows.Forms.Label labelRubroDatos;
+        private System.Windows.Forms.Label labelVencimientoDatos;
+        private System.Windows.Forms.Label labelProductoDatos;
+        private System.Windows.Forms.Label labelStockDatos;
+        private System.Windows.Forms.Label labelPrecioDatos;
     }
 }
