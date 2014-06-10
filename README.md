@@ -25,15 +25,6 @@
 # Filtro Cliente
 - [ ] Agregar tipo de documento
 
-# Editar Cliente
-- [ ] Cargar dirrecion
-
-# Editar Empresa
-- [ ] Falta agregar el telefono y el nombre de contacto
-
-#Registro de Usuario
-- [ ] Informar si el usuario ya esta registrado
-
 #Otros
 - [ ] Cambiar en script la forma de agregar direcciones
 - [ ] Tener en cuenta que pasa si se no se completan los campos
@@ -41,3 +32,12 @@
 - [ ] Modificar el usuario_id en generar_publicacion
 - [ ] Modificar la fecha de vencimiento en generar_publicacion
 - [ ] Agregar restriccion de borrador y activa
+- [ ] No dejar crear usuarios que empiecen con USER
+- [ ] Incluir CUIL en Cliente: https://groups.google.com/forum/#!topic/gestiondedatos/qxvswJBzfIk
+- [ ] Diferencia entre dado de baja e inhabilitado: https://groups.google.com/forum/#!topic/gestiondedatos/TM9z10uu934
+- [ ] Hay ofertas que no aparecen en la tabla de oferta ya que fueron migradas mal: https://groups.google.com/forum/#!topic/gestiondedatos/OFREB0hWfnc
+- [ ] Sacar tiempo de visibilidad de tabla maestra: https://groups.google.com/forum/#!topic/gestiondedatos/ULqWLhcPpfk
+- [ ] Stock de las publicaciones de la tabla maestra: https://groups.google.com/forum/#!topic/gestiondedatos/_x2giGarVD4
+- [ ] Trigger para cuando se inhabilita un vendedor
+- [ ] Fecha de vencimiento: https://groups.google.com/forum/#!topic/gestiondedatos/ZosKyv1G0Fw
+- [ ] Casos repetidos de dni en Tabla maestra
