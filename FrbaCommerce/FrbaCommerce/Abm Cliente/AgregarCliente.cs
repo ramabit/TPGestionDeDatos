@@ -55,10 +55,10 @@ namespace FrbaCommerce.ABM_Cliente
             String nombre = textBox_Nombre.Text;
             String apellido = textBox_Apellido.Text;
             String tipoDeDocumento = comboBox_TipoDeDocumento.Text;
-            Decimal numeroDeDocumento = Convert.ToDecimal(textBox_NumeroDeDoc.Text);
-            DateTime fechaDeNacimiento = Convert.ToDateTime(textBox_FechaDeNacimiento.Text);
+            String numeroDeDocumento = textBox_NumeroDeDoc.Text;
+            String fechaDeNacimiento = textBox_FechaDeNacimiento.Text;
             String mail = textBox_Mail.Text;
-            Decimal telefono = Convert.ToDecimal(textBox_Telefono.Text);
+            String telefono = textBox_Telefono.Text;
             String calle = textBox_Calle.Text;
             String numero = textBox_Numero.Text;
             String piso = textBox_Piso.Text;
@@ -67,11 +67,21 @@ namespace FrbaCommerce.ABM_Cliente
             String localidad = textBox_Localidad.Text;
             SqlParameter parametroOutput;
 
+            // Controla que esten los campos numeroDeDocumento y telefono
+            if (!this.pasoControlDeNoVacio(numeroDeDocumento)) return;
+            if (!this.pasoControlDeNoVacio(telefono)) return;
+
             // Averigua el id del tipo de documento a partir del nombre del tipo de documento
             query = "SELECT id FROM LOS_SUPER_AMIGOS.TipoDeDocumento WHERE nombre = @tipoDeDocumento";
             parametros.Clear();
             parametros.Add(new SqlParameter("@tipoDeDocumento", tipoDeDocumento));
-            Decimal idTipoDeDocumento = (Decimal) builderDeComandos.Crear(query, parametros).ExecuteScalar();
+            Decimal idTipoDeDocumento = (Decimal)builderDeComandos.Crear(query, parametros).ExecuteScalar();
+
+            // Controla que tipo y numero de documento ya se haya registrado en el sistema
+            if (!this.pasoControlDeRegistro(idTipoDeDocumento, numeroDeDocumento)) return;
+
+            // Controla que telefono sea unico
+            if (!this.pasoControlDeUnicidad(telefono)) return;
 
             // Crea una direccion y se guarda su id. Usa un stored procedure del script
             query = "LOS_SUPER_AMIGOS.crear_direccion";
@@ -79,8 +89,8 @@ namespace FrbaCommerce.ABM_Cliente
             parametroOutput = new SqlParameter("@direccion_id", SqlDbType.Decimal);
             parametroOutput.Direction = ParameterDirection.Output;
             parametros.Add(new SqlParameter("@calle", calle));
-            parametros.Add(new SqlParameter("@numero", numero));
-            parametros.Add(new SqlParameter("@piso", piso));
+            parametros.Add(new SqlParameter("@numero", this.siEstaVacioDevuelveDBNullSinoDecimal(numero)));
+            parametros.Add(new SqlParameter("@piso", this.siEstaVacioDevuelveDBNullSinoDecimal(piso)));
             parametros.Add(new SqlParameter("@depto", departamento));
             parametros.Add(new SqlParameter("@cod_postal", codigoPostal));
             parametros.Add(new SqlParameter("@localidad", localidad));
@@ -90,9 +100,21 @@ namespace FrbaCommerce.ABM_Cliente
             command.ExecuteNonQuery();
             Decimal idDireccion = (Decimal) parametroOutput.Value;
 
-            // Si el cliente lo crea el admin, crea un nuevo usuario. Si lo crea un nuevo registro de usuario, usa el que viene por parametro
+            // Si el cliente lo crea el admin, crea un nuevo usuario predeterminado. Si lo crea un nuevo registro de usuario, usa el que viene por parametro
             Decimal idUsuario;
             if (username == "clienteCreadoPorAdmin")
+            {
+                query = "LOS_SUPER_AMIGOS.crear_usuario";
+                parametros.Clear();
+                parametroOutput = new SqlParameter("@usuario_id", SqlDbType.Decimal);
+                parametroOutput.Direction = ParameterDirection.Output;
+                parametros.Add(parametroOutput);
+                command = builderDeComandos.Crear(query, parametros);
+                command.CommandType = CommandType.StoredProcedure;
+                command.ExecuteNonQuery();
+                idUsuario = (Decimal)parametroOutput.Value;
+            }
+            else
             {
                 query = "LOS_SUPER_AMIGOS.crear_usuario_con_valores";
                 parametros.Clear();
@@ -106,20 +128,14 @@ namespace FrbaCommerce.ABM_Cliente
                 command.ExecuteNonQuery();
                 idUsuario = (Decimal)parametroOutput.Value;
             }
-            else
-            {
-                query = "SELECT id FROM LOS_SUPER_AMIGOS.Usuario WHERE nombre = @username";
-                parametros.Clear();
-                parametros.Add(new SqlParameter("@username", username));
-                idUsuario = (Decimal)builderDeComandos.Crear(query, parametros).ExecuteScalar();
-            }
             
+            // Hace el INSERT en Cliente
             parametros.Clear();
             parametros.Add(new SqlParameter("@nombre", nombre));
             parametros.Add(new SqlParameter("@apellido", apellido));
             parametros.Add(new SqlParameter("@idTipoDeDocumento", idTipoDeDocumento));
             parametros.Add(new SqlParameter("@numeroDeDocumento", numeroDeDocumento));
-            parametros.Add(new SqlParameter("@fechaDeNacimiento", fechaDeNacimiento));
+            parametros.Add(new SqlParameter("@fechaDeNacimiento", this.siEstaVacioDevuelveDBNullSinoDecimal(fechaDeNacimiento)));
             parametros.Add(new SqlParameter("@mail", mail));
             parametros.Add(new SqlParameter("@telefono", telefono));
             parametros.Add(new SqlParameter("@idDireccion", idDireccion));
@@ -130,6 +146,57 @@ namespace FrbaCommerce.ABM_Cliente
             int filasAfectadas = builderDeComandos.Crear(query, parametros).ExecuteNonQuery();
 
             if (filasAfectadas == 1) MessageBox.Show("Se agrego el cliente correctamente");
+        }
+
+        private bool pasoControlDeUnicidad(string telefono)
+        {
+            query = "SELECT COUNT(*) FROM LOS_SUPER_AMIGOS.Cliente WHERE telefono = @telefono";
+            parametros.Clear();
+            parametros.Add(new SqlParameter("@telefono", telefono));
+            int cantidad = (int)builderDeComandos.Crear(query, parametros).ExecuteScalar();
+            if (cantidad > 0)
+            {
+                MessageBox.Show("Ya existe ese telefono");
+                return false;
+            }
+            return true;
+        }
+
+        private bool pasoControlDeRegistro(Decimal tipoDeDocumento, String numeroDeDocumento)
+        {
+            query = "SELECT COUNT(*) FROM LOS_SUPER_AMIGOS.Cliente WHERE tipo_de_documento_id = @tipoDeDocumento AND documento = @numeroDeDocumento";
+            parametros.Clear();
+            parametros.Add(new SqlParameter("@tipoDeDocumento", tipoDeDocumento));
+            parametros.Add(new SqlParameter("@numeroDeDocumento", Convert.ToDecimal(numeroDeDocumento)));
+            int cantidad = (int)builderDeComandos.Crear(query, parametros).ExecuteScalar();
+            if (cantidad > 0)
+            {
+                MessageBox.Show("Ya existe ese numero de documento");
+                return false;
+            }
+            return true;
+        }
+
+        private bool pasoControlDeNoVacio(string valor)
+        {
+            if (valor == "")
+            {
+                MessageBox.Show("No se ingreso un " + valor);
+                return false;
+            }
+            return true;
+        }
+
+        private object siEstaVacioDevuelveDBNullSinoDecimal(string valor)
+        {
+            if (valor == "")
+            {
+                return DBNull.Value;
+            }
+            else
+            {
+                return Convert.ToDecimal(valor);
+            }
         }
 
         private void button_Limpiar_Click(object sender, EventArgs e)
