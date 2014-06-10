@@ -94,6 +94,8 @@ namespace FrbaCommerce.ABM_Visibilidad
 
         private void button_Cancelar_Click(object sender, EventArgs e)
         {
+            this.Hide();
+            new MenuPrincipal().ShowDialog();
             this.Close();
         }
     }

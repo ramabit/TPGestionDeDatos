@@ -29,9 +29,15 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.comboBox_Estado = new System.Windows.Forms.ComboBox();
             this.comboBox_TiposDePublicacion = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.monthCalendar_FechaDeInicio = new System.Windows.Forms.MonthCalendar();
+            this.button_FechaDeInicio = new System.Windows.Forms.Button();
+            this.label5 = new System.Windows.Forms.Label();
+            this.textBox_FechaDeInicio = new System.Windows.Forms.TextBox();
             this.comboBox_Rubro = new System.Windows.Forms.ComboBox();
             this.radioButton_Pregunta = new System.Windows.Forms.RadioButton();
             this.comboBox_Visibilidad = new System.Windows.Forms.ComboBox();
@@ -47,12 +53,6 @@
             this.button_Generar = new System.Windows.Forms.Button();
             this.button_Cancelar = new System.Windows.Forms.Button();
             this.button_Limpiar = new System.Windows.Forms.Button();
-            this.textBox_FechaDeInicio = new System.Windows.Forms.TextBox();
-            this.label5 = new System.Windows.Forms.Label();
-            this.button_FechaDeInicio = new System.Windows.Forms.Button();
-            this.monthCalendar_FechaDeInicio = new System.Windows.Forms.MonthCalendar();
-            this.comboBox_Estado = new System.Windows.Forms.ComboBox();
-            this.label6 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -70,6 +70,23 @@
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Tipo de publicacion";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(6, 43);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(40, 13);
+            this.label6.TabIndex = 3;
+            this.label6.Text = "Estado";
+            // 
+            // comboBox_Estado
+            // 
+            this.comboBox_Estado.FormattingEnabled = true;
+            this.comboBox_Estado.Location = new System.Drawing.Point(112, 40);
+            this.comboBox_Estado.Name = "comboBox_Estado";
+            this.comboBox_Estado.Size = new System.Drawing.Size(250, 21);
+            this.comboBox_Estado.TabIndex = 2;
             // 
             // comboBox_TiposDePublicacion
             // 
@@ -108,6 +125,39 @@
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Caracterisiticas comunes";
+            // 
+            // monthCalendar_FechaDeInicio
+            // 
+            this.monthCalendar_FechaDeInicio.Location = new System.Drawing.Point(198, 6);
+            this.monthCalendar_FechaDeInicio.Name = "monthCalendar_FechaDeInicio";
+            this.monthCalendar_FechaDeInicio.TabIndex = 14;
+            this.monthCalendar_FechaDeInicio.Visible = false;
+            // 
+            // button_FechaDeInicio
+            // 
+            this.button_FechaDeInicio.Location = new System.Drawing.Point(282, 48);
+            this.button_FechaDeInicio.Name = "button_FechaDeInicio";
+            this.button_FechaDeInicio.Size = new System.Drawing.Size(80, 20);
+            this.button_FechaDeInicio.TabIndex = 11;
+            this.button_FechaDeInicio.Text = "Seleccionar";
+            this.button_FechaDeInicio.UseVisualStyleBackColor = true;
+            this.button_FechaDeInicio.Click += new System.EventHandler(this.button_FechaDeInicio_Click);
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(6, 51);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(79, 13);
+            this.label5.TabIndex = 10;
+            this.label5.Text = "Fecha de inicio";
+            // 
+            // textBox_FechaDeInicio
+            // 
+            this.textBox_FechaDeInicio.Location = new System.Drawing.Point(112, 48);
+            this.textBox_FechaDeInicio.Name = "textBox_FechaDeInicio";
+            this.textBox_FechaDeInicio.Size = new System.Drawing.Size(164, 20);
+            this.textBox_FechaDeInicio.TabIndex = 9;
             // 
             // comboBox_Rubro
             // 
@@ -231,7 +281,7 @@
             this.button_Cancelar.Name = "button_Cancelar";
             this.button_Cancelar.Size = new System.Drawing.Size(96, 30);
             this.button_Cancelar.TabIndex = 7;
-            this.button_Cancelar.Text = "Cancelar";
+            this.button_Cancelar.Text = "Volver";
             this.button_Cancelar.UseVisualStyleBackColor = true;
             this.button_Cancelar.Click += new System.EventHandler(this.button_Cancelar_Click);
             // 
@@ -244,56 +294,6 @@
             this.button_Limpiar.Text = "Limpiar";
             this.button_Limpiar.UseVisualStyleBackColor = true;
             this.button_Limpiar.Click += new System.EventHandler(this.button_Limpiar_Click);
-            // 
-            // textBox_FechaDeInicio
-            // 
-            this.textBox_FechaDeInicio.Location = new System.Drawing.Point(112, 48);
-            this.textBox_FechaDeInicio.Name = "textBox_FechaDeInicio";
-            this.textBox_FechaDeInicio.Size = new System.Drawing.Size(164, 20);
-            this.textBox_FechaDeInicio.TabIndex = 9;
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(6, 51);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(79, 13);
-            this.label5.TabIndex = 10;
-            this.label5.Text = "Fecha de inicio";
-            // 
-            // button_FechaDeInicio
-            // 
-            this.button_FechaDeInicio.Location = new System.Drawing.Point(282, 48);
-            this.button_FechaDeInicio.Name = "button_FechaDeInicio";
-            this.button_FechaDeInicio.Size = new System.Drawing.Size(80, 20);
-            this.button_FechaDeInicio.TabIndex = 11;
-            this.button_FechaDeInicio.Text = "Seleccionar";
-            this.button_FechaDeInicio.UseVisualStyleBackColor = true;
-            this.button_FechaDeInicio.Click += new System.EventHandler(this.button_FechaDeInicio_Click);
-            // 
-            // monthCalendar_FechaDeInicio
-            // 
-            this.monthCalendar_FechaDeInicio.Location = new System.Drawing.Point(198, 6);
-            this.monthCalendar_FechaDeInicio.Name = "monthCalendar_FechaDeInicio";
-            this.monthCalendar_FechaDeInicio.TabIndex = 14;
-            this.monthCalendar_FechaDeInicio.Visible = false;
-            // 
-            // comboBox_Estado
-            // 
-            this.comboBox_Estado.FormattingEnabled = true;
-            this.comboBox_Estado.Location = new System.Drawing.Point(112, 40);
-            this.comboBox_Estado.Name = "comboBox_Estado";
-            this.comboBox_Estado.Size = new System.Drawing.Size(250, 21);
-            this.comboBox_Estado.TabIndex = 2;
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(6, 43);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(40, 13);
-            this.label6.TabIndex = 3;
-            this.label6.Text = "Estado";
             // 
             // GenerarPublicacion
             // 

@@ -102,5 +102,13 @@ namespace FrbaCommerce.Editar_Publicacion
         {
             this.Close();
         }
+
+        private void button_Cancelar_Click_1(object sender, EventArgs e)
+        {
+
+            this.Hide();
+            new MenuPrincipal().ShowDialog();
+            this.Close();
+        }
     }
 }

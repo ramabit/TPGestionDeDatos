@@ -92,6 +92,7 @@
             this.button_Cancelar.TabIndex = 3;
             this.button_Cancelar.Text = "Cancelar";
             this.button_Cancelar.UseVisualStyleBackColor = true;
+            this.button_Cancelar.Click += new System.EventHandler(this.button_Cancelar_Click_1);
             // 
             // dataGridView_Publicacion
             // 
