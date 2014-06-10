@@ -82,7 +82,8 @@ namespace FrbaCommerce.Calificar_Vendedor
             col6.HeaderText = "id";
             dataGridViewCompras.Columns.Add(col6);
 
-         //   dataGridViewCompras.Columns[5].Visible = false;
+            dataGridViewCompras.Columns[5].Visible = false;
+            dataGridViewCompras.Columns[4].Visible = false;
 
             dataGridViewCompras.DataSource = datacompras.Tables[0].DefaultView;
 
@@ -106,9 +107,11 @@ namespace FrbaCommerce.Calificar_Vendedor
             // Controla que la celda que se clickeo calificar vendedor
             if (e.ColumnIndex == dataGridViewCompras.Columns["Calificar vendedor"].Index && e.RowIndex >= 0)
             {
-             //   String idCompraParaCalificar = dataGridViewCompras.Rows[e.RowIndex].Cells["id"].Value.ToString();
-             //   String tipoCompraParaCalificar = dataGridViewCompras.Rows[e.RowIndex].Cells["Tipo"].Value.ToString();
-             //   new Calificar(idCompraParaCalificar, tipoCompraParaCalificar).ShowDialog();
+                Decimal idCompraParaCalificar = Convert.ToDecimal(dataGridViewCompras.Rows[e.RowIndex].Cells[5].Value);
+                String tipoCompraParaCalificar = dataGridViewCompras.Rows[e.RowIndex].Cells[4].Value.ToString();
+                this.Hide();
+                new Calificar(idCompraParaCalificar, tipoCompraParaCalificar).ShowDialog();
+                this.Close();
             }
         }
 
