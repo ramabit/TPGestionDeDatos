@@ -89,8 +89,8 @@ namespace FrbaCommerce
             parametroOutput = new SqlParameter("@direccion_id", SqlDbType.Decimal);
             parametroOutput.Direction = ParameterDirection.Output;
             parametros.Add(new SqlParameter("@calle", calle));
-            parametros.Add(new SqlParameter("@numero", Convert.ToDecimal(numero)));
-            parametros.Add(new SqlParameter("@piso", Convert.ToDecimal(piso)));
+            parametros.Add(new SqlParameter("@numero", this.siEstaVacioDevuelveDBNullSinoDecimal(numero)));
+            parametros.Add(new SqlParameter("@piso", this.siEstaVacioDevuelveDBNullSinoDecimal(piso)));
             parametros.Add(new SqlParameter("@depto", departamento));
             parametros.Add(new SqlParameter("@cod_postal", codigoPostal));
             parametros.Add(new SqlParameter("@localidad", localidad));
@@ -125,8 +125,8 @@ namespace FrbaCommerce
             query = "UPDATE LOS_SUPER_AMIGOS.Direccion SET calle = @calle, numero = @numero, piso = @piso, depto = @departamento, cod_postal = @codigoPostal, localidad = @localidad WHERE id = @idDireccion";
             parametros.Clear();
             parametros.Add(new SqlParameter("@calle", this.calle));
-            parametros.Add(new SqlParameter("@numero", Convert.ToDecimal(this.numero)));
-            parametros.Add(new SqlParameter("@piso", Convert.ToDecimal(this.piso)));
+            parametros.Add(new SqlParameter("@numero", this.siEstaVacioDevuelveDBNullSinoDecimal(numero)));
+            parametros.Add(new SqlParameter("@piso", this.siEstaVacioDevuelveDBNullSinoDecimal(piso)));
             parametros.Add(new SqlParameter("@departamento", this.departamento));
             parametros.Add(new SqlParameter("@codigoPostal", this.codigoPostal));
             parametros.Add(new SqlParameter("@localidad", this.localidad));
@@ -137,5 +137,18 @@ namespace FrbaCommerce
             if (filasAfectadas == 1) return true;
             return false;
         }
+
+        private object siEstaVacioDevuelveDBNullSinoDecimal(string valor)
+        {
+            if (valor == "")
+            {
+                return DBNull.Value;
+            }
+            else
+            {
+                return Convert.ToDecimal(valor);
+            }
+        }
+
     }
 }

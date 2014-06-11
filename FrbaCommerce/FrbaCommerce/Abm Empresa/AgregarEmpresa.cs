@@ -191,18 +191,6 @@ namespace FrbaCommerce.ABM_Empresa
             return true;
         }
 
-        private object siEstaVacioDevuelveDBNullSinoDecimal(string valor)
-        {
-            if (valor == "")
-            {
-                return DBNull.Value;
-            }
-            else
-            {
-                return Convert.ToDecimal(valor);
-            }
-        }
-
         private void button_Limpiar_Click(object sender, EventArgs e)
         {
             textBox_RazonSocial.Text = "";
