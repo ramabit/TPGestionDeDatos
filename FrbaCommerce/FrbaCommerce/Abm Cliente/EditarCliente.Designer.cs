@@ -390,7 +390,7 @@
             this.Controls.Add(this.button_Cancelar);
             this.Controls.Add(this.button_Guardar);
             this.Name = "EditarCliente";
-            this.Text = "EditarCliente";
+            this.Text = "Editar Cliente";
             this.Load += new System.EventHandler(this.EditarCliente_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();

@@ -144,7 +144,7 @@
             this.Controls.Add(this.button_Guardar);
             this.Controls.Add(this.groupBox1);
             this.Name = "AgregarVisibilidad";
-            this.Text = "AgregarVisibilidad";
+            this.Text = "Agregar Visibilidad";
             this.Load += new System.EventHandler(this.AgregarVisibilidad_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();

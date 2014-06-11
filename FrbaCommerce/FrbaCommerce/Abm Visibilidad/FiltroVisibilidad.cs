@@ -25,19 +25,25 @@ namespace FrbaCommerce.ABM_Visibilidad
         private void FiltroVisibilidad_Load(object sender, EventArgs e)
         {
             CargarVisibilidad();
+            OcultarColumnasQueNoDebenVerse();
+        }
+
+        private void OcultarColumnasQueNoDebenVerse()
+        {
+            dataGridView_Visibilidad.Columns["id"].Visible = false;
         }
 
         private void CargarVisibilidad()
         {
-            command = builderDeComandos.Crear("SELECT v.id, v.descripcion, v.precio, v.porcentaje FROM LOS_SUPER_AMIGOS.Visibilidad v", parametros);
+            command = builderDeComandos.Crear("SELECT v.id, v.descripcion Descripcion, v.precio Precio, v.porcentaje Porcentaje, v.duracion Duracion FROM LOS_SUPER_AMIGOS.Visibilidad v", parametros);
 
             DataSet visibilidades = new DataSet();
             SqlDataAdapter adapter = new SqlDataAdapter();
             adapter.SelectCommand = command;
             adapter.Fill(visibilidades);
             dataGridView_Visibilidad.DataSource = visibilidades.Tables[0].DefaultView;
-            if (dataGridView_Visibilidad.Columns.Contains("modificar"))
-                dataGridView_Visibilidad.Columns.Remove("modificar");
+            if (dataGridView_Visibilidad.Columns.Contains("Modificar"))
+                dataGridView_Visibilidad.Columns.Remove("Modificar");
             AgregarColumnaDeModificacion();
             AgregarListenerBotonDeModificacion();
         }
@@ -45,8 +51,8 @@ namespace FrbaCommerce.ABM_Visibilidad
         private void AgregarColumnaDeModificacion()
         {
             DataGridViewButtonColumn botonColumnaModificar = new DataGridViewButtonColumn();
-            botonColumnaModificar.Text = "modificar";
-            botonColumnaModificar.Name = "modificar";
+            botonColumnaModificar.Text = "Modificar";
+            botonColumnaModificar.Name = "Modificar";
             botonColumnaModificar.UseColumnTextForButtonValue = true;
             dataGridView_Visibilidad.Columns.Add(botonColumnaModificar);
         }

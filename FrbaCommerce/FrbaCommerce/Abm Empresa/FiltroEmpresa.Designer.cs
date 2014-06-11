@@ -159,7 +159,7 @@
             this.Controls.Add(this.button_Buscar);
             this.Controls.Add(this.groupBox1);
             this.Name = "FiltroEmpresa";
-            this.Text = "FiltroCliente";
+            this.Text = "Filtro de empresas";
             this.Load += new System.EventHandler(this.FiltroEmpresa_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();

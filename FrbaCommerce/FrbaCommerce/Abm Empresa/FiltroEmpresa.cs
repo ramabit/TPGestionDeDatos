@@ -35,15 +35,15 @@ namespace FrbaCommerce.ABM_Empresa
 
         private void CargarEmpresas()
         {
-            command = builderDeComandos.Crear("SELECT e.id, u.username, e.razon_social, e.nombre_de_contacto, e.cuit, e.fecha_creacion, e.mail, e.telefono, e.ciudad, d.calle, d.numero, d.piso, d.depto, d.cod_postal, d.localidad FROM LOS_SUPER_AMIGOS.Empresa e, LOS_SUPER_AMIGOS.Direccion d, LOS_SUPER_AMIGOS.Usuario u WHERE e.direccion_id = d.id AND e.usuario_id = u.id", parametros);
+            command = builderDeComandos.Crear("SELECT e.id, u.username Username, e.razon_social 'Razon Social', e.nombre_de_contacto 'Nombre de contacto', e.cuit 'CUIT', e.fecha_creacion 'Fecha de creacion', e.mail 'Mail', e.telefono 'Telefono', e.ciudad Ciudad, d.calle Calle, d.numero Numero, d.piso Piso, d.depto Departamento, d.cod_postal 'Codigo Postal', d.localidad Localidad FROM LOS_SUPER_AMIGOS.Empresa e, LOS_SUPER_AMIGOS.Direccion d, LOS_SUPER_AMIGOS.Usuario u WHERE e.direccion_id = d.id AND e.usuario_id = u.id", parametros);
 
             DataSet empresas = new DataSet();
             SqlDataAdapter adapter = new SqlDataAdapter();
             adapter.SelectCommand = command;
             adapter.Fill(empresas);
             dataGridView_Empresa.DataSource = empresas.Tables[0].DefaultView;
-            if (dataGridView_Empresa.Columns.Contains("modificar"))
-                dataGridView_Empresa.Columns.Remove("modificar");
+            if (dataGridView_Empresa.Columns.Contains("Modificar"))
+                dataGridView_Empresa.Columns.Remove("Modificar");
             AgregarColumnaDeModificacion();
             AgregarListenerBotonDeModificacion();
         }
@@ -51,8 +51,8 @@ namespace FrbaCommerce.ABM_Empresa
         private void AgregarColumnaDeModificacion()
         {
             DataGridViewButtonColumn botonColumnaModificar = new DataGridViewButtonColumn();
-            botonColumnaModificar.Text = "modificar";
-            botonColumnaModificar.Name = "modificar";
+            botonColumnaModificar.Text = "Modificar";
+            botonColumnaModificar.Name = "Modificar";
             botonColumnaModificar.UseColumnTextForButtonValue = true;
             dataGridView_Empresa.Columns.Add(botonColumnaModificar);
         }

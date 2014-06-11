@@ -156,7 +156,7 @@
             this.Controls.Add(this.button_Guardar);
             this.Controls.Add(this.groupBox1);
             this.Name = "EditarVisibilidad";
-            this.Text = "EditarVisibilidad";
+            this.Text = "Editar Visibilidad";
             this.Load += new System.EventHandler(this.EditarVisibilidad_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();

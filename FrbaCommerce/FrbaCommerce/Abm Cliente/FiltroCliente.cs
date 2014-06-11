@@ -27,7 +27,6 @@ namespace FrbaCommerce.ABM_Cliente
             CargarTiposDeDocumento();
             CargarClientes();
             OcultarColumnasQueNoDebenVerse();
-            ModificarHeaders();
         }
 
         private void CargarTiposDeDocumento()
@@ -44,11 +43,6 @@ namespace FrbaCommerce.ABM_Cliente
             comboBox_TipoDeDoc.ValueMember = "nombre";
         }
 
-        private void ModificarHeaders()
-        {
-            dataGridView_Cliente.Columns["nombre1"].HeaderText = "Tipo de documento";
-        }
-
         private void OcultarColumnasQueNoDebenVerse()
         {
             dataGridView_Cliente.Columns["id"].Visible = false;
@@ -56,15 +50,15 @@ namespace FrbaCommerce.ABM_Cliente
 
         private void CargarClientes()
         {
-            command = builderDeComandos.Crear("SELECT c.id, u.username, c.nombre, c.apellido, td.nombre, c.documento, c.fecha_nacimiento, c.mail, c.telefono, d.calle, d.numero, d.piso, d.depto, d.cod_postal, d.localidad FROM LOS_SUPER_AMIGOS.Cliente c, LOS_SUPER_AMIGOS.TipoDeDocumento td, LOS_SUPER_AMIGOS.Direccion d, LOS_SUPER_AMIGOS.Usuario u WHERE c.tipo_de_documento_id = td.id AND c.direccion_id = d.id AND c.usuario_id = u.id", parametros);
+            command = builderDeComandos.Crear("SELECT c.id, u.username Username, c.nombre Nombre, c.apellido Apellido, td.nombre 'Tipo de Documento', c.documento Documento, c.fecha_nacimiento 'Fecha de Nacimiento', c.mail Mail, c.telefono Telefono, d.calle Calle, d.numero Numero, d.piso Piso, d.depto Departamento, d.cod_postal 'Codigo postal', d.localidad Localidad FROM LOS_SUPER_AMIGOS.Cliente c, LOS_SUPER_AMIGOS.TipoDeDocumento td, LOS_SUPER_AMIGOS.Direccion d, LOS_SUPER_AMIGOS.Usuario u WHERE c.tipo_de_documento_id = td.id AND c.direccion_id = d.id AND c.usuario_id = u.id", parametros);
 
             DataSet clientes = new DataSet();
             SqlDataAdapter adapter = new SqlDataAdapter();
             adapter.SelectCommand = command;
             adapter.Fill(clientes);
             dataGridView_Cliente.DataSource = clientes.Tables[0].DefaultView;
-            if (dataGridView_Cliente.Columns.Contains("modificar")) 
-                dataGridView_Cliente.Columns.Remove("modificar");
+            if (dataGridView_Cliente.Columns.Contains("Modificar")) 
+                dataGridView_Cliente.Columns.Remove("Modificar");
             AgregarColumnaDeModificacion();
             AgregarListenerBotonDeModificacion();
         }
@@ -72,8 +66,8 @@ namespace FrbaCommerce.ABM_Cliente
         private void AgregarColumnaDeModificacion()
         {
             DataGridViewButtonColumn botonColumnaModificar = new DataGridViewButtonColumn();
-            botonColumnaModificar.Text = "modificar";
-            botonColumnaModificar.Name = "modificar";
+            botonColumnaModificar.Text = "Modificar";
+            botonColumnaModificar.Name = "Modificar";
             botonColumnaModificar.UseColumnTextForButtonValue = true;
             dataGridView_Cliente.Columns.Add(botonColumnaModificar);
         }
