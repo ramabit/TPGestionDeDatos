@@ -15,5 +15,10 @@ namespace FrbaCommerce.Historial_Cliente
         {
             InitializeComponent();
         }
+
+        private void Historial_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }
