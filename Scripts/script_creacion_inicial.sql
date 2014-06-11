@@ -225,6 +225,7 @@ id numeric(18,0) identity(1,1),
 descripcion nvarchar(255),
 precio numeric(18,2),
 porcentaje numeric(18,0),
+duracion numeric(18,0),
 habilitado bit default 1,
 PRIMARY KEY (id)
 )
@@ -470,8 +471,8 @@ SET IDENTITY_INSERT LOS_SUPER_AMIGOS.Visibilidad ON;
 GO
 
 INSERT INTO LOS_SUPER_AMIGOS.Visibilidad
-([id],[descripcion],[precio],[porcentaje])
-SELECT DISTINCT Publicacion_Visibilidad_Cod, Publicacion_Visibilidad_Desc, Publicacion_Visibilidad_Porcentaje, Publicacion_Visibilidad_Precio FROM gd_esquema.Maestra
+([id],[descripcion],[precio],[porcentaje], [duracion])
+SELECT DISTINCT Publicacion_Visibilidad_Cod, Publicacion_Visibilidad_Desc, Publicacion_Visibilidad_Porcentaje, Publicacion_Visibilidad_Precio, 7 FROM gd_esquema.Maestra
 GO
 
 SET IDENTITY_INSERT LOS_SUPER_AMIGOS.Visibilidad OFF;
