@@ -103,10 +103,11 @@ namespace FrbaCommerce.Generar_Publicacion
             parametros.Add(new SqlParameter("@rubroSeleccionado", rubroSeleccionado));
             Decimal idRubroSeleccionado = (Decimal) builderDeComandos.Crear(query, parametros).ExecuteScalar();
 
-            query = "SELECT id FROM LOS_SUPER_AMIGOS.Visibilidad WHERE descripcion = @visibilidadSeleccionado";
+            query = "SELECT * FROM LOS_SUPER_AMIGOS.Visibilidad WHERE descripcion = @visibilidadSeleccionado";
             parametros.Clear();
             parametros.Add(new SqlParameter("@visibilidadSeleccionado", visibilidadSeleccionado));
-            Decimal idVisibilidadSeleccionado = (Decimal) builderDeComandos.Crear(query, parametros).ExecuteScalar();
+            SqlDataReader readerVisibilidad = builderDeComandos.Crear(query, parametros).ExecuteReader();
+            readerVisibilidad.Read();
 
             query = "INSERT INTO LOS_SUPER_AMIGOS.Publicacion (tipo, estado, descripcion, fecha_inicio, fecha_vencimiento, rubro_id, visibilidad_id, precio, stock, usuario_id) values (@tipo, @estado, @descripcion, @fechaInicial, @fechaVencimiento, @rubroId, @visibilidadId, @precio, @stock, @usuarioId)";
 
@@ -115,10 +116,10 @@ namespace FrbaCommerce.Generar_Publicacion
             parametros.Add(new SqlParameter("@descripcion", descripcionSeleccionado));
             parametros.Add(new SqlParameter("@stock", Convert.ToDecimal(stockSeleccionado)));
             parametros.Add(new SqlParameter("@fechaInicial", fechaDeInicio));
-            parametros.Add(new SqlParameter("@fechaVencimiento", fechaDeInicio)); // OJO ACA
+            parametros.Add(new SqlParameter("@fechaVencimiento", Convert.ToDateTime(fechaDeInicio).AddDays(Convert.ToDouble(readerVisibilidad["duracion"])))); // OJO ACA
             parametros.Add(new SqlParameter("@precio", Convert.ToDouble(precioSeleccionado)));
             parametros.Add(new SqlParameter("@rubroId", idRubroSeleccionado));
-            parametros.Add(new SqlParameter("@visibilidadId", idVisibilidadSeleccionado));
+            parametros.Add(new SqlParameter("@visibilidadId", readerVisibilidad["id"]));
             parametros.Add(new SqlParameter("@usuarioId", 1));//UsuarioSesion.usuario));
             parametros.Add(new SqlParameter("@tipo", tipoSeleccionado));
             

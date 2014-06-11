@@ -183,10 +183,11 @@ namespace FrbaCommerce.Editar_Publicacion
             parametros.Add(new SqlParameter("@rubroSeleccionado", rubroSeleccionado));
             Decimal idRubroSeleccionado = (Decimal)builderDeComandos.Crear(query, parametros).ExecuteScalar();
 
-            query = "SELECT id FROM LOS_SUPER_AMIGOS.Visibilidad WHERE descripcion = @visibilidadSeleccionado";
+            query = "SELECT * FROM LOS_SUPER_AMIGOS.Visibilidad WHERE descripcion = @visibilidadSeleccionado";
             parametros.Clear();
             parametros.Add(new SqlParameter("@visibilidadSeleccionado", visibilidadSeleccionado));
-            Decimal idVisibilidadSeleccionado = (Decimal)builderDeComandos.Crear(query, parametros).ExecuteScalar();
+            SqlDataReader readerVisibilidad = builderDeComandos.Crear(query, parametros).ExecuteReader();
+            readerVisibilidad.Read();
 
             query = "UPDATE LOS_SUPER_AMIGOS.Publicacion SET estado = @estado, descripcion = @descripcion, fecha_inicio = @fechaDeInicio, rubro_id = @rubroId, visibilidad_id = @visibilidadId, se_realizan_preguntas = @preguntaSeleccionado, stock = @stock, precio = @precio WHERE id = @idPublicacion";
             parametros.Clear();
@@ -194,10 +195,11 @@ namespace FrbaCommerce.Editar_Publicacion
             parametros.Add(new SqlParameter("@estado", estado));
             parametros.Add(new SqlParameter("@descripcion", descripcionSeleccionado));
             parametros.Add(new SqlParameter("@fechaDeInicio", fechaDeInicio));
+            parametros.Add(new SqlParameter("@fechaVencimiento", Convert.ToDateTime(fechaDeInicio).AddDays(Convert.ToDouble(readerVisibilidad["duracion"])))); // OJO ACA
             parametros.Add(new SqlParameter("@stock", Convert.ToDecimal(stockSeleccionado)));
             parametros.Add(new SqlParameter("@precio", Convert.ToDouble(precioSeleccionado)));
             parametros.Add(new SqlParameter("@rubroId", idRubroSeleccionado));
-            parametros.Add(new SqlParameter("@visibilidadId", idVisibilidadSeleccionado));
+            parametros.Add(new SqlParameter("@visibilidadId", readerVisibilidad["id"]));
             parametros.Add(new SqlParameter("@preguntaSeleccionado", preguntaSeleccionado));
 
             int filasAfectadas = builderDeComandos.Crear(query, parametros).ExecuteNonQuery();
