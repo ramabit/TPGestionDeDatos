@@ -149,6 +149,8 @@ namespace FrbaCommerce.ABM_Cliente
             filasAfectadas = builderDeComandos.Crear(query, parametros).ExecuteNonQuery();
 
             if (filasAfectadas == 1) MessageBox.Show("El cliente se modifico correctamente");
+
+            this.Close();
         }
 
         private bool pasoControlDeUnicidad(string telefono)

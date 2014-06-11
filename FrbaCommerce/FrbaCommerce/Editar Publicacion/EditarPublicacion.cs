@@ -203,6 +203,8 @@ namespace FrbaCommerce.Editar_Publicacion
             int filasAfectadas = builderDeComandos.Crear(query, parametros).ExecuteNonQuery();
 
             if (filasAfectadas == 1) MessageBox.Show("Se agrego la nueva publicacion correctamente");
+
+            this.Close();
         }
 
         private bool pasoControlDeNoVacio(string valor)

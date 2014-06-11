@@ -125,6 +125,8 @@ namespace FrbaCommerce.Generar_Publicacion
             int filasAfectadas = builderDeComandos.Crear(query, parametros).ExecuteNonQuery();
             
             if (filasAfectadas == 1) MessageBox.Show("Se agrego la nueva publicacion correctamente");
+
+            VolverAlMenuPrincipal();
         }
 
         private bool pasoControlDeNoVacio(string valor)
@@ -151,6 +153,11 @@ namespace FrbaCommerce.Generar_Publicacion
         }
 
         private void button_Cancelar_Click(object sender, EventArgs e)
+        {
+            VolverAlMenuPrincipal();
+        }
+
+        private void VolverAlMenuPrincipal()
         {
             this.Hide();
             new MenuPrincipal().ShowDialog();

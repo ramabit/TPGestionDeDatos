@@ -72,6 +72,8 @@ namespace FrbaCommerce.ABM_Visibilidad
             int filasAfectadas = builderDeComandos.Crear(query, parametros).ExecuteNonQuery();
 
             if (filasAfectadas == 1) MessageBox.Show("Se modifico la visiblidad correctamente");
+
+            this.Close();
         }
 
         private bool pasoControlDeNoVacio(string valor)

@@ -131,6 +131,8 @@ namespace FrbaCommerce.ABM_Empresa
             int filasAfectadas = builderDeComandos.Crear(query, parametros).ExecuteNonQuery();
 
             if (filasAfectadas == 1) MessageBox.Show("Se agrego la empresa correctamente");
+
+            VolverAlMenuPrincipal();
         }
 
         private bool pasoControlDeUnicidad(string telefono)
@@ -215,6 +217,11 @@ namespace FrbaCommerce.ABM_Empresa
         }
 
         private void button_Cancelar_Click(object sender, EventArgs e)
+        {
+            VolverAlMenuPrincipal();
+        }
+
+        private void VolverAlMenuPrincipal()
         {
             this.Hide();
             new MenuPrincipal().ShowDialog();
