@@ -175,6 +175,7 @@
       <DependentUpon>Listado.cs</DependentUpon>
     </Compile>
     <Compile Include="BuilderDeComandos.cs" />
+	<Compile Include="Direccion.cs" />
     <Compile Include="Comprar-Ofertar\BuscadorPublicaciones.cs">
       <SubType>Form</SubType>
     </Compile>
