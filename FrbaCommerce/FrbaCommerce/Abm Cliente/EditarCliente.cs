@@ -104,8 +104,19 @@ namespace FrbaCommerce.ABM_Cliente
             String codigoPostal = textBox_CodigoPostal.Text;
             String localidad = textBox_Localidad.Text;
 
-            // Controla que esten los campos numeroDeDocumento y telefono
+            // Controla que esten completos los campos
+            if (!this.pasoControlDeNoVacio(nombre)) return;
+            if (!this.pasoControlDeNoVacio(apellido)) return;
             if (!this.pasoControlDeNoVacio(numeroDeDocumento)) return;
+            if (!this.pasoControlDeNoVacio(fechaDeNacimiento)) return;
+            if (!this.pasoControlDeNoVacio(mail)) return;
+            if (!this.pasoControlDeNoVacio(telefono)) return;
+            if (!this.pasoControlDeNoVacio(calle)) return;
+            if (!this.pasoControlDeNoVacio(numero)) return;
+            if (!this.pasoControlDeNoVacio(piso)) return;
+            if (!this.pasoControlDeNoVacio(departamento)) return;
+            if (!this.pasoControlDeNoVacio(codigoPostal)) return;
+            if (!this.pasoControlDeNoVacio(localidad)) return;
 
             // Averigua el id del tipo de documento a partir del nombre del tipo de documento
             query = "SELECT id FROM LOS_SUPER_AMIGOS.TipoDeDocumento WHERE nombre = @tipoDeDocumento";
@@ -117,14 +128,14 @@ namespace FrbaCommerce.ABM_Cliente
             if (!this.pasoControlDeRegistro(idTipoDeDocumento, numeroDeDocumento)) return;
 
             // Controla que telefono sea unico
-            if (telefono != "" && !this.pasoControlDeUnicidad(telefono)) return;
+            if (!this.pasoControlDeUnicidad(telefono)) return;
 
             // Update direccion
             query = "UPDATE LOS_SUPER_AMIGOS.Direccion SET calle = @calle, numero = @numero, piso = @piso, depto = @departamento, cod_postal = @codigoPostal, localidad = @localidad WHERE id = @idDireccion";
             parametros.Clear();
             parametros.Add(new SqlParameter("@calle", calle));
-            parametros.Add(new SqlParameter("@numero", this.siEstaVacioDevuelveDBNullSinoDecimal(numero)));
-            parametros.Add(new SqlParameter("@piso", this.siEstaVacioDevuelveDBNullSinoDecimal(piso)));
+            parametros.Add(new SqlParameter("@numero", Convert.ToDecimal(numero)));
+            parametros.Add(new SqlParameter("@piso", Convert.ToDecimal(piso)));
             parametros.Add(new SqlParameter("@departamento", departamento));
             parametros.Add(new SqlParameter("@codigoPostal", codigoPostal));
             parametros.Add(new SqlParameter("@localidad", localidad));
@@ -138,10 +149,10 @@ namespace FrbaCommerce.ABM_Cliente
             parametros.Add(new SqlParameter("@nombre", nombre));
             parametros.Add(new SqlParameter("@apellido", apellido));
             parametros.Add(new SqlParameter("@idTipoDeDocumento", idTipoDeDocumento));
-            parametros.Add(new SqlParameter("@numeroDeDocumento", numeroDeDocumento));
+            parametros.Add(new SqlParameter("@numeroDeDocumento", Convert.ToDecimal(numeroDeDocumento)));
             parametros.Add(new SqlParameter("@fechaDeNacimiento", fechaDeNacimiento));
             parametros.Add(new SqlParameter("@mail", mail));
-            parametros.Add(new SqlParameter("@telefono", this.siEstaVacioDevuelveDBNullSinoDecimal(telefono)));
+            parametros.Add(new SqlParameter("@telefono", Convert.ToDecimal(telefono)));
             parametros.Add(new SqlParameter("@idCliente", idCliente));
 
             query = "UPDATE LOS_SUPER_AMIGOS.Cliente SET nombre = @nombre, apellido = @apellido, tipo_de_documento_id = @idTipoDeDocumento, documento = @numeroDeDocumento, fecha_nacimiento = @fechaDeNacimiento, mail = @mail, telefono = @telefono WHERE id = @idCliente";
@@ -151,6 +162,32 @@ namespace FrbaCommerce.ABM_Cliente
             if (filasAfectadas == 1) MessageBox.Show("El cliente se modifico correctamente");
 
             this.Close();
+        }
+
+        private void button_Limpiar_Click(object sender, EventArgs e)
+        {
+            CargarDatos();
+        }
+
+        private void button_Cancelar_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void button_FechaDeNacimiento_Click(object sender, EventArgs e)
+        {
+            this.monthCalendar_FechaDeNacimiento.Visible = true;
+        }
+
+        private void AgregarListenerACalendario()
+        {
+            this.monthCalendar_FechaDeNacimiento.DateSelected += new System.Windows.Forms.DateRangeEventHandler(this.monthCalendar_FechaDeNacimiento_DateSelected);
+        }
+
+        private void monthCalendar_FechaDeNacimiento_DateSelected(object sender, System.Windows.Forms.DateRangeEventArgs e)
+        {
+            textBox_FechaDeNacimiento.Text = e.Start.ToShortDateString();
+            monthCalendar_FechaDeNacimiento.Visible = false;
         }
 
         private bool pasoControlDeUnicidad(string telefono)
@@ -190,44 +227,6 @@ namespace FrbaCommerce.ABM_Cliente
                 return false;
             }
             return true;
-        }
-
-        private object siEstaVacioDevuelveDBNullSinoDecimal(string valor)
-        {
-            if (valor == "")
-            {
-                return DBNull.Value;
-            }
-            else
-            {
-                return Convert.ToDecimal(valor);
-            }
-        }
-
-        private void button_Limpiar_Click(object sender, EventArgs e)
-        {
-            CargarDatos();
-        }
-
-        private void button_Cancelar_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
-
-        private void button_FechaDeNacimiento_Click(object sender, EventArgs e)
-        {
-            this.monthCalendar_FechaDeNacimiento.Visible = true;
-        }
-
-        private void AgregarListenerACalendario()
-        {
-            this.monthCalendar_FechaDeNacimiento.DateSelected += new System.Windows.Forms.DateRangeEventHandler(this.monthCalendar_FechaDeNacimiento_DateSelected);
-        }
-
-        private void monthCalendar_FechaDeNacimiento_DateSelected(object sender, System.Windows.Forms.DateRangeEventArgs e)
-        {
-            textBox_FechaDeNacimiento.Text = e.Start.ToShortDateString();
-            monthCalendar_FechaDeNacimiento.Visible = false;
         }
     }
 }

@@ -67,8 +67,19 @@ namespace FrbaCommerce.ABM_Cliente
             String localidad = textBox_Localidad.Text;
             SqlParameter parametroOutput;
 
-            // Controla que esten los campos numeroDeDocumento y telefono
+            // Controla que esten completos los campos
+            if (!this.pasoControlDeNoVacio(nombre)) return;
+            if (!this.pasoControlDeNoVacio(apellido)) return;
             if (!this.pasoControlDeNoVacio(numeroDeDocumento)) return;
+            if (!this.pasoControlDeNoVacio(fechaDeNacimiento)) return;
+            if (!this.pasoControlDeNoVacio(mail)) return;
+            if (!this.pasoControlDeNoVacio(telefono)) return;
+            if (!this.pasoControlDeNoVacio(calle)) return;
+            if (!this.pasoControlDeNoVacio(numero)) return;
+            if (!this.pasoControlDeNoVacio(piso)) return;
+            if (!this.pasoControlDeNoVacio(departamento)) return;
+            if (!this.pasoControlDeNoVacio(codigoPostal)) return;
+            if (!this.pasoControlDeNoVacio(localidad)) return;
 
             // Averigua el id del tipo de documento a partir del nombre del tipo de documento
             query = "SELECT id FROM LOS_SUPER_AMIGOS.TipoDeDocumento WHERE nombre = @tipoDeDocumento";
@@ -80,16 +91,18 @@ namespace FrbaCommerce.ABM_Cliente
             if (!this.pasoControlDeRegistro(idTipoDeDocumento, numeroDeDocumento)) return;
 
             // Controla que telefono sea unico
-            if (telefono != "" && !this.pasoControlDeUnicidad(telefono)) return;
+            if (!this.pasoControlDeUnicidad(telefono)) return;
 
             // Crea una direccion y se guarda su id. Usa un stored procedure del script
+            Direccion direccion = new Direccion();
+            
             query = "LOS_SUPER_AMIGOS.crear_direccion";
             parametros.Clear();
             parametroOutput = new SqlParameter("@direccion_id", SqlDbType.Decimal);
             parametroOutput.Direction = ParameterDirection.Output;
             parametros.Add(new SqlParameter("@calle", calle));
-            parametros.Add(new SqlParameter("@numero", this.siEstaVacioDevuelveDBNullSinoDecimal(numero)));
-            parametros.Add(new SqlParameter("@piso", this.siEstaVacioDevuelveDBNullSinoDecimal(piso)));
+            parametros.Add(new SqlParameter("@numero", Convert.ToDecimal(numero)));
+            parametros.Add(new SqlParameter("@piso", Convert.ToDecimal(piso)));
             parametros.Add(new SqlParameter("@depto", departamento));
             parametros.Add(new SqlParameter("@cod_postal", codigoPostal));
             parametros.Add(new SqlParameter("@localidad", localidad));
@@ -133,10 +146,10 @@ namespace FrbaCommerce.ABM_Cliente
             parametros.Add(new SqlParameter("@nombre", nombre));
             parametros.Add(new SqlParameter("@apellido", apellido));
             parametros.Add(new SqlParameter("@idTipoDeDocumento", idTipoDeDocumento));
-            parametros.Add(new SqlParameter("@numeroDeDocumento", numeroDeDocumento));
+            parametros.Add(new SqlParameter("@numeroDeDocumento", Convert.ToDecimal(numeroDeDocumento)));
             parametros.Add(new SqlParameter("@fechaDeNacimiento", fechaDeNacimiento));
             parametros.Add(new SqlParameter("@mail", mail));
-            parametros.Add(new SqlParameter("@telefono", this.siEstaVacioDevuelveDBNullSinoDecimal(telefono)));
+            parametros.Add(new SqlParameter("@telefono", Convert.ToDecimal(telefono)));
             parametros.Add(new SqlParameter("@idDireccion", idDireccion));
             parametros.Add(new SqlParameter("@idUsuario", idUsuario));
 
@@ -145,6 +158,48 @@ namespace FrbaCommerce.ABM_Cliente
             int filasAfectadas = builderDeComandos.Crear(query, parametros).ExecuteNonQuery();
 
             if (filasAfectadas == 1) MessageBox.Show("Se agrego el cliente correctamente");
+            
+            VolverAlMenuPrincial();
+        }
+
+        private void button_Limpiar_Click(object sender, EventArgs e)
+        {
+            textBox_Nombre.Text = "";
+            textBox_Apellido.Text = "";
+            comboBox_TipoDeDocumento.SelectedIndex = 0;
+            textBox_NumeroDeDoc.Text = "";
+            textBox_FechaDeNacimiento.Text = "";
+            textBox_Mail.Text = "";
+            textBox_Telefono.Text = "";
+            textBox_Calle.Text = "";
+            textBox_Numero.Text = "";
+            textBox_Piso.Text = "";
+            textBox_Departamento.Text = "";
+            textBox_CodigoPostal.Text = "";
+            textBox_Localidad.Text = "";
+        }      
+
+        private void button_Cancelar_Click(object sender, EventArgs e)
+        {
+            VolverAlMenuPrincial();
+        }
+
+        private void VolverAlMenuPrincial()
+        {
+            this.Hide();
+            new MenuPrincipal().ShowDialog();
+            this.Close();
+        }
+
+        private void button_FechaDeNacimiento_Click(object sender, EventArgs e)
+        {
+            monthCalendar_FechaDeNacimiento.Visible = true;
+        }
+
+        private void monthCalendar_FechaDeNacimiento_DateSelected(object sender, System.Windows.Forms.DateRangeEventArgs e)
+        {
+            textBox_FechaDeNacimiento.Text = e.Start.ToShortDateString();
+            monthCalendar_FechaDeNacimiento.Visible = false;
         }
 
         private bool pasoControlDeUnicidad(string telefono)
@@ -184,53 +239,6 @@ namespace FrbaCommerce.ABM_Cliente
                 return false;
             }
             return true;
-        }
-
-        private object siEstaVacioDevuelveDBNullSinoDecimal(string valor)
-        {
-            if (valor == "")
-            {
-                return DBNull.Value;
-            }
-            else
-            {
-                return Convert.ToDecimal(valor);
-            }
-        }
-
-        private void button_Limpiar_Click(object sender, EventArgs e)
-        {
-            textBox_Nombre.Text = "";
-            textBox_Apellido.Text = "";
-            comboBox_TipoDeDocumento.SelectedIndex = 0;
-            textBox_NumeroDeDoc.Text = "";
-            textBox_FechaDeNacimiento.Text = "";
-            textBox_Mail.Text = "";
-            textBox_Telefono.Text = "";
-            textBox_Calle.Text = "";
-            textBox_Numero.Text = "";
-            textBox_Piso.Text = "";
-            textBox_Departamento.Text = "";
-            textBox_CodigoPostal.Text = "";
-            textBox_Localidad.Text = "";
-        }      
-
-        private void button_Cancelar_Click(object sender, EventArgs e)
-        {
-            this.Hide();
-            new MenuPrincipal().ShowDialog();
-            this.Close();
-        }
-
-        private void button_FechaDeNacimiento_Click(object sender, EventArgs e)
-        {
-            monthCalendar_FechaDeNacimiento.Visible = true;
-        }
-
-        private void monthCalendar_FechaDeNacimiento_DateSelected(object sender, System.Windows.Forms.DateRangeEventArgs e)
-        {
-            textBox_FechaDeNacimiento.Text = e.Start.ToShortDateString();
-            monthCalendar_FechaDeNacimiento.Visible = false;
         }
     }
 }

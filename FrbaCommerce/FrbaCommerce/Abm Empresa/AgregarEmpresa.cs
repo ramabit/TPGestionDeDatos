@@ -54,9 +54,20 @@ namespace FrbaCommerce.ABM_Empresa
             String localidad = textBox_Localidad.Text;
             SqlParameter parametroOutput;
 
-            // Controla que esten los campos numeroDeDocumento y telefono
+            // Controla que esten completos los campos
             if (!this.pasoControlDeNoVacio(razonSocial)) return;
+            if (!this.pasoControlDeNoVacio(nombreDeContacto)) return;
             if (!this.pasoControlDeNoVacio(cuit)) return;
+            if (!this.pasoControlDeNoVacio(fechaDeCreacion)) return;
+            if (!this.pasoControlDeNoVacio(mail)) return;
+            if (!this.pasoControlDeNoVacio(telefono)) return;
+            if (!this.pasoControlDeNoVacio(ciudad)) return;
+            if (!this.pasoControlDeNoVacio(calle)) return;
+            if (!this.pasoControlDeNoVacio(numero)) return;
+            if (!this.pasoControlDeNoVacio(piso)) return;
+            if (!this.pasoControlDeNoVacio(departamento)) return;
+            if (!this.pasoControlDeNoVacio(codigoPostal)) return;
+            if (!this.pasoControlDeNoVacio(localidad)) return;
 
             // Controla que el cuit no se haya registrado en el sistema
             if (!this.pasoControlDeRegistroDeCuit(cuit)) return;
@@ -65,7 +76,7 @@ namespace FrbaCommerce.ABM_Empresa
             if (!this.pasoControlDeRegistroDeRazonSocial(razonSocial)) return;
 
             // Controla que telefono sea unico
-            if (telefono != "" && !this.pasoControlDeUnicidad(telefono)) return;
+            if (!this.pasoControlDeUnicidad(telefono)) return;
 
             // Crea una direccion y se guarda su id. Usa un stored procedure del script
             query = "LOS_SUPER_AMIGOS.crear_direccion";
@@ -73,8 +84,8 @@ namespace FrbaCommerce.ABM_Empresa
             parametroOutput = new SqlParameter("@direccion_id", SqlDbType.Decimal);
             parametroOutput.Direction = ParameterDirection.Output;
             parametros.Add(new SqlParameter("@calle", calle));
-            parametros.Add(new SqlParameter("@numero", this.siEstaVacioDevuelveDBNullSinoDecimal(numero)));
-            parametros.Add(new SqlParameter("@piso", this.siEstaVacioDevuelveDBNullSinoDecimal(piso)));
+            parametros.Add(new SqlParameter("@numero", Convert.ToDecimal(numero)));
+            parametros.Add(new SqlParameter("@piso", Convert.ToDecimal(piso)));
             parametros.Add(new SqlParameter("@depto", departamento));
             parametros.Add(new SqlParameter("@cod_postal", codigoPostal));
             parametros.Add(new SqlParameter("@localidad", localidad));
@@ -118,10 +129,10 @@ namespace FrbaCommerce.ABM_Empresa
             parametros.Clear();
             parametros.Add(new SqlParameter("@razonSocial", razonSocial));
             parametros.Add(new SqlParameter("@nombreDeContacto", nombreDeContacto));
-            parametros.Add(new SqlParameter("@cuit", this.siEstaVacioDevuelveDBNullSinoDecimal(cuit)));
+            parametros.Add(new SqlParameter("@cuit", Convert.ToDecimal(cuit)));
             parametros.Add(new SqlParameter("@fechaDeCreacion", fechaDeCreacion));
             parametros.Add(new SqlParameter("@mail", mail));
-            parametros.Add(new SqlParameter("@telefono", this.siEstaVacioDevuelveDBNullSinoDecimal(telefono)));
+            parametros.Add(new SqlParameter("@telefono", Convert.ToDecimal(telefono)));
             parametros.Add(new SqlParameter("@ciudad", ciudad));
             parametros.Add(new SqlParameter("@idDireccion", idDireccion));
             parametros.Add(new SqlParameter("@idUsuario", idUsuario));
