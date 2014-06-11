@@ -119,5 +119,23 @@ namespace FrbaCommerce
             }
             return false;
         }
+
+        public Boolean ModificarDireccion(Decimal idDireccion)
+        {
+            query = "UPDATE LOS_SUPER_AMIGOS.Direccion SET calle = @calle, numero = @numero, piso = @piso, depto = @departamento, cod_postal = @codigoPostal, localidad = @localidad WHERE id = @idDireccion";
+            parametros.Clear();
+            parametros.Add(new SqlParameter("@calle", this.calle));
+            parametros.Add(new SqlParameter("@numero", Convert.ToDecimal(this.numero)));
+            parametros.Add(new SqlParameter("@piso", Convert.ToDecimal(this.piso)));
+            parametros.Add(new SqlParameter("@departamento", this.departamento));
+            parametros.Add(new SqlParameter("@codigoPostal", this.codigoPostal));
+            parametros.Add(new SqlParameter("@localidad", this.localidad));
+            parametros.Add(new SqlParameter("@idDireccion", idDireccion));
+
+            int filasAfectadas = builderDeComandos.Crear(query, parametros).ExecuteNonQuery();
+
+            if (filasAfectadas == 1) return true;
+            return false;
+        }
     }
 }
