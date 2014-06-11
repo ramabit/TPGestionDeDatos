@@ -34,14 +34,14 @@
             this.button_Limpiar = new System.Windows.Forms.Button();
             this.button_Cancelar = new System.Windows.Forms.Button();
             this.dataGridView_Historial = new System.Windows.Forms.DataGridView();
-            this.comboBox_tipoDePublicacionn = new System.Windows.Forms.ComboBox();
+            this.comboBox_opciones = new System.Windows.Forms.ComboBox();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_Historial)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.comboBox_tipoDePublicacionn);
+            this.groupBox1.Controls.Add(this.comboBox_opciones);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
@@ -67,6 +67,7 @@
             this.button_Buscar.TabIndex = 1;
             this.button_Buscar.Text = "Buscar";
             this.button_Buscar.UseVisualStyleBackColor = true;
+            this.button_Buscar.Click += new System.EventHandler(this.button_Buscar_Click);
             // 
             // button_Limpiar
             // 
@@ -76,6 +77,7 @@
             this.button_Limpiar.TabIndex = 2;
             this.button_Limpiar.Text = "Limpiar";
             this.button_Limpiar.UseVisualStyleBackColor = true;
+            this.button_Limpiar.Click += new System.EventHandler(this.button_Limpiar_Click);
             // 
             // button_Cancelar
             // 
@@ -85,6 +87,7 @@
             this.button_Cancelar.TabIndex = 3;
             this.button_Cancelar.Text = "Cancelar";
             this.button_Cancelar.UseVisualStyleBackColor = true;
+            this.button_Cancelar.Click += new System.EventHandler(this.button_Cancelar_Click);
             // 
             // dataGridView_Historial
             // 
@@ -98,13 +101,13 @@
             this.dataGridView_Historial.Size = new System.Drawing.Size(1068, 199);
             this.dataGridView_Historial.TabIndex = 4;
             // 
-            // comboBox_tipoDePublicacionn
+            // comboBox_opciones
             // 
-            this.comboBox_tipoDePublicacionn.FormattingEnabled = true;
-            this.comboBox_tipoDePublicacionn.Location = new System.Drawing.Point(119, 19);
-            this.comboBox_tipoDePublicacionn.Name = "comboBox_tipoDePublicacionn";
-            this.comboBox_tipoDePublicacionn.Size = new System.Drawing.Size(243, 21);
-            this.comboBox_tipoDePublicacionn.TabIndex = 2;
+            this.comboBox_opciones.FormattingEnabled = true;
+            this.comboBox_opciones.Location = new System.Drawing.Point(119, 19);
+            this.comboBox_opciones.Name = "comboBox_opciones";
+            this.comboBox_opciones.Size = new System.Drawing.Size(243, 21);
+            this.comboBox_opciones.TabIndex = 2;
             // 
             // Historial
             // 
@@ -134,6 +137,6 @@
         private System.Windows.Forms.Button button_Limpiar;
         private System.Windows.Forms.Button button_Cancelar;
         private System.Windows.Forms.DataGridView dataGridView_Historial;
-        private System.Windows.Forms.ComboBox comboBox_tipoDePublicacionn;
+        private System.Windows.Forms.ComboBox comboBox_opciones;
     }
 }

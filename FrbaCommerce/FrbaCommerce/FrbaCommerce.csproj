@@ -175,7 +175,7 @@
       <DependentUpon>Listado.cs</DependentUpon>
     </Compile>
     <Compile Include="BuilderDeComandos.cs" />
-	<Compile Include="Direccion.cs" />
+    <Compile Include="Direccion.cs" />
     <Compile Include="Comprar-Ofertar\BuscadorPublicaciones.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -347,6 +347,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Generar Publicacion\GenerarPublicacion.resx">
       <DependentUpon>GenerarPublicacion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Historial Cliente\Historial.resx">
+      <DependentUpon>Historial.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Login\CambiarContrasena.resx">
       <DependentUpon>CambiarContrasena.cs</DependentUpon>
