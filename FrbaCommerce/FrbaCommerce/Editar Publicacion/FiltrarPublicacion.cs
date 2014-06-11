@@ -35,8 +35,8 @@ namespace FrbaCommerce.Editar_Publicacion
 
         private void CargarPublicacion()
         {
-            command = builderDeComandos.Crear("SELECT p.id, u.username, p.tipo, p.estado, p.descripcion, p.fecha_inicio, p.fecha_vencimiento, r.descripcion, v.descripcion, p.se_realizan_preguntas, p.stock, p.precio FROM LOS_SUPER_AMIGOS.Publicacion p, LOS_SUPER_AMIGOS.Rubro r, LOS_SUPER_AMIGOS.Visibilidad v, LOS_SUPER_AMIGOS.Usuario u WHERE p.rubro_id = r.id AND p.visibilidad_id = v.id AND p.usuario_id = u.id", parametros);
-
+            command = builderDeComandos.Crear("SELECT p.id, u.username, p.tipo, p.estado, p.descripcion, p.fecha_inicio, p.fecha_vencimiento, r.descripcion, v.descripcion, p.se_realizan_preguntas, p.stock, p.precio FROM LOS_SUPER_AMIGOS.Publicacion p, LOS_SUPER_AMIGOS.Rubro r, LOS_SUPER_AMIGOS.Visibilidad v, LOS_SUPER_AMIGOS.Usuario u WHERE p.rubro_id = r.id AND p.visibilidad_id = v.id AND p.usuario_id = u.id AND p.usuario_id = @idUsuario", parametros);
+            command.Parameters.Add(new SqlParameter("@idUsuario", UsuarioSesion.Usuario.id));
             DataSet publicaciones = new DataSet();
             SqlDataAdapter adapter = new SqlDataAdapter();
             adapter.SelectCommand = command;

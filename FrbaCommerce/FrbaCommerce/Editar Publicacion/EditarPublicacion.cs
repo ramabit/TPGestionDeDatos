@@ -204,7 +204,7 @@ namespace FrbaCommerce.Editar_Publicacion
 
             int filasAfectadas = builderDeComandos.Crear(query, parametros).ExecuteNonQuery();
 
-            if (filasAfectadas == 1) MessageBox.Show("Se agrego la nueva publicacion correctamente");
+            if (filasAfectadas == 1) MessageBox.Show("Se modifico la nueva publicacion correctamente");
 
             this.Close();
         }
