@@ -1,4 +1,4 @@
-﻿namespace FrbaCommerce.Gestion_de_Preguntas
+﻿namespace FrbaCommerce.Comprar_Ofertar
 {
     partial class Preguntar
     {
@@ -30,7 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Text = "Form1";
+            this.Text = "Preguntar";
         }
 
         #endregion

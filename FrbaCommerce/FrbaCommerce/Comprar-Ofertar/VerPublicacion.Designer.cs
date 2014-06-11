@@ -98,6 +98,7 @@
             this.botonPreguntar.TabIndex = 5;
             this.botonPreguntar.Text = "Preguntar";
             this.botonPreguntar.UseVisualStyleBackColor = true;
+            this.botonPreguntar.Click += new System.EventHandler(this.botonPreguntar_Click);
             // 
             // botonComprarOfertar
             // 

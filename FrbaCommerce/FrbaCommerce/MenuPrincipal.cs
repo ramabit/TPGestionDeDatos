@@ -23,9 +23,9 @@ namespace FrbaCommerce
             funcionalidades.Add("Comprar / Ofertar", new Comprar_Ofertar.BuscadorPublicaciones());
             funcionalidades.Add("Generar publicacion", new Generar_Publicacion.GenerarPublicacion());
             funcionalidades.Add("Editar publicacion", new Editar_Publicacion.FiltrarPublicacion());
-            funcionalidades.Add("Calificar vendedor", new Calificar_Vendedor.Listado());
-            funcionalidades.Add("Preguntar", new Gestion_de_Preguntas.Preguntar());
-            funcionalidades.Add("Responder preguntas", new Gestion_de_Preguntas.ResponderPreguntas());
+            funcionalidades.Add("Calificar vendedor", new Calificar_Vendedor.Listado());            
+            funcionalidades.Add("Responder preguntas", new Gestion_de_Preguntas.VerPreguntas());
+            funcionalidades.Add("Ver respuestas", new Gestion_de_Preguntas.VerRespuestas());
             funcionalidades.Add("Gestionar roles", new ABM_Rol.RolForm());
             funcionalidades.Add("Gestionar usuarios", null);
             funcionalidades.Add("Generar factura", new Facturar_Publicaciones.Facturar());

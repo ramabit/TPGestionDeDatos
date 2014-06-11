@@ -9,9 +9,9 @@ using System.Windows.Forms;
 
 namespace FrbaCommerce.Gestion_de_Preguntas
 {
-    public partial class ResponderPreguntas : Form
+    public partial class VerPreguntas : Form
     {
-        public ResponderPreguntas()
+        public VerPreguntas()
         {
             InitializeComponent();
         }

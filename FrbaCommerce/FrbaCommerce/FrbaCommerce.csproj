@@ -175,6 +175,12 @@
       <DependentUpon>Listado.cs</DependentUpon>
     </Compile>
     <Compile Include="BuilderDeComandos.cs" />
+    <Compile Include="Comprar-Ofertar\Preguntar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Comprar-Ofertar\Preguntar.Designer.cs">
+      <DependentUpon>Preguntar.cs</DependentUpon>
+    </Compile>
     <Compile Include="Direccion.cs" />
     <Compile Include="Comprar-Ofertar\BuscadorPublicaciones.cs">
       <SubType>Form</SubType>
@@ -225,17 +231,23 @@
     <Compile Include="Generar Publicacion\GenerarPublicacion.Designer.cs">
       <DependentUpon>GenerarPublicacion.cs</DependentUpon>
     </Compile>
-    <Compile Include="Gestion de Preguntas\Preguntar.cs">
+    <Compile Include="Gestion de Preguntas\ResponderPregunta.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Gestion de Preguntas\Preguntar.Designer.cs">
-      <DependentUpon>Preguntar.cs</DependentUpon>
+    <Compile Include="Gestion de Preguntas\ResponderPregunta.Designer.cs">
+      <DependentUpon>ResponderPregunta.cs</DependentUpon>
     </Compile>
-    <Compile Include="Gestion de Preguntas\ResponderPreguntas.cs">
+    <Compile Include="Gestion de Preguntas\VerPreguntas.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Gestion de Preguntas\ResponderPreguntas.Designer.cs">
-      <DependentUpon>ResponderPreguntas.cs</DependentUpon>
+    <Compile Include="Gestion de Preguntas\VerPreguntas.Designer.cs">
+      <DependentUpon>VerPreguntas.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Gestion de Preguntas\VerRespuestas.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Gestion de Preguntas\VerRespuestas.Designer.cs">
+      <DependentUpon>VerRespuestas.cs</DependentUpon>
     </Compile>
     <Compile Include="HashSha256.cs" />
     <Compile Include="Historial Cliente\Historial.cs">

@@ -143,5 +143,10 @@ namespace FrbaCommerce.Comprar_Ofertar
             new BuscadorPublicaciones().Show();
             this.Close();
         }
+
+        private void botonPreguntar_Click(object sender, EventArgs e)
+        {
+            new Preguntar().Show();
+        }
     }
 }

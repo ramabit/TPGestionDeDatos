@@ -1,6 +1,6 @@
 ﻿namespace FrbaCommerce.Gestion_de_Preguntas
 {
-    partial class ResponderPreguntas
+    partial class ResponderPregunta
     {
         /// <summary>
         /// Required designer variable.
