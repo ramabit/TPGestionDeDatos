@@ -114,19 +114,17 @@ namespace FrbaCommerce.ABM_Empresa
             if (!this.pasoControlDeUnicidad(telefono)) return;
 
             // Update direccion
-            query = "UPDATE LOS_SUPER_AMIGOS.Direccion SET calle = @calle, numero = @numero, piso = @piso, depto = @departamento, cod_postal = @codigoPostal, localidad = @localidad WHERE id = @idDireccion";
-            parametros.Clear();
-            parametros.Add(new SqlParameter("@calle", calle));
-            parametros.Add(new SqlParameter("@numero", Convert.ToDecimal(numero)));
-            parametros.Add(new SqlParameter("@piso", Convert.ToDecimal(piso)));
-            parametros.Add(new SqlParameter("@departamento", departamento));
-            parametros.Add(new SqlParameter("@codigoPostal", codigoPostal));
-            parametros.Add(new SqlParameter("@localidad", localidad));
-            parametros.Add(new SqlParameter("@idDireccion", idDireccion));
+            Direccion direccion = new Direccion();
+            direccion.SetCalle(calle);
+            direccion.SetNumero(numero);
+            direccion.SetPiso(piso);
+            direccion.SetDepartamento(departamento);
+            direccion.SetCodigoPostal(codigoPostal);
+            direccion.SetLocalidad(localidad);
+            Boolean pudoModificar = direccion.ModificarDireccion(Convert.ToDecimal(idDireccion));
 
-            int filasAfectadas = builderDeComandos.Crear(query, parametros).ExecuteNonQuery();
-
-            if (filasAfectadas == 1) MessageBox.Show("La direccion se modifico correctamente");
+            if (!pudoModificar) MessageBox.Show("La direccion se modifico correctamente");
+            else MessageBox.Show("La direccion no se pudo modificar correctamente");
 
             parametros.Clear();
             parametros.Add(new SqlParameter("@razonSocial", razonSocial));
@@ -140,7 +138,7 @@ namespace FrbaCommerce.ABM_Empresa
 
             query = "UPDATE LOS_SUPER_AMIGOS.Empresa SET razon_social = @razonSocial, nombre_de_contacto = @nombreDeContacto, cuit = @cuit, fecha_creacion = @fechaDeCreacion, mail = @mail, telefono = @telefono, ciudad = @ciudad  WHERE id = @idEmpresa";
 
-            filasAfectadas = builderDeComandos.Crear(query, parametros).ExecuteNonQuery();
+            int filasAfectadas = builderDeComandos.Crear(query, parametros).ExecuteNonQuery();
 
             if (filasAfectadas == 1) MessageBox.Show("El cliente se modifico correctamente");
 
