@@ -50,23 +50,26 @@ namespace FrbaCommerce.ABM_Empresa
             textBox_Mail.Text = Convert.ToString(reader["mail"]);
             textBox_Telefono.Text = Convert.ToString(reader["telefono"]);
             textBox_Ciudad.Text = Convert.ToString(reader["ciudad"]);
-
-            query = "SELECT calle, numero, piso, depto, cod_postal, localidad FROM LOS_SUPER_AMIGOS.Direccion WHERE id = @idDireccion";
-            parametros.Clear();
-            parametros.Add(new SqlParameter("@idDireccion", Convert.ToDecimal(reader["direccion_id"])));
             idDireccion = Convert.ToString(reader["direccion_id"]);
-            SqlDataReader readerDireccion = builderDeComandos.Crear(query, parametros).ExecuteReader();
 
-            // Si no encuentra la direccion, tira error
-            if (!readerDireccion.Read()) throw new Exception("No existe la direccion");
+            CargarDireccion(idDireccion);
 
-            textBox_Calle.Text = Convert.ToString(readerDireccion["calle"]);
-            textBox_Numero.Text = Convert.ToString(readerDireccion["numero"]);
-            textBox_Piso.Text = Convert.ToString(readerDireccion["piso"]);
-            textBox_Departamento.Text = Convert.ToString(readerDireccion["depto"]);
-            textBox_CodigoPostal.Text = Convert.ToString(readerDireccion["cod_postal"]);
-            textBox_Localidad.Text = Convert.ToString(readerDireccion["localidad"]);
             if (Convert.ToBoolean(reader["habilitado"])) checkBox_Habilitado.Checked = true;
+        }
+
+        private void CargarDireccion(String idDireccion)
+        {
+            Direccion direccion = new Direccion();
+            Boolean pudoObtenerDireccion = direccion.ObtenerDireccion(Convert.ToDecimal(idDireccion));
+
+            if (!pudoObtenerDireccion) throw new Exception("No existe la direccion");
+
+            textBox_Calle.Text = direccion.GetCalle();
+            textBox_Numero.Text = direccion.GetNumero();
+            textBox_Piso.Text = direccion.GetPiso();
+            textBox_Departamento.Text = direccion.GetDepartamento();
+            textBox_CodigoPostal.Text = direccion.GetCodigoPostal();
+            textBox_Localidad.Text = direccion.GetLocalidad();
         }
 
         private void button_Guardar_Click(object sender, EventArgs e)

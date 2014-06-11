@@ -93,24 +93,15 @@ namespace FrbaCommerce.ABM_Cliente
             // Controla que telefono sea unico
             if (!this.pasoControlDeUnicidad(telefono)) return;
 
-            // Crea una direccion y se guarda su id. Usa un stored procedure del script
+            // Crea una direccion y se guarda su id
             Direccion direccion = new Direccion();
-            
-            query = "LOS_SUPER_AMIGOS.crear_direccion";
-            parametros.Clear();
-            parametroOutput = new SqlParameter("@direccion_id", SqlDbType.Decimal);
-            parametroOutput.Direction = ParameterDirection.Output;
-            parametros.Add(new SqlParameter("@calle", calle));
-            parametros.Add(new SqlParameter("@numero", Convert.ToDecimal(numero)));
-            parametros.Add(new SqlParameter("@piso", Convert.ToDecimal(piso)));
-            parametros.Add(new SqlParameter("@depto", departamento));
-            parametros.Add(new SqlParameter("@cod_postal", codigoPostal));
-            parametros.Add(new SqlParameter("@localidad", localidad));
-            parametros.Add(parametroOutput);
-            command = builderDeComandos.Crear(query, parametros);
-            command.CommandType = CommandType.StoredProcedure;
-            command.ExecuteNonQuery();
-            Decimal idDireccion = (Decimal) parametroOutput.Value;
+            direccion.SetCalle(calle);
+            direccion.SetNumero(numero);
+            direccion.SetPiso(piso);
+            direccion.SetDepartamento(departamento);
+            direccion.SetCodigoPostal(codigoPostal);
+            direccion.SetLocalidad(localidad);
+            Decimal idDireccion = direccion.Crear();
 
             // Si el cliente lo crea el admin, crea un nuevo usuario predeterminado. Si lo crea un nuevo registro de usuario, usa el que viene por parametro
             Decimal idUsuario;
