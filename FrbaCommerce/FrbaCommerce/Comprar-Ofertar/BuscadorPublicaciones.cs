@@ -272,6 +272,12 @@ namespace FrbaCommerce.Comprar_Ofertar
             this.Hide();
             new VerPublicacion(publicacionElegida).Show();
         }
+
+        private void botonVolver_Click(object sender, EventArgs e)
+        {
+            new MenuPrincipal().Show();
+            this.Close();
+        }
                 
     }
 }

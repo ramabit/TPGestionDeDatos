@@ -38,5 +38,11 @@ namespace FrbaCommerce.ABM_Rol
         {
 
         }
+
+        private void botonVolver_Click(object sender, EventArgs e)
+        {
+            new MenuPrincipal().Show();
+            this.Close();
+        }
     }
 }

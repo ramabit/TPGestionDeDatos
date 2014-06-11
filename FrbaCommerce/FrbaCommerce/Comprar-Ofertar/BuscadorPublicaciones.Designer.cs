@@ -40,20 +40,21 @@
             this.labelRubro = new System.Windows.Forms.Label();
             this.textBoxDescripcion = new System.Windows.Forms.TextBox();
             this.comboBoxRubro = new System.Windows.Forms.ComboBox();
+            this.botonVolver = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // dataGridView1
             // 
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(17, 152);
+            this.dataGridView1.Location = new System.Drawing.Point(17, 134);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.Size = new System.Drawing.Size(444, 278);
             this.dataGridView1.TabIndex = 0;
             // 
             // botonLimpiar
             // 
-            this.botonLimpiar.Location = new System.Drawing.Point(29, 107);
+            this.botonLimpiar.Location = new System.Drawing.Point(37, 90);
             this.botonLimpiar.Name = "botonLimpiar";
             this.botonLimpiar.Size = new System.Drawing.Size(99, 28);
             this.botonLimpiar.TabIndex = 1;
@@ -63,7 +64,7 @@
             // 
             // botonBuscar
             // 
-            this.botonBuscar.Location = new System.Drawing.Point(339, 112);
+            this.botonBuscar.Location = new System.Drawing.Point(339, 96);
             this.botonBuscar.Name = "botonBuscar";
             this.botonBuscar.Size = new System.Drawing.Size(122, 22);
             this.botonBuscar.TabIndex = 2;
@@ -73,7 +74,7 @@
             // 
             // botonPrimeraPagina
             // 
-            this.botonPrimeraPagina.Location = new System.Drawing.Point(17, 456);
+            this.botonPrimeraPagina.Location = new System.Drawing.Point(17, 430);
             this.botonPrimeraPagina.Name = "botonPrimeraPagina";
             this.botonPrimeraPagina.Size = new System.Drawing.Size(64, 26);
             this.botonPrimeraPagina.TabIndex = 3;
@@ -83,7 +84,7 @@
             // 
             // botonPaginaAnterior
             // 
-            this.botonPaginaAnterior.Location = new System.Drawing.Point(104, 456);
+            this.botonPaginaAnterior.Location = new System.Drawing.Point(104, 431);
             this.botonPaginaAnterior.Name = "botonPaginaAnterior";
             this.botonPaginaAnterior.Size = new System.Drawing.Size(65, 25);
             this.botonPaginaAnterior.TabIndex = 4;
@@ -94,14 +95,14 @@
             // labelNrosPagina
             // 
             this.labelNrosPagina.AutoSize = true;
-            this.labelNrosPagina.Location = new System.Drawing.Point(217, 463);
+            this.labelNrosPagina.Location = new System.Drawing.Point(217, 437);
             this.labelNrosPagina.Name = "labelNrosPagina";
             this.labelNrosPagina.Size = new System.Drawing.Size(0, 13);
             this.labelNrosPagina.TabIndex = 5;
             // 
             // botonPaginaSiguiente
             // 
-            this.botonPaginaSiguiente.Location = new System.Drawing.Point(322, 456);
+            this.botonPaginaSiguiente.Location = new System.Drawing.Point(322, 431);
             this.botonPaginaSiguiente.Name = "botonPaginaSiguiente";
             this.botonPaginaSiguiente.Size = new System.Drawing.Size(66, 25);
             this.botonPaginaSiguiente.TabIndex = 6;
@@ -111,7 +112,7 @@
             // 
             // botonUltimaPagina
             // 
-            this.botonUltimaPagina.Location = new System.Drawing.Point(394, 456);
+            this.botonUltimaPagina.Location = new System.Drawing.Point(394, 431);
             this.botonUltimaPagina.Name = "botonUltimaPagina";
             this.botonUltimaPagina.Size = new System.Drawing.Size(67, 25);
             this.botonUltimaPagina.TabIndex = 7;
@@ -152,11 +153,22 @@
             this.comboBoxRubro.Size = new System.Drawing.Size(195, 21);
             this.comboBoxRubro.TabIndex = 11;
             // 
-            // BuscardorPublicaciones
+            // botonVolver
+            // 
+            this.botonVolver.Location = new System.Drawing.Point(13, 462);
+            this.botonVolver.Name = "botonVolver";
+            this.botonVolver.Size = new System.Drawing.Size(170, 31);
+            this.botonVolver.TabIndex = 12;
+            this.botonVolver.Text = "< Volver al Menú Principal";
+            this.botonVolver.UseVisualStyleBackColor = true;
+            this.botonVolver.Click += new System.EventHandler(this.botonVolver_Click);
+            // 
+            // BuscadorPublicaciones
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(481, 493);
+            this.ClientSize = new System.Drawing.Size(481, 499);
+            this.Controls.Add(this.botonVolver);
             this.Controls.Add(this.comboBoxRubro);
             this.Controls.Add(this.textBoxDescripcion);
             this.Controls.Add(this.labelRubro);
@@ -169,7 +181,7 @@
             this.Controls.Add(this.botonBuscar);
             this.Controls.Add(this.botonLimpiar);
             this.Controls.Add(this.dataGridView1);
-            this.Name = "BuscardorPublicaciones";
+            this.Name = "BuscadorPublicaciones";
             this.Text = "BuscardorPublicaciones";
             this.Load += new System.EventHandler(this.BuscardorPublicaciones_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
@@ -192,6 +204,7 @@
         private System.Windows.Forms.Label labelRubro;
         private System.Windows.Forms.TextBox textBoxDescripcion;
         private System.Windows.Forms.ComboBox comboBoxRubro;
+        private System.Windows.Forms.Button botonVolver;
 
     }
 }

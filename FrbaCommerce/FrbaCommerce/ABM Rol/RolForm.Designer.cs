@@ -32,6 +32,7 @@
             this.botonBajaRol = new System.Windows.Forms.Button();
             this.botonEditarRol = new System.Windows.Forms.Button();
             this.botonAgregarRol = new System.Windows.Forms.Button();
+            this.botonVolver = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // labelRoles
@@ -77,11 +78,22 @@
             this.botonAgregarRol.UseVisualStyleBackColor = true;
             this.botonAgregarRol.Click += new System.EventHandler(this.botonAgregarRol_Click);
             // 
+            // botonVolver
+            // 
+            this.botonVolver.Location = new System.Drawing.Point(15, 321);
+            this.botonVolver.Name = "botonVolver";
+            this.botonVolver.Size = new System.Drawing.Size(144, 35);
+            this.botonVolver.TabIndex = 8;
+            this.botonVolver.Text = "< Volver al Menú Principal";
+            this.botonVolver.UseVisualStyleBackColor = true;
+            this.botonVolver.Click += new System.EventHandler(this.botonVolver_Click);
+            // 
             // RolForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(302, 311);
+            this.ClientSize = new System.Drawing.Size(309, 386);
+            this.Controls.Add(this.botonVolver);
             this.Controls.Add(this.labelRoles);
             this.Controls.Add(this.botonBajaRol);
             this.Controls.Add(this.botonEditarRol);
@@ -100,5 +112,6 @@
         private System.Windows.Forms.Button botonBajaRol;
         private System.Windows.Forms.Button botonEditarRol;
         private System.Windows.Forms.Button botonAgregarRol;
+        private System.Windows.Forms.Button botonVolver;
     }
 }
