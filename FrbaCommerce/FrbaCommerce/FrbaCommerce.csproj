@@ -178,25 +178,25 @@
     <Compile Include="Comprar-Ofertar\BuscadorPublicaciones.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Comprar-Ofertar\BuscadorPublicaciones.designer.cs">
+    <Compile Include="Comprar-Ofertar\BuscadorPublicaciones.Designer.cs">
       <DependentUpon>BuscadorPublicaciones.cs</DependentUpon>
     </Compile>
     <Compile Include="Comprar-Ofertar\Comprar.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Comprar-Ofertar\Comprar.designer.cs">
+    <Compile Include="Comprar-Ofertar\Comprar.Designer.cs">
       <DependentUpon>Comprar.cs</DependentUpon>
     </Compile>
     <Compile Include="Comprar-Ofertar\Ofertar.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Comprar-Ofertar\Ofertar.designer.cs">
+    <Compile Include="Comprar-Ofertar\Ofertar.Designer.cs">
       <DependentUpon>Ofertar.cs</DependentUpon>
     </Compile>
     <Compile Include="Comprar-Ofertar\VerPublicacion.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Comprar-Ofertar\VerPublicacion.designer.cs">
+    <Compile Include="Comprar-Ofertar\VerPublicacion.Designer.cs">
       <DependentUpon>VerPublicacion.cs</DependentUpon>
     </Compile>
     <Compile Include="ConexionDB.cs" />
@@ -331,6 +331,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Comprar-Ofertar\BuscadorPublicaciones.resx">
       <DependentUpon>BuscadorPublicaciones.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Comprar-Ofertar\Comprar.resx">
+      <DependentUpon>Comprar.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Comprar-Ofertar\VerPublicacion.resx">
       <DependentUpon>VerPublicacion.cs</DependentUpon>

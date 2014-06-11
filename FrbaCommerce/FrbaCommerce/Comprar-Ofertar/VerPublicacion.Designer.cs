@@ -180,7 +180,7 @@
             this.labelPrecioDatos.TabIndex = 15;
             this.labelPrecioDatos.Text = "label6";
             // 
-            // ComprarOfertar
+            // VerPublicacion
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -200,7 +200,7 @@
             this.Controls.Add(this.labelProducto);
             this.Controls.Add(this.labelRubro);
             this.Controls.Add(this.labelVendedor);
-            this.Name = "ComprarOfertar";
+            this.Name = "VerPublicacion";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.ComprarOfertar_Load);
             this.ResumeLayout(false);

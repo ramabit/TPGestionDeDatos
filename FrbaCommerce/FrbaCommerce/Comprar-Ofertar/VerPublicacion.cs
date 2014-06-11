@@ -19,6 +19,8 @@ namespace FrbaCommerce.Comprar_Ofertar
         public Object SelectedItem { get; set; }
         private String publicacionElegida;
         private String tipoPublicacion;
+        private int publicacionId;
+        private int vendedorId;
 
         public VerPublicacion(String publicacion)
         {
@@ -29,14 +31,12 @@ namespace FrbaCommerce.Comprar_Ofertar
 
         private void ComprarOfertar_Load(object sender, EventArgs e)
         {
-            labelVendedorDatos.Text = pedirVendedor();
-            labelRubroDatos.Text = pedirRubro();
-            labelVencimientoDatos.Text = pedirVencimiento().ToString();
-            labelProductoDatos.Text = publicacionElegida;
-            labelStockDatos.Text = pedirStock().ToString();
-            labelPrecioDatos.Text = pedirPrecio().ToString();
-            botonComprarOfertar.Text = pedirAccion();
-            permitirPreguntas();
+            pedirVendedor();
+            pedirRubro();
+            pedirVencimientoStockPreguntas();
+            labelProductoDatos.Text = publicacionElegida;            
+            pedirPrecio();            
+            pedirAccion();            
         }
 
         private String pedirEstado()
@@ -50,7 +50,7 @@ namespace FrbaCommerce.Comprar_Ofertar
             return (String)reader["estado"];
         }
 
-        private String pedirVendedor()
+        private void pedirVendedor()
         {
             parametros.Clear();
             parametros.Add(new SqlParameter("@descripcion", publicacionElegida));            
@@ -58,10 +58,11 @@ namespace FrbaCommerce.Comprar_Ofertar
             String query = "SELECT * FROM LOS_SUPER_AMIGOS.Usuario WHERE id = (SELECT usuario_id FROM LOS_SUPER_AMIGOS.Publicacion WHERE descripcion = @descripcion)";
 
             SqlDataReader reader = builderDeComandos.Crear(query, parametros).ExecuteReader();
-            return (String)reader["username"];
+            labelVendedorDatos.Text = (String)reader["username"];
+            vendedorId = (int)reader["id"];
         }
 
-        private String pedirRubro()
+        private void pedirRubro()
         {
             parametros.Clear();
             parametros.Add(new SqlParameter("@descripcion", publicacionElegida));
@@ -69,10 +70,10 @@ namespace FrbaCommerce.Comprar_Ofertar
             String query = "SELECT * FROM LOS_SUPER_AMIGOS.Rubro WHERE id = (SELECT rubro_id FROM LOS_SUPER_AMIGOS.Publicacion WHERE descripcion = @descripcion)";
 
             SqlDataReader reader = builderDeComandos.Crear(query, parametros).ExecuteReader();
-            return (String)reader["descripcion"];
+            labelRubroDatos.Text = (String)reader["descripcion"];
         }
 
-        private DateTime pedirVencimiento()
+        private void pedirVencimientoStockPreguntas()
         {
             parametros.Clear();
             parametros.Add(new SqlParameter("@descripcion", publicacionElegida));
@@ -80,21 +81,16 @@ namespace FrbaCommerce.Comprar_Ofertar
             String query = "SELECT * FROM LOS_SUPER_AMIGOS.Publicacion WHERE descripcion = @descripcion";
 
             SqlDataReader reader = builderDeComandos.Crear(query, parametros).ExecuteReader();
-            return (DateTime)reader["fecha_vencimiento"];
-        }
+            labelVencimientoDatos.Text = ( (DateTime)reader["fecha_vencimiento"] ).ToString();
+            labelStockDatos.Text = ( (int)reader["stock"] ).ToString();
+            if ((int)reader["se_realizan_preguntas"] == 0)
+            {
+                botonPreguntar.Enabled = false;
+            }
+            publicacionId = (int)reader["publicacion_id"];
+        }        
 
-        private int pedirStock()
-        {
-            parametros.Clear();
-            parametros.Add(new SqlParameter("@descripcion", publicacionElegida));
-
-            String query = "SELECT * FROM LOS_SUPER_AMIGOS.Publicacion WHERE descripcion = @descripcion";
-
-            SqlDataReader reader = builderDeComandos.Crear(query, parametros).ExecuteReader();
-            return (int)reader["stock"];
-        }
-
-        private int pedirPrecio()
+        private void pedirPrecio()
         {
             if (tipoPublicacion == "Compra Inmediata")
             {
@@ -104,7 +100,7 @@ namespace FrbaCommerce.Comprar_Ofertar
                 String query = "SELECT * FROM LOS_SUPER_AMIGOS.Publicacion WHERE descripcion = @descripcion";
 
                 SqlDataReader reader = builderDeComandos.Crear(query, parametros).ExecuteReader();
-                return (int)reader["precio"];
+                labelPrecioDatos.Text = ( (int)reader["precio"] ).ToString();
             }
             else
             {
@@ -114,46 +110,31 @@ namespace FrbaCommerce.Comprar_Ofertar
                 String query = "SELECT * FROM VistaOfertaMax WHERE publicacion_id = (SELECT publicacion_id FROM LOS_SUPER_AMIGOS.Publicacion WHERE descripcion = @descripcion)";
 
                 SqlDataReader reader = builderDeComandos.Crear(query, parametros).ExecuteReader();
-                return (int)reader["precioMax"];
+                labelPrecioDatos.Text = ( (int)reader["precioMax"] ).ToString();
             }
         }
 
-        private String pedirAccion()
+        private void pedirAccion()
         {
             if (tipoPublicacion == "Compra Inmediata")
-            {                
-                return "Comprar";
+            {
+                botonComprarOfertar.Text = "Comprar";
             }
             else
             {
-                return "Ofertar";
+                botonComprarOfertar.Text = "Ofertar";
             }
-        }
-
-        private void permitirPreguntas()
-        {
-            parametros.Clear();
-            parametros.Add(new SqlParameter("@descripcion", publicacionElegida));
-
-            String query = "SELECT * FROM LOS_SUPER_AMIGOS.Publicacion WHERE descripcion = @descripcion";
-
-            SqlDataReader reader = builderDeComandos.Crear(query, parametros).ExecuteReader();
-            if ((int)reader["se_realizan_preguntas"] == 0)
-            {
-                botonPreguntar.Enabled = false;
-            }
-        }
+        }               
 
         private void botonComprarOfertar_Click(object sender, EventArgs e)
         {
             if (tipoPublicacion == "Compra Inmediata")
-            {
-
-                
+            {                          
+                new Comprar(vendedorId, publicacionId).Show();                
             }
             else
             {
-                
+                new Ofertar().Show();    
             }
         }
     }
