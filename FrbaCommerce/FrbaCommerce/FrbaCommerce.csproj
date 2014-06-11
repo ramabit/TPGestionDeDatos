@@ -336,6 +336,9 @@
     <EmbeddedResource Include="Comprar-Ofertar\Comprar.resx">
       <DependentUpon>Comprar.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Comprar-Ofertar\Ofertar.resx">
+      <DependentUpon>Ofertar.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Comprar-Ofertar\VerPublicacion.resx">
       <DependentUpon>VerPublicacion.cs</DependentUpon>
     </EmbeddedResource>

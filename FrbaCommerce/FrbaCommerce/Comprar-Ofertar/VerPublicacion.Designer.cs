@@ -125,6 +125,7 @@
             this.buttonVolver.TabIndex = 9;
             this.buttonVolver.Text = "Volver al Buscador";
             this.buttonVolver.UseVisualStyleBackColor = true;
+            this.buttonVolver.Click += new System.EventHandler(this.buttonVolver_Click);
             // 
             // labelVendedorDatos
             // 

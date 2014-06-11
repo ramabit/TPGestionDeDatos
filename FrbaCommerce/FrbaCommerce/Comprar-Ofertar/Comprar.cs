@@ -29,13 +29,33 @@ namespace FrbaCommerce.Comprar_Ofertar
         private void Comprar_Load(object sender, EventArgs e)
         {
             parametros.Clear();
-            parametros.Add(new SqlParameter("@descripcion", vendedorId));
+            parametros.Add(new SqlParameter("@usuario", vendedorId));
+            String queryCliente = "SELECT * FROM LOS_SUPER_AMIGOS.Cliente WHERE usuario_id = @usuario) and habilitado = 1";
+            SqlDataReader readerCliente = builderDeComandos.Crear(queryCliente, parametros).ExecuteReader();
 
-            String query = "SELECT * FROM LOS_SUPER_AMIGOS.Usuario WHERE id = (SELECT usuario_id FROM LOS_SUPER_AMIGOS.Publicacion WHERE descripcion = @descripcion)";
+            if (readerCliente.Read())
+            {
+                labelNombre.Text = (String)readerCliente["nombre"] + " " + (String)readerCliente["apellido"];
+                labelMail.Text = (String)readerCliente["mail"];
+                labelTelefono.Text = ( (int)readerCliente["telefono"] ).ToString();
+            }
+            else
+            {                
+                String queryEmpresa = "SELECT * FROM LOS_SUPER_AMIGOS.Empresa WHERE usuario_id = @usuario and habilitado = 1)";
+                SqlDataReader readerEmpresa = builderDeComandos.Crear(queryEmpresa, parametros).ExecuteReader();
 
-            SqlDataReader reader = builderDeComandos.Crear(query, parametros).ExecuteReader();
-            
-            vendedorId = (int)reader["id"];
+                labelNombre.Text = (String)readerEmpresa["razon_social"];
+                labelMail.Text = (String)readerEmpresa["mail"];
+                labelTelefono.Text = ((int)readerEmpresa["telefono"]).ToString();
+            }
+
+            String queryDireccion = "SELECT * FROM LOS_SUPER_AMIGOS.Direccion WHERE usuario_id = @usuario)";
+            SqlDataReader readerDireccion = builderDeComandos.Crear(queryDireccion, parametros).ExecuteReader();
+
+            labelCalle.Text = (String)readerDireccion["calle"] + " " + (int)readerDireccion["numero"];
+            labelDepartamento.Text = "Departamento " + (int)readerDireccion["piso"] + "-" + (String)readerDireccion["dpto"];
+            labelPostal.Text = ((int)readerDireccion["cod_postal"]).ToString();
+            labelLocalidad.Text = (String)readerDireccion["localidad"];
         }
 
         private void buttonConfirmarCompra_Click(object sender, EventArgs e)
@@ -48,6 +68,12 @@ namespace FrbaCommerce.Comprar_Ofertar
             parametros.Add(new SqlParameter("@usuario", idUsuarioActual));
             parametros.Add(new SqlParameter("@publicacion", publicacionId));
             builderDeComandos.Crear(sql, parametros).ExecuteNonQuery();
+            MessageBox.Show("Contactese con el vendedor para finalizar la compra");
+        }
+
+        private void botonCancelar_Click(object sender, EventArgs e)
+        {            
+            this.Hide();
         }
     }
 }

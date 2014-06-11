@@ -134,8 +134,14 @@ namespace FrbaCommerce.Comprar_Ofertar
             }
             else
             {
-                new Ofertar().Show();    
+                new Ofertar(Convert.ToInt32(labelPrecioDatos.Text),publicacionId).Show();    
             }
+        }
+
+        private void buttonVolver_Click(object sender, EventArgs e)
+        {            
+            new BuscadorPublicaciones().Show();
+            this.Close();
         }
     }
 }
