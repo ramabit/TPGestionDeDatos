@@ -282,15 +282,12 @@ create table LOS_SUPER_AMIGOS.Oferta
 (
 id numeric(18,0) identity(1,1),
 monto numeric(18,0),
-gano_subasta bit default 0,
 fecha datetime,
 usuario_id numeric(18,0),
 publicacion_id numeric(18,0),
-calificacion_id numeric(18,0) default null,
 PRIMARY KEY (id),
 FOREIGN KEY (usuario_id) REFERENCES LOS_SUPER_AMIGOS.Usuario (id),
-FOREIGN KEY (publicacion_id) REFERENCES LOS_SUPER_AMIGOS.Publicacion (id),
-FOREIGN KEY (calificacion_id) REFERENCES LOS_SUPER_AMIGOS.Calificacion (id)
+FOREIGN KEY (publicacion_id) REFERENCES LOS_SUPER_AMIGOS.Publicacion (id)
 )
 
 create table LOS_SUPER_AMIGOS.Compra
@@ -330,10 +327,10 @@ id numeric(18,0) identity(1,1),
 monto numeric(18,2),
 cantidad numeric(18,0),
 factura_nro numeric(18,0),
-publicacion_id numeric(18,0),
+compra_id numeric(18,0),
 PRIMARY KEY (id),
 FOREIGN KEY (factura_nro) REFERENCES LOS_SUPER_AMIGOS.Factura (nro),
-FOREIGN KEY (publicacion_id) REFERENCES LOS_SUPER_AMIGOS.Publicacion (id)
+FOREIGN KEY (compra_id) REFERENCES LOS_SUPER_AMIGOS.Compra (id)
 )
 
 -- INSERTAR Usuario
@@ -531,8 +528,8 @@ GO
 
 -- INSERTAR Ofertas
 INSERT INTO LOS_SUPER_AMIGOS.Oferta
-([monto], [fecha], [usuario_id], [publicacion_id], [calificacion_id])
-SELECT Oferta_Monto, Oferta_Fecha, (SELECT usuario_id FROM LOS_SUPER_AMIGOS.Cliente WHERE documento = Cli_Dni), Publicacion_Cod, Calificacion_Codigo FROM gd_esquema.Maestra
+([monto], [fecha], [usuario_id], [publicacion_id])
+SELECT Oferta_Monto, Oferta_Fecha, (SELECT usuario_id FROM LOS_SUPER_AMIGOS.Cliente WHERE documento = Cli_Dni), Publicacion_Cod FROM gd_esquema.Maestra
 WHERE ISNULL(Oferta_Monto, 0) != 0
 
 -- INSERTAR Compras
@@ -541,19 +538,6 @@ INSERT INTO LOS_SUPER_AMIGOS.Compra
 SELECT Compra_Cantidad, Compra_Fecha, (SELECT usuario_id FROM LOS_SUPER_AMIGOS.Cliente WHERE documento = Cli_Dni), Publicacion_Cod, Calificacion_Codigo FROM gd_esquema.Maestra
 WHERE ISNULL(Compra_Cantidad, 0) != 0 and ISNULL(Calificacion_Codigo,0) != 0
 
--- Marcar gano_subasta = 1 en aquellas ofertas que ganaron
-update LOS_SUPER_AMIGOS.Oferta
-set gano_subasta = 1
-from LOS_SUPER_AMIGOS.Compra c, LOS_SUPER_AMIGOS.Oferta o, LOS_SUPER_AMIGOS.Publicacion p
-where o.usuario_id = c.usuario_id and
-	o.publicacion_id = c.publicacion_id and
-	o.publicacion_id = p.id and
-	p.tipo = 'Subasta'
-	
-delete LOS_SUPER_AMIGOS.Compra
-from LOS_SUPER_AMIGOS.Compra c, LOS_SUPER_AMIGOS.Publicacion p
-where c.publicacion_id = p.id AND p.tipo = 'Subasta'
- 
 -- INSERTAR Formas_Pago
 INSERT INTO LOS_SUPER_AMIGOS.Forma_Pago
    ( [descripcion])
@@ -570,7 +554,7 @@ WHERE ISNULL(Factura_Nro,-1) != -1
 
 -- INSERTAR Items_Factura
 INSERT INTO LOS_SUPER_AMIGOS.Item_Factura
-   ( [monto], [cantidad], [factura_nro], [publicacion_id])
-SELECT DISTINCT Item_Factura_Monto, Item_Factura_Cantidad, Factura_Nro, Publicacion_Cod
-FROM gd_esquema.Maestra 
-WHERE ISNULL(Factura_Nro,-1) != -1
+   ( [monto], [cantidad], [factura_nro], [compra_id])
+SELECT DISTINCT g.Item_Factura_Monto, g.Item_Factura_Cantidad, g.Factura_Nro, c.id
+FROM gd_esquema.Maestra g, LOS_SUPER_AMIGOS.Compra c
+WHERE ISNULL(g.Factura_Nro,-1) != -1 and c.publicacion_id = g.Publicacion_Cod
