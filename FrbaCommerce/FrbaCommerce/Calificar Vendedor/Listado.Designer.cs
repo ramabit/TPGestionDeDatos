@@ -41,6 +41,7 @@
             this.dataGridViewCompras.Name = "dataGridViewCompras";
             this.dataGridViewCompras.Size = new System.Drawing.Size(551, 180);
             this.dataGridViewCompras.TabIndex = 0;
+            this.dataGridViewCompras.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewCompras_CellContentClick);
             // 
             // labelTitulo
             // 

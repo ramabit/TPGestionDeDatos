@@ -31,23 +31,24 @@ namespace FrbaCommerce.Calificar_Vendedor
             
 
             parametros.Add(new SqlParameter("@id", UsuarioSesion.Usuario.id));
-            String comprasSinCalificar = "CREATE Table LOS_SUPER_AMIGOS.Compras_Sin_Calificar (id numeric(18,0), tipo nvarchar(10)) insert LOS_SUPER_AMIGOS.Compras_Sin_Calificar (id, tipo) (select id, 'Compra' as tipo from LOS_SUPER_AMIGOS.Compra where usuario_id = @id and isnull(calificacion_id,0) = 0) UNION (select id, 'Ofertas' as tipo from LOS_SUPER_AMIGOS.Oferta where usuario_id = @id and isnull(calificacion_id,0) = 0 and gano_subasta = 1)";
+            String comprasSinCalificar = "CREATE Table LOS_SUPER_AMIGOS.Compras_Sin_Calificar (id numeric(18,0), tipo nvarchar(10)) insert LOS_SUPER_AMIGOS.Compras_Sin_Calificar (id, tipo) (select id, 'Compra' as tipo from LOS_SUPER_AMIGOS.Compra where usuario_id = @id and isnull(calificacion_id,0) = 0) UNION (select id, 'Oferta' as tipo from LOS_SUPER_AMIGOS.Oferta where usuario_id = @id and isnull(calificacion_id,0) = 0 and gano_subasta = 1)";
             builderDeComandos.Crear(comprasSinCalificar, parametros).ExecuteNonQuery();
 
             parametros.Clear();
             String compras = "(select csc.id id, csc.tipo tipo, u.username Vendedor, p.descripcion Publicacion," 
-                    + " c.cantidad Cantidad, convert(varchar, c.fecha, 101) Fecha"
+                    + " c.cantidad Cantidad, convert(varchar, c.fecha, 102) Fecha"
                     + " from LOS_SUPER_AMIGOS.Compras_Sin_Calificar csc, LOS_SUPER_AMIGOS.Compra c," 
                     + " LOS_SUPER_AMIGOS.Usuario u, LOS_SUPER_AMIGOS.Publicacion p"
                     + " where csc.tipo = 'Compra' and csc.id = c.id and p.usuario_id = u.id  and"
                     + " c.publicacion_id = p.id)"
                     + " union all"
                     + " (select csc.id, csc.tipo, u.username Vendedor, p.descripcion Publicacion," 
-                    + " p.stock Cantidad, convert(varchar, o.fecha, 101) Fecha"
+                    + " p.stock Cantidad, convert(varchar, o.fecha, 102) Fecha"
                     + " from LOS_SUPER_AMIGOS.Compras_Sin_Calificar csc, LOS_SUPER_AMIGOS.Oferta o," 
                     + " LOS_SUPER_AMIGOS.Usuario u, LOS_SUPER_AMIGOS.Publicacion p"
                     + " where csc.tipo = 'Oferta' and csc.id = o.id and p.usuario_id = u.id and"
-                    + " o.publicacion_id = p.id)";
+                    + " o.publicacion_id = p.id)"
+                    + " order by Fecha";
             command = builderDeComandos.Crear(compras, parametros);
 
             DataSet datacompras = new DataSet();
@@ -120,6 +121,11 @@ namespace FrbaCommerce.Calificar_Vendedor
             this.Hide();
             new MenuPrincipal().ShowDialog();
             this.Close();
+        }
+
+        private void dataGridViewCompras_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
 
     }
