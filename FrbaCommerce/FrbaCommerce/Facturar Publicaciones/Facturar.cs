@@ -15,5 +15,10 @@ namespace FrbaCommerce.Facturar_Publicaciones
         {
             InitializeComponent();
         }
+
+        private void Facturar_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }
