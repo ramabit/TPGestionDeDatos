@@ -33,7 +33,8 @@ namespace FrbaCommerce.Comprar_Ofertar
         {
             pedirVendedor();
             pedirRubro();
-            pedirVencimientoStockPreguntas();
+            pedirVencimientoPreguntas();
+            pedirStock();
             labelProductoDatos.Text = publicacionElegida;            
             pedirPrecio();            
             pedirAccion();            
@@ -73,7 +74,7 @@ namespace FrbaCommerce.Comprar_Ofertar
             labelRubroDatos.Text = (String)reader["descripcion"];
         }
 
-        private void pedirVencimientoStockPreguntas()
+        private void pedirVencimientoPreguntas()
         {
             parametros.Clear();
             parametros.Add(new SqlParameter("@descripcion", publicacionElegida));
@@ -82,35 +83,69 @@ namespace FrbaCommerce.Comprar_Ofertar
 
             SqlDataReader reader = builderDeComandos.Crear(query, parametros).ExecuteReader();
             labelVencimientoDatos.Text = ( (DateTime)reader["fecha_vencimiento"] ).ToString();
-            labelStockDatos.Text = ( (int)reader["stock"] ).ToString();
+            
             if ((int)reader["se_realizan_preguntas"] == 0)
             {
                 botonPreguntar.Enabled = false;
             }
             publicacionId = (int)reader["publicacion_id"];
-        }        
+        }
 
-        private void pedirPrecio()
+        private void pedirStock()
         {
-            if (tipoPublicacion == "Compra Inmediata")
+            parametros.Clear();
+            parametros.Add(new SqlParameter("@descripcion", publicacionElegida));
+
+            if (tipoPublicacion == "Subasta")
             {
-                parametros.Clear();
-                parametros.Add(new SqlParameter("@descripcion", publicacionElegida));
-
-                String query = "SELECT * FROM LOS_SUPER_AMIGOS.Publicacion WHERE descripcion = @descripcion";
-
-                SqlDataReader reader = builderDeComandos.Crear(query, parametros).ExecuteReader();
-                labelPrecioDatos.Text = ( (int)reader["precio"] ).ToString();
+                String querySubasta = "SELECT * FROM LOS_SUPER_AMIGOS.Publicacion WHERE descripcion = @descripcion";
+                SqlDataReader readerSubasta = builderDeComandos.Crear(querySubasta, parametros).ExecuteReader();
+                labelStockDatos.Text = ((int)readerSubasta["stock"]).ToString();
             }
             else
             {
-                parametros.Clear();
-                parametros.Add(new SqlParameter("@descripcion", publicacionElegida));
+                String queryVista = "SELECT * FROM VistaCantidadVendida WHERE descripcion = @descripcion";
+                SqlDataReader readerVista = builderDeComandos.Crear(queryVista, parametros).ExecuteReader();
 
-                String query = "SELECT * FROM VistaOfertaMax WHERE publicacion_id = (SELECT publicacion_id FROM LOS_SUPER_AMIGOS.Publicacion WHERE descripcion = @descripcion)";
+                String queryCompra = "SELECT * FROM LOS_SUPER_AMIGOS.Publicacion WHERE descripcion = @descripcion";
+                SqlDataReader readerCompra = builderDeComandos.Crear(queryCompra, parametros).ExecuteReader();
 
-                SqlDataReader reader = builderDeComandos.Crear(query, parametros).ExecuteReader();
-                labelPrecioDatos.Text = ( (int)reader["precioMax"] ).ToString();
+                if (readerVista.Read())
+                {
+                    labelStockDatos.Text = ((int)readerCompra["stock"] - (int)readerVista["cant_vendida"]).ToString();
+                }
+                else
+                {                    
+                    labelStockDatos.Text = ((int)readerCompra["stock"]).ToString();
+                }
+            }
+        }
+
+        private void pedirPrecio()
+        {
+            parametros.Clear();
+            parametros.Add(new SqlParameter("@descripcion", publicacionElegida));
+
+            if (tipoPublicacion == "Compra Inmediata")
+            {
+                String queryCompra = "SELECT * FROM LOS_SUPER_AMIGOS.Publicacion WHERE descripcion = @descripcion";
+                SqlDataReader readerCompra = builderDeComandos.Crear(queryCompra, parametros).ExecuteReader();
+                labelPrecioDatos.Text = ( (int)readerCompra["precio"] ).ToString();
+            }
+            else
+            {                
+                String queryVista = "SELECT * FROM VistaOfertaMax WHERE publicacion_id = (SELECT publicacion_id FROM LOS_SUPER_AMIGOS.Publicacion WHERE descripcion = @descripcion)";
+                SqlDataReader readerVista = builderDeComandos.Crear(queryVista, parametros).ExecuteReader();
+                if (readerVista.Read())
+                {
+                    labelPrecioDatos.Text = ((int)readerVista["precioMax"]).ToString();
+                }
+                else
+                {
+                    String queryOferta = "SELECT * FROM LOS_SUPER_AMIGOS.Publicacion WHERE descripcion = @descripcion";
+                    SqlDataReader readerOferta = builderDeComandos.Crear(queryOferta, parametros).ExecuteReader();
+                    labelPrecioDatos.Text = ((int)readerOferta["precio"]).ToString();
+                }
             }
         }
 
