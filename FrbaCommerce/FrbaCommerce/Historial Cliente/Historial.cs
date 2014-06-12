@@ -43,42 +43,20 @@ namespace FrbaCommerce.Historial_Cliente
         {
             String opcion = comboBox_opciones.Text;
 
-            if (opcion == "Compras") CargarCompras();
-            if (opcion == "Ofertas") CargarOfertas();
-            if (opcion == "Calificaciones") CargarCalificaciones();
+            if (opcion == "Compras") CargarInformacion("SELECT publicacion.descripcion Producto, compra.cantidad Cantidad, publicacion.precio Precio, compra.fecha Fecha, a_quien.username 'A quien' FROM LOS_SUPER_AMIGOS.Compra compra, LOS_SUPER_AMIGOS.Publicacion publicacion, LOS_SUPER_AMIGOS.Usuario a_quien  WHERE compra.publicacion_id = publicacion.id AND publicacion.usuario_id = a_quien.id AND compra.usuario_id = @idUsuario");
+            if (opcion == "Ofertas") CargarInformacion("SELECT publicacion.descripcion Producto, compra.cantidad Cantidad, publicacion.precio Precio, compra.fecha Fecha, a_quien.username 'A quien' FROM LOS_SUPER_AMIGOS.Compra compra, LOS_SUPER_AMIGOS.Publicacion publicacion, LOS_SUPER_AMIGOS.Usuario a_quien  WHERE compra.publicacion_id = publicacion.id AND publicacion.usuario_id = a_quien.id AND compra.usuario_id = @idUsuario");
+            if (opcion == "Calificaciones") CargarInformacion("SELECT publicacion.descripcion Producto, oferta.monto Cantidad, publicacion.precio Precio, oferta.fecha Fecha, a_quien.username 'A quien', LOS_SUPER_AMIGOS.gano_subasta(oferta.id) 'Gano la subasta' FROM LOS_SUPER_AMIGOS.Oferta oferta, LOS_SUPER_AMIGOS.Publicacion publicacion, LOS_SUPER_AMIGOS.Usuario a_quien  WHERE oferta.publicacion_id = publicacion.id AND publicacion.usuario_id = a_quien.id AND oferta.usuario_id = @idUsuario");
         }
 
-        private void CargarCompras()
+        public void CargarInformacion(String query)
         {
-            command = builderDeComandos.Crear("SELECT publicacion.descripcion Producto, compra.cantidad Cantidad, publicacion.precio Precio, compra.fecha Fecha, a_quien.username 'A quien' FROM LOS_SUPER_AMIGOS.Compra compra, LOS_SUPER_AMIGOS.Publicacion publicacion, LOS_SUPER_AMIGOS.Usuario a_quien  WHERE compra.publicacion_id = publicacion.id AND publicacion.usuario_id = a_quien.id AND compra.usuario_id = @idUsuario", parametros);
+            command = builderDeComandos.Crear(query, parametros);
             command.Parameters.Add(new SqlParameter("@idUsuario", UsuarioSesion.Usuario.id));
             DataSet compras = new DataSet();
             SqlDataAdapter adapter = new SqlDataAdapter();
             adapter.SelectCommand = command;
             adapter.Fill(compras);
             dataGridView_Historial.DataSource = compras.Tables[0].DefaultView;
-        }
-
-        private void CargarOfertas()
-        {
-            command = builderDeComandos.Crear("SELECT publicacion.descripcion Producto, oferta.monto Cantidad, publicacion.precio Precio, oferta.fecha Fecha, a_quien.username 'A quien', LOS_SUPER_AMIGOS.gano_subasta(oferta.id) 'Gano la subasta' FROM LOS_SUPER_AMIGOS.Oferta oferta, LOS_SUPER_AMIGOS.Publicacion publicacion, LOS_SUPER_AMIGOS.Usuario a_quien  WHERE oferta.publicacion_id = publicacion.id AND publicacion.usuario_id = a_quien.id AND oferta.usuario_id = @idUsuario", parametros);
-            command.Parameters.Add(new SqlParameter("@idUsuario", UsuarioSesion.Usuario.id));
-            DataSet ofertas = new DataSet();
-            SqlDataAdapter adapter = new SqlDataAdapter();
-            adapter.SelectCommand = command;
-            adapter.Fill(ofertas);
-            dataGridView_Historial.DataSource = ofertas.Tables[0].DefaultView;
-        }
-
-        private void CargarCalificaciones()
-        {
-            command = builderDeComandos.Crear("SELECT quien.username Quien, a_quien.username 'A Quien', calificacion.cantidad_estrellas Estrellas, calificacion.descripcion Descripcion FROM LOS_SUPER_AMIGOS.Calificacion calificacion, LOS_SUPER_AMIGOS.Compra compra, LOS_SUPER_AMIGOS.Usuario quien, LOS_SUPER_AMIGOS.Publicacion publicacion, LOS_SUPER_AMIGOS.Usuario a_quien WHERE calificacion.id = compra.calificacion_id AND compra.usuario_id = quien.id AND compra.publicacion_id = publicacion.id AND publicacion.usuario_id = a_quien.id AND (quien.id = @idUsuario OR a_quien.id = @idUsuario)", parametros);
-            command.Parameters.Add(new SqlParameter("@idUsuario", UsuarioSesion.Usuario.id));
-            DataSet calificaciones = new DataSet();
-            SqlDataAdapter adapter = new SqlDataAdapter();
-            adapter.SelectCommand = command;
-            adapter.Fill(calificaciones);
-            dataGridView_Historial.DataSource = calificaciones.Tables[0].DefaultView;
         }
 
         private void button_Buscar_Click(object sender, EventArgs e)
