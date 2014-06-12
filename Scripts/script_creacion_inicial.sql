@@ -401,10 +401,10 @@ id numeric(18,0) identity(1,1),
 monto numeric(18,2),
 cantidad numeric(18,0),
 factura_nro numeric(18,0),
-compra_id numeric(18,0),
+publicacion_id numeric(18,0),
 PRIMARY KEY (id),
 FOREIGN KEY (factura_nro) REFERENCES LOS_SUPER_AMIGOS.Factura (nro),
-FOREIGN KEY (compra_id) REFERENCES LOS_SUPER_AMIGOS.Compra (id)
+FOREIGN KEY (publicacion_id) REFERENCES LOS_SUPER_AMIGOS.Publicacion (id)
 )
 
 -- INSERTAR Usuario
@@ -628,10 +628,10 @@ WHERE ISNULL(Factura_Nro,-1) != -1
 
 -- INSERTAR Items_Factura
 INSERT INTO LOS_SUPER_AMIGOS.Item_Factura
-   ( [monto], [cantidad], [factura_nro], [compra_id])
-SELECT DISTINCT g.Item_Factura_Monto, g.Item_Factura_Cantidad, g.Factura_Nro, c.id
-FROM gd_esquema.Maestra g, LOS_SUPER_AMIGOS.Compra c
-WHERE ISNULL(g.Factura_Nro,-1) != -1 and c.publicacion_id = g.Publicacion_Cod
+( [monto], [cantidad], [factura_nro], [publicacion_id])
+SELECT DISTINCT Item_Factura_Monto, Item_Factura_Cantidad, Factura_Nro, Publicacion_Cod
+FROM gd_esquema.Maestra 
+WHERE ISNULL(Factura_Nro,-1) != -1
 GO
 
 -- VISTAS
