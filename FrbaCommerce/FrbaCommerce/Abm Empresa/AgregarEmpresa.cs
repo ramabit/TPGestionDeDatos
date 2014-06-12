@@ -113,25 +113,7 @@ namespace FrbaCommerce.ABM_Empresa
             Decimal idEmpresa = comunicador.CrearEmpresa(empresa);
 
             if (idEmpresa > 0) MessageBox.Show("Se agrego la empresa correctamente");
-            /*
-            // Hace el INSERT en Empresa
-            parametros.Clear();
-            parametros.Add(new SqlParameter("@razonSocial", razonSocial));
-            parametros.Add(new SqlParameter("@nombreDeContacto", nombreDeContacto));
-            parametros.Add(new SqlParameter("@cuit", cuit));
-            parametros.Add(new SqlParameter("@fechaDeCreacion", fechaDeCreacion));
-            parametros.Add(new SqlParameter("@mail", mail));
-            parametros.Add(new SqlParameter("@telefono", Convert.ToDecimal(telefono)));
-            parametros.Add(new SqlParameter("@ciudad", ciudad));
-            parametros.Add(new SqlParameter("@idDireccion", idDireccion));
-            parametros.Add(new SqlParameter("@idUsuario", idUsuario));
-
-            query = "INSERT INTO LOS_SUPER_AMIGOS.Empresa (razon_social, nombre_de_contacto, cuit, fecha_creacion, mail, telefono, ciudad, direccion_id, usuario_id) values (@razonSocial, @nombreDeContacto, @cuit, @fechaDeCreacion, @mail, @telefono, @ciudad, @idDireccion, @idUsuario)";
-
-            int filasAfectadas = builderDeComandos.Crear(query, parametros).ExecuteNonQuery();
-
-            if (filasAfectadas == 1) MessageBox.Show("Se agrego la empresa correctamente");
-            */
+            
             VolverAlMenuPrincipal();
         }
 
