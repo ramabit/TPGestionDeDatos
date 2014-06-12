@@ -77,6 +77,10 @@ IF OBJECT_ID('LOS_SUPER_AMIGOS.agregar_id_publ') IS NOT NULL
 DROP FUNCTION LOS_SUPER_AMIGOS.agregar_id_publ
 GO
 
+IF OBJECT_ID('LOS_SUPER_AMIGOS.gano_subasta') IS NOT NULL
+DROP FUNCTION LOS_SUPER_AMIGOS.gano_subasta
+GO
+
 CREATE PROCEDURE LOS_SUPER_AMIGOS.crear_usuario_con_valores
 	@username nvarchar(50),
 	@password nvarchar(150),
@@ -116,6 +120,21 @@ BEGIN
 	SET NOCOUNT ON;
 	INSERT INTO LOS_SUPER_AMIGOS.Direccion (calle, numero, piso, depto, cod_postal, localidad) values (@calle, @numero, @piso, @depto, @cod_postal, @localidad);
 	SET @direccion_id = SCOPE_IDENTITY();
+END
+GO
+
+CREATE FUNCTION LOS_SUPER_AMIGOS.gano_subasta
+(
+	@id numeric(18,0)
+)
+RETURNS bit
+AS
+BEGIN
+	IF (EXISTS (select compra.id FROM LOS_SUPER_AMIGOS.Oferta oferta, LOS_SUPER_AMIGOS.Compra compra WHERE oferta.publicacion_id = compra.publicacion_id AND oferta.usuario_id = compra.usuario_id AND oferta.id = @id))
+	BEGIN
+		RETURN 1;
+	END
+	RETURN 0;
 END
 GO
 
