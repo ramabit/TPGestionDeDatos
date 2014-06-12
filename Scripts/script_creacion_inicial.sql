@@ -65,6 +65,10 @@ IF OBJECT_ID('LOS_SUPER_AMIGOS.crear_cliente', 'P') IS NOT NULL
 DROP PROCEDURE LOS_SUPER_AMIGOS.crear_cliente
 GO
 
+IF OBJECT_ID('LOS_SUPER_AMIGOS.crear_empresa', 'P') IS NOT NULL
+DROP PROCEDURE LOS_SUPER_AMIGOS.crear_empresa
+GO
+
 IF OBJECT_ID('LOS_SUPER_AMIGOS.crear_usuario', 'P') IS NOT NULL
 DROP PROCEDURE LOS_SUPER_AMIGOS.crear_usuario
 GO
@@ -101,6 +105,25 @@ BEGIN
 	SET NOCOUNT ON;
 	INSERT INTO LOS_SUPER_AMIGOS.Cliente (nombre, apellido, fecha_nacimiento, tipo_de_documento_id, documento, mail, telefono, direccion_id, usuario_id) values (@nombre, @apellido, @fecha_nacimiento, @tipo_de_documento_id, @documento, @mail, @telefono, @direccion_id, @usuario_id);
 	SET @cliente_id = SCOPE_IDENTITY();	
+END
+GO
+
+CREATE PROCEDURE LOS_SUPER_AMIGOS.crear_empresa
+	@razon_social nvarchar(255),
+	@nombre_de_contacto nvarchar(50),
+	@cuit nvarchar(50),
+	@fecha_creacion datetime,
+	@mail nvarchar(50),
+	@telefono numeric(18,0),
+	@ciudad nvarchar(50),
+	@direccion_id numeric(18,0),
+	@usuario_id numeric(18,0),
+	@empresa_id numeric(18,0) OUTPUT
+AS
+BEGIN
+	SET NOCOUNT ON;
+	INSERT INTO LOS_SUPER_AMIGOS.Empresa (razon_social, nombre_de_contacto, cuit, fecha_creacion, mail, telefono, ciudad, direccion_id, usuario_id) values (@razon_social, @nombre_de_contacto, @cuit, @fecha_creacion, @mail, @telefono, @ciudad, @direccion_id, @usuario_id)
+	SET @empresa_id = SCOPE_IDENTITY();	
 END
 GO
 
