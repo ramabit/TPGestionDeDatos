@@ -265,8 +265,10 @@ id numeric(18,0),
 descripcion nvarchar(255) not null,
 respuesta nvarchar(255) default '',
 respuesta_fecha datetime default null,
+usuario_id numeric(18,0),
 publicacion_id numeric(18,0),
 PRIMARY KEY (id),
+FOREIGN KEY (usuario_id) REFERENCES LOS_SUPER_AMIGOS.Usuario(id),
 FOREIGN KEY (publicacion_id) REFERENCES LOS_SUPER_AMIGOS.Publicacion (id)
 )
 
@@ -437,7 +439,7 @@ SELECT (SELECT id FROM LOS_SUPER_AMIGOS.Rol WHERE nombre = 'Cliente'), usuario_i
 INSERT INTO LOS_SUPER_AMIGOS.Funcionalidad
 (nombre)
 VALUES ('Comprar / Ofertar'),('Generar publicacion'),('Editar publicacion'),
-('Calificar vendedor'),('Preguntar'),('Responder preguntas'),('Gestionar roles'),
+('Calificar vendedor'),('Responder preguntas'),('Ver respuestas'),('Gestionar roles'),
 ('Gestionar usuarios'),('Generar factura'),('Crear empresa'),('Editar empresa'),
 ('Crear cliente'),('Editar cliente'),('Agregar visibilidad'),('Editar visibilidad'),
 ('Agregar rubro'),('Editar rubro'),('Obtener estadisticas'),('Ver historial')
@@ -461,7 +463,7 @@ COMMIT
 INSERT INTO LOS_SUPER_AMIGOS.Funcionalidad_x_Rol
 (funcionalidad_id,rol_id)
 VALUES(1,2),(2,2),(3,2),(4,2),(5,2),(6,2),(9,2),(18,2),(19,2),(2,3),(3,3),
-(6,3),(9,3),(18,3)
+(5,3),(9,3),(18,3)
 
 -- INSERTAR Visibilidad
 SET IDENTITY_INSERT LOS_SUPER_AMIGOS.Visibilidad ON;
