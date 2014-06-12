@@ -88,12 +88,6 @@ namespace FrbaCommerce.ABM_Cliente
             tipoDeDocumentoObjeto.SetNombre(tipoDeDocumento);
             Decimal idTipoDeDocumento = comunicador.ObtenerIdDe(tipoDeDocumentoObjeto);
 
-            // Controla que tipo y numero de documento no se encuentren registrado en el sistema
-            //if (!this.pasoControlDeRegistro(idTipoDeDocumento, numeroDeDocumento)) return;
-
-            // Controla que telefono sea unico
-            //if (!this.pasoControlDeUnicidad(telefono)) return;
-
             // Crea una direccion y se guarda su id
             Direccion direccion = new Direccion();
             direccion.SetCalle(calle);

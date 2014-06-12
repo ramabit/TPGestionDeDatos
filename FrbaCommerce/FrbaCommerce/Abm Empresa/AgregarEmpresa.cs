@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Data.SqlClient;
 using FrbaCommerce.Objetos;
+using FrbaCommerce.Exceptions;
 
 namespace FrbaCommerce.ABM_Empresa
 {
@@ -70,15 +71,6 @@ namespace FrbaCommerce.ABM_Empresa
             if (!this.pasoControlDeNoVacio(codigoPostal)) return;
             if (!this.pasoControlDeNoVacio(localidad)) return;
 
-            // Controla que el cuit no se haya registrado en el sistema
-            if (!this.pasoControlDeRegistroDeCuit(cuit)) return;
-
-            // Controla que la razon social no se encuentren registrado en el sistema
-            if (!this.pasoControlDeRegistroDeRazonSocial(razonSocial)) return;
-
-            // Controla que telefono sea unico
-            if (!this.pasoControlDeUnicidad(telefono)) return;
-
             // Crea una direccion y se guarda su id
             Direccion direccion = new Direccion();
             direccion.SetCalle(calle);
@@ -110,53 +102,28 @@ namespace FrbaCommerce.ABM_Empresa
             empresa.SetCiudad(ciudad);
             empresa.SetIdDireccion(idDireccion);
             empresa.SetIdUsuario(idUsuario);
-            Decimal idEmpresa = comunicador.CrearEmpresa(empresa);
+            try
+            {
+                Decimal idEmpresa = comunicador.CrearEmpresa(empresa);
+                if (idEmpresa > 0) MessageBox.Show("Se agrego la empresa correctamente");
+            }
+            catch (TelefonoYaExisteException exception)
+            {
+                MessageBox.Show("Telefono ya existe");
+                return;
+            }
+            catch (CuitYaExisteException exception)
+            {
+                MessageBox.Show("Cuit ya existe");
+                return;
+            }
+            catch (RazonSocialYaExisteException exception)
+            {
+                MessageBox.Show("RazonSocial ya existe");
+                return;
+            }
 
-            if (idEmpresa > 0) MessageBox.Show("Se agrego la empresa correctamente");
-            
             VolverAlMenuPrincipal();
-        }
-
-        private bool pasoControlDeUnicidad(string telefono)
-        {
-            query = "SELECT COUNT(*) FROM LOS_SUPER_AMIGOS.Cliente WHERE telefono = @telefono";
-            parametros.Clear();
-            parametros.Add(new SqlParameter("@telefono", telefono));
-            int cantidad = (int)builderDeComandos.Crear(query, parametros).ExecuteScalar();
-            if (cantidad > 0)
-            {
-                MessageBox.Show("Ya existe ese telefono");
-                return false;
-            }
-            return true;
-        }
-
-        private bool pasoControlDeRegistroDeRazonSocial(String razonSocial)
-        {
-            query = "SELECT COUNT(*) FROM LOS_SUPER_AMIGOS.Empresa WHERE razon_social = @razonSocial";
-            parametros.Clear();
-            parametros.Add(new SqlParameter("@razonSocial", razonSocial));
-            int cantidad = (int)builderDeComandos.Crear(query, parametros).ExecuteScalar();
-            if (cantidad > 0)
-            {
-                MessageBox.Show("Ya existe esa razon social");
-                return false;
-            }
-            return true;
-        }
-
-        private bool pasoControlDeRegistroDeCuit(String cuit)
-        {
-            query = "SELECT COUNT(*) FROM LOS_SUPER_AMIGOS.Empresa WHERE cuit = @cuit";
-            parametros.Clear();
-            parametros.Add(new SqlParameter("@cuit", cuit));
-            int cantidad = (int)builderDeComandos.Crear(query, parametros).ExecuteScalar();
-            if (cantidad > 0)
-            {
-                MessageBox.Show("Ya existe ese cuit");
-                return false;
-            }
-            return true;
         }
 
         private bool pasoControlDeNoVacio(string valor)
