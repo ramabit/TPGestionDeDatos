@@ -289,6 +289,7 @@
     <Compile Include="MenuPrincipal.Designer.cs">
       <DependentUpon>MenuPrincipal.cs</DependentUpon>
     </Compile>
+    <Compile Include="Objetos\Empresa.cs" />
     <Compile Include="Objetos\TipoDeDocumento.cs" />
     <Compile Include="Objetos\Usuario.cs" />
     <Compile Include="Program.cs" />
