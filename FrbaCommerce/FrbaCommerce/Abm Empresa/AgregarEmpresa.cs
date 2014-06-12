@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Data.SqlClient;
+using FrbaCommerce.Objetos;
 
 namespace FrbaCommerce.ABM_Empresa
 {
@@ -53,7 +54,6 @@ namespace FrbaCommerce.ABM_Empresa
             String departamento = textBox_Departamento.Text;
             String codigoPostal = textBox_CodigoPostal.Text;
             String localidad = textBox_Localidad.Text;
-            SqlParameter parametroOutput;
 
             // Controla que esten completos los campos
             if (!this.pasoControlDeNoVacio(razonSocial)) return;
@@ -100,6 +100,20 @@ namespace FrbaCommerce.ABM_Empresa
                 idUsuario = comunicador.CrearUsuarioConValores(username, contrasena);
             }
 
+            Empresa empresa = new Empresa();
+            empresa.SetRazonSocial(razonSocial);
+            empresa.SetNombreDeContacto(nombreDeContacto);
+            empresa.SetCuit(cuit);
+            empresa.SetFechaDeCreacion(fechaDeCreacion);
+            empresa.SetMail(mail);
+            empresa.SetTelefono(telefono);
+            empresa.SetCiudad(ciudad);
+            empresa.SetIdDireccion(idDireccion);
+            empresa.SetIdUsuario(idUsuario);
+            Decimal idEmpresa = comunicador.CrearEmpresa(empresa);
+
+            if (idEmpresa > 0) MessageBox.Show("Se agrego la empresa correctamente");
+            /*
             // Hace el INSERT en Empresa
             parametros.Clear();
             parametros.Add(new SqlParameter("@razonSocial", razonSocial));
@@ -117,7 +131,7 @@ namespace FrbaCommerce.ABM_Empresa
             int filasAfectadas = builderDeComandos.Crear(query, parametros).ExecuteNonQuery();
 
             if (filasAfectadas == 1) MessageBox.Show("Se agrego la empresa correctamente");
-
+            */
             VolverAlMenuPrincipal();
         }
 
