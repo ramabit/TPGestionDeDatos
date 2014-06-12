@@ -220,6 +220,7 @@
     <Compile Include="Editar Publicacion\FiltrarPublicacion.Designer.cs">
       <DependentUpon>FiltrarPublicacion.cs</DependentUpon>
     </Compile>
+    <Compile Include="Exceptions\FaltanDefinirAtributosException.cs" />
     <Compile Include="Facturar Publicaciones\Facturar.cs">
       <SubType>Form</SubType>
     </Compile>

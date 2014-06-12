@@ -14,7 +14,7 @@ namespace FrbaCommerce.ABM_Cliente
     public partial class EditarCliente : Form
     {
         private String idCliente;
-        private String idDireccion;
+        private Decimal idDireccion;
         private BuilderDeComandos builderDeComandos = new BuilderDeComandos();
         private String query;
         private SqlCommand command;
@@ -70,17 +70,17 @@ namespace FrbaCommerce.ABM_Cliente
             textBox_FechaDeNacimiento.Text = Convert.ToString(reader["fecha_nacimiento"]);
             textBox_Mail.Text = Convert.ToString(reader["mail"]);
             textBox_Telefono.Text = Convert.ToString(reader["telefono"]);
-            idDireccion = Convert.ToString(reader["direccion_id"]);
+            idDireccion = Convert.ToDecimal(reader["direccion_id"]);
 
             CargarDireccion(idDireccion);
 
             if (Convert.ToBoolean(reader["habilitado"])) checkBox_Habilitado.Checked = true; 
         }
 
-        private void CargarDireccion(String idDireccion)
+        private void CargarDireccion(Decimal idDireccion)
         {
             Direccion direccion = new Direccion();
-            Boolean pudoObtenerDireccion = direccion.ObtenerDireccion(Convert.ToDecimal(idDireccion));
+            Boolean pudoObtenerDireccion = direccion.ObtenerDireccion(idDireccion);
 
             if (!pudoObtenerDireccion) throw new Exception("No existe la direccion");
 
@@ -128,12 +128,6 @@ namespace FrbaCommerce.ABM_Cliente
             tipoDeDocumento.SetNombre(tipoDeDocumentoNombre);
             Decimal idTipoDeDocumento = comunicador.ObtenerIdDe(tipoDeDocumento);
 
-            // Controla que tipo y numero de documento no se encuentren registrado en el sistema
-            if (!this.pasoControlDeRegistro(idTipoDeDocumento, numeroDeDocumento)) return;
-
-            // Controla que telefono sea unico
-            if (!this.pasoControlDeUnicidad(telefono)) return;
-
             // Update direccion
             Direccion direccion = new Direccion();
             direccion.SetCalle(calle);
@@ -142,9 +136,9 @@ namespace FrbaCommerce.ABM_Cliente
             direccion.SetDepartamento(departamento);
             direccion.SetCodigoPostal(codigoPostal);
             direccion.SetLocalidad(localidad);
-            Boolean pudoModificar = direccion.ModificarDireccion(Convert.ToDecimal(idDireccion));
+            Boolean pudoModificar = comunicador.ModificarDireccion(idDireccion, direccion);
 
-            if (!pudoModificar) MessageBox.Show("La direccion se modifico correctamente");
+            if (pudoModificar) MessageBox.Show("La direccion se modifico correctamente");
             else MessageBox.Show("La direccion no se pudo modificar correctamente");
 
             parametros.Clear();

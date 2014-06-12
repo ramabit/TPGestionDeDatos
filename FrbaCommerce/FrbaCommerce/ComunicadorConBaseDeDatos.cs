@@ -61,5 +61,23 @@ namespace FrbaCommerce
             direccion.SetId(idDireccionNueva);
             return idDireccionNueva;
         }
+
+        public Boolean ModificarDireccion(Decimal idDireccion, Direccion direccion)
+        {
+            query = "UPDATE LOS_SUPER_AMIGOS.Direccion SET calle = @calle, numero = @numero, piso = @piso, depto = @departamento, cod_postal = @codigoPostal, localidad = @localidad WHERE id = @idDireccion";
+            parametros.Clear();
+            parametros.Add(new SqlParameter("@calle", direccion.GetCalle()));
+            parametros.Add(new SqlParameter("@numero", direccion.GetNumero()));
+            parametros.Add(new SqlParameter("@piso", direccion.GetPiso()));
+            parametros.Add(new SqlParameter("@departamento", direccion.GetDepartamento()));
+            parametros.Add(new SqlParameter("@codigoPostal", direccion.GetCodigoPostal()));
+            parametros.Add(new SqlParameter("@localidad", direccion.GetLocalidad()));
+            parametros.Add(new SqlParameter("@idDireccion", idDireccion));
+
+            int filasAfectadas = builderDeComandos.Crear(query, parametros).ExecuteNonQuery();
+
+            if (filasAfectadas == 1) return true;
+            return false;
+        }
     }
 }
