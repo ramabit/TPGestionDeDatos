@@ -66,7 +66,7 @@ namespace FrbaCommerce.Comprar_Ofertar
             parametros.Clear();
             parametros.Add(new SqlParameter("@usuario", idUsuarioActual));
             DataTable busquedaTemporal = new DataTable();
-            String filtro = "and usuario_id = @usuario";            
+            String filtro = "and usuario_id != @usuario";            
 
             if (textBoxDescripcion.Text != "")
             {                
@@ -93,9 +93,16 @@ namespace FrbaCommerce.Comprar_Ofertar
             else
             {
                 tablaTemporal = busquedaTemporal;
-
+                calcularPaginas();
                 ini = 0;
-                fin = 9;
+                if (totalPublicaciones > 9)
+                {
+                    fin = 9;
+                }
+                else
+                {
+                    fin = totalPublicaciones;
+                }
                 calcularPaginas();
                 dataGridView1.DataSource = paginarDataGridView(ini, fin);
                 mostrarNrosPaginas(ini);
@@ -270,13 +277,14 @@ namespace FrbaCommerce.Comprar_Ofertar
         {
             String publicacionElegida = dataGridView1.Rows[e.RowIndex].Cells["descripcion"].Value.ToString();
             this.Hide();
-            new VerPublicacion(publicacionElegida).Show();
+            new VerPublicacion(publicacionElegida).ShowDialog();
+            this.Close();
         }
 
         private void botonVolver_Click(object sender, EventArgs e)
         {
             this.Hide();
-            new MenuPrincipal().Show();
+            new MenuPrincipal().ShowDialog();
             this.Close();
         }
                 
