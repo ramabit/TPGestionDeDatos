@@ -14,10 +14,6 @@ namespace FrbaCommerce.ABM_Empresa
 {
     public partial class EditarEmpresa : Form
     {
-        private BuilderDeComandos builderDeComandos = new BuilderDeComandos();
-        private String query;
-        private SqlCommand command;
-        private IList<SqlParameter> parametros = new List<SqlParameter>();
         private Decimal idEmpresa;
         private Decimal idDireccion;
         private ComunicadorConBaseDeDatos comunicador = new ComunicadorConBaseDeDatos();
@@ -36,33 +32,23 @@ namespace FrbaCommerce.ABM_Empresa
 
         private void CargarDatos()
         {
-            query = "SELECT * FROM LOS_SUPER_AMIGOS.Empresa WHERE id = @idEmpresa";
+            Empresa empresa = comunicador.ObtenerEmpresa(idEmpresa);
 
-            parametros.Clear();
-            parametros.Add(new SqlParameter("@idEmpresa", idEmpresa));
-            SqlDataReader reader = builderDeComandos.Crear(query, parametros).ExecuteReader();
-
-            // Si no se puede leer tiro una excepcion
-            if (!reader.Read()) throw new Exception("No se puede leer empresa");
-
-            // Si se puede leer cargo los datos
-            textBox_RazonSocial.Text = Convert.ToString(reader["razon_social"]);
-            textBox_NombreDeContacto.Text = Convert.ToString(reader["nombre_de_contacto"]);
-            textBox_CUIT.Text = Convert.ToString(reader["cuit"]);
-            textBox_FechaDeCreacion.Text = Convert.ToString(reader["fecha_creacion"]);
-            textBox_Mail.Text = Convert.ToString(reader["mail"]);
-            textBox_Telefono.Text = Convert.ToString(reader["telefono"]);
-            textBox_Ciudad.Text = Convert.ToString(reader["ciudad"]);
-            idDireccion = Convert.ToDecimal(reader["direccion_id"]);
-
+            this.idDireccion = empresa.GetIdDireccion();
+            textBox_RazonSocial.Text = empresa.GetRazonSocial();
+            textBox_NombreDeContacto.Text = empresa.GetNombreDeContacto();
+            textBox_CUIT.Text = empresa.GetCuit();
+            textBox_FechaDeCreacion.Text = empresa.GetFechaDeCreacion();
+            textBox_Mail.Text = empresa.GetMail();
+            textBox_Telefono.Text = empresa.GetTelefono();
+            textBox_Ciudad.Text = empresa.GetCiudad();
             CargarDireccion(idDireccion);
-
-            if (Convert.ToBoolean(reader["habilitado"])) checkBox_Habilitado.Checked = true;
         }
 
         private void CargarDireccion(Decimal idDireccion)
         {
             Direccion direccion = comunicador.ObtenerDireccion(idDireccion);
+
             textBox_Calle.Text = direccion.GetCalle();
             textBox_Numero.Text = direccion.GetNumero();
             textBox_Piso.Text = direccion.GetPiso();

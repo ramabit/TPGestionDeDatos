@@ -16,10 +16,6 @@ namespace FrbaCommerce.ABM_Cliente
     {
         private Decimal idCliente;
         private Decimal idDireccion;
-        private BuilderDeComandos builderDeComandos = new BuilderDeComandos();
-        private String query;
-        private SqlCommand command;
-        private IList<SqlParameter> parametros = new List<SqlParameter>();
         private ComunicadorConBaseDeDatos comunicador = new ComunicadorConBaseDeDatos();
 
         public EditarCliente(String idCliente)
@@ -43,33 +39,24 @@ namespace FrbaCommerce.ABM_Cliente
 
         private void CargarDatos()
         {
-            query = "SELECT * FROM LOS_SUPER_AMIGOS.Cliente WHERE id = @idCliente";
+            Cliente cliente = comunicador.ObtenerCliente(idCliente);
 
-            parametros.Clear();
-            parametros.Add(new SqlParameter("@idCliente", idCliente));
-            SqlDataReader reader = builderDeComandos.Crear(query, parametros).ExecuteReader();
+            this.idDireccion = cliente.GetIdDireccion();
+            textBox_Nombre.Text = cliente.GetNombre();
+            textBox_Apellido.Text = cliente.GetApellido();
+            textBox_NumeroDeDoc.Text = cliente.GetNumeroDeDocumento();
+            textBox_FechaDeNacimiento.Text = cliente.GetFechaDeNacimiento();
+            textBox_Mail.Text = cliente.GetMail();
+            textBox_Telefono.Text = cliente.GetTelefono();
+            CargarDireccion(idDireccion);
+            CargarTipoDeDocumento(cliente.GetIdTipoDeDocumento());
+        }
 
-            // Si no existe el id, tira error
-            if (!reader.Read()) throw new Exception("No existe el cliente");
-
-            textBox_Nombre.Text = Convert.ToString(reader["nombre"]);
-            textBox_Apellido.Text = Convert.ToString(reader["apellido"]);
-
-
+        private void CargarTipoDeDocumento(Decimal idTipoDeDocumento)
+        {
             TipoDeDocumento tipoDeDocumento = new TipoDeDocumento();
-            Decimal idTipoDeDocumento = Convert.ToDecimal(reader["tipo_de_documento_id"]);
             tipoDeDocumento.SetId(idTipoDeDocumento);
             comboBox_TipoDeDocumento.SelectedValue = comunicador.ObtenerNombreDe(tipoDeDocumento);
-
-            textBox_NumeroDeDoc.Text = Convert.ToString(reader["documento"]);
-            textBox_FechaDeNacimiento.Text = Convert.ToString(reader["fecha_nacimiento"]);
-            textBox_Mail.Text = Convert.ToString(reader["mail"]);
-            textBox_Telefono.Text = Convert.ToString(reader["telefono"]);
-            idDireccion = Convert.ToDecimal(reader["direccion_id"]);
-
-            CargarDireccion(idDireccion);
-
-            if (Convert.ToBoolean(reader["habilitado"])) checkBox_Habilitado.Checked = true; 
         }
 
         private void CargarDireccion(Decimal idDireccion)
