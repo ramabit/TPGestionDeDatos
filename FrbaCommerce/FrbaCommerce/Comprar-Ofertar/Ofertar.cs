@@ -47,6 +47,7 @@ namespace FrbaCommerce.Comprar_Ofertar
             parametros.Add(new SqlParameter("@publicacion", publicacionId));
             builderDeComandos.Crear(sql, parametros).ExecuteNonQuery();
             MessageBox.Show("Su oferta fue registrada");
+            this.Close();
         }
     }
 }

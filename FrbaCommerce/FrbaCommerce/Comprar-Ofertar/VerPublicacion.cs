@@ -139,7 +139,8 @@ namespace FrbaCommerce.Comprar_Ofertar
         }
 
         private void buttonVolver_Click(object sender, EventArgs e)
-        {            
+        {
+            this.Hide();
             new BuscadorPublicaciones().Show();
             this.Close();
         }

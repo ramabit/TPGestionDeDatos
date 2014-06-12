@@ -99,6 +99,7 @@ namespace FrbaCommerce.ABM_Rol
 
         private void botonCancelar_Click(object sender, EventArgs e)
         {
+            this.Hide();
             new RolForm().Show();
             this.Close();
         }

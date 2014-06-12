@@ -51,12 +51,14 @@ namespace FrbaCommerce.ABM_Rol
 
         private void botonVolver_Click(object sender, EventArgs e)
         {
+            this.Hide();
             new RolForm().Show();
             this.Close();
         }
 
         private void botonVolverBusqueda_Click(object sender, EventArgs e)
         {
+            this.Hide();
             new ListadoEditarRol().Show();
             this.Close();
         }

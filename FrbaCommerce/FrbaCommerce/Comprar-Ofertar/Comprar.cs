@@ -69,11 +69,12 @@ namespace FrbaCommerce.Comprar_Ofertar
             parametros.Add(new SqlParameter("@publicacion", publicacionId));
             builderDeComandos.Crear(sql, parametros).ExecuteNonQuery();
             MessageBox.Show("Contactese con el vendedor para finalizar la compra");
+            this.Close();
         }
 
         private void botonCancelar_Click(object sender, EventArgs e)
         {            
-            this.Hide();
+            this.Close();
         }
     }
 }

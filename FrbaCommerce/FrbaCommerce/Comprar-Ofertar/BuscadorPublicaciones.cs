@@ -275,6 +275,7 @@ namespace FrbaCommerce.Comprar_Ofertar
 
         private void botonVolver_Click(object sender, EventArgs e)
         {
+            this.Hide();
             new MenuPrincipal().Show();
             this.Close();
         }
