@@ -43,8 +43,6 @@ namespace FrbaCommerce.Objetos
 
         public void SetNombreDeContacto(String nombreDeContacto)
         {
-            if (nombreDeContacto == "")
-                throw new CampoVacioException();
             this.nombreDeContacto = nombreDeContacto;
         }
 
@@ -79,8 +77,6 @@ namespace FrbaCommerce.Objetos
 
         public void SetCiudad(String ciudad)
         {
-            if (ciudad == "")
-                throw new CampoVacioException();
             this.ciudad = ciudad;
         }
 
@@ -103,8 +99,6 @@ namespace FrbaCommerce.Objetos
 
         public void SetTelefono(String telefono)
         {
-            if (telefono == "")
-                throw new CampoVacioException();
             this.telefono = telefono;
         }
 

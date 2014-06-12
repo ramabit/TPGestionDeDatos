@@ -60,8 +60,6 @@ namespace FrbaCommerce
 
         public void SetLocalidad(String localidad)
         {
-            if (localidad == "")
-                throw new CampoVacioException();
             this.localidad = localidad;
         }
 

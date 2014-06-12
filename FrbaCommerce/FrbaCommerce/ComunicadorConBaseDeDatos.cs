@@ -426,6 +426,7 @@ namespace FrbaCommerce
                 nuevoEmpresa.SetRazonSocial(Convert.ToString(readerEmpresa["razon_social"]));
                 nuevoEmpresa.SetNombreDeContacto(Convert.ToString(readerEmpresa["nombre_de_contacto"]));
                 nuevoEmpresa.SetFechaDeCreacion(Convert.ToString(readerEmpresa["fecha_creacion"]));
+                nuevoEmpresa.SetCuit(Convert.ToString(readerEmpresa["cuit"]));
                 nuevoEmpresa.SetMail(Convert.ToString(readerEmpresa["mail"]));
                 nuevoEmpresa.SetTelefono(Convert.ToString(readerEmpresa["telefono"]));
                 nuevoEmpresa.SetCiudad(Convert.ToString(readerEmpresa["ciudad"]));
