@@ -91,38 +91,20 @@ namespace FrbaCommerce.ABM_Empresa
 
             // Si la empresa lo crea el admin, crea un nuevo usuario predeterminado. Si lo crea un nuevo registro de usuario, usa el que viene por parametro
             Decimal idUsuario;
-            if (username == "empresaCreadoPorAdmin")
+            if (username == "clienteCreadoPorAdmin")
             {
-                query = "LOS_SUPER_AMIGOS.crear_usuario";
-                parametros.Clear();
-                parametroOutput = new SqlParameter("@usuario_id", SqlDbType.Decimal);
-                parametroOutput.Direction = ParameterDirection.Output;
-                parametros.Add(parametroOutput);
-                command = builderDeComandos.Crear(query, parametros);
-                command.CommandType = CommandType.StoredProcedure;
-                command.ExecuteNonQuery();
-                idUsuario = (Decimal)parametroOutput.Value;
+                idUsuario = comunicador.CrearUsuario();
             }
             else
             {
-                query = "LOS_SUPER_AMIGOS.crear_usuario_con_valores";
-                parametros.Clear();
-                parametroOutput = new SqlParameter("@usuario_id", SqlDbType.Decimal);
-                parametroOutput.Direction = ParameterDirection.Output;
-                parametros.Add(new SqlParameter("@username", username));
-                parametros.Add(new SqlParameter("@password", HashSha256.getHash(contrasena)));
-                parametros.Add(parametroOutput);
-                command = builderDeComandos.Crear(query, parametros);
-                command.CommandType = CommandType.StoredProcedure;
-                command.ExecuteNonQuery();
-                idUsuario = (Decimal)parametroOutput.Value;
+                idUsuario = comunicador.CrearUsuarioConValores(username, contrasena);
             }
 
             // Hace el INSERT en Empresa
             parametros.Clear();
             parametros.Add(new SqlParameter("@razonSocial", razonSocial));
             parametros.Add(new SqlParameter("@nombreDeContacto", nombreDeContacto));
-            parametros.Add(new SqlParameter("@cuit", Convert.ToDecimal(cuit)));
+            parametros.Add(new SqlParameter("@cuit", cuit));
             parametros.Add(new SqlParameter("@fechaDeCreacion", fechaDeCreacion));
             parametros.Add(new SqlParameter("@mail", mail));
             parametros.Add(new SqlParameter("@telefono", Convert.ToDecimal(telefono)));

@@ -108,29 +108,11 @@ namespace FrbaCommerce.ABM_Cliente
             Decimal idUsuario;
             if (username == "clienteCreadoPorAdmin")
             {
-                query = "LOS_SUPER_AMIGOS.crear_usuario";
-                parametros.Clear();
-                parametroOutput = new SqlParameter("@usuario_id", SqlDbType.Decimal);
-                parametroOutput.Direction = ParameterDirection.Output;
-                parametros.Add(parametroOutput);
-                command = builderDeComandos.Crear(query, parametros);
-                command.CommandType = CommandType.StoredProcedure;
-                command.ExecuteNonQuery();
-                idUsuario = (Decimal)parametroOutput.Value;
+                idUsuario = comunicador.CrearUsuario();
             }
             else
             {
-                query = "LOS_SUPER_AMIGOS.crear_usuario_con_valores";
-                parametros.Clear();
-                parametroOutput = new SqlParameter("@usuario_id", SqlDbType.Decimal);
-                parametroOutput.Direction = ParameterDirection.Output;
-                parametros.Add(new SqlParameter("@username", username));
-                parametros.Add(new SqlParameter("@password", HashSha256.getHash(contrasena)));
-                parametros.Add(parametroOutput);
-                command = builderDeComandos.Crear(query, parametros);
-                command.CommandType = CommandType.StoredProcedure;
-                command.ExecuteNonQuery();
-                idUsuario = (Decimal)parametroOutput.Value;
+                idUsuario = comunicador.CrearUsuarioConValores(username, contrasena);
             }
             
             // Hace el INSERT en Cliente
