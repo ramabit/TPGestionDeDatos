@@ -79,11 +79,7 @@ namespace FrbaCommerce.ABM_Cliente
 
         private void CargarDireccion(Decimal idDireccion)
         {
-            Direccion direccion = new Direccion();
-            Boolean pudoObtenerDireccion = direccion.ObtenerDireccion(idDireccion);
-
-            if (!pudoObtenerDireccion) throw new Exception("No existe la direccion");
-
+            Direccion direccion = comunicador.ObtenerDireccion(idDireccion);
             textBox_Calle.Text = direccion.GetCalle();
             textBox_Numero.Text = direccion.GetNumero();
             textBox_Piso.Text = direccion.GetPiso();

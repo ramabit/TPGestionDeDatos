@@ -60,11 +60,7 @@ namespace FrbaCommerce.ABM_Empresa
 
         private void CargarDireccion(Decimal idDireccion)
         {
-            Direccion direccion = new Direccion();
-            Boolean pudoObtenerDireccion = direccion.ObtenerDireccion(idDireccion);
-
-            if (!pudoObtenerDireccion) throw new Exception("No existe la direccion");
-
+            Direccion direccion = comunicador.ObtenerDireccion(idDireccion);
             textBox_Calle.Text = direccion.GetCalle();
             textBox_Numero.Text = direccion.GetNumero();
             textBox_Piso.Text = direccion.GetPiso();
@@ -121,7 +117,7 @@ namespace FrbaCommerce.ABM_Empresa
             parametros.Clear();
             parametros.Add(new SqlParameter("@razonSocial", razonSocial));
             parametros.Add(new SqlParameter("@nombreDeContacto", nombreDeContacto));
-            parametros.Add(new SqlParameter("@cuit", Convert.ToDecimal(cuit)));
+            parametros.Add(new SqlParameter("@cuit", cuit));
             parametros.Add(new SqlParameter("@fechaDeCreacion", fechaDeCreacion));
             parametros.Add(new SqlParameter("@mail", mail));
             parametros.Add(new SqlParameter("@telefono", Convert.ToDecimal(telefono)));
