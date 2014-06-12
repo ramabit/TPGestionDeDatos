@@ -205,6 +205,7 @@
     <Compile Include="Comprar-Ofertar\VerPublicacion.Designer.cs">
       <DependentUpon>VerPublicacion.cs</DependentUpon>
     </Compile>
+    <Compile Include="ComunicadorConBaseDeDatos.cs" />
     <Compile Include="ConexionDB.cs" />
     <Compile Include="Direccion.cs" />
     <Compile Include="Editar Publicacion\EditarPublicacion.cs">
@@ -286,6 +287,7 @@
     <Compile Include="MenuPrincipal.Designer.cs">
       <DependentUpon>MenuPrincipal.cs</DependentUpon>
     </Compile>
+    <Compile Include="Objetos\TipoDeDocumento.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="ABM Cliente\AgregarCliente.resx">
