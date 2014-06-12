@@ -207,6 +207,7 @@
     </Compile>
     <Compile Include="ComunicadorConBaseDeDatos.cs" />
     <Compile Include="ConexionDB.cs" />
+    <Compile Include="Objetos\Cliente.cs" />
     <Compile Include="Objetos\Direccion.cs" />
     <Compile Include="Editar Publicacion\EditarPublicacion.cs">
       <SubType>Form</SubType>
