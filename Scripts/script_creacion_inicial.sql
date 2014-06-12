@@ -610,7 +610,7 @@ WHERE ISNULL(Oferta_Monto, 0) != 0
 INSERT INTO LOS_SUPER_AMIGOS.Compra
 ([cantidad], [fecha], [usuario_id], [publicacion_id], [calificacion_id])
 SELECT Compra_Cantidad, Compra_Fecha, (SELECT usuario_id FROM LOS_SUPER_AMIGOS.Cliente WHERE documento = Cli_Dni), Publicacion_Cod, Calificacion_Codigo FROM gd_esquema.Maestra
-WHERE ISNULL(Compra_Cantidad, 0) != 0 and ISNULL(Calificacion_Codigo,0) != 0
+WHERE ISNULL(Compra_Cantidad, 0) != 0
 
 -- INSERTAR Formas_Pago
 INSERT INTO LOS_SUPER_AMIGOS.Forma_Pago
