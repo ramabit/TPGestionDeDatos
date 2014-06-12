@@ -175,5 +175,24 @@ namespace FrbaCommerce
             empresa.SetId(idEmpresaNuevo);
             return idEmpresaNuevo;
         }
+
+        public Boolean ModificarCliente(Decimal idCliente, Cliente cliente)
+        {
+            query = "UPDATE LOS_SUPER_AMIGOS.Cliente SET nombre = @nombre, apellido = @apellido, tipo_de_documento_id = @tipo_de_documento_id, documento = @documento, fecha_nacimiento = @fecha_nacimiento, mail = @mail, telefono = @telefono WHERE id = @idCliente";
+            parametros.Clear();
+            parametros.Add(new SqlParameter("@nombre", cliente.GetNombre()));
+            parametros.Add(new SqlParameter("@apellido", cliente.GetApellido()));
+            parametros.Add(new SqlParameter("@tipo_de_documento_id", cliente.GetIdTipoDeDocumento()));
+            parametros.Add(new SqlParameter("@documento", cliente.GetNumeroDeDocumento()));
+            parametros.Add(new SqlParameter("@fecha_nacimiento", cliente.GetFechaDeNacimiento()));
+            parametros.Add(new SqlParameter("@mail", cliente.GetMail()));
+            parametros.Add(new SqlParameter("@telefono", cliente.GetTelefono()));
+            parametros.Add(new SqlParameter("@idCliente", idCliente));
+
+            int filasAfectadas = builderDeComandos.Crear(query, parametros).ExecuteNonQuery();
+
+            if (filasAfectadas == 1) return true;
+            return false;
+        }
     }
 }
