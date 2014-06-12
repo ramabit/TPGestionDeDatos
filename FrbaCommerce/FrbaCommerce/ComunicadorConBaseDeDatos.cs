@@ -194,5 +194,24 @@ namespace FrbaCommerce
             if (filasAfectadas == 1) return true;
             return false;
         }
+
+        public Boolean ModificarEmpresa(Decimal idEmpresa, Empresa empresa)
+        {
+            query = "UPDATE LOS_SUPER_AMIGOS.Empresa SET razon_social = @razon_social, nombre_de_contacto = @nombre_de_contacto, cuit = @cuit, fecha_creacion = @fecha_creacion, mail = @mail, telefono = @telefono, ciudad = @ciudad  WHERE id = @idEmpresa";
+            parametros.Clear();
+            parametros.Add(new SqlParameter("@razon_social", empresa.GetRazonSocial()));
+            parametros.Add(new SqlParameter("@nombre_de_contacto", empresa.GetNombreDeContacto()));
+            parametros.Add(new SqlParameter("@cuit", empresa.GetCuit()));
+            parametros.Add(new SqlParameter("@fecha_creacion", empresa.GetFechaDeCreacion()));
+            parametros.Add(new SqlParameter("@mail", empresa.GetMail()));
+            parametros.Add(new SqlParameter("@telefono", empresa.GetTelefono()));
+            parametros.Add(new SqlParameter("@ciudad", empresa.GetCiudad()));
+            parametros.Add(new SqlParameter("@idEmpresa", idEmpresa));
+
+            int filasAfectadas = builderDeComandos.Crear(query, parametros).ExecuteNonQuery();
+
+            if (filasAfectadas == 1) return true;
+            return false;
+        }
     }
 }
