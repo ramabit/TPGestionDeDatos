@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Data.SqlClient;
 using System.Data;
+using FrbaCommerce.Exceptions;
 
 namespace FrbaCommerce
 {
@@ -24,31 +25,43 @@ namespace FrbaCommerce
 
         public void SetCalle(String calle)
         {
+            if (calle == "")
+                throw new CampoVacioException();
             this.calle = calle;
         }
 
         public void SetNumero(String numero)
         {
+            if (numero == "")
+                throw new CampoVacioException();
             this.numero = numero;
         }
 
         public void SetPiso(String piso)
         {
+            if (piso == "")
+                throw new CampoVacioException();
             this.piso = piso;
         }
 
         public void SetDepartamento(String departamento)
         {
+            if (departamento == "")
+                throw new CampoVacioException();
             this.departamento = departamento;
         }
 
         public void SetCodigoPostal(String codigoPostal)
         {
+            if (codigoPostal == "")
+                throw new CampoVacioException();
             this.codigoPostal = codigoPostal;
         }
 
         public void SetLocalidad(String localidad)
         {
+            if (localidad == "")
+                throw new CampoVacioException();
             this.localidad = localidad;
         }
 

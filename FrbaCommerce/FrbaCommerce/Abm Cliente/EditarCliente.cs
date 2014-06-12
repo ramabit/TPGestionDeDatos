@@ -108,54 +108,52 @@ namespace FrbaCommerce.ABM_Cliente
 
             Boolean pudoModificar;
 
-            // Controla que esten completos los campos
-            if (!this.pasoControlDeNoVacio(nombre)) return;
-            if (!this.pasoControlDeNoVacio(apellido)) return;
-            if (!this.pasoControlDeNoVacio(numeroDeDocumento)) return;
-            if (!this.pasoControlDeNoVacio(fechaDeNacimiento)) return;
-            if (!this.pasoControlDeNoVacio(mail)) return;
-            if (!this.pasoControlDeNoVacio(telefono)) return;
-            if (!this.pasoControlDeNoVacio(calle)) return;
-            if (!this.pasoControlDeNoVacio(numero)) return;
-            if (!this.pasoControlDeNoVacio(piso)) return;
-            if (!this.pasoControlDeNoVacio(departamento)) return;
-            if (!this.pasoControlDeNoVacio(codigoPostal)) return;
-            if (!this.pasoControlDeNoVacio(localidad)) return;
-
             // Averigua el id del tipo de documento a partir del nombre del tipo de documento
             TipoDeDocumento tipoDeDocumento = new TipoDeDocumento();
             tipoDeDocumento.SetNombre(tipoDeDocumentoNombre);
             Decimal idTipoDeDocumento = comunicador.ObtenerIdDe(tipoDeDocumento);
 
             // Update direccion
-            Direccion direccion = new Direccion();
-            direccion.SetCalle(calle);
-            direccion.SetNumero(numero);
-            direccion.SetPiso(piso);
-            direccion.SetDepartamento(departamento);
-            direccion.SetCodigoPostal(codigoPostal);
-            direccion.SetLocalidad(localidad);
-            pudoModificar = comunicador.ModificarDireccion(idDireccion, direccion);
-
-            if (pudoModificar) MessageBox.Show("La direccion se modifico correctamente");
-            else MessageBox.Show("La direccion no se pudo modificar correctamente");
-
-            Cliente cliente = new Cliente();
-            cliente.SetNombre(nombre);
-            cliente.SetApellido(apellido);
-            cliente.SetFechaDeNacimiento(fechaDeNacimiento);
-            cliente.SetMail(mail);
-            cliente.SetTelefono(telefono);
-            cliente.SetIdTipoDeDocumento(idTipoDeDocumento);
-            cliente.SetNumeroDeDocumento(numeroDeDocumento);
-            cliente.SetIdDireccion(idDireccion);
-            
-
             try
             {
+                Direccion direccion = new Direccion();
+                direccion.SetCalle(calle);
+                direccion.SetNumero(numero);
+                direccion.SetPiso(piso);
+                direccion.SetDepartamento(departamento);
+                direccion.SetCodigoPostal(codigoPostal);
+                direccion.SetLocalidad(localidad);
+                pudoModificar = comunicador.ModificarDireccion(idDireccion, direccion);
+
+                if (pudoModificar) MessageBox.Show("La direccion se modifico correctamente");
+                else MessageBox.Show("La direccion no se pudo modificar correctamente");
+            }
+            catch (CampoVacioException exception)
+            {
+                MessageBox.Show("Faltan completar campos en direccion");
+                return;
+            }
+
+            // Update cliente
+            try
+            {
+                Cliente cliente = new Cliente();
+                cliente.SetNombre(nombre);
+                cliente.SetApellido(apellido);
+                cliente.SetFechaDeNacimiento(fechaDeNacimiento);
+                cliente.SetMail(mail);
+                cliente.SetTelefono(telefono);
+                cliente.SetIdTipoDeDocumento(idTipoDeDocumento);
+                cliente.SetNumeroDeDocumento(numeroDeDocumento);
+                cliente.SetIdDireccion(idDireccion);
                 pudoModificar = comunicador.ModificarCliente(idCliente, cliente);
                 if (pudoModificar) MessageBox.Show("El cliente se modifico correctamente");
                 else MessageBox.Show("El cliente no se pudo modificar correctamente");
+            }
+            catch (CampoVacioException exception)
+            {
+                MessageBox.Show("Faltan completar campos");
+                return;
             }
             catch (ClienteYaExisteException exception)
             {

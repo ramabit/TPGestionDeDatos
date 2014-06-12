@@ -42,14 +42,14 @@ namespace FrbaCommerce.ABM_Cliente
 
         private void CargarTipoDeDocumentos()
         {
-            command = builderDeComandos.Crear("SELECT nombre FROM LOS_SUPER_AMIGOS.TipoDeDocumento", parametros);
+            command = builderDeComandos.Crear("SELECT nombre Nombre FROM LOS_SUPER_AMIGOS.TipoDeDocumento", parametros);
 
             DataSet tiposDeDocumento = new DataSet();
             SqlDataAdapter adapter = new SqlDataAdapter();
             adapter.SelectCommand = command;
             adapter.Fill(tiposDeDocumento);
             comboBox_TipoDeDocumento.DataSource = tiposDeDocumento.Tables[0].DefaultView;
-            comboBox_TipoDeDocumento.ValueMember = "nombre";
+            comboBox_TipoDeDocumento.ValueMember = "Nombre";
         }
 
         private void button_Guardar_Click(object sender, EventArgs e)
@@ -69,20 +69,6 @@ namespace FrbaCommerce.ABM_Cliente
             String codigoPostal = textBox_CodigoPostal.Text;
             String localidad = textBox_Localidad.Text;
 
-            // Controla que esten completos los campos
-            if (!this.pasoControlDeNoVacio(nombre)) return;
-            if (!this.pasoControlDeNoVacio(apellido)) return;
-            if (!this.pasoControlDeNoVacio(numeroDeDocumento)) return;
-            if (!this.pasoControlDeNoVacio(fechaDeNacimiento)) return;
-            if (!this.pasoControlDeNoVacio(mail)) return;
-            if (!this.pasoControlDeNoVacio(telefono)) return;
-            if (!this.pasoControlDeNoVacio(calle)) return;
-            if (!this.pasoControlDeNoVacio(numero)) return;
-            if (!this.pasoControlDeNoVacio(piso)) return;
-            if (!this.pasoControlDeNoVacio(departamento)) return;
-            if (!this.pasoControlDeNoVacio(codigoPostal)) return;
-            if (!this.pasoControlDeNoVacio(localidad)) return;
-
             // Averigua el id del tipo de documento a partir del nombre del tipo de documento
             TipoDeDocumento tipoDeDocumentoObjeto = new TipoDeDocumento();
             tipoDeDocumentoObjeto.SetNombre(tipoDeDocumento);
@@ -90,12 +76,20 @@ namespace FrbaCommerce.ABM_Cliente
 
             // Crea una direccion y se guarda su id
             Direccion direccion = new Direccion();
-            direccion.SetCalle(calle);
-            direccion.SetNumero(numero);
-            direccion.SetPiso(piso);
-            direccion.SetDepartamento(departamento);
-            direccion.SetCodigoPostal(codigoPostal);
-            direccion.SetLocalidad(localidad);
+            try
+            {
+                direccion.SetCalle(calle);
+                direccion.SetNumero(numero);
+                direccion.SetPiso(piso);
+                direccion.SetDepartamento(departamento);
+                direccion.SetCodigoPostal(codigoPostal);
+                direccion.SetLocalidad(localidad);
+            }
+            catch (CampoVacioException exception)
+            {
+                MessageBox.Show("Faltan completar campos en direccion");
+                return;
+            }
             Decimal idDireccion = comunicador.CrearDireccion(direccion);
 
             // Si el cliente lo crea el admin, crea un nuevo usuario predeterminado. Si lo crea un nuevo registro de usuario, usa el que viene por parametro
@@ -108,21 +102,27 @@ namespace FrbaCommerce.ABM_Cliente
             {
                 idUsuario = comunicador.CrearUsuarioConValores(username, contrasena);
             }
-            
-            Cliente cliente = new Cliente();
-            cliente.SetNombre(nombre);
-            cliente.SetApellido(apellido);
-            cliente.SetFechaDeNacimiento(fechaDeNacimiento);
-            cliente.SetMail(mail);
-            cliente.SetTelefono(telefono);
-            cliente.SetIdTipoDeDocumento(idTipoDeDocumento);
-            cliente.SetNumeroDeDocumento(numeroDeDocumento);
-            cliente.SetIdDireccion(idDireccion);
-            cliente.SetIdUsuario(idUsuario);
+
+            // Crear cliente
             try
             {
+                Cliente cliente = new Cliente();
+                cliente.SetNombre(nombre);
+                cliente.SetApellido(apellido);
+                cliente.SetFechaDeNacimiento(fechaDeNacimiento);
+                cliente.SetMail(mail);
+                cliente.SetTelefono(telefono);
+                cliente.SetIdTipoDeDocumento(idTipoDeDocumento);
+                cliente.SetNumeroDeDocumento(numeroDeDocumento);
+                cliente.SetIdDireccion(idDireccion);
+                cliente.SetIdUsuario(idUsuario);
                 Decimal idCliente = comunicador.CrearCliente(cliente);
                 if (idCliente > 0) MessageBox.Show("Se agrego el cliente correctamente");
+            }
+            catch (CampoVacioException exception)
+            {
+                MessageBox.Show("Faltan completar campos");
+                return;
             }
             catch (ClienteYaExisteException exception)
             {

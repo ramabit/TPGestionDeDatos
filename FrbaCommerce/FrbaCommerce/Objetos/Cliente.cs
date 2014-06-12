@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using FrbaCommerce.Exceptions;
 
 namespace FrbaCommerce.Objetos
 {
@@ -30,6 +31,8 @@ namespace FrbaCommerce.Objetos
 
         public void SetNombre(String nombre)
         {
+            if (nombre == "")
+                throw new CampoVacioException();
             this.nombre = nombre;
         }
 
@@ -40,6 +43,8 @@ namespace FrbaCommerce.Objetos
 
         public void SetApellido(String apellido)
         {
+            if (apellido == "")
+                throw new CampoVacioException();
             this.apellido = apellido;
         }
 
@@ -60,6 +65,8 @@ namespace FrbaCommerce.Objetos
 
         public void SetNumeroDeDocumento(String numeroDeDocumento)
         {
+            if (numeroDeDocumento == "")
+                throw new CampoVacioException();
             this.numeroDeDocumento = numeroDeDocumento;
         }
 
@@ -70,6 +77,8 @@ namespace FrbaCommerce.Objetos
 
         public void SetFechaDeNacimiento(String fechaDeNacimiento)
         {
+            if (fechaDeNacimiento == "")
+                throw new CampoVacioException();
             this.fechaDeNacimiento = fechaDeNacimiento;
         }
 
@@ -80,6 +89,8 @@ namespace FrbaCommerce.Objetos
 
         public void SetMail(String mail)
         {
+            if (mail == "")
+                throw new CampoVacioException();
             this.mail = mail;
         }
 
@@ -90,6 +101,8 @@ namespace FrbaCommerce.Objetos
 
         public void SetTelefono(String telefono)
         {
+            if (telefono == "")
+                throw new CampoVacioException();
             this.telefono = telefono;
         }
 

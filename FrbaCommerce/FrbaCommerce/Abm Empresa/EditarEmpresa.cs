@@ -90,48 +90,47 @@ namespace FrbaCommerce.ABM_Empresa
 
             Boolean pudoModificar;
 
-            // Controla que esten completos los campos
-            if (!this.pasoControlDeNoVacio(razonSocial)) return;
-            if (!this.pasoControlDeNoVacio(nombreDeContacto)) return;
-            if (!this.pasoControlDeNoVacio(cuit)) return;
-            if (!this.pasoControlDeNoVacio(fechaDeCreacion)) return;
-            if (!this.pasoControlDeNoVacio(mail)) return;
-            if (!this.pasoControlDeNoVacio(telefono)) return;
-            if (!this.pasoControlDeNoVacio(ciudad)) return;
-            if (!this.pasoControlDeNoVacio(calle)) return;
-            if (!this.pasoControlDeNoVacio(numero)) return;
-            if (!this.pasoControlDeNoVacio(piso)) return;
-            if (!this.pasoControlDeNoVacio(departamento)) return;
-            if (!this.pasoControlDeNoVacio(codigoPostal)) return;
-            if (!this.pasoControlDeNoVacio(localidad)) return;
-
             // Update direccion
             Direccion direccion = new Direccion();
-            direccion.SetCalle(calle);
-            direccion.SetNumero(numero);
-            direccion.SetPiso(piso);
-            direccion.SetDepartamento(departamento);
-            direccion.SetCodigoPostal(codigoPostal);
-            direccion.SetLocalidad(localidad);
-            pudoModificar = comunicador.ModificarDireccion(idDireccion, direccion);
-
-            if (pudoModificar) MessageBox.Show("La direccion se modifico correctamente");
-            else MessageBox.Show("La direccion no se pudo modificar correctamente");
-
-            Empresa empresa = new Empresa();
-            empresa.SetRazonSocial(razonSocial);
-            empresa.SetNombreDeContacto(nombreDeContacto);
-            empresa.SetCuit(cuit);
-            empresa.SetFechaDeCreacion(fechaDeCreacion);
-            empresa.SetMail(mail);
-            empresa.SetTelefono(telefono);
-            empresa.SetCiudad(ciudad);
-
             try
             {
+                direccion.SetCalle(calle);
+                direccion.SetNumero(numero);
+                direccion.SetPiso(piso);
+                direccion.SetDepartamento(departamento);
+                direccion.SetCodigoPostal(codigoPostal);
+                direccion.SetLocalidad(localidad);
+                pudoModificar = comunicador.ModificarDireccion(idDireccion, direccion);
+
+                if (pudoModificar) MessageBox.Show("La direccion se modifico correctamente");
+                else MessageBox.Show("La direccion no se pudo modificar correctamente");
+            }
+            catch (CampoVacioException exception)
+            {
+                MessageBox.Show("Faltan completar campos en direccion");
+                return;
+            }
+
+            // Update empresa
+            try
+            {
+                Empresa empresa = new Empresa();
+                empresa.SetRazonSocial(razonSocial);
+                empresa.SetNombreDeContacto(nombreDeContacto);
+                empresa.SetCuit(cuit);
+                empresa.SetFechaDeCreacion(fechaDeCreacion);
+                empresa.SetMail(mail);
+                empresa.SetTelefono(telefono);
+                empresa.SetCiudad(ciudad);
+
                 pudoModificar = comunicador.ModificarEmpresa(idEmpresa, empresa);
                 if (pudoModificar) MessageBox.Show("La empresa se modifico correctamente");
                 else MessageBox.Show("La empresa no se pudo modificar correctamente");
+            }
+            catch (CampoVacioException exception)
+            {
+                MessageBox.Show("Faltan completar campos");
+                return;
             }
             catch (TelefonoYaExisteException exception)
             {

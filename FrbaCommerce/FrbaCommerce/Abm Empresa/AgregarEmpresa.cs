@@ -56,29 +56,22 @@ namespace FrbaCommerce.ABM_Empresa
             String codigoPostal = textBox_CodigoPostal.Text;
             String localidad = textBox_Localidad.Text;
 
-            // Controla que esten completos los campos
-            if (!this.pasoControlDeNoVacio(razonSocial)) return;
-            if (!this.pasoControlDeNoVacio(nombreDeContacto)) return;
-            if (!this.pasoControlDeNoVacio(cuit)) return;
-            if (!this.pasoControlDeNoVacio(fechaDeCreacion)) return;
-            if (!this.pasoControlDeNoVacio(mail)) return;
-            if (!this.pasoControlDeNoVacio(telefono)) return;
-            if (!this.pasoControlDeNoVacio(ciudad)) return;
-            if (!this.pasoControlDeNoVacio(calle)) return;
-            if (!this.pasoControlDeNoVacio(numero)) return;
-            if (!this.pasoControlDeNoVacio(piso)) return;
-            if (!this.pasoControlDeNoVacio(departamento)) return;
-            if (!this.pasoControlDeNoVacio(codigoPostal)) return;
-            if (!this.pasoControlDeNoVacio(localidad)) return;
-
             // Crea una direccion y se guarda su id
             Direccion direccion = new Direccion();
-            direccion.SetCalle(calle);
-            direccion.SetNumero(numero);
-            direccion.SetPiso(piso);
-            direccion.SetDepartamento(departamento);
-            direccion.SetCodigoPostal(codigoPostal);
-            direccion.SetLocalidad(localidad);
+            try
+            {
+                direccion.SetCalle(calle);
+                direccion.SetNumero(numero);
+                direccion.SetPiso(piso);
+                direccion.SetDepartamento(departamento);
+                direccion.SetCodigoPostal(codigoPostal);
+                direccion.SetLocalidad(localidad);
+            }
+            catch (CampoVacioException exception)
+            {
+                MessageBox.Show("Faltan completar campos en direccion");
+                return;
+            }
             Decimal idDireccion = comunicador.CrearDireccion(direccion);
 
             // Si la empresa lo crea el admin, crea un nuevo usuario predeterminado. Si lo crea un nuevo registro de usuario, usa el que viene por parametro
@@ -92,20 +85,26 @@ namespace FrbaCommerce.ABM_Empresa
                 idUsuario = comunicador.CrearUsuarioConValores(username, contrasena);
             }
 
-            Empresa empresa = new Empresa();
-            empresa.SetRazonSocial(razonSocial);
-            empresa.SetNombreDeContacto(nombreDeContacto);
-            empresa.SetCuit(cuit);
-            empresa.SetFechaDeCreacion(fechaDeCreacion);
-            empresa.SetMail(mail);
-            empresa.SetTelefono(telefono);
-            empresa.SetCiudad(ciudad);
-            empresa.SetIdDireccion(idDireccion);
-            empresa.SetIdUsuario(idUsuario);
+            // Crea empresa
             try
             {
+                Empresa empresa = new Empresa();
+                empresa.SetRazonSocial(razonSocial);
+                empresa.SetNombreDeContacto(nombreDeContacto);
+                empresa.SetCuit(cuit);
+                empresa.SetFechaDeCreacion(fechaDeCreacion);
+                empresa.SetMail(mail);
+                empresa.SetTelefono(telefono);
+                empresa.SetCiudad(ciudad);
+                empresa.SetIdDireccion(idDireccion);
+                empresa.SetIdUsuario(idUsuario);
                 Decimal idEmpresa = comunicador.CrearEmpresa(empresa);
                 if (idEmpresa > 0) MessageBox.Show("Se agrego la empresa correctamente");
+            }
+            catch (CampoVacioException exception)
+            {
+                MessageBox.Show("Faltan completar campos");
+                return;
             }
             catch (TelefonoYaExisteException exception)
             {

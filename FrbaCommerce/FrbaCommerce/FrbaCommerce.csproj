@@ -207,6 +207,7 @@
     </Compile>
     <Compile Include="ComunicadorConBaseDeDatos.cs" />
     <Compile Include="ConexionDB.cs" />
+    <Compile Include="Exceptions\CampoVacioException.cs" />
     <Compile Include="Exceptions\ClienteYaExisteException.cs" />
     <Compile Include="Exceptions\CuitYaExisteException.cs" />
     <Compile Include="Exceptions\RazonSocialYaExisteException.cs" />
