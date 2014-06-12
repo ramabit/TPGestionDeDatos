@@ -14,10 +14,6 @@ namespace FrbaCommerce.ABM_Empresa
 {
     public partial class AgregarEmpresa : Form
     {
-        private BuilderDeComandos builderDeComandos = new BuilderDeComandos();
-        private String query;
-        private SqlCommand command;
-        private IList<SqlParameter> parametros = new List<SqlParameter>();
         private String username;
         private String contrasena;
         private ComunicadorConBaseDeDatos comunicador = new ComunicadorConBaseDeDatos();

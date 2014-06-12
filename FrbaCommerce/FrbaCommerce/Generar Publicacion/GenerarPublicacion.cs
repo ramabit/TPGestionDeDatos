@@ -16,6 +16,7 @@ namespace FrbaCommerce.Generar_Publicacion
         private String query;
         private SqlCommand command;
         private IList<SqlParameter> parametros = new List<SqlParameter>();
+        private ComunicadorConBaseDeDatos comunicador = new ComunicadorConBaseDeDatos();
 
         public GenerarPublicacion()
         {
@@ -53,25 +54,13 @@ namespace FrbaCommerce.Generar_Publicacion
 
         private void CargarRubros()
         {
-            command = builderDeComandos.Crear("SELECT descripcion FROM LOS_SUPER_AMIGOS.Rubro", parametros);
-
-            DataSet rubros = new DataSet();
-            SqlDataAdapter adapter = new SqlDataAdapter();
-            adapter.SelectCommand = command;
-            adapter.Fill(rubros);
-            comboBox_Rubro.DataSource = rubros.Tables[0].DefaultView;
+            comboBox_Rubro.DataSource = comunicador.SelectDataTable("descripcion", "Rubro");
             comboBox_Rubro.ValueMember = "descripcion";
         }
 
         private void CargarVisibilidades()
         {
-            command = builderDeComandos.Crear("SELECT descripcion FROM LOS_SUPER_AMIGOS.Visibilidad", parametros);
-
-            DataSet visibilidades = new DataSet();
-            SqlDataAdapter adapter = new SqlDataAdapter();
-            adapter.SelectCommand = command;
-            adapter.Fill(visibilidades);
-            comboBox_Visibilidad.DataSource = visibilidades.Tables[0].DefaultView;
+            comboBox_Visibilidad.DataSource = comunicador.SelectDataTable("descripcion", "Visibilidad");
             comboBox_Visibilidad.ValueMember = "descripcion";
         }
 
