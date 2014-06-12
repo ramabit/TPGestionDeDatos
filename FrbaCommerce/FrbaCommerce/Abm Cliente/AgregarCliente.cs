@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Data.SqlClient;
+using FrbaCommerce.Objetos;
 
 namespace FrbaCommerce.ABM_Cliente
 {
@@ -18,6 +19,7 @@ namespace FrbaCommerce.ABM_Cliente
         private IList<SqlParameter> parametros = new List<SqlParameter>();
         private String username;
         private String contrasena;
+        private ComunicadorConBaseDeDatos comunicador = new ComunicadorConBaseDeDatos();
 
         public AgregarCliente(String username, String contrasena)
         {
@@ -82,10 +84,9 @@ namespace FrbaCommerce.ABM_Cliente
             if (!this.pasoControlDeNoVacio(localidad)) return;
 
             // Averigua el id del tipo de documento a partir del nombre del tipo de documento
-            query = "SELECT id FROM LOS_SUPER_AMIGOS.TipoDeDocumento WHERE nombre = @tipoDeDocumento";
-            parametros.Clear();
-            parametros.Add(new SqlParameter("@tipoDeDocumento", tipoDeDocumento));
-            Decimal idTipoDeDocumento = (Decimal)builderDeComandos.Crear(query, parametros).ExecuteScalar();
+            TipoDeDocumento tipoDeDocumentoObjeto = new TipoDeDocumento();
+            tipoDeDocumentoObjeto.SetNombre(tipoDeDocumento);
+            Decimal idTipoDeDocumento = comunicador.ObtenerIdDe(tipoDeDocumentoObjeto);
 
             // Controla que tipo y numero de documento no se encuentren registrado en el sistema
             if (!this.pasoControlDeRegistro(idTipoDeDocumento, numeroDeDocumento)) return;
