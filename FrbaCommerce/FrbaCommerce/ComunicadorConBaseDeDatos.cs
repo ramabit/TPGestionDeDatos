@@ -17,6 +17,16 @@ namespace FrbaCommerce
         private SqlCommand command;
         private BuilderDeComandos builderDeComandos = new BuilderDeComandos();
 
+        public DataTable SelectDataTable(String que, String deDonde)
+        {
+            command = builderDeComandos.Crear("SELECT "+ que + " FROM LOS_SUPER_AMIGOS." + deDonde, parametros);
+            DataSet datos = new DataSet();
+            SqlDataAdapter adapter = new SqlDataAdapter();
+            adapter.SelectCommand = command;
+            adapter.Fill(datos);
+            return datos.Tables[0];
+         }
+
         public Decimal ObtenerIdDe(TipoDeDocumento tipoDeDocumento)
         {
             if (tipoDeDocumento.GetNombre() == "") 

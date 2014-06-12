@@ -16,6 +16,7 @@ namespace FrbaCommerce.ABM_Cliente
         private String query;
         private SqlCommand command;
         private IList<SqlParameter> parametros = new List<SqlParameter>();
+        private ComunicadorConBaseDeDatos comunicador = new ComunicadorConBaseDeDatos();
 
         public FiltroCliente()
         {
@@ -31,15 +32,7 @@ namespace FrbaCommerce.ABM_Cliente
 
         private void CargarTiposDeDocumento()
         {
-            query = "SELECT nombre FROM LOS_SUPER_AMIGOS.TipoDeDocumento";
-            parametros.Clear();
-            command = builderDeComandos.Crear(query, parametros);
-
-            DataSet tiposDeDocumentos = new DataSet();
-            SqlDataAdapter adapter = new SqlDataAdapter();
-            adapter.SelectCommand = command;
-            adapter.Fill(tiposDeDocumentos);
-            comboBox_TipoDeDoc.DataSource = tiposDeDocumentos.Tables[0].DefaultView;
+            comboBox_TipoDeDoc.DataSource = comunicador.SelectDataTable("nombre", "TipoDeDocumento");
             comboBox_TipoDeDoc.ValueMember = "nombre";
         }
 
@@ -61,33 +54,6 @@ namespace FrbaCommerce.ABM_Cliente
                 dataGridView_Cliente.Columns.Remove("Modificar");
             AgregarColumnaDeModificacion();
             AgregarListenerBotonDeModificacion();
-        }
-
-        private void AgregarColumnaDeModificacion()
-        {
-            DataGridViewButtonColumn botonColumnaModificar = new DataGridViewButtonColumn();
-            botonColumnaModificar.Text = "Modificar";
-            botonColumnaModificar.Name = "Modificar";
-            botonColumnaModificar.UseColumnTextForButtonValue = true;
-            dataGridView_Cliente.Columns.Add(botonColumnaModificar);
-        }
-
-        private void AgregarListenerBotonDeModificacion()
-        {
-            // Add a CellClick handler to handle clicks in the button column.
-            dataGridView_Cliente.CellClick +=
-                new DataGridViewCellEventHandler(dataGridView_Cliente_CellClick);
-        }
-
-        private void dataGridView_Cliente_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
-            // Controla que la celda que se clickeo fue la de modificar
-            if (e.ColumnIndex == dataGridView_Cliente.Columns["modificar"].Index && e.RowIndex >= 0)
-            {
-                String idClienteAModificar = dataGridView_Cliente.Rows[e.RowIndex].Cells["id"].Value.ToString();
-                new EditarCliente(idClienteAModificar).ShowDialog();
-                CargarClientes();
-            }
         }
 
         private void button_Buscar_Click(object sender, EventArgs e)
@@ -129,5 +95,31 @@ namespace FrbaCommerce.ABM_Cliente
             this.Close();
         }
 
+        private void AgregarColumnaDeModificacion()
+        {
+            DataGridViewButtonColumn botonColumnaModificar = new DataGridViewButtonColumn();
+            botonColumnaModificar.Text = "Modificar";
+            botonColumnaModificar.Name = "Modificar";
+            botonColumnaModificar.UseColumnTextForButtonValue = true;
+            dataGridView_Cliente.Columns.Add(botonColumnaModificar);
+        }
+
+        private void AgregarListenerBotonDeModificacion()
+        {
+            // Add a CellClick handler to handle clicks in the button column.
+            dataGridView_Cliente.CellClick +=
+                new DataGridViewCellEventHandler(dataGridView_Cliente_CellClick);
+        }
+
+        private void dataGridView_Cliente_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            // Controla que la celda que se clickeo fue la de modificar
+            if (e.ColumnIndex == dataGridView_Cliente.Columns["modificar"].Index && e.RowIndex >= 0)
+            {
+                String idClienteAModificar = dataGridView_Cliente.Rows[e.RowIndex].Cells["id"].Value.ToString();
+                new EditarCliente(idClienteAModificar).ShowDialog();
+                CargarClientes();
+            }
+        }
     }
 }

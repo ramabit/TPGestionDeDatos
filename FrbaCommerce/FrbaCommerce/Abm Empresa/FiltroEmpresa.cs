@@ -48,33 +48,6 @@ namespace FrbaCommerce.ABM_Empresa
             AgregarListenerBotonDeModificacion();
         }
 
-        private void AgregarColumnaDeModificacion()
-        {
-            DataGridViewButtonColumn botonColumnaModificar = new DataGridViewButtonColumn();
-            botonColumnaModificar.Text = "Modificar";
-            botonColumnaModificar.Name = "Modificar";
-            botonColumnaModificar.UseColumnTextForButtonValue = true;
-            dataGridView_Empresa.Columns.Add(botonColumnaModificar);
-        }
-
-        private void AgregarListenerBotonDeModificacion()
-        {
-            // Add a CellClick handler to handle clicks in the button column.
-            dataGridView_Empresa.CellClick +=
-                new DataGridViewCellEventHandler(dataGridView_Empresa_CellClick);
-        }
-
-        private void dataGridView_Empresa_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
-            // Controla que la celda que se clickeo fue la de modificar
-            if (e.ColumnIndex == dataGridView_Empresa.Columns["modificar"].Index && e.RowIndex >= 0)
-            {
-                String idEmpresaAModificar = dataGridView_Empresa.Rows[e.RowIndex].Cells["id"].Value.ToString();
-                new EditarEmpresa(idEmpresaAModificar).ShowDialog();
-                CargarEmpresas();
-            }
-        }
-
         private void button_Buscar_Click(object sender, EventArgs e)
         {
             String filtro = "ISNULL(usuario_id, 0) != 0";
@@ -107,6 +80,33 @@ namespace FrbaCommerce.ABM_Empresa
             this.Hide();
             new MenuPrincipal().ShowDialog();
             this.Close();
+        }
+
+        private void AgregarColumnaDeModificacion()
+        {
+            DataGridViewButtonColumn botonColumnaModificar = new DataGridViewButtonColumn();
+            botonColumnaModificar.Text = "Modificar";
+            botonColumnaModificar.Name = "Modificar";
+            botonColumnaModificar.UseColumnTextForButtonValue = true;
+            dataGridView_Empresa.Columns.Add(botonColumnaModificar);
+        }
+
+        private void AgregarListenerBotonDeModificacion()
+        {
+            // Add a CellClick handler to handle clicks in the button column.
+            dataGridView_Empresa.CellClick +=
+                new DataGridViewCellEventHandler(dataGridView_Empresa_CellClick);
+        }
+
+        private void dataGridView_Empresa_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            // Controla que la celda que se clickeo fue la de modificar
+            if (e.ColumnIndex == dataGridView_Empresa.Columns["modificar"].Index && e.RowIndex >= 0)
+            {
+                String idEmpresaAModificar = dataGridView_Empresa.Rows[e.RowIndex].Cells["id"].Value.ToString();
+                new EditarEmpresa(idEmpresaAModificar).ShowDialog();
+                CargarEmpresas();
+            }
         }
     }
 }

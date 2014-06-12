@@ -34,11 +34,6 @@ namespace FrbaCommerce.ABM_Empresa
             AgregarListenerACalendario();
         }
 
-        private void AgregarListenerACalendario()
-        {
-            this.monthCalendar_FechaDeCreacion.DateSelected += new System.Windows.Forms.DateRangeEventHandler(this.monthCalendar_FechaDeCreacion_DateSelected);
-        }
-
         private void button_Guardar_Click(object sender, EventArgs e)
         {
             // Guarda en variables todos los campos de entrada
@@ -162,6 +157,11 @@ namespace FrbaCommerce.ABM_Empresa
             this.Hide();
             new MenuPrincipal().ShowDialog();
             this.Close();
+        }
+
+        private void AgregarListenerACalendario()
+        {
+            this.monthCalendar_FechaDeCreacion.DateSelected += new System.Windows.Forms.DateRangeEventHandler(this.monthCalendar_FechaDeCreacion_DateSelected);
         }
 
         private void button_FechaDeCreacion_Click(object sender, EventArgs e)

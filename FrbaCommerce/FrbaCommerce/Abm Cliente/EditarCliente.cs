@@ -37,13 +37,7 @@ namespace FrbaCommerce.ABM_Cliente
 
         private void CargarTipoDeDocumentos()
         {
-            command = builderDeComandos.Crear("SELECT nombre FROM LOS_SUPER_AMIGOS.TipoDeDocumento", parametros);
-
-            DataSet rubros = new DataSet();
-            SqlDataAdapter adapter = new SqlDataAdapter();
-            adapter.SelectCommand = command;
-            adapter.Fill(rubros);
-            comboBox_TipoDeDocumento.DataSource = rubros.Tables[0].DefaultView;
+            comboBox_TipoDeDocumento.DataSource = comunicador.SelectDataTable("nombre", "TipoDeDocumento");
             comboBox_TipoDeDocumento.ValueMember = "nombre";
         }
 
@@ -193,45 +187,6 @@ namespace FrbaCommerce.ABM_Cliente
         {
             textBox_FechaDeNacimiento.Text = e.Start.ToShortDateString();
             monthCalendar_FechaDeNacimiento.Visible = false;
-        }
-
-        private bool pasoControlDeUnicidad(string telefono)
-        {
-            query = "SELECT COUNT(*) FROM LOS_SUPER_AMIGOS.Cliente WHERE telefono = @telefono";
-            parametros.Clear();
-            parametros.Add(new SqlParameter("@telefono", telefono));
-            int cantidad = (int)builderDeComandos.Crear(query, parametros).ExecuteScalar();
-            if (cantidad > 0)
-            {
-                MessageBox.Show("Ya existe ese telefono");
-                return false;
-            }
-            return true;
-        }
-
-        private bool pasoControlDeRegistro(Decimal tipoDeDocumento, String numeroDeDocumento)
-        {
-            query = "SELECT COUNT(*) FROM LOS_SUPER_AMIGOS.Cliente WHERE tipo_de_documento_id = @tipoDeDocumento AND documento = @numeroDeDocumento";
-            parametros.Clear();
-            parametros.Add(new SqlParameter("@tipoDeDocumento", tipoDeDocumento));
-            parametros.Add(new SqlParameter("@numeroDeDocumento", Convert.ToDecimal(numeroDeDocumento)));
-            int cantidad = (int)builderDeComandos.Crear(query, parametros).ExecuteScalar();
-            if (cantidad > 0)
-            {
-                MessageBox.Show("Ya existe ese numero de documento");
-                return false;
-            }
-            return true;
-        }
-
-        private bool pasoControlDeNoVacio(string valor)
-        {
-            if (valor == "")
-            {
-                MessageBox.Show("Faltan datos");
-                return false;
-            }
-            return true;
         }
     }
 }
