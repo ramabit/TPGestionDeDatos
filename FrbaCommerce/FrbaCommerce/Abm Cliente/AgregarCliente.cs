@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Data.SqlClient;
 using FrbaCommerce.Objetos;
+using FrbaCommerce.Exceptions;
 
 namespace FrbaCommerce.ABM_Cliente
 {
@@ -87,13 +88,11 @@ namespace FrbaCommerce.ABM_Cliente
             tipoDeDocumentoObjeto.SetNombre(tipoDeDocumento);
             Decimal idTipoDeDocumento = comunicador.ObtenerIdDe(tipoDeDocumentoObjeto);
 
-            MessageBox.Show("" + idTipoDeDocumento);
-
             // Controla que tipo y numero de documento no se encuentren registrado en el sistema
-            if (!this.pasoControlDeRegistro(idTipoDeDocumento, numeroDeDocumento)) return;
+            //if (!this.pasoControlDeRegistro(idTipoDeDocumento, numeroDeDocumento)) return;
 
             // Controla que telefono sea unico
-            if (!this.pasoControlDeUnicidad(telefono)) return;
+            //if (!this.pasoControlDeUnicidad(telefono)) return;
 
             // Crea una direccion y se guarda su id
             Direccion direccion = new Direccion();
@@ -104,8 +103,6 @@ namespace FrbaCommerce.ABM_Cliente
             direccion.SetCodigoPostal(codigoPostal);
             direccion.SetLocalidad(localidad);
             Decimal idDireccion = comunicador.CrearDireccion(direccion);
-
-            MessageBox.Show("" + idDireccion);
 
             // Si el cliente lo crea el admin, crea un nuevo usuario predeterminado. Si lo crea un nuevo registro de usuario, usa el que viene por parametro
             Decimal idUsuario;
@@ -128,9 +125,21 @@ namespace FrbaCommerce.ABM_Cliente
             cliente.SetNumeroDeDocumento(numeroDeDocumento);
             cliente.SetIdDireccion(idDireccion);
             cliente.SetIdUsuario(idUsuario);
-            Decimal idCliente = comunicador.CrearCliente(cliente);
-
-            if (idCliente > 0) MessageBox.Show("Se agrego el cliente correctamente");
+            try
+            {
+                Decimal idCliente = comunicador.CrearCliente(cliente);
+                if (idCliente > 0) MessageBox.Show("Se agrego el cliente correctamente");
+            }
+            catch (ClienteYaExisteException exception)
+            {
+                MessageBox.Show("El documento ya existe");
+                return;
+            }
+            catch (TelefonoYaExisteException exception)
+            {
+                MessageBox.Show("El telefono ya existe");
+                return;
+            }
             
             VolverAlMenuPrincial();
         }
@@ -198,7 +207,6 @@ namespace FrbaCommerce.ABM_Cliente
             int cantidad = (int)builderDeComandos.Crear(query, parametros).ExecuteScalar();
             if (cantidad > 0)
             {
-                MessageBox.Show("Ya existe ese numero de documento");
                 return false;
             }
             return true;
