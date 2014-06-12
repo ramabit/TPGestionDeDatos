@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Data.SqlClient;
+using FrbaCommerce.Objetos;
 
 namespace FrbaCommerce.ABM_Empresa
 {
@@ -16,14 +17,14 @@ namespace FrbaCommerce.ABM_Empresa
         private String query;
         private SqlCommand command;
         private IList<SqlParameter> parametros = new List<SqlParameter>();
-        private String idEmpresa;
+        private Decimal idEmpresa;
         private Decimal idDireccion;
         private ComunicadorConBaseDeDatos comunicador = new ComunicadorConBaseDeDatos();
 
         public EditarEmpresa(String idEmpresa)
         {
             InitializeComponent();
-            this.idEmpresa = idEmpresa;
+            this.idEmpresa = Convert.ToDecimal(idEmpresa);
         }
 
         private void EditarEmpresa_Load(object sender, EventArgs e)
@@ -86,6 +87,8 @@ namespace FrbaCommerce.ABM_Empresa
             String codigoPostal = textBox_CodigoPostal.Text;
             String localidad = textBox_Localidad.Text;
 
+            Boolean pudoModificar;
+
             // Controla que esten completos los campos
             if (!this.pasoControlDeNoVacio(razonSocial)) return;
             if (!this.pasoControlDeNoVacio(nombreDeContacto)) return;
@@ -109,26 +112,23 @@ namespace FrbaCommerce.ABM_Empresa
             direccion.SetDepartamento(departamento);
             direccion.SetCodigoPostal(codigoPostal);
             direccion.SetLocalidad(localidad);
-            Boolean pudoModificar = comunicador.ModificarDireccion(idDireccion, direccion);
+            pudoModificar = comunicador.ModificarDireccion(idDireccion, direccion);
 
             if (pudoModificar) MessageBox.Show("La direccion se modifico correctamente");
             else MessageBox.Show("La direccion no se pudo modificar correctamente");
 
-            parametros.Clear();
-            parametros.Add(new SqlParameter("@razonSocial", razonSocial));
-            parametros.Add(new SqlParameter("@nombreDeContacto", nombreDeContacto));
-            parametros.Add(new SqlParameter("@cuit", cuit));
-            parametros.Add(new SqlParameter("@fechaDeCreacion", fechaDeCreacion));
-            parametros.Add(new SqlParameter("@mail", mail));
-            parametros.Add(new SqlParameter("@telefono", Convert.ToDecimal(telefono)));
-            parametros.Add(new SqlParameter("@ciudad", ciudad));
-            parametros.Add(new SqlParameter("@idEmpresa", idEmpresa));
+            Empresa empresa = new Empresa();
+            empresa.SetRazonSocial(razonSocial);
+            empresa.SetNombreDeContacto(nombreDeContacto);
+            empresa.SetCuit(cuit);
+            empresa.SetFechaDeCreacion(fechaDeCreacion);
+            empresa.SetMail(mail);
+            empresa.SetTelefono(telefono);
+            empresa.SetCiudad(ciudad);
+            pudoModificar = comunicador.ModificarEmpresa(idEmpresa, empresa);
 
-            query = "UPDATE LOS_SUPER_AMIGOS.Empresa SET razon_social = @razonSocial, nombre_de_contacto = @nombreDeContacto, cuit = @cuit, fecha_creacion = @fechaDeCreacion, mail = @mail, telefono = @telefono, ciudad = @ciudad  WHERE id = @idEmpresa";
-
-            int filasAfectadas = builderDeComandos.Crear(query, parametros).ExecuteNonQuery();
-
-            if (filasAfectadas == 1) MessageBox.Show("El cliente se modifico correctamente");
+            if (pudoModificar) MessageBox.Show("La empresa se modifico correctamente");
+            else MessageBox.Show("La empresa no se pudo modificar correctamente");
 
             this.Close();
         }
