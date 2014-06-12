@@ -18,14 +18,13 @@ namespace FrbaCommerce.Calificar_Vendedor
 
         private Decimal id;
         private String tipo;
-        private int calificacion { get; set;}
-        private string descripcion {get; set;}
+        private int calificacion { get; set; }
+        private string descripcion { get; set; }
 
-        public Calificar(Decimal idCompraParaCalificar, String tipoCompraParaCalificar)
+        public Calificar(Decimal idCompraParaCalificar)
         {
             InitializeComponent();
             id = idCompraParaCalificar;
-            tipo = tipoCompraParaCalificar;
             calificacion = 0;
             descripcion = "";
         }
@@ -58,7 +57,7 @@ namespace FrbaCommerce.Calificar_Vendedor
                 comboBoxDescripciones.Enabled = true;
                 textBoxDescripcion.Enabled = false;
             }
-            else 
+            else
             {
                 comboBoxDescripciones.Enabled = false;
                 textBoxDescripcion.Enabled = true;
@@ -69,17 +68,17 @@ namespace FrbaCommerce.Calificar_Vendedor
         {
             if (checkBoxPredeterminado.Checked)
             {
-                if(comboBoxDescripciones.SelectedItem != null)
+                if (comboBoxDescripciones.SelectedItem != null)
                 {
                     descripcion = comboBoxDescripciones.SelectedItem.ToString();
-                } 
+                }
             }
             else
             {
                 descripcion = textBoxDescripcion.Text;
             }
-            
-            if(this.calificacion==0)
+
+            if (this.calificacion == 0)
             {
                 MessageBox.Show("Seleccione una cantidad de estrellas");
                 return;
@@ -104,21 +103,13 @@ namespace FrbaCommerce.Calificar_Vendedor
             parametros.Add(new SqlParameter("@idCalif", elId));
             parametros.Add(new SqlParameter("@id", id));
 
-            // referencia en compra u oferta a la calificacion
-            if (tipo == "Compra")
-            {
-                String compraAct = "update LOS_SUPER_AMIGOS.Compra"
-                                 + " set calificacion_id = @idCalif"
-                                 + " where id = @id";
-                builderDeComandos.Crear(compraAct, parametros).ExecuteNonQuery();
-            }
-            else if (tipo == "Oferta")
-            {
-                String compraAct = "update LOS_SUPER_AMIGOS.Oferta"
-                                 + " set calificacion_id = @idCalif"
-                                 + " where id = @id";
-                builderDeComandos.Crear(compraAct, parametros).ExecuteNonQuery();
-            }
+            // referencia en compra a la calificacion
+
+            String compraAct = "update LOS_SUPER_AMIGOS.Compra"
+                             + " set calificacion_id = @idCalif"
+                             + " where id = @id";
+            builderDeComandos.Crear(compraAct, parametros).ExecuteNonQuery();
+
 
             MessageBox.Show("Calificacion hecha correctamente");
 
@@ -138,6 +129,6 @@ namespace FrbaCommerce.Calificar_Vendedor
         {
             calificacion = (int)dropdownCalificacion.SelectedItem;
         }
-        
+
     }
 }

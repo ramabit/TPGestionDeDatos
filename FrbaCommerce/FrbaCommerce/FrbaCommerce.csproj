@@ -175,13 +175,6 @@
       <DependentUpon>Listado.cs</DependentUpon>
     </Compile>
     <Compile Include="BuilderDeComandos.cs" />
-    <Compile Include="Comprar-Ofertar\Preguntar.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Comprar-Ofertar\Preguntar.Designer.cs">
-      <DependentUpon>Preguntar.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Direccion.cs" />
     <Compile Include="Comprar-Ofertar\BuscadorPublicaciones.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -200,6 +193,12 @@
     <Compile Include="Comprar-Ofertar\Ofertar.Designer.cs">
       <DependentUpon>Ofertar.cs</DependentUpon>
     </Compile>
+    <Compile Include="Comprar-Ofertar\Preguntar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Comprar-Ofertar\Preguntar.designer.cs">
+      <DependentUpon>Preguntar.cs</DependentUpon>
+    </Compile>
     <Compile Include="Comprar-Ofertar\VerPublicacion.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -207,6 +206,7 @@
       <DependentUpon>VerPublicacion.cs</DependentUpon>
     </Compile>
     <Compile Include="ConexionDB.cs" />
+    <Compile Include="Direccion.cs" />
     <Compile Include="Editar Publicacion\EditarPublicacion.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -234,19 +234,19 @@
     <Compile Include="Gestion de Preguntas\ResponderPregunta.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Gestion de Preguntas\ResponderPregunta.Designer.cs">
+    <Compile Include="Gestion de Preguntas\ResponderPregunta.designer.cs">
       <DependentUpon>ResponderPregunta.cs</DependentUpon>
     </Compile>
     <Compile Include="Gestion de Preguntas\VerPreguntas.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Gestion de Preguntas\VerPreguntas.Designer.cs">
+    <Compile Include="Gestion de Preguntas\VerPreguntas.designer.cs">
       <DependentUpon>VerPreguntas.cs</DependentUpon>
     </Compile>
     <Compile Include="Gestion de Preguntas\VerRespuestas.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Gestion de Preguntas\VerRespuestas.Designer.cs">
+    <Compile Include="Gestion de Preguntas\VerRespuestas.designer.cs">
       <DependentUpon>VerRespuestas.cs</DependentUpon>
     </Compile>
     <Compile Include="HashSha256.cs" />
@@ -363,11 +363,11 @@
     <EmbeddedResource Include="Editar Publicacion\FiltrarPublicacion.resx">
       <DependentUpon>FiltrarPublicacion.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Facturar Publicaciones\Facturar.resx">
+      <DependentUpon>Facturar.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Generar Publicacion\GenerarPublicacion.resx">
       <DependentUpon>GenerarPublicacion.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Historial Cliente\Historial.resx">
-      <DependentUpon>Historial.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Login\CambiarContrasena.resx">
       <DependentUpon>CambiarContrasena.cs</DependentUpon>

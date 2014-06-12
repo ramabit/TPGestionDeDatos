@@ -29,27 +29,13 @@ namespace FrbaCommerce.Calificar_Vendedor
         private void CargarCompras()
         {
             
-
             parametros.Add(new SqlParameter("@id", UsuarioSesion.Usuario.id));
-            String comprasSinCalificar = "CREATE Table LOS_SUPER_AMIGOS.Compras_Sin_Calificar (id numeric(18,0), tipo nvarchar(10)) insert LOS_SUPER_AMIGOS.Compras_Sin_Calificar (id, tipo) (select id, 'Compra' as tipo from LOS_SUPER_AMIGOS.Compra where usuario_id = @id and isnull(calificacion_id,0) = 0) UNION (select id, 'Oferta' as tipo from LOS_SUPER_AMIGOS.Oferta where usuario_id = @id and isnull(calificacion_id,0) = 0 and gano_subasta = 1)";
-            builderDeComandos.Crear(comprasSinCalificar, parametros).ExecuteNonQuery();
-
-            parametros.Clear();
-            String compras = "(select csc.id id, csc.tipo tipo, u.username Vendedor, p.descripcion Publicacion," 
-                    + " c.cantidad Cantidad, convert(varchar, c.fecha, 102) Fecha"
-                    + " from LOS_SUPER_AMIGOS.Compras_Sin_Calificar csc, LOS_SUPER_AMIGOS.Compra c," 
-                    + " LOS_SUPER_AMIGOS.Usuario u, LOS_SUPER_AMIGOS.Publicacion p"
-                    + " where csc.tipo = 'Compra' and csc.id = c.id and p.usuario_id = u.id  and"
-                    + " c.publicacion_id = p.id)"
-                    + " union all"
-                    + " (select csc.id, csc.tipo, u.username Vendedor, p.descripcion Publicacion," 
-                    + " p.stock Cantidad, convert(varchar, o.fecha, 102) Fecha"
-                    + " from LOS_SUPER_AMIGOS.Compras_Sin_Calificar csc, LOS_SUPER_AMIGOS.Oferta o," 
-                    + " LOS_SUPER_AMIGOS.Usuario u, LOS_SUPER_AMIGOS.Publicacion p"
-                    + " where csc.tipo = 'Oferta' and csc.id = o.id and p.usuario_id = u.id and"
-                    + " o.publicacion_id = p.id)"
-                    + " order by Fecha";
-            command = builderDeComandos.Crear(compras, parametros);
+            String comprasSinCalificar = "select c.id, u.username Vendedor, p.descripcion Publicacion, c.cantidad Cantidad," 
+                        + " p.tipo Tipo, convert(varchar, c.fecha, 102) Fecha"
+                        + " from LOS_SUPER_AMIGOS.Compra c, LOS_SUPER_AMIGOS.Publicacion p, LOS_SUPER_AMIGOS.Usuario u"
+                        + " where c.usuario_id = @id and isnull(c.calificacion_id,0) = 0 and c.publicacion_id = p.id"
+                        + " and p.usuario_id = u.id";
+            command = builderDeComandos.Crear(comprasSinCalificar, parametros);
 
             DataSet datacompras = new DataSet();
             SqlDataAdapter adapter = new SqlDataAdapter();
@@ -75,8 +61,8 @@ namespace FrbaCommerce.Calificar_Vendedor
             col4.HeaderText = "Fecha de compra";
             dataGridViewCompras.Columns.Add(col4);
             DataGridViewColumn col5 = new DataGridViewTextBoxColumn();
-            col5.DataPropertyName = "tipo";
-            col5.HeaderText = "Tipo";
+            col5.DataPropertyName = "Tipo";
+            col5.HeaderText = "Tipo de publicacion";
             dataGridViewCompras.Columns.Add(col5);
             DataGridViewColumn col6 = new DataGridViewTextBoxColumn();
             col6.DataPropertyName = "id";
@@ -84,7 +70,6 @@ namespace FrbaCommerce.Calificar_Vendedor
             dataGridViewCompras.Columns.Add(col6);
 
             dataGridViewCompras.Columns[5].Visible = false;
-            dataGridViewCompras.Columns[4].Visible = false;
 
             dataGridViewCompras.DataSource = datacompras.Tables[0].DefaultView;
 
@@ -96,10 +81,6 @@ namespace FrbaCommerce.Calificar_Vendedor
 
             dataGridViewCompras.CellClick += new DataGridViewCellEventHandler(dataGridViewCompras_CellClick);
             
-            
-            parametros.Clear();
-            String sacamosTabla = "drop table LOS_SUPER_AMIGOS.Compras_Sin_Calificar";
-            builderDeComandos.Crear(sacamosTabla,parametros).ExecuteNonQuery();
 
         }
 
@@ -109,9 +90,8 @@ namespace FrbaCommerce.Calificar_Vendedor
             if (e.ColumnIndex == dataGridViewCompras.Columns["Calificar vendedor"].Index && e.RowIndex >= 0)
             {
                 Decimal idCompraParaCalificar = Convert.ToDecimal(dataGridViewCompras.Rows[e.RowIndex].Cells[5].Value);
-                String tipoCompraParaCalificar = dataGridViewCompras.Rows[e.RowIndex].Cells[4].Value.ToString();
                 this.Hide();
-                new Calificar(idCompraParaCalificar, tipoCompraParaCalificar).ShowDialog();
+                new Calificar(idCompraParaCalificar).ShowDialog();
                 this.Close();
             }
         }
