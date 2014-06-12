@@ -17,7 +17,8 @@ namespace FrbaCommerce.ABM_Empresa
         private SqlCommand command;
         private IList<SqlParameter> parametros = new List<SqlParameter>();
         private String idEmpresa;
-        private String idDireccion;
+        private Decimal idDireccion;
+        private ComunicadorConBaseDeDatos comunicador = new ComunicadorConBaseDeDatos();
 
         public EditarEmpresa(String idEmpresa)
         {
@@ -50,17 +51,17 @@ namespace FrbaCommerce.ABM_Empresa
             textBox_Mail.Text = Convert.ToString(reader["mail"]);
             textBox_Telefono.Text = Convert.ToString(reader["telefono"]);
             textBox_Ciudad.Text = Convert.ToString(reader["ciudad"]);
-            idDireccion = Convert.ToString(reader["direccion_id"]);
+            idDireccion = Convert.ToDecimal(reader["direccion_id"]);
 
             CargarDireccion(idDireccion);
 
             if (Convert.ToBoolean(reader["habilitado"])) checkBox_Habilitado.Checked = true;
         }
 
-        private void CargarDireccion(String idDireccion)
+        private void CargarDireccion(Decimal idDireccion)
         {
             Direccion direccion = new Direccion();
-            Boolean pudoObtenerDireccion = direccion.ObtenerDireccion(Convert.ToDecimal(idDireccion));
+            Boolean pudoObtenerDireccion = direccion.ObtenerDireccion(idDireccion);
 
             if (!pudoObtenerDireccion) throw new Exception("No existe la direccion");
 
@@ -104,15 +105,6 @@ namespace FrbaCommerce.ABM_Empresa
             if (!this.pasoControlDeNoVacio(codigoPostal)) return;
             if (!this.pasoControlDeNoVacio(localidad)) return;
 
-            // Controla que el cuit no se haya registrado en el sistema
-            if (!this.pasoControlDeRegistroDeCuit(cuit)) return;
-
-            // Controla que la razon social no se encuentren registrado en el sistema
-            if (!this.pasoControlDeRegistroDeRazonSocial(razonSocial)) return;
-
-            // Controla que telefono sea unico
-            if (!this.pasoControlDeUnicidad(telefono)) return;
-
             // Update direccion
             Direccion direccion = new Direccion();
             direccion.SetCalle(calle);
@@ -121,9 +113,9 @@ namespace FrbaCommerce.ABM_Empresa
             direccion.SetDepartamento(departamento);
             direccion.SetCodigoPostal(codigoPostal);
             direccion.SetLocalidad(localidad);
-            Boolean pudoModificar = direccion.ModificarDireccion(Convert.ToDecimal(idDireccion));
+            Boolean pudoModificar = comunicador.ModificarDireccion(idDireccion, direccion);
 
-            if (!pudoModificar) MessageBox.Show("La direccion se modifico correctamente");
+            if (pudoModificar) MessageBox.Show("La direccion se modifico correctamente");
             else MessageBox.Show("La direccion no se pudo modificar correctamente");
 
             parametros.Clear();
