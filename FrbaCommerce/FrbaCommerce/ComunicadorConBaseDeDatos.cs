@@ -390,5 +390,50 @@ namespace FrbaCommerce
             }
             return true;
         }
+
+        public Cliente ObtenerCliente(Decimal idCliente)
+        {
+            Cliente nuevoCliente = new Cliente();
+            query = "SELECT * FROM LOS_SUPER_AMIGOS.Cliente WHERE id = @idCliente";
+            parametros.Clear();
+            parametros.Add(new SqlParameter("@idCliente", idCliente));
+            SqlDataReader readerCliente = builderDeComandos.Crear(query, parametros).ExecuteReader();
+            if (readerCliente.Read())
+            {
+                nuevoCliente.SetNombre(Convert.ToString(readerCliente["nombre"]));
+                nuevoCliente.SetApellido(Convert.ToString(readerCliente["apellido"]));
+                nuevoCliente.SetFechaDeNacimiento(Convert.ToString(readerCliente["fecha_nacimiento"]));
+                nuevoCliente.SetMail(Convert.ToString(readerCliente["mail"]));
+                nuevoCliente.SetTelefono(Convert.ToString(readerCliente["telefono"]));
+                nuevoCliente.SetIdTipoDeDocumento(Convert.ToDecimal(readerCliente["tipo_de_documento_id"]));
+                nuevoCliente.SetNumeroDeDocumento(Convert.ToString(readerCliente["documento"]));
+                nuevoCliente.SetIdDireccion(Convert.ToDecimal(readerCliente["direccion_id"]));
+                nuevoCliente.SetIdUsuario(Convert.ToDecimal(readerCliente["usuario_id"]));
+                return nuevoCliente;
+            }
+            return nuevoCliente;
+        }
+
+        public Empresa ObtenerEmpresa(Decimal idEmpresa)
+        {
+            Empresa nuevoEmpresa = new Empresa();
+            query = "SELECT * FROM LOS_SUPER_AMIGOS.Empresa WHERE id = @idEmpresa";
+            parametros.Clear();
+            parametros.Add(new SqlParameter("@idEmpresa", idEmpresa));
+            SqlDataReader readerEmpresa = builderDeComandos.Crear(query, parametros).ExecuteReader();
+            if (readerEmpresa.Read())
+            {
+                nuevoEmpresa.SetRazonSocial(Convert.ToString(readerEmpresa["razon_social"]));
+                nuevoEmpresa.SetNombreDeContacto(Convert.ToString(readerEmpresa["nombre_de_contacto"]));
+                nuevoEmpresa.SetFechaDeCreacion(Convert.ToString(readerEmpresa["fecha_creacion"]));
+                nuevoEmpresa.SetMail(Convert.ToString(readerEmpresa["mail"]));
+                nuevoEmpresa.SetTelefono(Convert.ToString(readerEmpresa["telefono"]));
+                nuevoEmpresa.SetCiudad(Convert.ToString(readerEmpresa["ciudad"]));
+                nuevoEmpresa.SetIdDireccion(Convert.ToDecimal(readerEmpresa["direccion_id"]));
+                nuevoEmpresa.SetIdUsuario(Convert.ToDecimal(readerEmpresa["usuario_id"]));
+                return nuevoEmpresa;
+            }
+            return nuevoEmpresa;
+        }
     }
 }
