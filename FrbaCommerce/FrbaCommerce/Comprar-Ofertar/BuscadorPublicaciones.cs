@@ -277,7 +277,7 @@ namespace FrbaCommerce.Comprar_Ofertar
         {
             String publicacionElegida = dataGridView1.Rows[e.RowIndex].Cells["descripcion"].Value.ToString();
             this.Hide();
-            new VerPublicacion(publicacionElegida).ShowDialog();
+            new VerPublicacion(publicacionElegida).Show();
             this.Close();
         }
 
