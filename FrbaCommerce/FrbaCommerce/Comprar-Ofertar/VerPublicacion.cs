@@ -104,7 +104,7 @@ namespace FrbaCommerce.Comprar_Ofertar
             }
             else
             {
-                String queryVista = "SELECT * FROM VistaCantidadVendida WHERE descripcion = @descripcion";
+                String queryVista = "SELECT * FROM LOS_SUPER_AMIGOS.VistaCantidadVendida WHERE descripcion = @descripcion";
                 SqlDataReader readerVista = builderDeComandos.Crear(queryVista, parametros).ExecuteReader();
 
                 String queryCompra = "SELECT * FROM LOS_SUPER_AMIGOS.Publicacion WHERE descripcion = @descripcion";
@@ -134,7 +134,7 @@ namespace FrbaCommerce.Comprar_Ofertar
             }
             else
             {                
-                String queryVista = "SELECT * FROM VistaOfertaMax WHERE publicacion_id = (SELECT publicacion_id FROM LOS_SUPER_AMIGOS.Publicacion WHERE descripcion = @descripcion)";
+                String queryVista = "SELECT * FROM LOS_SUPER_AMIGOS.VistaOfertaMax WHERE publicacion_id = (SELECT publicacion_id FROM LOS_SUPER_AMIGOS.Publicacion WHERE descripcion = @descripcion)";
                 SqlDataReader readerVista = builderDeComandos.Crear(queryVista, parametros).ExecuteReader();
                 if (readerVista.Read())
                 {
