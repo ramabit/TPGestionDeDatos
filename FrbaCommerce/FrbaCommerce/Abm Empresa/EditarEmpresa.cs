@@ -91,7 +91,7 @@ namespace FrbaCommerce.ABM_Empresa
                 if (pudoModificar) MessageBox.Show("La direccion se modifico correctamente");
                 else MessageBox.Show("La direccion no se pudo modificar correctamente");
             }
-            catch (CampoVacioException exception)
+            catch (CampoVacioException)
             {
                 MessageBox.Show("Faltan completar campos en direccion");
                 return;
@@ -161,58 +161,6 @@ namespace FrbaCommerce.ABM_Empresa
         {
             textBox_FechaDeCreacion.Text = e.Start.ToShortDateString();
             monthCalendar_FechaDeCreacion.Visible = false;
-        }
-
-        private bool pasoControlDeUnicidad(string telefono)
-        {
-            query = "SELECT COUNT(*) FROM LOS_SUPER_AMIGOS.Cliente WHERE telefono = @telefono";
-            parametros.Clear();
-            parametros.Add(new SqlParameter("@telefono", telefono));
-            int cantidad = (int)builderDeComandos.Crear(query, parametros).ExecuteScalar();
-            if (cantidad > 0)
-            {
-                MessageBox.Show("Ya existe ese telefono");
-                return false;
-            }
-            return true;
-        }
-
-        private bool pasoControlDeRegistroDeRazonSocial(String razonSocial)
-        {
-            query = "SELECT COUNT(*) FROM LOS_SUPER_AMIGOS.Empresa WHERE razon_social = @razonSocial";
-            parametros.Clear();
-            parametros.Add(new SqlParameter("@razonSocial", razonSocial));
-            int cantidad = (int)builderDeComandos.Crear(query, parametros).ExecuteScalar();
-            if (cantidad > 0)
-            {
-                MessageBox.Show("Ya existe esa razon social");
-                return false;
-            }
-            return true;
-        }
-
-        private bool pasoControlDeRegistroDeCuit(String cuit)
-        {
-            query = "SELECT COUNT(*) FROM LOS_SUPER_AMIGOS.Empresa WHERE cuit = @cuit";
-            parametros.Clear();
-            parametros.Add(new SqlParameter("@cuit", cuit));
-            int cantidad = (int)builderDeComandos.Crear(query, parametros).ExecuteScalar();
-            if (cantidad > 0)
-            {
-                MessageBox.Show("Ya existe ese cuit");
-                return false;
-            }
-            return true;
-        }
-
-        private bool pasoControlDeNoVacio(string valor)
-        {
-            if (valor == "")
-            {
-                MessageBox.Show("Faltan datos");
-                return false;
-            }
-            return true;
         }
     }
 }
