@@ -67,7 +67,6 @@ namespace FrbaCommerce.ABM_Cliente
             String departamento = textBox_Departamento.Text;
             String codigoPostal = textBox_CodigoPostal.Text;
             String localidad = textBox_Localidad.Text;
-            SqlParameter parametroOutput;
 
             // Controla que esten completos los campos
             if (!this.pasoControlDeNoVacio(nombre)) return;
@@ -88,6 +87,8 @@ namespace FrbaCommerce.ABM_Cliente
             tipoDeDocumentoObjeto.SetNombre(tipoDeDocumento);
             Decimal idTipoDeDocumento = comunicador.ObtenerIdDe(tipoDeDocumentoObjeto);
 
+            MessageBox.Show("" + idTipoDeDocumento);
+
             // Controla que tipo y numero de documento no se encuentren registrado en el sistema
             if (!this.pasoControlDeRegistro(idTipoDeDocumento, numeroDeDocumento)) return;
 
@@ -104,6 +105,8 @@ namespace FrbaCommerce.ABM_Cliente
             direccion.SetLocalidad(localidad);
             Decimal idDireccion = comunicador.CrearDireccion(direccion);
 
+            MessageBox.Show("" + idDireccion);
+
             // Si el cliente lo crea el admin, crea un nuevo usuario predeterminado. Si lo crea un nuevo registro de usuario, usa el que viene por parametro
             Decimal idUsuario;
             if (username == "clienteCreadoPorAdmin")
@@ -115,23 +118,19 @@ namespace FrbaCommerce.ABM_Cliente
                 idUsuario = comunicador.CrearUsuarioConValores(username, contrasena);
             }
             
-            // Hace el INSERT en Cliente
-            parametros.Clear();
-            parametros.Add(new SqlParameter("@nombre", nombre));
-            parametros.Add(new SqlParameter("@apellido", apellido));
-            parametros.Add(new SqlParameter("@idTipoDeDocumento", idTipoDeDocumento));
-            parametros.Add(new SqlParameter("@numeroDeDocumento", Convert.ToDecimal(numeroDeDocumento)));
-            parametros.Add(new SqlParameter("@fechaDeNacimiento", fechaDeNacimiento));
-            parametros.Add(new SqlParameter("@mail", mail));
-            parametros.Add(new SqlParameter("@telefono", Convert.ToDecimal(telefono)));
-            parametros.Add(new SqlParameter("@idDireccion", idDireccion));
-            parametros.Add(new SqlParameter("@idUsuario", idUsuario));
+            Cliente cliente = new Cliente();
+            cliente.SetNombre(nombre);
+            cliente.SetApellido(apellido);
+            cliente.SetFechaDeNacimiento(fechaDeNacimiento);
+            cliente.SetMail(mail);
+            cliente.SetTelefono(telefono);
+            cliente.SetIdTipoDeDocumento(idTipoDeDocumento);
+            cliente.SetNumeroDeDocumento(numeroDeDocumento);
+            cliente.SetIdDireccion(idDireccion);
+            cliente.SetIdUsuario(idUsuario);
+            Decimal idCliente = comunicador.CrearCliente(cliente);
 
-            query = "INSERT INTO LOS_SUPER_AMIGOS.Cliente (nombre, apellido, fecha_nacimiento, tipo_de_documento_id, documento, mail, telefono, direccion_id, usuario_id) values (@nombre, @apellido, @fechaDeNacimiento, @idTipoDeDocumento, @numeroDeDocumento, @mail, @telefono, @idDireccion, @idUsuario)";
-
-            int filasAfectadas = builderDeComandos.Crear(query, parametros).ExecuteNonQuery();
-
-            if (filasAfectadas == 1) MessageBox.Show("Se agrego el cliente correctamente");
+            if (idCliente > 0) MessageBox.Show("Se agrego el cliente correctamente");
             
             VolverAlMenuPrincial();
         }
