@@ -172,7 +172,7 @@ namespace FrbaCommerce
             return true;
         }
 
-        private bool pasoControlDeUnicidadTelefonoCliente(string telefono)
+        private bool pasoControlDeUnicidadTelefonoCliente(String telefono)
         {
             query = "SELECT COUNT(*) FROM LOS_SUPER_AMIGOS.Cliente WHERE telefono = @telefono";
             parametros.Clear();
@@ -218,7 +218,7 @@ namespace FrbaCommerce
             return idEmpresaNuevo;
         }
 
-        private bool pasoControlDeUnicidadTelefonoEmpresa(string telefono)
+        private bool pasoControlDeUnicidadTelefonoEmpresa(String telefono)
         {
             query = "SELECT COUNT(*) FROM LOS_SUPER_AMIGOS.Empresa WHERE telefono = @telefono";
             parametros.Clear();
@@ -259,6 +259,12 @@ namespace FrbaCommerce
 
         public Boolean ModificarCliente(Decimal idCliente, Cliente cliente)
         {
+            if (!pasoControlDeRegistro(cliente.GetIdTipoDeDocumento(), cliente.GetNumeroDeDocumento(), idCliente))
+                throw new ClienteYaExisteException();
+
+            if (!pasoControlDeUnicidadTelefonoCliente(cliente.GetTelefono(), idCliente))
+                throw new TelefonoYaExisteException();
+
             query = "UPDATE LOS_SUPER_AMIGOS.Cliente SET nombre = @nombre, apellido = @apellido, tipo_de_documento_id = @tipo_de_documento_id, documento = @documento, fecha_nacimiento = @fecha_nacimiento, mail = @mail, telefono = @telefono WHERE id = @idCliente";
             parametros.Clear();
             parametros.Add(new SqlParameter("@nombre", cliente.GetNombre()));
@@ -276,8 +282,46 @@ namespace FrbaCommerce
             return false;
         }
 
+        private bool pasoControlDeRegistro(Decimal tipoDeDocumento, String numeroDeDocumento, Decimal idCliente)
+        {
+            query = "SELECT COUNT(*) FROM LOS_SUPER_AMIGOS.Cliente WHERE tipo_de_documento_id = @tipoDeDocumento AND documento = @numeroDeDocumento AND id != @idCliente";
+            parametros.Clear();
+            parametros.Add(new SqlParameter("@tipoDeDocumento", tipoDeDocumento));
+            parametros.Add(new SqlParameter("@numeroDeDocumento", numeroDeDocumento));
+            parametros.Add(new SqlParameter("@idCliente", idCliente));
+            int cantidad = (int)builderDeComandos.Crear(query, parametros).ExecuteScalar();
+            if (cantidad > 0)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        private bool pasoControlDeUnicidadTelefonoCliente(String telefono, Decimal idCliente)
+        {
+            query = "SELECT COUNT(*) FROM LOS_SUPER_AMIGOS.Cliente WHERE telefono = @telefono AND id != @idCliente";
+            parametros.Clear();
+            parametros.Add(new SqlParameter("@telefono", telefono));
+            parametros.Add(new SqlParameter("@idCliente", idCliente));
+            int cantidad = (int)builderDeComandos.Crear(query, parametros).ExecuteScalar();
+            if (cantidad > 0)
+            {
+                return false;
+            }
+            return true;
+        }
+
         public Boolean ModificarEmpresa(Decimal idEmpresa, Empresa empresa)
         {
+            if (!pasoControlDeRegistroDeCuit(empresa.GetCuit(), idEmpresa))
+                throw new CuitYaExisteException();
+
+            if (!pasoControlDeUnicidadTelefonoEmpresa(empresa.GetTelefono(), idEmpresa))
+                throw new TelefonoYaExisteException();
+
+            if (!pasoControlDeRegistroDeRazonSocial(empresa.GetRazonSocial(), idEmpresa))
+                throw new RazonSocialYaExisteException();
+
             query = "UPDATE LOS_SUPER_AMIGOS.Empresa SET razon_social = @razon_social, nombre_de_contacto = @nombre_de_contacto, cuit = @cuit, fecha_creacion = @fecha_creacion, mail = @mail, telefono = @telefono, ciudad = @ciudad  WHERE id = @idEmpresa";
             parametros.Clear();
             parametros.Add(new SqlParameter("@razon_social", empresa.GetRazonSocial()));
@@ -293,6 +337,48 @@ namespace FrbaCommerce
 
             if (filasAfectadas == 1) return true;
             return false;
+        }
+
+        private bool pasoControlDeUnicidadTelefonoEmpresa(String telefono, Decimal idEmpresa)
+        {
+            query = "SELECT COUNT(*) FROM LOS_SUPER_AMIGOS.Empresa WHERE telefono = @telefono AND id != @idEmpresa";
+            parametros.Clear();
+            parametros.Add(new SqlParameter("@telefono", telefono));
+            parametros.Add(new SqlParameter("@idEmpresa", idEmpresa));
+            int cantidad = (int)builderDeComandos.Crear(query, parametros).ExecuteScalar();
+            if (cantidad > 0)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        private bool pasoControlDeRegistroDeRazonSocial(String razonSocial, Decimal idEmpresa)
+        {
+            query = "SELECT COUNT(*) FROM LOS_SUPER_AMIGOS.Empresa WHERE razon_social = @razonSocial AND id != @idEmpresa";
+            parametros.Clear();
+            parametros.Add(new SqlParameter("@razonSocial", razonSocial));
+            parametros.Add(new SqlParameter("@idEmpresa", idEmpresa));
+            int cantidad = (int)builderDeComandos.Crear(query, parametros).ExecuteScalar();
+            if (cantidad > 0)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        private bool pasoControlDeRegistroDeCuit(String cuit, Decimal idEmpresa)
+        {
+            query = "SELECT COUNT(*) FROM LOS_SUPER_AMIGOS.Empresa WHERE cuit = @cuit AND id != @idEmpresa";
+            parametros.Clear();
+            parametros.Add(new SqlParameter("@cuit", cuit));
+            parametros.Add(new SqlParameter("@idEmpresa", idEmpresa));
+            int cantidad = (int)builderDeComandos.Crear(query, parametros).ExecuteScalar();
+            if (cantidad > 0)
+            {
+                return false;
+            }
+            return true;
         }
     }
 }

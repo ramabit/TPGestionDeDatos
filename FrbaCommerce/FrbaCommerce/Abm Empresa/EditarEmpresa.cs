@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Data.SqlClient;
 using FrbaCommerce.Objetos;
+using FrbaCommerce.Exceptions;
 
 namespace FrbaCommerce.ABM_Empresa
 {
@@ -125,10 +126,28 @@ namespace FrbaCommerce.ABM_Empresa
             empresa.SetMail(mail);
             empresa.SetTelefono(telefono);
             empresa.SetCiudad(ciudad);
-            pudoModificar = comunicador.ModificarEmpresa(idEmpresa, empresa);
 
-            if (pudoModificar) MessageBox.Show("La empresa se modifico correctamente");
-            else MessageBox.Show("La empresa no se pudo modificar correctamente");
+            try
+            {
+                pudoModificar = comunicador.ModificarEmpresa(idEmpresa, empresa);
+                if (pudoModificar) MessageBox.Show("La empresa se modifico correctamente");
+                else MessageBox.Show("La empresa no se pudo modificar correctamente");
+            }
+            catch (TelefonoYaExisteException exception)
+            {
+                MessageBox.Show("Telefono ya existe");
+                return;
+            }
+            catch (CuitYaExisteException exception)
+            {
+                MessageBox.Show("Cuit ya existe");
+                return;
+            }
+            catch (RazonSocialYaExisteException exception)
+            {
+                MessageBox.Show("RazonSocial ya existe");
+                return;
+            }
 
             this.Close();
         }

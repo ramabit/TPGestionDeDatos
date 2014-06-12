@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Data.SqlClient;
 using FrbaCommerce.Objetos;
+using FrbaCommerce.Exceptions;
 
 namespace FrbaCommerce.ABM_Cliente
 {
@@ -148,11 +149,25 @@ namespace FrbaCommerce.ABM_Cliente
             cliente.SetIdTipoDeDocumento(idTipoDeDocumento);
             cliente.SetNumeroDeDocumento(numeroDeDocumento);
             cliente.SetIdDireccion(idDireccion);
-            pudoModificar = comunicador.ModificarCliente(idCliente, cliente);
-
-            if (pudoModificar) MessageBox.Show("El cliente se modifico correctamente");
-            else MessageBox.Show("El cliente no se pudo modificar correctamente");
             
+
+            try
+            {
+                pudoModificar = comunicador.ModificarCliente(idCliente, cliente);
+                if (pudoModificar) MessageBox.Show("El cliente se modifico correctamente");
+                else MessageBox.Show("El cliente no se pudo modificar correctamente");
+            }
+            catch (ClienteYaExisteException exception)
+            {
+                MessageBox.Show("El documento ya existe");
+                return;
+            }
+            catch (TelefonoYaExisteException exception)
+            {
+                MessageBox.Show("El telefono ya existe");
+                return;
+            }
+
             this.Close();
         }
 
