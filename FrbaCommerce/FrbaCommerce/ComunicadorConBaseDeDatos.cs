@@ -130,6 +130,12 @@ namespace FrbaCommerce
 
         public Decimal CrearCliente(Cliente cliente)
         {
+            if (!pasoControlDeRegistro(cliente.GetIdTipoDeDocumento(), cliente.GetNumeroDeDocumento()))
+                throw new ClienteYaExisteException();
+
+            if (!pasoControlDeUnicidad(cliente.GetTelefono()))
+                throw new TelefonoYaExisteException();
+
             query = "LOS_SUPER_AMIGOS.crear_cliente";
             parametros.Clear();
             parametroOutput = new SqlParameter("@cliente_id", SqlDbType.Decimal);
@@ -150,6 +156,33 @@ namespace FrbaCommerce
             Decimal idClienteNuevo = (Decimal)parametroOutput.Value;
             cliente.SetId(idClienteNuevo);
             return idClienteNuevo;
+        }
+
+        private bool pasoControlDeRegistro(Decimal tipoDeDocumento, String numeroDeDocumento)
+        {
+            query = "SELECT COUNT(*) FROM LOS_SUPER_AMIGOS.Cliente WHERE tipo_de_documento_id = @tipoDeDocumento AND documento = @numeroDeDocumento";
+            parametros.Clear();
+            parametros.Add(new SqlParameter("@tipoDeDocumento", tipoDeDocumento));
+            parametros.Add(new SqlParameter("@numeroDeDocumento", Convert.ToDecimal(numeroDeDocumento)));
+            int cantidad = (int)builderDeComandos.Crear(query, parametros).ExecuteScalar();
+            if (cantidad > 0)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        private bool pasoControlDeUnicidad(string telefono)
+        {
+            query = "SELECT COUNT(*) FROM LOS_SUPER_AMIGOS.Cliente WHERE telefono = @telefono";
+            parametros.Clear();
+            parametros.Add(new SqlParameter("@telefono", telefono));
+            int cantidad = (int)builderDeComandos.Crear(query, parametros).ExecuteScalar();
+            if (cantidad > 0)
+            {
+                return false;
+            }
+            return true;
         }
 
         public Decimal CrearEmpresa(Empresa empresa)
