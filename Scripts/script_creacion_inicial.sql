@@ -61,6 +61,10 @@ DROP TABLE LOS_SUPER_AMIGOS.Factura
 IF OBJECT_ID('LOS_SUPER_AMIGOS.Forma_Pago', 'U') IS NOT NULL
 DROP TABLE LOS_SUPER_AMIGOS.Forma_Pago
 
+IF OBJECT_ID('LOS_SUPER_AMIGOS.crear_cliente', 'P') IS NOT NULL
+DROP PROCEDURE LOS_SUPER_AMIGOS.crear_cliente
+GO
+
 IF OBJECT_ID('LOS_SUPER_AMIGOS.crear_usuario', 'P') IS NOT NULL
 DROP PROCEDURE LOS_SUPER_AMIGOS.crear_usuario
 GO
@@ -79,6 +83,25 @@ GO
 
 IF OBJECT_ID('LOS_SUPER_AMIGOS.gano_subasta') IS NOT NULL
 DROP FUNCTION LOS_SUPER_AMIGOS.gano_subasta
+GO
+
+CREATE PROCEDURE LOS_SUPER_AMIGOS.crear_cliente
+	@nombre nvarchar(255),
+	@apellido nvarchar(255),
+	@tipo_de_documento_id numeric(18,0),
+	@documento numeric(18,0),
+	@fecha_nacimiento datetime,
+	@mail nvarchar(255),
+	@telefono numeric(18,0),
+	@direccion_id numeric(18,0),
+	@usuario_id numeric(18,0),
+	@cliente_id numeric(18,0) OUTPUT
+AS
+BEGIN
+	SET NOCOUNT ON;
+	INSERT INTO LOS_SUPER_AMIGOS.Cliente (nombre, apellido, fecha_nacimiento, tipo_de_documento_id, documento, mail, telefono, direccion_id, usuario_id) values (@nombre, @apellido, @fecha_nacimiento, @tipo_de_documento_id, @documento, @mail, @telefono, @direccion_id, @usuario_id);
+	SET @cliente_id = SCOPE_IDENTITY();	
+END
 GO
 
 CREATE PROCEDURE LOS_SUPER_AMIGOS.crear_usuario_con_valores
