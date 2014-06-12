@@ -60,11 +60,11 @@ namespace FrbaCommerce.ABM_Cliente
             textBox_Nombre.Text = Convert.ToString(reader["nombre"]);
             textBox_Apellido.Text = Convert.ToString(reader["apellido"]);
 
-            query = "SELECT nombre FROM LOS_SUPER_AMIGOS.TipoDeDocumento WHERE id = @idTipoDeDocumento";
-            parametros.Clear();
-            parametros.Add(new SqlParameter("@idTipoDeDocumento", reader["tipo_de_documento_id"]));
-            String tipoDeDocumento = (String) builderDeComandos.Crear(query, parametros).ExecuteScalar();
-            comboBox_TipoDeDocumento.SelectedValue = tipoDeDocumento;
+
+            TipoDeDocumento tipoDeDocumento = new TipoDeDocumento();
+            Decimal idTipoDeDocumento = Convert.ToDecimal(reader["tipo_de_documento_id"]);
+            tipoDeDocumento.SetId(idTipoDeDocumento);
+            comboBox_TipoDeDocumento.SelectedValue = comunicador.ObtenerNombreDe(tipoDeDocumento);
 
             textBox_NumeroDeDoc.Text = Convert.ToString(reader["documento"]);
             textBox_FechaDeNacimiento.Text = Convert.ToString(reader["fecha_nacimiento"]);
@@ -97,7 +97,7 @@ namespace FrbaCommerce.ABM_Cliente
             // Guarda en variables todos los campos de entrada
             String nombre = textBox_Nombre.Text;
             String apellido = textBox_Apellido.Text;
-            String tipoDeDocumento = comboBox_TipoDeDocumento.Text;
+            String tipoDeDocumentoNombre = comboBox_TipoDeDocumento.Text;
             String numeroDeDocumento = textBox_NumeroDeDoc.Text;
             String fechaDeNacimiento = textBox_FechaDeNacimiento.Text;
             String mail = textBox_Mail.Text;
@@ -124,9 +124,9 @@ namespace FrbaCommerce.ABM_Cliente
             if (!this.pasoControlDeNoVacio(localidad)) return;
 
             // Averigua el id del tipo de documento a partir del nombre del tipo de documento
-            TipoDeDocumento tipoDeDocumentoObjeto = new TipoDeDocumento();
-            tipoDeDocumentoObjeto.SetNombre(tipoDeDocumento);
-            Decimal idTipoDeDocumento = comunicador.ObtenerIdDe(tipoDeDocumentoObjeto);
+            TipoDeDocumento tipoDeDocumento = new TipoDeDocumento();
+            tipoDeDocumento.SetNombre(tipoDeDocumentoNombre);
+            Decimal idTipoDeDocumento = comunicador.ObtenerIdDe(tipoDeDocumento);
 
             // Controla que tipo y numero de documento no se encuentren registrado en el sistema
             if (!this.pasoControlDeRegistro(idTipoDeDocumento, numeroDeDocumento)) return;

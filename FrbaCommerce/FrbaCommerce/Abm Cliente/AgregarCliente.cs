@@ -102,7 +102,7 @@ namespace FrbaCommerce.ABM_Cliente
             direccion.SetDepartamento(departamento);
             direccion.SetCodigoPostal(codigoPostal);
             direccion.SetLocalidad(localidad);
-            Decimal idDireccion = direccion.Crear();
+            Decimal idDireccion = comunicador.CrearDireccion(direccion);
 
             // Si el cliente lo crea el admin, crea un nuevo usuario predeterminado. Si lo crea un nuevo registro de usuario, usa el que viene por parametro
             Decimal idUsuario;
