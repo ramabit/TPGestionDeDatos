@@ -125,6 +125,13 @@ BEGIN
 	INSERT INTO LOS_SUPER_AMIGOS.Empresa (razon_social, nombre_de_contacto, cuit, fecha_creacion, mail, telefono, ciudad, direccion_id, usuario_id) values (@razon_social, @nombre_de_contacto, @cuit, @fecha_creacion, @mail, @telefono, @ciudad, @direccion_id, @usuario_id)
 	SET @empresa_id = SCOPE_IDENTITY();	
 END
+=======
+IF OBJECT_ID('LOS_SUPER_AMIGOS.VistaCantidadVendida') IS NOT NULL
+DROP VIEW LOS_SUPER_AMIGOS.VistaCantidadVendida
+GO
+
+IF OBJECT_ID('LOS_SUPER_AMIGOS.VistaOfertaMax') IS NOT NULL
+DROP VIEW LOS_SUPER_AMIGOS.VistaOfertaMax
 GO
 
 CREATE PROCEDURE LOS_SUPER_AMIGOS.crear_usuario_con_valores
@@ -625,3 +632,20 @@ INSERT INTO LOS_SUPER_AMIGOS.Item_Factura
 SELECT DISTINCT g.Item_Factura_Monto, g.Item_Factura_Cantidad, g.Factura_Nro, c.id
 FROM gd_esquema.Maestra g, LOS_SUPER_AMIGOS.Compra c
 WHERE ISNULL(g.Factura_Nro,-1) != -1 and c.publicacion_id = g.Publicacion_Cod
+GO
+
+-- VISTAS
+
+CREATE VIEW LOS_SUPER_AMIGOS.VistaOfertaMax (precioMax,publicacion_id)
+AS
+SELECT MAX(o.monto), o.publicacion_id
+FROM LOS_SUPER_AMIGOS.Oferta o
+GROUP BY o.publicacion_id
+GO
+
+CREATE VIEW LOS_SUPER_AMIGOS.VistaCantidadVendida (cant_vendida,publicacion_id)
+AS
+SELECT SUM(o.cantidad), o.publicacion_id
+FROM LOS_SUPER_AMIGOS.Compra o
+GROUP BY o.publicacion_id
+GO
