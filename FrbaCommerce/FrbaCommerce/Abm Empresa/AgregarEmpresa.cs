@@ -18,6 +18,7 @@ namespace FrbaCommerce.ABM_Empresa
         private IList<SqlParameter> parametros = new List<SqlParameter>();
         private String username;
         private String contrasena;
+        private ComunicadorConBaseDeDatos comunicador = new ComunicadorConBaseDeDatos();
 
         public AgregarEmpresa(String username, String contrasena)
         {
@@ -86,8 +87,7 @@ namespace FrbaCommerce.ABM_Empresa
             direccion.SetDepartamento(departamento);
             direccion.SetCodigoPostal(codigoPostal);
             direccion.SetLocalidad(localidad);
-            Decimal idDireccion = direccion.Crear();
-
+            Decimal idDireccion = comunicador.CrearDireccion(direccion);
 
             // Si la empresa lo crea el admin, crea un nuevo usuario predeterminado. Si lo crea un nuevo registro de usuario, usa el que viene por parametro
             Decimal idUsuario;
