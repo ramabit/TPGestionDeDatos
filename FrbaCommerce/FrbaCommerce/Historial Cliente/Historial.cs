@@ -51,7 +51,7 @@ namespace FrbaCommerce.Historial_Cliente
         private void CargarCompras()
         {
             command = builderDeComandos.Crear("SELECT publicacion.descripcion Producto, compra.cantidad Cantidad, publicacion.precio Precio, compra.fecha Fecha, a_quien.username 'A quien' FROM LOS_SUPER_AMIGOS.Compra compra, LOS_SUPER_AMIGOS.Publicacion publicacion, LOS_SUPER_AMIGOS.Usuario a_quien  WHERE compra.publicacion_id = publicacion.id AND publicacion.usuario_id = a_quien.id AND compra.usuario_id = @idUsuario", parametros);
-            command.Parameters.Add(new SqlParameter("@idUsuario", 72));//UsuarioSesion.Usuario.id));
+            command.Parameters.Add(new SqlParameter("@idUsuario", UsuarioSesion.Usuario.id));
             DataSet compras = new DataSet();
             SqlDataAdapter adapter = new SqlDataAdapter();
             adapter.SelectCommand = command;
@@ -61,8 +61,8 @@ namespace FrbaCommerce.Historial_Cliente
 
         private void CargarOfertas()
         {
-            command = builderDeComandos.Crear("SELECT publicacion.descripcion Producto, oferta.monto Cantidad, publicacion.precio Precio, oferta.fecha Fecha, a_quien.username 'A quien' FROM LOS_SUPER_AMIGOS.Oferta oferta, LOS_SUPER_AMIGOS.Publicacion publicacion, LOS_SUPER_AMIGOS.Usuario a_quien  WHERE oferta.publicacion_id = publicacion.id AND publicacion.usuario_id = a_quien.id AND oferta.usuario_id = @idUsuario", parametros);
-            command.Parameters.Add(new SqlParameter("@idUsuario", 72));//UsuarioSesion.Usuario.id));
+            command = builderDeComandos.Crear("SELECT publicacion.descripcion Producto, oferta.monto Cantidad, publicacion.precio Precio, oferta.fecha Fecha, a_quien.username 'A quien', LOS_SUPER_AMIGOS.gano_subasta(oferta.id) 'Gano la subasta' FROM LOS_SUPER_AMIGOS.Oferta oferta, LOS_SUPER_AMIGOS.Publicacion publicacion, LOS_SUPER_AMIGOS.Usuario a_quien  WHERE oferta.publicacion_id = publicacion.id AND publicacion.usuario_id = a_quien.id AND oferta.usuario_id = @idUsuario", parametros);
+            command.Parameters.Add(new SqlParameter("@idUsuario", UsuarioSesion.Usuario.id));
             DataSet ofertas = new DataSet();
             SqlDataAdapter adapter = new SqlDataAdapter();
             adapter.SelectCommand = command;
@@ -73,7 +73,7 @@ namespace FrbaCommerce.Historial_Cliente
         private void CargarCalificaciones()
         {
             command = builderDeComandos.Crear("SELECT quien.username Quien, a_quien.username 'A Quien', calificacion.cantidad_estrellas Estrellas, calificacion.descripcion Descripcion FROM LOS_SUPER_AMIGOS.Calificacion calificacion, LOS_SUPER_AMIGOS.Compra compra, LOS_SUPER_AMIGOS.Usuario quien, LOS_SUPER_AMIGOS.Publicacion publicacion, LOS_SUPER_AMIGOS.Usuario a_quien WHERE calificacion.id = compra.calificacion_id AND compra.usuario_id = quien.id AND compra.publicacion_id = publicacion.id AND publicacion.usuario_id = a_quien.id AND (quien.id = @idUsuario OR a_quien.id = @idUsuario)", parametros);
-            command.Parameters.Add(new SqlParameter("@idUsuario", 72));//UsuarioSesion.Usuario.id));
+            command.Parameters.Add(new SqlParameter("@idUsuario", UsuarioSesion.Usuario.id));
             DataSet calificaciones = new DataSet();
             SqlDataAdapter adapter = new SqlDataAdapter();
             adapter.SelectCommand = command;
