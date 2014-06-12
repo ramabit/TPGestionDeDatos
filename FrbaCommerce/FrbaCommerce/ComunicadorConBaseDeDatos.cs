@@ -79,5 +79,53 @@ namespace FrbaCommerce
             if (filasAfectadas == 1) return true;
             return false;
         }
+
+        public Direccion ObtenerDireccion(Decimal idDireccion)
+        {
+            Direccion nuevaDireccion = new Direccion();
+            query = "SELECT calle, numero, piso, depto, cod_postal, localidad FROM LOS_SUPER_AMIGOS.Direccion WHERE id = @idDireccion";
+            parametros.Clear();
+            parametros.Add(new SqlParameter("@idDireccion", idDireccion));
+            SqlDataReader readerDireccion = builderDeComandos.Crear(query, parametros).ExecuteReader();
+            if (readerDireccion.Read())
+            {
+                nuevaDireccion.SetCalle(Convert.ToString(readerDireccion["calle"]));
+                nuevaDireccion.SetNumero(Convert.ToString(readerDireccion["numero"]));
+                nuevaDireccion.SetPiso(Convert.ToString(readerDireccion["piso"]));
+                nuevaDireccion.SetDepartamento(Convert.ToString(readerDireccion["depto"]));
+                nuevaDireccion.SetCodigoPostal(Convert.ToString(readerDireccion["cod_postal"]));
+                nuevaDireccion.SetLocalidad(Convert.ToString(readerDireccion["localidad"]));
+                return nuevaDireccion;
+            }
+            return nuevaDireccion;
+        }
+
+        public Decimal CrearUsuario()
+        {
+            query = "LOS_SUPER_AMIGOS.crear_usuario";
+            parametros.Clear();
+            parametroOutput = new SqlParameter("@usuario_id", SqlDbType.Decimal);
+            parametroOutput.Direction = ParameterDirection.Output;
+            parametros.Add(parametroOutput);
+            command = builderDeComandos.Crear(query, parametros);
+            command.CommandType = CommandType.StoredProcedure;
+            command.ExecuteNonQuery();
+            return (Decimal) parametroOutput.Value;
+        }
+
+        public Decimal CrearUsuarioConValores(String username, String password)
+        {
+            query = "LOS_SUPER_AMIGOS.crear_usuario_con_valores";
+            parametros.Clear();
+            parametroOutput = new SqlParameter("@usuario_id", SqlDbType.Decimal);
+            parametroOutput.Direction = ParameterDirection.Output;
+            parametros.Add(new SqlParameter("@username", username));
+            parametros.Add(new SqlParameter("@password", HashSha256.getHash(password)));
+            parametros.Add(parametroOutput);
+            command = builderDeComandos.Crear(query, parametros);
+            command.CommandType = CommandType.StoredProcedure;
+            command.ExecuteNonQuery();
+            return (Decimal) parametroOutput.Value;
+        }
     }
 }
