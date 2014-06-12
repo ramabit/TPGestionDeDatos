@@ -151,5 +151,29 @@ namespace FrbaCommerce
             cliente.SetId(idClienteNuevo);
             return idClienteNuevo;
         }
+
+        public Decimal CrearEmpresa(Empresa empresa)
+        {
+            query = "LOS_SUPER_AMIGOS.crear_empresa";
+            parametros.Clear();
+            parametroOutput = new SqlParameter("@empresa_id", SqlDbType.Decimal);
+            parametroOutput.Direction = ParameterDirection.Output;
+            parametros.Add(new SqlParameter("@razon_social", empresa.GetRazonSocial()));
+            parametros.Add(new SqlParameter("@nombre_de_contacto", empresa.GetNombreDeContacto()));
+            parametros.Add(new SqlParameter("@cuit", empresa.GetCuit()));
+            parametros.Add(new SqlParameter("@fecha_creacion", empresa.GetFechaDeCreacion()));
+            parametros.Add(new SqlParameter("@mail", empresa.GetMail()));
+            parametros.Add(new SqlParameter("@telefono", empresa.GetTelefono()));
+            parametros.Add(new SqlParameter("@ciudad", empresa.GetCiudad()));
+            parametros.Add(new SqlParameter("@direccion_id", empresa.GetIdDireccion()));
+            parametros.Add(new SqlParameter("@usuario_id", empresa.GetIdUsuario()));
+            parametros.Add(parametroOutput);
+            command = builderDeComandos.Crear(query, parametros);
+            command.CommandType = CommandType.StoredProcedure;
+            command.ExecuteNonQuery();
+            Decimal idEmpresaNuevo = (Decimal)parametroOutput.Value;
+            empresa.SetId(idEmpresaNuevo);
+            return idEmpresaNuevo;
+        }
     }
 }
