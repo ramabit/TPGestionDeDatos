@@ -52,6 +52,11 @@ namespace FrbaCommerce
             this.localidad = localidad;
         }
 
+        public void SetId(Decimal id)
+        {
+            this.id = id;
+        }
+
         public String GetCalle()
         {
             return this.calle;
@@ -82,6 +87,11 @@ namespace FrbaCommerce
             return this.localidad;
         }
 
+        public Decimal GetId()
+        {
+            return this.id;
+        }
+
         public Decimal Crear()
         {
             query = "LOS_SUPER_AMIGOS.crear_direccion";
@@ -109,12 +119,12 @@ namespace FrbaCommerce
             SqlDataReader readerDireccion = builderDeComandos.Crear(query, parametros).ExecuteReader();
             if (readerDireccion.Read())
             {
-                this.calle = (String)readerDireccion["calle"];
-                this.numero = (String)readerDireccion["numero"];
-                this.piso = (String)readerDireccion["piso"];
-                this.departamento = (String)readerDireccion["depto"];
-                this.codigoPostal = (String)readerDireccion["cod_postal"];
-                this.localidad = (String)readerDireccion["localidad"];
+                this.calle = Convert.ToString(readerDireccion["calle"]);
+                this.numero = Convert.ToString(readerDireccion["numero"]);
+                this.piso = Convert.ToString(readerDireccion["piso"]);
+                this.departamento = Convert.ToString(readerDireccion["depto"]);
+                this.codigoPostal = Convert.ToString(readerDireccion["cod_postal"]);
+                this.localidad = Convert.ToString(readerDireccion["localidad"]);
                 return true;
             }
             return false;
