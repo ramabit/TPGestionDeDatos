@@ -16,10 +16,10 @@ namespace FrbaCommerce.Comprar_Ofertar
         private IList<SqlParameter> parametros = new List<SqlParameter>();
         private BuilderDeComandos builderDeComandos = new BuilderDeComandos();
         decimal idUsuarioActual = UsuarioSesion.Usuario.id;
-        private int vendedorId;
+        private Decimal vendedorId;
         private int publicacionId;
 
-        public Comprar(int usuarioVendedor, int publicacion)
+        public Comprar(Decimal usuarioVendedor, int publicacion)
         {
             InitializeComponent();
             vendedorId = usuarioVendedor;
@@ -28,33 +28,47 @@ namespace FrbaCommerce.Comprar_Ofertar
 
         private void Comprar_Load(object sender, EventArgs e)
         {
+            pedirContacto();
+            pedirDireccion();            
+        }
+
+        private void pedirContacto()
+        {
             parametros.Clear();
             parametros.Add(new SqlParameter("@usuario", vendedorId));
-            String queryCliente = "SELECT * FROM LOS_SUPER_AMIGOS.Cliente WHERE usuario_id = @usuario) and habilitado = 1";
+
+            String queryCliente = "SELECT * FROM LOS_SUPER_AMIGOS.Cliente WHERE usuario_id = @usuario and habilitado = 1";
             SqlDataReader readerCliente = builderDeComandos.Crear(queryCliente, parametros).ExecuteReader();
 
             if (readerCliente.Read())
             {
                 labelNombre.Text = (String)readerCliente["nombre"] + " " + (String)readerCliente["apellido"];
                 labelMail.Text = (String)readerCliente["mail"];
-                labelTelefono.Text = ( (int)readerCliente["telefono"] ).ToString();
+                labelTelefono.Text = ((Decimal)readerCliente["telefono"]).ToString();
             }
             else
-            {                
+            {
                 String queryEmpresa = "SELECT * FROM LOS_SUPER_AMIGOS.Empresa WHERE usuario_id = @usuario and habilitado = 1)";
                 SqlDataReader readerEmpresa = builderDeComandos.Crear(queryEmpresa, parametros).ExecuteReader();
-
+                readerEmpresa.Read();
                 labelNombre.Text = (String)readerEmpresa["razon_social"];
                 labelMail.Text = (String)readerEmpresa["mail"];
-                labelTelefono.Text = ((int)readerEmpresa["telefono"]).ToString();
+                labelTelefono.Text = ((Decimal)readerEmpresa["telefono"]).ToString();
             }
+        }
+
+        private void pedirDireccion()
+        {
+            parametros.Clear();
+            parametros.Add(new SqlParameter("@usuario", vendedorId));
 
             String queryDireccion = "SELECT * FROM LOS_SUPER_AMIGOS.Direccion WHERE usuario_id = @usuario)";
             SqlDataReader readerDireccion = builderDeComandos.Crear(queryDireccion, parametros).ExecuteReader();
+            readerDireccion.Read();
 
-            labelCalle.Text = (String)readerDireccion["calle"] + " " + (int)readerDireccion["numero"];
-            labelDepartamento.Text = "Departamento " + (int)readerDireccion["piso"] + "-" + (String)readerDireccion["dpto"];
-            labelPostal.Text = ((int)readerDireccion["cod_postal"]).ToString();
+            labelCalle.Text = (String)readerDireccion["calle"] + " " + (Decimal)readerDireccion["numero"];
+            labelDepartamento.Text = "Departamento " + (Decimal)readerDireccion["piso"] + "-" + (String)readerDireccion["dpto"];
+            labelPostal.Text = ((Decimal)readerDireccion["cod_postal"]).ToString();
             labelLocalidad.Text = (String)readerDireccion["localidad"];
         }
 
@@ -62,12 +76,14 @@ namespace FrbaCommerce.Comprar_Ofertar
         {
             String sql = "INSERT INTO LOS_SUPER_AMIGOS.Compra(cantidad, fecha, usuario_id, publicacion_id, calificacion_id) VALUES (@cant, @fecha, @usuario, @publicacion, NULL)";
             DateTime fecha = DateTime.Now;
+
             parametros.Clear();
             parametros.Add(new SqlParameter("@cant", this.textBoxCant.Text));
             parametros.Add(new SqlParameter("@fecha", fecha));
             parametros.Add(new SqlParameter("@usuario", idUsuarioActual));
             parametros.Add(new SqlParameter("@publicacion", publicacionId));
             builderDeComandos.Crear(sql, parametros).ExecuteNonQuery();
+
             MessageBox.Show("Contactese con el vendedor para finalizar la compra");
             this.Close();
         }

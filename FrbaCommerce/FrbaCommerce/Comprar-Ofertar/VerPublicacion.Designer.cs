@@ -203,7 +203,7 @@
             this.Controls.Add(this.labelRubro);
             this.Controls.Add(this.labelVendedor);
             this.Name = "VerPublicacion";
-            this.Text = "Form1";
+            this.Text = "VerPublicacion";
             this.Load += new System.EventHandler(this.ComprarOfertar_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

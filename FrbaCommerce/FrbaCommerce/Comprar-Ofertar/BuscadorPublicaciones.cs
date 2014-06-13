@@ -79,7 +79,7 @@ namespace FrbaCommerce.Comprar_Ofertar
                 filtro += " and " + "rubro_id = (SELECT id FROM LOS_SUPER_AMIGOS.Rubro WHERE descripcion = @rubro)";                
             }
 
-            String query = "SELECT descripcion, precio, tipo FROM LOS_SUPER_AMIGOS.Publicacion WHERE (estado = 'Publicada' or estado = 'Pausada') " + filtro + " ORDER BY visibilidad_id";
+            String query = "SELECT id, descripcion, precio, tipo FROM LOS_SUPER_AMIGOS.Publicacion WHERE (estado = 'Publicada' or estado = 'Pausada') " + filtro + " ORDER BY visibilidad_id";
             
             command = builderDeComandos.Crear(query, parametros);
             adapter.SelectCommand = command;            
@@ -105,6 +105,7 @@ namespace FrbaCommerce.Comprar_Ofertar
                 }
                 calcularPaginas();
                 dataGridView1.DataSource = paginarDataGridView(ini, fin);
+                dataGridView1.Columns[1].Visible = false;
                 mostrarNrosPaginas(ini);
             }
         }
@@ -276,8 +277,9 @@ namespace FrbaCommerce.Comprar_Ofertar
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             String publicacionElegida = dataGridView1.Rows[e.RowIndex].Cells["descripcion"].Value.ToString();
+            int idPublicacionElegida = Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells["id"].Value);            
             this.Hide();
-            new VerPublicacion(publicacionElegida).Show();
+            new VerPublicacion(publicacionElegida, idPublicacionElegida).ShowDialog();
             this.Close();
         }
 
