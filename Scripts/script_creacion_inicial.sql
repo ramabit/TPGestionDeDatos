@@ -32,6 +32,9 @@ DROP TABLE LOS_SUPER_AMIGOS.Publicacion
 IF OBJECT_ID('LOS_SUPER_AMIGOS.Rubro', 'U') IS NOT NULL
 DROP TABLE LOS_SUPER_AMIGOS.Rubro
 
+IF OBJECT_ID('LOS_SUPER_AMIGOS.Comisiones_Usuario_x_Visibilidad', 'U') IS NOT NULL
+DROP TABLE LOS_SUPER_AMIGOS.Comisiones_Usuario_x_Visibilidad
+
 IF OBJECT_ID('LOS_SUPER_AMIGOS.Visibilidad', 'U') IS NOT NULL
 DROP TABLE LOS_SUPER_AMIGOS.Visibilidad
 
@@ -441,6 +444,16 @@ FOREIGN KEY (factura_nro) REFERENCES LOS_SUPER_AMIGOS.Factura (nro),
 FOREIGN KEY (publicacion_id) REFERENCES LOS_SUPER_AMIGOS.Publicacion (id)
 )
 
+create table LOS_SUPER_AMIGOS.Comisiones_Usuario_x_Visibilidad
+(
+usuario_id numeric(18,0),
+visibilidad_id numeric(18,0),
+contador_comisiones int,
+PRIMARY KEY (usuario_id, visibilidad_id),
+FOREIGN KEY (usuario_id) REFERENCES LOS_SUPER_AMIGOS.Usuario (id),
+FOREIGN KEY (visibilidad_id) REFERENCES LOS_SUPER_AMIGOS.Visibilidad (id),
+)
+
 -- INSERTAR Usuario
 
 
@@ -673,6 +686,17 @@ INSERT INTO LOS_SUPER_AMIGOS.Item_Factura
 SELECT DISTINCT Item_Factura_Monto, Item_Factura_Cantidad, Factura_Nro, Publicacion_Cod
 FROM gd_esquema.Maestra 
 WHERE ISNULL(Factura_Nro,-1) != -1
+GO
+
+-- INSERTA Comisiones_Usuario_x_Visibilidad
+INSERT INTO LOS_SUPER_AMIGOS.Comisiones_Usuario_x_Visibilidad
+([usuario_id], [visibilidad_id], [contador_comisiones])
+select u.id id_usuario, v.id id_visibilidad, COUNT(c.id) ventas
+from LOS_SUPER_AMIGOS.Usuario u, LOS_SUPER_AMIGOS.Visibilidad v, 
+LOS_SUPER_AMIGOS.Compra c, LOS_SUPER_AMIGOS.Publicacion p
+where p.usuario_id = u.id and p.visibilidad_id = v.id and c.publicacion_id = p.id
+group by u.id, v.id
+order by u.id
 GO
 
 -- VISTAS
