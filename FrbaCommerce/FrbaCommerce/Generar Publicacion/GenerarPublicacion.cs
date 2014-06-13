@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Data.SqlClient;
+using FrbaCommerce.Exceptions;
+using FrbaCommerce.Objetos;
 
 namespace FrbaCommerce.Generar_Publicacion
 {
@@ -29,7 +31,6 @@ namespace FrbaCommerce.Generar_Publicacion
             CargarEstados();
             CargarRubros();
             CargarVisibilidades();
-            AgregarListenerACalendario();
         }
 
         private void CargarTiposDePublicacion()
@@ -54,79 +55,57 @@ namespace FrbaCommerce.Generar_Publicacion
 
         private void CargarRubros()
         {
-            comboBox_Rubro.DataSource = comunicador.SelectDataTable("descripcion", "Rubro");
+            comboBox_Rubro.DataSource = comunicador.SelectDataTable("descripcion", "LOS_SUPER_AMIGOS.Rubro");
             comboBox_Rubro.ValueMember = "descripcion";
         }
 
         private void CargarVisibilidades()
         {
-            comboBox_Visibilidad.DataSource = comunicador.SelectDataTable("descripcion", "Visibilidad");
+            comboBox_Visibilidad.DataSource = comunicador.SelectDataTable("descripcion", "LOS_SUPER_AMIGOS.Visibilidad");
             comboBox_Visibilidad.ValueMember = "descripcion";
-        }
-
-        private void AgregarListenerACalendario()
-        {
-            this.monthCalendar_FechaDeInicio.DateSelected += new System.Windows.Forms.DateRangeEventHandler(this.monthCalendar_FechaDeInicio_DateSelected);
         }
 
         private void button_generar_Click(object sender, EventArgs e)
         {
-            String tipoSeleccionado = comboBox_TiposDePublicacion.Text;
+            String tipo = comboBox_TiposDePublicacion.Text;
             String estado = comboBox_Estado.Text;
-            String descripcionSeleccionado = textBox_Descripcion.Text;
+            String descripcion = textBox_Descripcion.Text;
             String fechaDeInicio = textBox_FechaDeInicio.Text;
-            String rubroSeleccionado = comboBox_Rubro.Text;
-            String visibilidadSeleccionado = comboBox_Visibilidad.Text;
-            Boolean preguntaSeleccionado = radioButton_Pregunta.Checked;
-            String stockSeleccionado = textBox_Stock.Text;
-            String precioSeleccionado = textBox_Precio.Text;
+            String rubro = comboBox_Rubro.Text;
+            String visibilidadDescripcion = comboBox_Visibilidad.Text;
+            Boolean pregunta = radioButton_Pregunta.Checked;
+            String stock = textBox_Stock.Text;
+            String precio = textBox_Precio.Text;
 
-            // Controla que esten los campos numeroDeDocumento y telefono
-            if (!this.pasoControlDeNoVacio(descripcionSeleccionado)) return;
-            if (!this.pasoControlDeNoVacio(fechaDeInicio)) return;
-            if (!this.pasoControlDeNoVacio(stockSeleccionado)) return;
-            if (!this.pasoControlDeNoVacio(precioSeleccionado)) return;
+            Decimal idRubro = (Decimal) comunicador.selectFromWhere("id", "Rubro", "descripcion", rubro);
+            Decimal idVisibilidad = Convert.ToDecimal(comunicador.selectFromWhere("id", "Visibilidad", "descripcion", visibilidadDescripcion));
+            Double duracion = Convert.ToDouble(comunicador.selectFromWhere("duracion", "Visibilidad", "descripcion", visibilidadDescripcion));
+            String fechaDeVencimiento = Convert.ToString(Convert.ToDateTime(fechaDeInicio).AddDays(duracion));
 
-            query = "SELECT id FROM LOS_SUPER_AMIGOS.Rubro WHERE descripcion = @rubroSeleccionado";
-            parametros.Clear();
-            parametros.Add(new SqlParameter("@rubroSeleccionado", rubroSeleccionado));
-            Decimal idRubroSeleccionado = (Decimal) builderDeComandos.Crear(query, parametros).ExecuteScalar();
-
-            query = "SELECT * FROM LOS_SUPER_AMIGOS.Visibilidad WHERE descripcion = @visibilidadSeleccionado";
-            parametros.Clear();
-            parametros.Add(new SqlParameter("@visibilidadSeleccionado", visibilidadSeleccionado));
-            SqlDataReader readerVisibilidad = builderDeComandos.Crear(query, parametros).ExecuteReader();
-            readerVisibilidad.Read();
-
-            query = "INSERT INTO LOS_SUPER_AMIGOS.Publicacion (tipo, estado, descripcion, fecha_inicio, fecha_vencimiento, rubro_id, visibilidad_id, precio, stock, usuario_id) values (@tipo, @estado, @descripcion, @fechaInicial, @fechaVencimiento, @rubroId, @visibilidadId, @precio, @stock, @usuarioId)";
-
-            parametros.Clear();
-            parametros.Add(new SqlParameter("@estado", estado));
-            parametros.Add(new SqlParameter("@descripcion", descripcionSeleccionado));
-            parametros.Add(new SqlParameter("@stock", Convert.ToDecimal(stockSeleccionado)));
-            parametros.Add(new SqlParameter("@fechaInicial", fechaDeInicio));
-            parametros.Add(new SqlParameter("@fechaVencimiento", Convert.ToDateTime(fechaDeInicio).AddDays(Convert.ToDouble(readerVisibilidad["duracion"])))); // OJO ACA
-            parametros.Add(new SqlParameter("@precio", Convert.ToDouble(precioSeleccionado)));
-            parametros.Add(new SqlParameter("@rubroId", idRubroSeleccionado));
-            parametros.Add(new SqlParameter("@visibilidadId", readerVisibilidad["id"]));
-            parametros.Add(new SqlParameter("@usuarioId", 1));//UsuarioSesion.usuario));
-            parametros.Add(new SqlParameter("@tipo", tipoSeleccionado));
             
-            int filasAfectadas = builderDeComandos.Crear(query, parametros).ExecuteNonQuery();
-            
-            if (filasAfectadas == 1) MessageBox.Show("Se agrego la nueva publicacion correctamente");
-
-            VolverAlMenuPrincipal();
-        }
-
-        private bool pasoControlDeNoVacio(string valor)
-        {
-            if (valor == "")
+            try
             {
-                MessageBox.Show("Faltan datos");
-                return false;
+                Publicacion publicacion = new Publicacion();
+                publicacion.SetTipo(tipo);
+                publicacion.SetEstado(estado);
+                publicacion.SetDescripcion(descripcion);
+                publicacion.SetFechaDeInicio(fechaDeInicio);
+                publicacion.SetFechaDeVencimiento(fechaDeVencimiento);
+                publicacion.SetStock(stock);
+                publicacion.SetPrecio(precio);
+                publicacion.SetIdRubro(idRubro);
+                publicacion.SetIdVisibilidad(idVisibilidad);
+                publicacion.SetIdUsuario(3);//Convert.ToDecimal(UsuarioSesion.usuario));
+                Decimal idPublicacion = comunicador.CrearPublicacion(publicacion);
+                if (idPublicacion > 0) MessageBox.Show("Se agrego la publicacion correctamente");
             }
-            return true;
+            catch (CampoVacioException exception)
+            {
+                MessageBox.Show("Faltan completar campos");
+                return;
+            }
+            
+            VolverAlMenuPrincipal();
         }
 
         private void button_Limpiar_Click(object sender, EventArgs e)

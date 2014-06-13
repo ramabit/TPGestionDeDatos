@@ -132,6 +132,7 @@
             this.monthCalendar_FechaDeInicio.Name = "monthCalendar_FechaDeInicio";
             this.monthCalendar_FechaDeInicio.TabIndex = 14;
             this.monthCalendar_FechaDeInicio.Visible = false;
+            this.monthCalendar_FechaDeInicio.DateSelected += new System.Windows.Forms.DateRangeEventHandler(this.monthCalendar_FechaDeInicio_DateSelected);
             // 
             // button_FechaDeInicio
             // 

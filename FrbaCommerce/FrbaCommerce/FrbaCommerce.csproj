@@ -296,6 +296,7 @@
       <DependentUpon>MenuPrincipal.cs</DependentUpon>
     </Compile>
     <Compile Include="Objetos\Empresa.cs" />
+    <Compile Include="Objetos\Publicacion.cs" />
     <Compile Include="Objetos\TipoDeDocumento.cs" />
     <Compile Include="Objetos\Usuario.cs" />
     <Compile Include="Objetos\Visibilidad.cs" />

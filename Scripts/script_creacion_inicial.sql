@@ -80,6 +80,9 @@ DROP PROCEDURE LOS_SUPER_AMIGOS.crear_direccion
 IF OBJECT_ID('LOS_SUPER_AMIGOS.crear_visibilidad', 'P') IS NOT NULL
 DROP PROCEDURE LOS_SUPER_AMIGOS.crear_visibilidad
 
+IF OBJECT_ID('LOS_SUPER_AMIGOS.crear_publicacion', 'P') IS NOT NULL
+DROP PROCEDURE LOS_SUPER_AMIGOS.crear_publicacion
+
 IF OBJECT_ID('LOS_SUPER_AMIGOS.agregar_id_publ') IS NOT NULL
 DROP FUNCTION LOS_SUPER_AMIGOS.agregar_id_publ
 
@@ -182,6 +185,26 @@ BEGIN
 	SET NOCOUNT ON;
 	INSERT INTO LOS_SUPER_AMIGOS.Visibilidad (descripcion, precio, porcentaje, duracion) values (@descripcion, @precio, @porcentaje, @duracion);
 	SET @visibilidad_id = SCOPE_IDENTITY();
+END
+GO
+
+CREATE PROCEDURE LOS_SUPER_AMIGOS.crear_publicacion
+	@tipo nvarchar(255),
+	@estado nvarchar(255),
+	@descripcion nvarchar(255),
+	@fecha_inicio datetime,
+	@fecha_vencimiento datetime,
+	@rubro_id numeric(18,0),
+	@visibilidad_id numeric(18,0),
+	@stock numeric(18,0),
+	@precio numeric(18,0),
+	@usuario_id numeric(18,0),
+	@publicacion_id numeric(18,0) OUTPUT
+AS
+BEGIN
+	SET NOCOUNT ON;
+	INSERT INTO LOS_SUPER_AMIGOS.Publicacion (tipo, estado, descripcion, fecha_inicio, fecha_vencimiento, rubro_id, visibilidad_id, precio, stock, usuario_id) values (@tipo, @estado, @descripcion, @fecha_inicio, @fecha_vencimiento, @rubro_id, @visibilidad_id, @precio, @stock, @usuario_id);
+	SET @publicacion_id = SCOPE_IDENTITY();
 END
 GO
 

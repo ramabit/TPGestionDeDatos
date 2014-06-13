@@ -509,5 +509,38 @@ namespace FrbaCommerce
             }
             return true;
         }
+
+        public Object selectFromWhere(String que, String deDonde, String param1, String param2)
+        {
+            query = "SELECT " + que + " FROM LOS_SUPER_AMIGOS." + deDonde + " WHERE " + param1 + " = @" + param1;
+            parametros.Clear();
+            parametros.Add(new SqlParameter("@" + param1, param2));
+            return builderDeComandos.Crear(query, parametros).ExecuteScalar();
+        }
+
+        public Decimal CrearPublicacion(Publicacion publicacion)
+        {
+            query = "LOS_SUPER_AMIGOS.crear_publicacion";
+            parametros.Clear();
+            parametroOutput = new SqlParameter("@publicacion_id", SqlDbType.Decimal);
+            parametroOutput.Direction = ParameterDirection.Output;
+            parametros.Add(new SqlParameter("@tipo", publicacion.GetTipo()));
+            parametros.Add(new SqlParameter("@estado", publicacion.GetEstado()));
+            parametros.Add(new SqlParameter("@descripcion", publicacion.GetDescripcion()));
+            parametros.Add(new SqlParameter("@fecha_inicio", publicacion.GetFechaDeInicio()));
+            parametros.Add(new SqlParameter("@fecha_vencimiento", publicacion.GetFechaDeVencimiento()));
+            parametros.Add(new SqlParameter("@stock", publicacion.GetStock()));
+            parametros.Add(new SqlParameter("@precio", publicacion.GetPrecio()));
+            parametros.Add(new SqlParameter("@rubro_id", publicacion.GetIdRubro()));
+            parametros.Add(new SqlParameter("@visibilidad_id", publicacion.GetIdVisibilidad()));
+            parametros.Add(new SqlParameter("@usuario_id", publicacion.GetIdUsuario()));
+            parametros.Add(parametroOutput);
+            command = builderDeComandos.Crear(query, parametros);
+            command.CommandType = CommandType.StoredProcedure;
+            command.ExecuteNonQuery();
+            Decimal idPublicacionNueva = (Decimal)parametroOutput.Value;
+            publicacion.SetId(idPublicacionNueva);
+            return idPublicacionNueva;
+        }
     }
 }
