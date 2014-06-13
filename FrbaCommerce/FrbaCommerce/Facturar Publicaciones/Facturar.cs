@@ -23,12 +23,27 @@ namespace FrbaCommerce.Facturar_Publicaciones
 
         private void Facturar_Load(object sender, EventArgs e)
         {
-           dropdownCalificacion.Items.Add(10);
-           CargarVentasPorFacturar();
+          // dropdownCalificacion.Items.Add(10);
+           CargarCostosPublicacionPorFacturar();
+           CargarComisionesVentasPorFacturar();
            
         }
 
-        private void CargarVentasPorFacturar()
+        private void CargarCostosPublicacionPorFacturar()
+        {
+            parametros.Add(new SqlParameter("@id", UsuarioSesion.Usuario.id));
+
+            String cantidadCostos = "select COUNT(p.id) from LOS_SUPER_AMIGOS.Publicacion p,"
+            + " LOS_SUPER_AMIGOS.Visibilidad v, LOS_SUPER_AMIGOS.Usuario u"
+            + " where p.usuario_id = u.id and u.id = @id and p.visibilidad_id = v.id"
+            + " and p.costo_pagado = 0 and p.estado = 'Finalizada'";
+
+            int cantidad  = (int)builderDeComandos.Crear(cantidadCostos, parametros).ExecuteScalar();
+
+            labelCantidadCostos.Text = cantidad.ToString();
+        }
+
+        private void CargarComisionesVentasPorFacturar()
         {
 
         }
