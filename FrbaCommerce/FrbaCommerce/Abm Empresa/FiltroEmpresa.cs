@@ -50,13 +50,13 @@ namespace FrbaCommerce.ABM_Empresa
 
         private void button_Buscar_Click(object sender, EventArgs e)
         {
-            String filtro = "ISNULL(usuario_id, 0) != 0";
+            String filtro = "";
 
-            if (textBox_RazonSocial.Text != "") filtro += " and " + "razon_social like '" + textBox_RazonSocial.Text + "%'";
-            if (textBox_Cuit.Text != "") filtro += " and " + "cuit like '" + textBox_Cuit.Text + "%'";
-            if (textBox_Mail.Text != "") filtro += " and " + "mail like '" + textBox_Mail.Text + "%'";
+            if (textBox_RazonSocial.Text != "") filtro += "AND " + "e.razon_social LIKE '" + textBox_RazonSocial.Text + "%'";
+            if (textBox_Cuit.Text != "") filtro += "AND " + "e.cuit LIKE '" + textBox_Cuit.Text + "%'";
+            if (textBox_Mail.Text != "") filtro += "AND " + "e.mail LIKE '" + textBox_Mail.Text + "%'";
 
-            query = "SELECT * FROM LOS_SUPER_AMIGOS.Empresa WHERE " + filtro;
+            query = "SELECT e.id, u.username Username, e.razon_social 'Razon Social', e.nombre_de_contacto 'Nombre de contacto', e.cuit 'CUIT', e.fecha_creacion 'Fecha de creacion', e.mail 'Mail', e.telefono 'Telefono', e.ciudad Ciudad, d.calle Calle, d.numero Numero, d.piso Piso, d.depto Departamento, d.cod_postal 'Codigo Postal', d.localidad Localidad FROM LOS_SUPER_AMIGOS.Empresa e, LOS_SUPER_AMIGOS.Direccion d, LOS_SUPER_AMIGOS.Usuario u WHERE e.direccion_id = d.id AND e.usuario_id = u.id " + filtro;
 
             command = builderDeComandos.Crear(query, parametros);
 

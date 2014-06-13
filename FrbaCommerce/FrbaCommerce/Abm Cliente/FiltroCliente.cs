@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Data.SqlClient;
+using FrbaCommerce.Objetos;
 
 namespace FrbaCommerce.ABM_Cliente
 {
@@ -58,15 +59,18 @@ namespace FrbaCommerce.ABM_Cliente
 
         private void button_Buscar_Click(object sender, EventArgs e)
         {
-            String filtro = "ISNULL(usuario_id, 0) != 0";
+            String filtro = "";
 
-            if (textBox_Nombre.Text != "") filtro += " and " + "nombre like '" + textBox_Nombre.Text + "%'";
-            if (textBox_Apellido.Text != "") filtro += " and " + "apellido like '" + textBox_Apellido.Text + "%'";
-            if (textBox_Mail.Text != "") filtro += " and " + "mail like '" + textBox_Mail.Text + "%'";
-            if (textBox_NumeroDeDoc.Text != "") filtro += " and " + "dni like '" + textBox_NumeroDeDoc.Text + "%'";
-            // TODO: agregar el filtro del documento
+            if (textBox_Nombre.Text != "") filtro += "AND " + "c.nombre LIKE '" + textBox_Nombre.Text + "%'";
+            if (textBox_Apellido.Text != "") filtro += "AND " + "c.apellido LIKE '" + textBox_Apellido.Text + "%'";
+            if (textBox_Mail.Text != "") filtro += "AND " + "c.mail LIKE '" + textBox_Mail.Text + "%'";
+            if (textBox_NumeroDeDoc.Text != "") filtro += "AND " + "c.documento LIKE '" + textBox_NumeroDeDoc.Text + "%'";
+            TipoDeDocumento tipoDeDocumento = new TipoDeDocumento();
+            tipoDeDocumento.SetNombre(comboBox_TipoDeDoc.Text);
+            Decimal idTipoDeDocumento = comunicador.ObtenerIdDe(tipoDeDocumento);
+            filtro += "AND " + "c.tipo_de_documento_id = " + idTipoDeDocumento;
 
-            query = "SELECT * FROM LOS_SUPER_AMIGOS.Cliente WHERE " + filtro;
+            query = "SELECT c.id, u.username Username, c.nombre Nombre, c.apellido Apellido, td.nombre 'Tipo de Documento', c.documento Documento, c.fecha_nacimiento 'Fecha de Nacimiento', c.mail Mail, c.telefono Telefono, d.calle Calle, d.numero Numero, d.piso Piso, d.depto Departamento, d.cod_postal 'Codigo postal', d.localidad Localidad FROM LOS_SUPER_AMIGOS.Cliente c, LOS_SUPER_AMIGOS.TipoDeDocumento td, LOS_SUPER_AMIGOS.Direccion d, LOS_SUPER_AMIGOS.Usuario u WHERE c.tipo_de_documento_id = td.id AND c.direccion_id = d.id AND c.usuario_id = u.id " + filtro;
 
             command = builderDeComandos.Crear(query, parametros);
 
@@ -83,8 +87,7 @@ namespace FrbaCommerce.ABM_Cliente
             textBox_Apellido.Text = "";
             textBox_Mail.Text = "";
             textBox_NumeroDeDoc.Text = "";
-            // TODO: agregar la limpieza del comboBox
-
+            comboBox_TipoDeDoc.SelectedIndex = 0;
             CargarClientes();
         }
 
