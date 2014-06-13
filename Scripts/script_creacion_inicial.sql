@@ -369,7 +369,7 @@ FOREIGN KEY (rubro_id) REFERENCES LOS_SUPER_AMIGOS.Rubro(id),
 
 create table LOS_SUPER_AMIGOS.Pregunta
 (
-id numeric(18,0),
+id numeric(18,0)identity(1,1),
 descripcion nvarchar(255) not null,
 respuesta nvarchar(255) default '',
 respuesta_fecha datetime default null,
@@ -459,29 +459,29 @@ FOREIGN KEY (visibilidad_id) REFERENCES LOS_SUPER_AMIGOS.Visibilidad (id),
 
 -- INSERTAR Direcciones de Empresas
 INSERT INTO LOS_SUPER_AMIGOS.Direccion
-([calle],[numero],[piso],[depto],[cod_postal])
-SELECT DISTINCT Publ_Empresa_Dom_Calle, Publ_Empresa_Nro_Calle, Publ_Empresa_Piso, Publ_Empresa_Depto, Publ_Empresa_Cod_Postal
+([calle],[numero],[piso],[depto],[cod_postal],[localidad])
+SELECT DISTINCT Publ_Empresa_Dom_Calle, Publ_Empresa_Nro_Calle, Publ_Empresa_Piso, Publ_Empresa_Depto, Publ_Empresa_Cod_Postal, 'localidadMigrada'
 FROM gd_esquema.Maestra
 WHERE ISNULL(Publ_Empresa_Dom_Calle,'')!=''
 
 -- INSERTAR Direcciones de Clientes que vendieron
 INSERT INTO LOS_SUPER_AMIGOS.Direccion
-([calle],[numero],[piso],[depto],[cod_postal])
-SELECT DISTINCT Publ_Cli_Dom_Calle, Publ_Cli_Nro_Calle, Publ_Cli_Piso, Publ_Cli_Depto, Publ_Cli_Cod_Postal
+([calle],[numero],[piso],[depto],[cod_postal],[localidad])
+SELECT DISTINCT Publ_Cli_Dom_Calle, Publ_Cli_Nro_Calle, Publ_Cli_Piso, Publ_Cli_Depto, Publ_Cli_Cod_Postal, 'localidadMigrada'
 FROM gd_esquema.Maestra
 WHERE ISNULL(Publ_Cli_Dom_Calle,'')!=''
 
 -- INSERTAR Direcciones de Clientes que compraron
 INSERT INTO LOS_SUPER_AMIGOS.Direccion
-([calle],[numero],[piso],[depto],[cod_postal])
-SELECT DISTINCT Cli_Dom_Calle, Cli_Nro_Calle, Cli_Piso, Cli_Depto, Cli_Cod_Postal
+([calle],[numero],[piso],[depto],[cod_postal],[localidad])
+SELECT DISTINCT Cli_Dom_Calle, Cli_Nro_Calle, Cli_Piso, Cli_Depto, Cli_Cod_Postal, 'localidadMigrada'
 FROM gd_esquema.Maestra
 WHERE ISNULL(Cli_Dom_Calle,'')!='' and not exists (SELECT * FROM LOS_SUPER_AMIGOS.Direccion dir WHERE Cli_Dom_Calle = dir.calle and Cli_Nro_Calle = dir.numero and Cli_Piso = dir.piso and Cli_Depto = dir.depto and Cli_Cod_Postal = dir.cod_postal)
 
 -- INSERTAR Empresas
 INSERT INTO LOS_SUPER_AMIGOS.Empresa
-   ( [razon_social], [cuit], [fecha_creacion], [mail], [direccion_id])
-SELECT DISTINCT Publ_Empresa_Razon_Social, Publ_Empresa_Cuit, Publ_Empresa_Fecha_Creacion, Publ_Empresa_Mail,
+   ( [razon_social], [cuit], [fecha_creacion], [mail], [telefono], [direccion_id])
+SELECT DISTINCT Publ_Empresa_Razon_Social, Publ_Empresa_Cuit, Publ_Empresa_Fecha_Creacion, Publ_Empresa_Mail, 0,
 	(SELECT DISTINCT id FROM LOS_SUPER_AMIGOS.Direccion d WHERE (Publ_Empresa_Dom_Calle = d.calle and Publ_Empresa_Nro_Calle = d.numero and Publ_Empresa_Piso = d.piso and Publ_Empresa_Depto = d.depto and Publ_Empresa_Cod_Postal = d.cod_postal)) 
 FROM gd_esquema.Maestra 
 WHERE ISNULL(Publ_Empresa_Razon_Social, '') != ''
@@ -505,16 +505,16 @@ INSERT INTO LOS_SUPER_AMIGOS.TipoDeDocumento (nombre) values ('DNI'), ('OTRO')
 -- INSERTAR Clientes
 -- Todos los clientes que compraron
 INSERT INTO LOS_SUPER_AMIGOS.Cliente
-   ( [tipo_de_documento_id], [documento], [apellido], [nombre], [fecha_nacimiento], [mail], [direccion_id])
-SELECT DISTINCT 1, Cli_Dni, Cli_Apeliido, Cli_Nombre, Cli_Fecha_Nac, Cli_Mail,
+   ( [tipo_de_documento_id], [documento], [apellido], [nombre], [fecha_nacimiento], [mail], [telefono], [direccion_id])
+SELECT DISTINCT 1, Cli_Dni, Cli_Apeliido, Cli_Nombre, Cli_Fecha_Nac, Cli_Mail, 0,
 	(SELECT DISTINCT id FROM LOS_SUPER_AMIGOS.Direccion d WHERE (Cli_Dom_Calle = d.calle and Cli_Nro_Calle = d.numero and Cli_Piso = d.piso and Cli_Depto = d.depto and Cli_Cod_Postal = d.cod_postal)) 
 FROM gd_esquema.Maestra 
 WHERE ISNULL(Cli_DNI, 0) != 0
 
 -- Todos los clientes que vendieron
 INSERT INTO LOS_SUPER_AMIGOS.Cliente
-   ( [tipo_de_documento_id], [documento], [apellido], [nombre], [fecha_nacimiento], [mail], [direccion_id])
-SELECT DISTINCT 1, Publ_Cli_Dni, Publ_Cli_Apeliido, Publ_Cli_Nombre, Publ_Cli_Fecha_Nac, Publ_Cli_Mail,
+   ( [tipo_de_documento_id], [documento], [apellido], [nombre], [fecha_nacimiento], [mail], [telefono], [direccion_id])
+SELECT DISTINCT 1, Publ_Cli_Dni, Publ_Cli_Apeliido, Publ_Cli_Nombre, Publ_Cli_Fecha_Nac, Publ_Cli_Mail, 0,
 	(SELECT DISTINCT id FROM LOS_SUPER_AMIGOS.Direccion d WHERE (Publ_Cli_Dom_Calle = d.calle and Publ_Cli_Nro_Calle = d.numero and Publ_Cli_Piso = d.piso and Publ_Cli_Depto = d.depto and Publ_Cli_Cod_Postal = d.cod_postal)) 
 FROM gd_esquema.Maestra as m
 WHERE ISNULL(Publ_Cli_DNI, 0) != 0 and not exists (SELECT * FROM LOS_SUPER_AMIGOS.Cliente as c WHERE m.Publ_Cli_Dni = c.documento)
