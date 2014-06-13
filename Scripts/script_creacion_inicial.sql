@@ -89,6 +89,14 @@ IF OBJECT_ID('LOS_SUPER_AMIGOS.gano_subasta') IS NOT NULL
 DROP FUNCTION LOS_SUPER_AMIGOS.gano_subasta
 GO
 
+IF OBJECT_ID('LOS_SUPER_AMIGOS.VistaCantidadVendida') IS NOT NULL
+DROP VIEW LOS_SUPER_AMIGOS.VistaCantidadVendida
+GO
+
+IF OBJECT_ID('LOS_SUPER_AMIGOS.VistaOfertaMax') IS NOT NULL
+DROP VIEW LOS_SUPER_AMIGOS.VistaOfertaMax
+GO
+
 CREATE PROCEDURE LOS_SUPER_AMIGOS.crear_cliente
 	@nombre nvarchar(255),
 	@apellido nvarchar(255),
@@ -125,13 +133,6 @@ BEGIN
 	INSERT INTO LOS_SUPER_AMIGOS.Empresa (razon_social, nombre_de_contacto, cuit, fecha_creacion, mail, telefono, ciudad, direccion_id, usuario_id) values (@razon_social, @nombre_de_contacto, @cuit, @fecha_creacion, @mail, @telefono, @ciudad, @direccion_id, @usuario_id)
 	SET @empresa_id = SCOPE_IDENTITY();	
 END
-
-IF OBJECT_ID('LOS_SUPER_AMIGOS.VistaCantidadVendida') IS NOT NULL
-DROP VIEW LOS_SUPER_AMIGOS.VistaCantidadVendida
-GO
-
-IF OBJECT_ID('LOS_SUPER_AMIGOS.VistaOfertaMax') IS NOT NULL
-DROP VIEW LOS_SUPER_AMIGOS.VistaOfertaMax
 GO
 
 CREATE PROCEDURE LOS_SUPER_AMIGOS.crear_usuario_con_valores
