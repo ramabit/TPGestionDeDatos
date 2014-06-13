@@ -28,7 +28,6 @@ namespace FrbaCommerce.ABM_Cliente
         private void AgregarCliente_Load(object sender, EventArgs e)
         {
             CargarTipoDeDocumentos();
-            AgregarListenerACalendario();
         }
 
         private void CargarTipoDeDocumentos()
@@ -150,11 +149,6 @@ namespace FrbaCommerce.ABM_Cliente
             this.Hide();
             new MenuPrincipal().ShowDialog();
             this.Close();
-        }
-
-        private void AgregarListenerACalendario()
-        {
-            this.monthCalendar_FechaDeNacimiento.DateSelected += new System.Windows.Forms.DateRangeEventHandler(this.monthCalendar_FechaDeNacimiento_DateSelected);
         }
 
         private void button_FechaDeNacimiento_Click(object sender, EventArgs e)

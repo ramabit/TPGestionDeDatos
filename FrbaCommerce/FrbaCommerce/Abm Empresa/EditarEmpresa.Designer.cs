@@ -153,6 +153,7 @@
             this.monthCalendar_FechaDeCreacion.Name = "monthCalendar_FechaDeCreacion";
             this.monthCalendar_FechaDeCreacion.TabIndex = 5;
             this.monthCalendar_FechaDeCreacion.Visible = false;
+            this.monthCalendar_FechaDeCreacion.DateSelected += new System.Windows.Forms.DateRangeEventHandler(this.monthCalendar_FechaDeCreacion_DateSelected);
             // 
             // label2
             // 

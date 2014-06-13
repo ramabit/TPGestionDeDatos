@@ -27,7 +27,6 @@ namespace FrbaCommerce.ABM_Empresa
         private void EditarEmpresa_Load(object sender, EventArgs e)
         {
             CargarDatos();
-            AgregarListenerACalendario();
         }
 
         private void CargarDatos()
@@ -150,11 +149,6 @@ namespace FrbaCommerce.ABM_Empresa
         private void button_FechaDeCreacion_Click(object sender, EventArgs e)
         {
             monthCalendar_FechaDeCreacion.Visible = true;
-        }
-
-        private void AgregarListenerACalendario()
-        {
-            this.monthCalendar_FechaDeCreacion.DateSelected += new System.Windows.Forms.DateRangeEventHandler(this.monthCalendar_FechaDeCreacion_DateSelected);
         }
 
         private void monthCalendar_FechaDeCreacion_DateSelected(object sender, System.Windows.Forms.DateRangeEventArgs e)

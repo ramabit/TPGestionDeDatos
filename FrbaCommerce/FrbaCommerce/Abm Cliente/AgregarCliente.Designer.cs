@@ -112,6 +112,8 @@
             this.monthCalendar_FechaDeNacimiento.Name = "monthCalendar_FechaDeNacimiento";
             this.monthCalendar_FechaDeNacimiento.TabIndex = 13;
             this.monthCalendar_FechaDeNacimiento.Visible = false;
+            this.monthCalendar_FechaDeNacimiento.DateSelected += new System.Windows.Forms.DateRangeEventHandler(this.monthCalendar_FechaDeNacimiento_DateSelected);
+
             // 
             // label11
             // 
