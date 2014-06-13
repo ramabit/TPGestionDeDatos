@@ -6,6 +6,7 @@ GO
 
 IF OBJECT_ID('LOS_SUPER_AMIGOS.Funcionalidad_x_Rol', 'U') IS NOT NULL
 DROP TABLE LOS_SUPER_AMIGOS.Funcionalidad_x_Rol
+GO
 
 IF OBJECT_ID('LOS_SUPER_AMIGOS.Rol_x_Usuario', 'U') IS NOT NULL
 DROP TABLE LOS_SUPER_AMIGOS.Rol_x_Usuario
@@ -63,38 +64,34 @@ DROP TABLE LOS_SUPER_AMIGOS.Forma_Pago
 
 IF OBJECT_ID('LOS_SUPER_AMIGOS.crear_cliente', 'P') IS NOT NULL
 DROP PROCEDURE LOS_SUPER_AMIGOS.crear_cliente
-GO
 
 IF OBJECT_ID('LOS_SUPER_AMIGOS.crear_empresa', 'P') IS NOT NULL
 DROP PROCEDURE LOS_SUPER_AMIGOS.crear_empresa
-GO
 
 IF OBJECT_ID('LOS_SUPER_AMIGOS.crear_usuario', 'P') IS NOT NULL
 DROP PROCEDURE LOS_SUPER_AMIGOS.crear_usuario
-GO
 
 IF OBJECT_ID('LOS_SUPER_AMIGOS.crear_usuario_con_valores', 'P') IS NOT NULL
 DROP PROCEDURE LOS_SUPER_AMIGOS.crear_usuario_con_valores
-GO
 
 IF OBJECT_ID('LOS_SUPER_AMIGOS.crear_direccion', 'P') IS NOT NULL
 DROP PROCEDURE LOS_SUPER_AMIGOS.crear_direccion
-GO
+
+IF OBJECT_ID('LOS_SUPER_AMIGOS.crear_visibilidad', 'P') IS NOT NULL
+DROP PROCEDURE LOS_SUPER_AMIGOS.crear_visibilidad
 
 IF OBJECT_ID('LOS_SUPER_AMIGOS.agregar_id_publ') IS NOT NULL
 DROP FUNCTION LOS_SUPER_AMIGOS.agregar_id_publ
-GO
 
 IF OBJECT_ID('LOS_SUPER_AMIGOS.gano_subasta') IS NOT NULL
 DROP FUNCTION LOS_SUPER_AMIGOS.gano_subasta
-GO
 
 IF OBJECT_ID('LOS_SUPER_AMIGOS.VistaCantidadVendida') IS NOT NULL
 DROP VIEW LOS_SUPER_AMIGOS.VistaCantidadVendida
-GO
 
 IF OBJECT_ID('LOS_SUPER_AMIGOS.VistaOfertaMax') IS NOT NULL
 DROP VIEW LOS_SUPER_AMIGOS.VistaOfertaMax
+
 GO
 
 CREATE PROCEDURE LOS_SUPER_AMIGOS.crear_cliente
@@ -142,9 +139,7 @@ CREATE PROCEDURE LOS_SUPER_AMIGOS.crear_usuario_con_valores
 AS
 BEGIN
 	SET NOCOUNT ON;
-	INSERT INTO LOS_SUPER_AMIGOS.Usuario
-	(username, password) 
-	values (@username, @password)
+	INSERT INTO LOS_SUPER_AMIGOS.Usuario (username, password) VALUES (@username, @password)
 	SET @usuario_id = SCOPE_IDENTITY();	
 END
 GO
@@ -154,9 +149,7 @@ CREATE PROCEDURE LOS_SUPER_AMIGOS.crear_usuario
 AS
 BEGIN
 	SET NOCOUNT ON;
-	INSERT INTO LOS_SUPER_AMIGOS.Usuario
-	(username) 
-	values (isnull('USER' + CAST(((select COUNT(*) from LOS_SUPER_AMIGOS.Usuario)+ 1) AS NVARCHAR(10)),''))
+	INSERT INTO LOS_SUPER_AMIGOS.Usuario (username) VALUES (isnull('USER' + CAST(((SELECT COUNT(*) FROM LOS_SUPER_AMIGOS.Usuario)+ 1) AS NVARCHAR(10)),''))
 	SET @usuario_id = SCOPE_IDENTITY();	
 END
 GO
@@ -174,6 +167,21 @@ BEGIN
 	SET NOCOUNT ON;
 	INSERT INTO LOS_SUPER_AMIGOS.Direccion (calle, numero, piso, depto, cod_postal, localidad) values (@calle, @numero, @piso, @depto, @cod_postal, @localidad);
 	SET @direccion_id = SCOPE_IDENTITY();
+END
+GO
+
+
+CREATE PROCEDURE LOS_SUPER_AMIGOS.crear_visibilidad
+	@descripcion nvarchar(255),
+	@precio numeric(18,2),
+	@porcentaje numeric(18,0),
+	@duracion numeric(18,0),
+	@visibilidad_id numeric(18,0) OUTPUT
+AS
+BEGIN
+	SET NOCOUNT ON;
+	INSERT INTO LOS_SUPER_AMIGOS.Visibilidad (descripcion, precio, porcentaje, duracion) values (@descripcion, @precio, @porcentaje, @duracion);
+	SET @visibilidad_id = SCOPE_IDENTITY();
 END
 GO
 

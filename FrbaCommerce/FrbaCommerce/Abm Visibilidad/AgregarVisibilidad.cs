@@ -7,15 +7,14 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Data.SqlClient;
+using FrbaCommerce.Objetos;
+using FrbaCommerce.Exceptions;
 
 namespace FrbaCommerce.ABM_Visibilidad
 {
     public partial class AgregarVisibilidad : Form
     {
-        private BuilderDeComandos builderDeComandos = new BuilderDeComandos();
-        private String query;
-        private SqlCommand command;
-        private IList<SqlParameter> parametros = new List<SqlParameter>();
+        private ComunicadorConBaseDeDatos comunicador = new ComunicadorConBaseDeDatos();
 
         public AgregarVisibilidad()
         {
@@ -32,50 +31,32 @@ namespace FrbaCommerce.ABM_Visibilidad
             String descripcion = textBox_Descripcion.Text;
             String precioPorPublicar = textBox_PrecioPorPublicar.Text;
             String porcentajePorVenta = textBox_PorcentajePorVenta.Text;
+            String duracion = textBox_Duracion.Text;
 
-            // Controla que esten los campos numeroDeDocumento y telefono
-            if (!this.pasoControlDeNoVacio(descripcion)) return;
-            if (!this.pasoControlDeNoVacio(precioPorPublicar)) return;
-            if (!this.pasoControlDeNoVacio(porcentajePorVenta)) return;
-
-            // Controla que descripcion no se encuentren registrado en el sistema
-            if (!this.pasoControlDeRegistro(descripcion)) return;
-
-            query = "INSERT INTO LOS_SUPER_AMIGOS.Visibilidad (descripcion, precio, porcentaje) values (@descripcion, @precioPorPublicar, @porcentajePorVenta)";
-            parametros.Clear();
-            parametros.Add(new SqlParameter("@descripcion", descripcion));
-            parametros.Add(new SqlParameter("@precioPorPublicar", Convert.ToDouble(precioPorPublicar)));
-            parametros.Add(new SqlParameter("@porcentajePorVenta", Convert.ToDecimal(porcentajePorVenta)));
-
-            int filasAfectadas = builderDeComandos.Crear(query, parametros).ExecuteNonQuery();
-
-            if (filasAfectadas == 1) MessageBox.Show("Se agrego la visibilidad correctamente");
-
-            VolverAlMenuPrincipal();
-        }
-
-        private bool pasoControlDeNoVacio(string valor)
-        {
-            if (valor == "")
+            try
             {
-                MessageBox.Show("Faltan datos");
-                return false;
+                Visibilidad visibilidad = new Visibilidad();
+                visibilidad.SetDescripcion(descripcion);
+                visibilidad.SetPrecioPorPublicar(precioPorPublicar);
+                visibilidad.SetPorcentajePorVenta(porcentajePorVenta);
+                visibilidad.SetDuracion(duracion);
+                Decimal idVisibilidad = comunicador.CrearVisibilidad(visibilidad);
+                if (idVisibilidad > 0) MessageBox.Show("Se creo la visibilidad");
             }
-            return true;
-        }
-
-        private bool pasoControlDeRegistro(String descripcion)
-        {
-            query = "SELECT COUNT(*) FROM LOS_SUPER_AMIGOS.Visibilidad WHERE descripcion = @descripcion";
-            parametros.Clear();
-            parametros.Add(new SqlParameter("@descripcion", descripcion));
-            int cantidad = (int)builderDeComandos.Crear(query, parametros).ExecuteScalar();
-            if (cantidad > 0)
+            catch (CampoVacioException exception)
+            {
+                MessageBox.Show("Faltan completar campos");
+                return;
+            }
+            catch (TelefonoYaExisteException exception)
             {
                 MessageBox.Show("Ya existe esa descripcion");
-                return false;
+                return;
             }
-            return true;
+
+            this.Hide();
+            new MenuPrincipal().ShowDialog();
+            this.Close();
         }
 
         private void button_Limpiar_Click(object sender, EventArgs e)
@@ -83,14 +64,10 @@ namespace FrbaCommerce.ABM_Visibilidad
             textBox_Descripcion.Text = "";
             textBox_PorcentajePorVenta.Text = "";
             textBox_PrecioPorPublicar.Text = "";
+            textBox_Duracion.Text = "";
         }
 
         private void button_Cancelar_Click(object sender, EventArgs e)
-        {
-            VolverAlMenuPrincipal();
-        }
-
-        private void VolverAlMenuPrincipal()
         {
             this.Hide();
             new MenuPrincipal().ShowDialog();

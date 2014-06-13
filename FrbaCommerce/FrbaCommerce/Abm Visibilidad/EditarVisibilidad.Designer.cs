@@ -39,6 +39,8 @@
             this.label3 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.checkBox_Habilitado = new System.Windows.Forms.CheckBox();
+            this.textBox_Duracion = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -122,6 +124,8 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.label4);
+            this.groupBox1.Controls.Add(this.textBox_Duracion);
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.textBox_PorcentajePorVenta);
             this.groupBox1.Controls.Add(this.textBox_PrecioPorPublicar);
@@ -130,7 +134,7 @@
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(368, 99);
+            this.groupBox1.Size = new System.Drawing.Size(368, 125);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Datos personales";
@@ -138,12 +142,28 @@
             // checkBox_Habilitado
             // 
             this.checkBox_Habilitado.AutoSize = true;
-            this.checkBox_Habilitado.Location = new System.Drawing.Point(12, 117);
+            this.checkBox_Habilitado.Location = new System.Drawing.Point(21, 143);
             this.checkBox_Habilitado.Name = "checkBox_Habilitado";
             this.checkBox_Habilitado.Size = new System.Drawing.Size(73, 17);
             this.checkBox_Habilitado.TabIndex = 5;
             this.checkBox_Habilitado.Text = "Habilitado";
             this.checkBox_Habilitado.UseVisualStyleBackColor = true;
+            // 
+            // textBox_Duracion
+            // 
+            this.textBox_Duracion.Location = new System.Drawing.Point(112, 97);
+            this.textBox_Duracion.Name = "textBox_Duracion";
+            this.textBox_Duracion.Size = new System.Drawing.Size(250, 20);
+            this.textBox_Duracion.TabIndex = 6;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(6, 100);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(50, 13);
+            this.label4.TabIndex = 7;
+            this.label4.Text = "Duracion";
             // 
             // EditarVisibilidad
             // 
@@ -178,5 +198,7 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.CheckBox checkBox_Habilitado;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TextBox textBox_Duracion;
     }
 }
