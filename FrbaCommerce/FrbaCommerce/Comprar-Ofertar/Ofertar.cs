@@ -33,21 +33,50 @@ namespace FrbaCommerce.Comprar_Ofertar
 
         private void botonCancelar_Click(object sender, EventArgs e)
         {
-            this.Close();
+            this.Hide();
+                new VerPublicacion(publicacionId).ShowDialog();
+                this.Close();
         }
 
         private void botonOfertar_Click(object sender, EventArgs e)
         {
-            String sql = "INSERT INTO LOS_SUPER_AMIGOS.Oferta(monto, fecha, usuario_id, publicacion_id) VALUES (@monto, @fecha, @usuario, @publicacion)";
-            DateTime fecha = DateTime.Now;
-            parametros.Clear();
-            parametros.Add(new SqlParameter("@monto", this.textBoxMonto.Text));
-            parametros.Add(new SqlParameter("@fecha", fecha));
-            parametros.Add(new SqlParameter("@usuario", idUsuarioActual));
-            parametros.Add(new SqlParameter("@publicacion", publicacionId));
-            builderDeComandos.Crear(sql, parametros).ExecuteNonQuery();
-            MessageBox.Show("Su oferta fue registrada");
-            this.Close();
+            int val = 0;
+            if (!Int32.TryParse(textBoxMonto.Text, out val))
+            {
+                MessageBox.Show("Solo puede ingresar un número entero");
+                textBoxMonto.Clear();
+                return;
+            }
+            
+            if (Convert.ToInt32(this.textBoxMonto.Text) > ofertaMax)
+            {
+                String sql = "INSERT INTO LOS_SUPER_AMIGOS.Oferta(monto, fecha, usuario_id, publicacion_id) VALUES (@monto, @fecha, @usuario, @publicacion)";
+                DateTime fecha = DateTime.Now;
+                parametros.Clear();
+                parametros.Add(new SqlParameter("@monto", this.textBoxMonto.Text));
+                parametros.Add(new SqlParameter("@fecha", fecha));
+                parametros.Add(new SqlParameter("@usuario", idUsuarioActual));
+                parametros.Add(new SqlParameter("@publicacion", publicacionId));
+                builderDeComandos.Crear(sql, parametros).ExecuteNonQuery();                
+                MessageBox.Show("Su oferta fue registrada");
+                this.Hide();
+                new VerPublicacion(publicacionId).ShowDialog();
+                this.Close();
+            }
+            else
+            {
+                MessageBox.Show("Su oferta debe ser mayor a $" + ofertaMax);
+                textBoxMonto.Clear();
+            }
+        }
+
+        private void textBoxMonto_Validating(object sender, System.ComponentModel.CancelEventArgs e)
+        {    
+            int val = 0;
+            if (!Int32.TryParse(textBoxMonto.Text, out val))
+            {                
+                e.Cancel = true;
+            }            
         }
     }
 }

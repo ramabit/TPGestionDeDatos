@@ -131,7 +131,7 @@
             // labelVendedorDatos
             // 
             this.labelVendedorDatos.AutoSize = true;
-            this.labelVendedorDatos.Location = new System.Drawing.Point(132, 27);
+            this.labelVendedorDatos.Location = new System.Drawing.Point(133, 23);
             this.labelVendedorDatos.Name = "labelVendedorDatos";
             this.labelVendedorDatos.Size = new System.Drawing.Size(35, 13);
             this.labelVendedorDatos.TabIndex = 10;
@@ -140,7 +140,7 @@
             // labelRubroDatos
             // 
             this.labelRubroDatos.AutoSize = true;
-            this.labelRubroDatos.Location = new System.Drawing.Point(127, 51);
+            this.labelRubroDatos.Location = new System.Drawing.Point(133, 43);
             this.labelRubroDatos.Name = "labelRubroDatos";
             this.labelRubroDatos.Size = new System.Drawing.Size(35, 13);
             this.labelRubroDatos.TabIndex = 11;
@@ -149,7 +149,7 @@
             // labelVencimientoDatos
             // 
             this.labelVencimientoDatos.AutoSize = true;
-            this.labelVencimientoDatos.Location = new System.Drawing.Point(131, 73);
+            this.labelVencimientoDatos.Location = new System.Drawing.Point(133, 67);
             this.labelVencimientoDatos.Name = "labelVencimientoDatos";
             this.labelVencimientoDatos.Size = new System.Drawing.Size(35, 13);
             this.labelVencimientoDatos.TabIndex = 12;
@@ -158,7 +158,7 @@
             // labelProductoDatos
             // 
             this.labelProductoDatos.AutoSize = true;
-            this.labelProductoDatos.Location = new System.Drawing.Point(133, 102);
+            this.labelProductoDatos.Location = new System.Drawing.Point(133, 93);
             this.labelProductoDatos.Name = "labelProductoDatos";
             this.labelProductoDatos.Size = new System.Drawing.Size(35, 13);
             this.labelProductoDatos.TabIndex = 13;
@@ -167,7 +167,7 @@
             // labelStockDatos
             // 
             this.labelStockDatos.AutoSize = true;
-            this.labelStockDatos.Location = new System.Drawing.Point(141, 131);
+            this.labelStockDatos.Location = new System.Drawing.Point(133, 122);
             this.labelStockDatos.Name = "labelStockDatos";
             this.labelStockDatos.Size = new System.Drawing.Size(35, 13);
             this.labelStockDatos.TabIndex = 14;
@@ -176,7 +176,7 @@
             // labelPrecioDatos
             // 
             this.labelPrecioDatos.AutoSize = true;
-            this.labelPrecioDatos.Location = new System.Drawing.Point(145, 157);
+            this.labelPrecioDatos.Location = new System.Drawing.Point(133, 153);
             this.labelPrecioDatos.Name = "labelPrecioDatos";
             this.labelPrecioDatos.Size = new System.Drawing.Size(35, 13);
             this.labelPrecioDatos.TabIndex = 15;

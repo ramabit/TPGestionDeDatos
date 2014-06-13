@@ -150,7 +150,7 @@
             this.labelTelefono.Name = "labelTelefono";
             this.labelTelefono.Size = new System.Drawing.Size(35, 13);
             this.labelTelefono.TabIndex = 2;
-            this.labelTelefono.Text = "label3";
+            this.labelTelefono.Text = "";
             // 
             // labelMail
             // 

@@ -36,11 +36,11 @@
             // 
             // textBoxPregunta
             // 
-            this.textBoxPregunta.Location = new System.Drawing.Point(23, 81);
+            this.textBoxPregunta.Location = new System.Drawing.Point(25, 55);
             this.textBoxPregunta.MaxLength = 255;
-            this.textBoxPregunta.Name = "textBoxPregunta";
-            this.textBoxPregunta.Size = new System.Drawing.Size(235, 20);
             this.textBoxPregunta.Multiline = true;
+            this.textBoxPregunta.Name = "textBoxPregunta";
+            this.textBoxPregunta.Size = new System.Drawing.Size(235, 123);
             this.textBoxPregunta.TabIndex = 0;
             // 
             // labelMensaje

@@ -18,12 +18,14 @@ namespace FrbaCommerce.Comprar_Ofertar
         decimal idUsuarioActual = UsuarioSesion.Usuario.id;
         private Decimal vendedorId;
         private int publicacionId;
+        private int stockActual;
 
-        public Comprar(Decimal usuarioVendedor, int publicacion)
+        public Comprar(Decimal usuarioVendedor, int publicacion, int stock)
         {
             InitializeComponent();
             vendedorId = usuarioVendedor;
             publicacionId = publicacion;
+            stockActual = stock;
         }
 
         private void Comprar_Load(object sender, EventArgs e)
@@ -44,16 +46,32 @@ namespace FrbaCommerce.Comprar_Ofertar
             {
                 labelNombre.Text = (String)readerCliente["nombre"] + " " + (String)readerCliente["apellido"];
                 labelMail.Text = (String)readerCliente["mail"];
-                labelTelefono.Text = ((Decimal)readerCliente["telefono"]).ToString();
+                if ((Decimal)readerCliente["telefono"] == 0)
+                {
+                    labelLocalidad.Text = "";
+                }
+                else
+                {
+                    labelLocalidad.Text = ((Decimal)readerCliente["telefono"]).ToString();
+                }
             }
             else
             {
+                parametros.Clear();
+                parametros.Add(new SqlParameter("@usuario", vendedorId));
                 String queryEmpresa = "SELECT * FROM LOS_SUPER_AMIGOS.Empresa WHERE usuario_id = @usuario and habilitado = 1)";
                 SqlDataReader readerEmpresa = builderDeComandos.Crear(queryEmpresa, parametros).ExecuteReader();
                 readerEmpresa.Read();
                 labelNombre.Text = (String)readerEmpresa["razon_social"];
-                labelMail.Text = (String)readerEmpresa["mail"];
-                labelTelefono.Text = ((Decimal)readerEmpresa["telefono"]).ToString();
+                labelMail.Text = (String)readerEmpresa["mail"];                
+                if ((Decimal)readerEmpresa["telefono"] == 0)
+                {
+                    labelLocalidad.Text = "";
+                }
+                else
+                {
+                    labelLocalidad.Text = ((Decimal)readerEmpresa["telefono"]).ToString();
+                }
             }
         }
 
@@ -62,19 +80,40 @@ namespace FrbaCommerce.Comprar_Ofertar
             parametros.Clear();
             parametros.Add(new SqlParameter("@usuario", vendedorId));
 
-            String queryDireccion = "SELECT * FROM LOS_SUPER_AMIGOS.Direccion WHERE usuario_id = @usuario)";
+            String queryDireccion = "SELECT * FROM LOS_SUPER_AMIGOS.Direccion WHERE id = @usuario";
             SqlDataReader readerDireccion = builderDeComandos.Crear(queryDireccion, parametros).ExecuteReader();
             readerDireccion.Read();
 
             labelCalle.Text = (String)readerDireccion["calle"] + " " + (Decimal)readerDireccion["numero"];
-            labelDepartamento.Text = "Departamento " + (Decimal)readerDireccion["piso"] + "-" + (String)readerDireccion["dpto"];
-            labelPostal.Text = ((Decimal)readerDireccion["cod_postal"]).ToString();
-            labelLocalidad.Text = (String)readerDireccion["localidad"];
+            labelDepartamento.Text = "Departamento " + (Decimal)readerDireccion["piso"] + "-" + (String)readerDireccion["depto"];
+            labelPostal.Text = ((String)readerDireccion["cod_postal"]).ToString();
+            if ((String)readerDireccion["localidad"] == "localidadMigrada")
+            {
+                labelLocalidad.Text = "";
+            }
+            else
+            {
+                labelLocalidad.Text = (String)readerDireccion["localidad"];
+            }
         }
 
         private void buttonConfirmarCompra_Click(object sender, EventArgs e)
         {
-            String sql = "INSERT INTO LOS_SUPER_AMIGOS.Compra(cantidad, fecha, usuario_id, publicacion_id, calificacion_id) VALUES (@cant, @fecha, @usuario, @publicacion, NULL)";
+            int val = 0;
+            if (!Int32.TryParse(textBoxCant.Text, out val))
+            {
+                MessageBox.Show("Solo puede ingresar un número entero");
+                textBoxCant.Clear();
+                return;
+            }
+
+            if (Convert.ToInt32(textBoxCant.Text) > stockActual)
+            {
+                MessageBox.Show("Su pedido excede el stock actual de " + stockActual + " unidades");
+                return;
+            }
+
+            String sql = "INSERT INTO LOS_SUPER_AMIGOS.Compra(cantidad, fecha, usuario_id, publicacion_id, calificacion_id, facturada) VALUES (@cant, @fecha, @usuario, @publicacion, NULL,0)";
             DateTime fecha = DateTime.Now;
 
             parametros.Clear();
@@ -85,11 +124,15 @@ namespace FrbaCommerce.Comprar_Ofertar
             builderDeComandos.Crear(sql, parametros).ExecuteNonQuery();
 
             MessageBox.Show("Contactese con el vendedor para finalizar la compra");
+            this.Hide();
+            new VerPublicacion(publicacionId).ShowDialog();
             this.Close();
         }
 
         private void botonCancelar_Click(object sender, EventArgs e)
-        {            
+        {
+            this.Hide();
+            new VerPublicacion(publicacionId).ShowDialog();
             this.Close();
         }
     }

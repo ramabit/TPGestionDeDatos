@@ -275,11 +275,10 @@ namespace FrbaCommerce.Comprar_Ofertar
         }
 
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
-            String publicacionElegida = dataGridView1.Rows[e.RowIndex].Cells["descripcion"].Value.ToString();
+        {            
             int idPublicacionElegida = Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells["id"].Value);            
             this.Hide();
-            new VerPublicacion(publicacionElegida, idPublicacionElegida).ShowDialog();
+            new VerPublicacion(idPublicacionElegida).ShowDialog();
             this.Close();
         }
 

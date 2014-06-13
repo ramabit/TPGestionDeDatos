@@ -16,18 +16,16 @@ namespace FrbaCommerce.Comprar_Ofertar
         private IList<SqlParameter> parametros = new List<SqlParameter>();
         private BuilderDeComandos builderDeComandos = new BuilderDeComandos();
 
-        public Object SelectedItem { get; set; }
-        private String publicacionElegida;
+        public Object SelectedItem { get; set; }        
         private String tipoPublicacion;
         private int publicacionId;
         private Decimal vendedorId;
 
-        public VerPublicacion(String publicacion, int idPublicacion)
+        public VerPublicacion(int idPublicacion)
         {
-            InitializeComponent();
-            publicacionElegida = publicacion;
+            InitializeComponent();            
             publicacionId = idPublicacion;
-            pedirTipoEstado();
+            pedirTipoEstadoDescripcion();
         }
 
         private void ComprarOfertar_Load(object sender, EventArgs e)
@@ -35,13 +33,12 @@ namespace FrbaCommerce.Comprar_Ofertar
             pedirVendedor();
             pedirRubro();
             pedirVencimientoPreguntas();
-            pedirStock();
-            labelProductoDatos.Text = publicacionElegida;
+            pedirStock();                        
             pedirPrecio();
             pedirAccion();            
         }
 
-        private void pedirTipoEstado()
+        private void pedirTipoEstadoDescripcion()
         {
             parametros.Clear();
             parametros.Add(new SqlParameter("@id", publicacionId));
@@ -55,6 +52,7 @@ namespace FrbaCommerce.Comprar_Ofertar
                 botonComprarOfertar.Enabled = false;
                 MessageBox.Show("La publicación se encuentra pausada y no se pueden realizar compras/ofertas");
             }
+            labelProductoDatos.Text = (String)reader["descripcion"];
             tipoPublicacion = (String)reader["tipo"];
         }
 
@@ -182,12 +180,16 @@ namespace FrbaCommerce.Comprar_Ofertar
         private void botonComprarOfertar_Click(object sender, EventArgs e)
         {
             if (tipoPublicacion == "Compra Inmediata")
-            {                          
-                new Comprar(vendedorId, publicacionId).ShowDialog();                
+            {                
+                this.Hide();
+                new Comprar(vendedorId, publicacionId, Convert.ToInt32(labelStockDatos.Text)).ShowDialog();
+                this.Close();
             }
             else
             {
-                new Ofertar(Convert.ToInt32(labelPrecioDatos.Text),publicacionId).ShowDialog();    
+                this.Hide();
+                new Ofertar(Convert.ToInt32(labelPrecioDatos.Text),publicacionId).ShowDialog();
+                this.Close();
             }
         }
 
