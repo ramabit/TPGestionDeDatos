@@ -623,6 +623,11 @@ WHERE ISNULL(Publicacion_Rubro_Descripcion, '') != ''
 SET IDENTITY_INSERT LOS_SUPER_AMIGOS.Publicacion OFF;
 GO
 
+UPDATE LOS_SUPER_AMIGOS.Publicacion SET estado = 'Finalizada'
+WHERE fecha_vencimiento <= GETDATE()
+
+GO
+
 -- INSERTAR Calificaciones
 SET IDENTITY_INSERT LOS_SUPER_AMIGOS.Calificacion ON;
 GO

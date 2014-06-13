@@ -40,6 +40,7 @@
             this.textBoxPregunta.MaxLength = 255;
             this.textBoxPregunta.Name = "textBoxPregunta";
             this.textBoxPregunta.Size = new System.Drawing.Size(235, 20);
+            this.textBoxPregunta.Multiline = true;
             this.textBoxPregunta.TabIndex = 0;
             // 
             // labelMensaje
