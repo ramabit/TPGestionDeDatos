@@ -19,13 +19,25 @@ namespace FrbaCommerce
 
         public DataTable SelectDataTable(String que, String deDonde)
         {
-            command = builderDeComandos.Crear("SELECT "+ que + " FROM LOS_SUPER_AMIGOS." + deDonde, parametros);
+            parametros.Clear();
+            command = builderDeComandos.Crear("SELECT " + que + " FROM LOS_SUPER_AMIGOS." + deDonde, parametros);
             DataSet datos = new DataSet();
             SqlDataAdapter adapter = new SqlDataAdapter();
             adapter.SelectCommand = command;
             adapter.Fill(datos);
             return datos.Tables[0];
-         }
+        }
+
+        public DataTable SelectDataTable(String que, String deDonde, String condiciones)
+        {
+            parametros.Clear();
+            command = builderDeComandos.Crear("SELECT " + que + " FROM " + deDonde + " WHERE " + condiciones, parametros);
+            DataSet datos = new DataSet();
+            SqlDataAdapter adapter = new SqlDataAdapter();
+            adapter.SelectCommand = command;
+            adapter.Fill(datos);
+            return datos.Tables[0];
+        }
 
         public Decimal ObtenerIdDe(TipoDeDocumento tipoDeDocumento)
         {
@@ -435,6 +447,26 @@ namespace FrbaCommerce
                 return nuevoEmpresa;
             }
             return nuevoEmpresa;
+        }
+
+        public DataTable SelectClientesParaFiltroConFiltro(String filtro)
+        {
+            return this.SelectDataTable("c.id, u.username Username, c.nombre Nombre, c.apellido Apellido, td.nombre 'Tipo de Documento', c.documento Documento, c.fecha_nacimiento 'Fecha de Nacimiento', c.mail Mail, c.telefono Telefono, d.calle Calle, d.numero Numero, d.piso Piso, d.depto Departamento, d.cod_postal 'Codigo postal', d.localidad Localidad", "LOS_SUPER_AMIGOS.Cliente c, LOS_SUPER_AMIGOS.TipoDeDocumento td, LOS_SUPER_AMIGOS.Direccion d, LOS_SUPER_AMIGOS.Usuario u", "c.tipo_de_documento_id = td.id AND c.direccion_id = d.id AND c.usuario_id = u.id " + filtro);
+        }
+
+        public DataTable SelectClientesParaFiltro()
+        {
+            return this.SelectClientesParaFiltroConFiltro("");
+        }
+
+        public DataTable SelectEmpresasParaFiltroConFiltro(String filtro)
+        {
+            return this.SelectDataTable("e.id, u.username Username, e.razon_social 'Razon Social', e.nombre_de_contacto 'Nombre de contacto', e.cuit 'CUIT', e.fecha_creacion 'Fecha de creacion', e.mail 'Mail', e.telefono 'Telefono', e.ciudad Ciudad, d.calle Calle, d.numero Numero, d.piso Piso, d.depto Departamento, d.cod_postal 'Codigo Postal', d.localidad Localidad", "LOS_SUPER_AMIGOS.Empresa e, LOS_SUPER_AMIGOS.Direccion d, LOS_SUPER_AMIGOS.Usuario u", "e.direccion_id = d.id AND e.usuario_id = u.id " + filtro);
+        }
+
+        public DataTable SelectEmpresasParaFiltro()
+        {
+            return this.SelectEmpresasParaFiltroConFiltro("");
         }
     }
 }

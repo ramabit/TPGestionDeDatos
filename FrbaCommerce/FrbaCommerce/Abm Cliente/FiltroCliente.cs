@@ -13,10 +13,6 @@ namespace FrbaCommerce.ABM_Cliente
 {
     public partial class FiltroCliente : Form
     {
-        private BuilderDeComandos builderDeComandos = new BuilderDeComandos();
-        private String query;
-        private SqlCommand command;
-        private IList<SqlParameter> parametros = new List<SqlParameter>();
         private ComunicadorConBaseDeDatos comunicador = new ComunicadorConBaseDeDatos();
 
         public FiltroCliente()
@@ -44,23 +40,32 @@ namespace FrbaCommerce.ABM_Cliente
 
         private void CargarClientes()
         {
-            command = builderDeComandos.Crear("SELECT c.id, u.username Username, c.nombre Nombre, c.apellido Apellido, td.nombre 'Tipo de Documento', c.documento Documento, c.fecha_nacimiento 'Fecha de Nacimiento', c.mail Mail, c.telefono Telefono, d.calle Calle, d.numero Numero, d.piso Piso, d.depto Departamento, d.cod_postal 'Codigo postal', d.localidad Localidad FROM LOS_SUPER_AMIGOS.Cliente c, LOS_SUPER_AMIGOS.TipoDeDocumento td, LOS_SUPER_AMIGOS.Direccion d, LOS_SUPER_AMIGOS.Usuario u WHERE c.tipo_de_documento_id = td.id AND c.direccion_id = d.id AND c.usuario_id = u.id", parametros);
+            dataGridView_Cliente.DataSource = comunicador.SelectClientesParaFiltro();
+            CargarColumnaModificacion();
+        }
 
-            DataSet clientes = new DataSet();
-            SqlDataAdapter adapter = new SqlDataAdapter();
-            adapter.SelectCommand = command;
-            adapter.Fill(clientes);
-            dataGridView_Cliente.DataSource = clientes.Tables[0].DefaultView;
-            if (dataGridView_Cliente.Columns.Contains("Modificar")) 
+        private void CargarColumnaModificacion()
+        {
+            if (dataGridView_Cliente.Columns.Contains("Modificar"))
                 dataGridView_Cliente.Columns.Remove("Modificar");
-            AgregarColumnaDeModificacion();
-            AgregarListenerBotonDeModificacion();
+            DataGridViewButtonColumn botonColumnaModificar = new DataGridViewButtonColumn();
+            botonColumnaModificar.Text = "Modificar";
+            botonColumnaModificar.Name = "Modificar";
+            botonColumnaModificar.UseColumnTextForButtonValue = true;
+            dataGridView_Cliente.Columns.Add(botonColumnaModificar);
+            dataGridView_Cliente.CellClick +=
+                new DataGridViewCellEventHandler(dataGridView_Cliente_CellClick);
         }
 
         private void button_Buscar_Click(object sender, EventArgs e)
         {
-            String filtro = "";
+            String filtro = CalcularFiltro();
+            dataGridView_Cliente.DataSource = comunicador.SelectClientesParaFiltroConFiltro(filtro);
+        }
 
+        private String CalcularFiltro()
+        {
+            String filtro = "";
             if (textBox_Nombre.Text != "") filtro += "AND " + "c.nombre LIKE '" + textBox_Nombre.Text + "%'";
             if (textBox_Apellido.Text != "") filtro += "AND " + "c.apellido LIKE '" + textBox_Apellido.Text + "%'";
             if (textBox_Mail.Text != "") filtro += "AND " + "c.mail LIKE '" + textBox_Mail.Text + "%'";
@@ -69,16 +74,7 @@ namespace FrbaCommerce.ABM_Cliente
             tipoDeDocumento.SetNombre(comboBox_TipoDeDoc.Text);
             Decimal idTipoDeDocumento = comunicador.ObtenerIdDe(tipoDeDocumento);
             filtro += "AND " + "c.tipo_de_documento_id = " + idTipoDeDocumento;
-
-            query = "SELECT c.id, u.username Username, c.nombre Nombre, c.apellido Apellido, td.nombre 'Tipo de Documento', c.documento Documento, c.fecha_nacimiento 'Fecha de Nacimiento', c.mail Mail, c.telefono Telefono, d.calle Calle, d.numero Numero, d.piso Piso, d.depto Departamento, d.cod_postal 'Codigo postal', d.localidad Localidad FROM LOS_SUPER_AMIGOS.Cliente c, LOS_SUPER_AMIGOS.TipoDeDocumento td, LOS_SUPER_AMIGOS.Direccion d, LOS_SUPER_AMIGOS.Usuario u WHERE c.tipo_de_documento_id = td.id AND c.direccion_id = d.id AND c.usuario_id = u.id " + filtro;
-
-            command = builderDeComandos.Crear(query, parametros);
-
-            DataSet clientes = new DataSet();
-            SqlDataAdapter adapter = new SqlDataAdapter();
-            adapter.SelectCommand = command;
-            adapter.Fill(clientes);
-            dataGridView_Cliente.DataSource = clientes.Tables[0].DefaultView;
+            return filtro;
         }
 
         private void button_Limpiar_Click(object sender, EventArgs e)
@@ -98,26 +94,10 @@ namespace FrbaCommerce.ABM_Cliente
             this.Close();
         }
 
-        private void AgregarColumnaDeModificacion()
-        {
-            DataGridViewButtonColumn botonColumnaModificar = new DataGridViewButtonColumn();
-            botonColumnaModificar.Text = "Modificar";
-            botonColumnaModificar.Name = "Modificar";
-            botonColumnaModificar.UseColumnTextForButtonValue = true;
-            dataGridView_Cliente.Columns.Add(botonColumnaModificar);
-        }
-
-        private void AgregarListenerBotonDeModificacion()
-        {
-            // Add a CellClick handler to handle clicks in the button column.
-            dataGridView_Cliente.CellClick +=
-                new DataGridViewCellEventHandler(dataGridView_Cliente_CellClick);
-        }
-
         private void dataGridView_Cliente_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             // Controla que la celda que se clickeo fue la de modificar
-            if (e.ColumnIndex == dataGridView_Cliente.Columns["modificar"].Index && e.RowIndex >= 0)
+            if (e.ColumnIndex == dataGridView_Cliente.Columns["Modificar"].Index && e.RowIndex >= 0)
             {
                 String idClienteAModificar = dataGridView_Cliente.Rows[e.RowIndex].Cells["id"].Value.ToString();
                 new EditarCliente(idClienteAModificar).ShowDialog();

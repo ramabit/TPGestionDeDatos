@@ -12,10 +12,7 @@ namespace FrbaCommerce.ABM_Empresa
 {
     public partial class FiltroEmpresa : Form
     {
-        private BuilderDeComandos builderDeComandos = new BuilderDeComandos();
-        private String query;
-        private SqlCommand command;
-        private IList<SqlParameter> parametros = new List<SqlParameter>();
+        private ComunicadorConBaseDeDatos comunicador = new ComunicadorConBaseDeDatos();
 
         public FiltroEmpresa()
         {
@@ -35,36 +32,36 @@ namespace FrbaCommerce.ABM_Empresa
 
         private void CargarEmpresas()
         {
-            command = builderDeComandos.Crear("SELECT e.id, u.username Username, e.razon_social 'Razon Social', e.nombre_de_contacto 'Nombre de contacto', e.cuit 'CUIT', e.fecha_creacion 'Fecha de creacion', e.mail 'Mail', e.telefono 'Telefono', e.ciudad Ciudad, d.calle Calle, d.numero Numero, d.piso Piso, d.depto Departamento, d.cod_postal 'Codigo Postal', d.localidad Localidad FROM LOS_SUPER_AMIGOS.Empresa e, LOS_SUPER_AMIGOS.Direccion d, LOS_SUPER_AMIGOS.Usuario u WHERE e.direccion_id = d.id AND e.usuario_id = u.id", parametros);
+            dataGridView_Empresa.DataSource = comunicador.SelectEmpresasParaFiltro();
+            CargarColumnaModificacion();
+        }
 
-            DataSet empresas = new DataSet();
-            SqlDataAdapter adapter = new SqlDataAdapter();
-            adapter.SelectCommand = command;
-            adapter.Fill(empresas);
-            dataGridView_Empresa.DataSource = empresas.Tables[0].DefaultView;
+        private void CargarColumnaModificacion()
+        {
             if (dataGridView_Empresa.Columns.Contains("Modificar"))
                 dataGridView_Empresa.Columns.Remove("Modificar");
-            AgregarColumnaDeModificacion();
-            AgregarListenerBotonDeModificacion();
+            DataGridViewButtonColumn botonColumnaModificar = new DataGridViewButtonColumn();
+            botonColumnaModificar.Text = "Modificar";
+            botonColumnaModificar.Name = "Modificar";
+            botonColumnaModificar.UseColumnTextForButtonValue = true;
+            dataGridView_Empresa.Columns.Add(botonColumnaModificar);
+            dataGridView_Empresa.CellClick +=
+                new DataGridViewCellEventHandler(dataGridView_Empresa_CellClick);
         }
 
         private void button_Buscar_Click(object sender, EventArgs e)
         {
-            String filtro = "";
+            String filtro = CalcularFiltro();
+            dataGridView_Empresa.DataSource = comunicador.SelectEmpresasParaFiltroConFiltro(filtro);
+        }
 
+        private String CalcularFiltro()
+        {
+            String filtro = "";
             if (textBox_RazonSocial.Text != "") filtro += "AND " + "e.razon_social LIKE '" + textBox_RazonSocial.Text + "%'";
             if (textBox_Cuit.Text != "") filtro += "AND " + "e.cuit LIKE '" + textBox_Cuit.Text + "%'";
             if (textBox_Mail.Text != "") filtro += "AND " + "e.mail LIKE '" + textBox_Mail.Text + "%'";
-
-            query = "SELECT e.id, u.username Username, e.razon_social 'Razon Social', e.nombre_de_contacto 'Nombre de contacto', e.cuit 'CUIT', e.fecha_creacion 'Fecha de creacion', e.mail 'Mail', e.telefono 'Telefono', e.ciudad Ciudad, d.calle Calle, d.numero Numero, d.piso Piso, d.depto Departamento, d.cod_postal 'Codigo Postal', d.localidad Localidad FROM LOS_SUPER_AMIGOS.Empresa e, LOS_SUPER_AMIGOS.Direccion d, LOS_SUPER_AMIGOS.Usuario u WHERE e.direccion_id = d.id AND e.usuario_id = u.id " + filtro;
-
-            command = builderDeComandos.Crear(query, parametros);
-
-            DataSet empresas = new DataSet();
-            SqlDataAdapter adapter = new SqlDataAdapter();
-            adapter.SelectCommand = command;
-            adapter.Fill(empresas);
-            dataGridView_Empresa.DataSource = empresas.Tables[0].DefaultView;
+            return filtro;
         }
 
         private void button_Limpiar_Click(object sender, EventArgs e)
@@ -82,26 +79,10 @@ namespace FrbaCommerce.ABM_Empresa
             this.Close();
         }
 
-        private void AgregarColumnaDeModificacion()
-        {
-            DataGridViewButtonColumn botonColumnaModificar = new DataGridViewButtonColumn();
-            botonColumnaModificar.Text = "Modificar";
-            botonColumnaModificar.Name = "Modificar";
-            botonColumnaModificar.UseColumnTextForButtonValue = true;
-            dataGridView_Empresa.Columns.Add(botonColumnaModificar);
-        }
-
-        private void AgregarListenerBotonDeModificacion()
-        {
-            // Add a CellClick handler to handle clicks in the button column.
-            dataGridView_Empresa.CellClick +=
-                new DataGridViewCellEventHandler(dataGridView_Empresa_CellClick);
-        }
-
         private void dataGridView_Empresa_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             // Controla que la celda que se clickeo fue la de modificar
-            if (e.ColumnIndex == dataGridView_Empresa.Columns["modificar"].Index && e.RowIndex >= 0)
+            if (e.ColumnIndex == dataGridView_Empresa.Columns["Modificar"].Index && e.RowIndex >= 0)
             {
                 String idEmpresaAModificar = dataGridView_Empresa.Rows[e.RowIndex].Cells["id"].Value.ToString();
                 new EditarEmpresa(idEmpresaAModificar).ShowDialog();
