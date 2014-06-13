@@ -357,6 +357,7 @@ stock numeric(18,0),
 precio numeric(18,0),
 habilitado bit default 1,
 usuario_id numeric(18,0),
+costo_pagado bit default 0,
 PRIMARY KEY (id),
 FOREIGN KEY (visibilidad_id) REFERENCES LOS_SUPER_AMIGOS.Visibilidad (id),
 FOREIGN KEY (usuario_id) REFERENCES LOS_SUPER_AMIGOS.Usuario (id),
@@ -435,7 +436,6 @@ monto numeric(18,2),
 cantidad numeric(18,0),
 factura_nro numeric(18,0),
 publicacion_id numeric(18,0),
-es_comision_venta bit default 1,
 PRIMARY KEY (id),
 FOREIGN KEY (factura_nro) REFERENCES LOS_SUPER_AMIGOS.Factura (nro),
 FOREIGN KEY (publicacion_id) REFERENCES LOS_SUPER_AMIGOS.Publicacion (id)
@@ -616,8 +616,8 @@ SET IDENTITY_INSERT LOS_SUPER_AMIGOS.Publicacion ON;
 GO
 
 INSERT INTO LOS_SUPER_AMIGOS.Publicacion
-([id], [descripcion], [stock], [fecha_inicio], [fecha_vencimiento], [precio], [rubro_id], [visibilidad_id], [usuario_id], [estado], [tipo])
-SELECT DISTINCT Publicacion_Cod, Publicacion_Descripcion, Publicacion_Stock, Publicacion_Fecha, Publicacion_Fecha_Venc, Publicacion_Precio, (SELECT id FROM LOS_SUPER_AMIGOS.Rubro r WHERE Publicacion_Rubro_Descripcion = r.descripcion), Publicacion_Visibilidad_Cod, LOS_SUPER_AMIGOS.agregar_id_publ(Publ_Cli_Dni, Publ_Empresa_Razon_Social),Publicacion_Estado,Publicacion_Tipo FROM gd_esquema.Maestra
+([id], [descripcion], [stock], [fecha_inicio], [fecha_vencimiento], [precio], [rubro_id], [visibilidad_id], [usuario_id], [estado], [tipo], [costo_pagado])
+SELECT DISTINCT Publicacion_Cod, Publicacion_Descripcion, Publicacion_Stock, Publicacion_Fecha, Publicacion_Fecha_Venc, Publicacion_Precio, (SELECT id FROM LOS_SUPER_AMIGOS.Rubro r WHERE Publicacion_Rubro_Descripcion = r.descripcion), Publicacion_Visibilidad_Cod, LOS_SUPER_AMIGOS.agregar_id_publ(Publ_Cli_Dni, Publ_Empresa_Razon_Social),Publicacion_Estado,Publicacion_Tipo, 1 FROM gd_esquema.Maestra
 WHERE ISNULL(Publicacion_Rubro_Descripcion, '') != ''
 
 SET IDENTITY_INSERT LOS_SUPER_AMIGOS.Publicacion OFF;
@@ -647,9 +647,9 @@ WHERE ISNULL(Oferta_Monto, 0) != 0
 
 -- INSERTAR Compras
 INSERT INTO LOS_SUPER_AMIGOS.Compra
-([cantidad], [fecha], [usuario_id], [publicacion_id], [calificacion_id])
-SELECT Compra_Cantidad, Compra_Fecha, (SELECT usuario_id FROM LOS_SUPER_AMIGOS.Cliente WHERE documento = Cli_Dni), Publicacion_Cod, Calificacion_Codigo FROM gd_esquema.Maestra
-WHERE ISNULL(Compra_Cantidad, 0) != 0
+([cantidad], [fecha], [usuario_id], [publicacion_id], [calificacion_id], [facturada])
+SELECT Compra_Cantidad, Compra_Fecha, (SELECT usuario_id FROM LOS_SUPER_AMIGOS.Cliente WHERE documento = Cli_Dni), Publicacion_Cod, Calificacion_Codigo, 1 FROM gd_esquema.Maestra
+WHERE ISNULL(Compra_Cantidad, 0) != 0 and ISNULL(Calificacion_Codigo,0) != 0
 
 -- INSERTAR Formas_Pago
 INSERT INTO LOS_SUPER_AMIGOS.Forma_Pago

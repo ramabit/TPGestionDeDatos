@@ -23,10 +23,22 @@ namespace FrbaCommerce.Facturar_Publicaciones
 
         private void Facturar_Load(object sender, EventArgs e)
         {
+           dropdownCalificacion.Items.Add(10);
+           CargarVentasPorFacturar();
+           
+        }
+
+        private void CargarVentasPorFacturar()
+        {
 
         }
 
         private void botonFacturar_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void labelCantCompras_Click(object sender, EventArgs e)
         {
 
         }

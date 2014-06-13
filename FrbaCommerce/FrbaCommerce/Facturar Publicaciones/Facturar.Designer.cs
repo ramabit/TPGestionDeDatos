@@ -28,38 +28,42 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.labelCantCompras = new System.Windows.Forms.Label();
-            this.domainUpDown1 = new System.Windows.Forms.DomainUpDown();
+            this.labelComisiones = new System.Windows.Forms.Label();
+            this.domainUpDownFacturar = new System.Windows.Forms.DomainUpDown();
             this.label1 = new System.Windows.Forms.Label();
             this.botonFacturar = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.labelMin = new System.Windows.Forms.Label();
             this.labelMax = new System.Windows.Forms.Label();
+            this.labelCostos = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.labelCantidadCostos = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
-            // labelCantCompras
+            // labelComisiones
             // 
-            this.labelCantCompras.AutoSize = true;
-            this.labelCantCompras.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelCantCompras.Location = new System.Drawing.Point(34, 43);
-            this.labelCantCompras.Name = "labelCantCompras";
-            this.labelCantCompras.Size = new System.Drawing.Size(195, 17);
-            this.labelCantCompras.TabIndex = 0;
-            this.labelCantCompras.Text = "Cantidad de ventas a facturar";
+            this.labelComisiones.AutoSize = true;
+            this.labelComisiones.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelComisiones.Location = new System.Drawing.Point(34, 67);
+            this.labelComisiones.Name = "labelComisiones";
+            this.labelComisiones.Size = new System.Drawing.Size(216, 17);
+            this.labelComisiones.TabIndex = 0;
+            this.labelComisiones.Text = "Comisiones por ventas a facturar";
+            this.labelComisiones.Click += new System.EventHandler(this.labelCantCompras_Click);
             // 
-            // domainUpDown1
+            // domainUpDownFacturar
             // 
-            this.domainUpDown1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.domainUpDown1.Location = new System.Drawing.Point(245, 41);
-            this.domainUpDown1.Name = "domainUpDown1";
-            this.domainUpDown1.Size = new System.Drawing.Size(120, 23);
-            this.domainUpDown1.TabIndex = 1;
-            this.domainUpDown1.Text = "0";
+            this.domainUpDownFacturar.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.domainUpDownFacturar.Location = new System.Drawing.Point(261, 65);
+            this.domainUpDownFacturar.Name = "domainUpDownFacturar";
+            this.domainUpDownFacturar.Size = new System.Drawing.Size(55, 23);
+            this.domainUpDownFacturar.TabIndex = 1;
+            this.domainUpDownFacturar.Text = "0";
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(71, 178);
+            this.label1.Location = new System.Drawing.Point(88, 193);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(339, 13);
             this.label1.TabIndex = 2;
@@ -68,7 +72,7 @@
             // botonFacturar
             // 
             this.botonFacturar.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.botonFacturar.Location = new System.Drawing.Point(185, 128);
+            this.botonFacturar.Location = new System.Drawing.Point(205, 142);
             this.botonFacturar.Name = "botonFacturar";
             this.botonFacturar.Size = new System.Drawing.Size(111, 37);
             this.botonFacturar.TabIndex = 3;
@@ -90,7 +94,7 @@
             // 
             this.labelMin.AutoSize = true;
             this.labelMin.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelMin.Location = new System.Drawing.Point(22, 67);
+            this.labelMin.Location = new System.Drawing.Point(22, 95);
             this.labelMin.Name = "labelMin";
             this.labelMin.Size = new System.Drawing.Size(443, 13);
             this.labelMin.TabIndex = 5;
@@ -100,25 +104,59 @@
             // labelMax
             // 
             this.labelMax.AutoSize = true;
-            this.labelMax.Location = new System.Drawing.Point(22, 80);
+            this.labelMax.Location = new System.Drawing.Point(22, 108);
             this.labelMax.Name = "labelMax";
             this.labelMax.Size = new System.Drawing.Size(478, 13);
             this.labelMax.TabIndex = 6;
             this.labelMax.Text = "La cantidad maxima de compras a facturar corresponden a la cantidad de ventas aún" +
                 " no facturadas";
             // 
+            // labelCostos
+            // 
+            this.labelCostos.AutoSize = true;
+            this.labelCostos.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelCostos.Location = new System.Drawing.Point(34, 18);
+            this.labelCostos.Name = "labelCostos";
+            this.labelCostos.Size = new System.Drawing.Size(215, 17);
+            this.labelCostos.TabIndex = 7;
+            this.labelCostos.Text = "Costos de publicacion a facturar:";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(22, 35);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(456, 13);
+            this.label3.TabIndex = 8;
+            this.label3.Text = "La cantidad de costos de publicacion a facturar corresponden a las publicaciones " +
+                "ya vencidas.";
+            // 
+            // labelCantidadCostos
+            // 
+            this.labelCantidadCostos.AutoSize = true;
+            this.labelCantidadCostos.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelCantidadCostos.Location = new System.Drawing.Point(246, 19);
+            this.labelCantidadCostos.Name = "labelCantidadCostos";
+            this.labelCantidadCostos.Size = new System.Drawing.Size(16, 17);
+            this.labelCantidadCostos.TabIndex = 9;
+            this.labelCantidadCostos.Text = "0";
+            // 
             // Facturar
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(512, 269);
+            this.Controls.Add(this.labelCantidadCostos);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.labelCostos);
             this.Controls.Add(this.labelMax);
             this.Controls.Add(this.labelMin);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.botonFacturar);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.domainUpDown1);
-            this.Controls.Add(this.labelCantCompras);
+            this.Controls.Add(this.domainUpDownFacturar);
+            this.Controls.Add(this.labelComisiones);
             this.Name = "Facturar";
             this.Text = "Facturar Publicaciones";
             this.Load += new System.EventHandler(this.Facturar_Load);
@@ -129,12 +167,15 @@
 
         #endregion
 
-        private System.Windows.Forms.Label labelCantCompras;
-        private System.Windows.Forms.DomainUpDown domainUpDown1;
+        private System.Windows.Forms.Label labelComisiones;
+        private System.Windows.Forms.DomainUpDown domainUpDownFacturar;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button botonFacturar;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Label labelMin;
         private System.Windows.Forms.Label labelMax;
+        private System.Windows.Forms.Label labelCostos;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label labelCantidadCostos;
     }
 }
