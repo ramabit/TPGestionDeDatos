@@ -12,10 +12,6 @@ namespace FrbaCommerce.ABM_Visibilidad
 {
     public partial class FiltroVisibilidad : Form
     {
-        private BuilderDeComandos builderDeComandos = new BuilderDeComandos();
-        private String query;
-        private SqlCommand command;
-        private IList<SqlParameter> parametros = new List<SqlParameter>();
         private ComunicadorConBaseDeDatos comunicador = new ComunicadorConBaseDeDatos();
 
         public FiltroVisibilidad()
