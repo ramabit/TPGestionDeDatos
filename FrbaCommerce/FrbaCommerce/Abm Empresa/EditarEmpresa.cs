@@ -88,7 +88,6 @@ namespace FrbaCommerce.ABM_Empresa
                 pudoModificar = comunicador.ModificarDireccion(idDireccion, direccion);
 
                 if (pudoModificar) MessageBox.Show("La direccion se modifico correctamente");
-                else MessageBox.Show("La direccion no se pudo modificar correctamente");
             }
             catch (CampoVacioException)
             {
@@ -110,7 +109,6 @@ namespace FrbaCommerce.ABM_Empresa
 
                 pudoModificar = comunicador.ModificarEmpresa(idEmpresa, empresa);
                 if (pudoModificar) MessageBox.Show("La empresa se modifico correctamente");
-                else MessageBox.Show("La empresa no se pudo modificar correctamente");
             }
             catch (CampoVacioException exception)
             {

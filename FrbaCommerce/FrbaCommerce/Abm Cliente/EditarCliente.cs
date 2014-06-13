@@ -106,7 +106,6 @@ namespace FrbaCommerce.ABM_Cliente
                 pudoModificar = comunicador.ModificarDireccion(idDireccion, direccion);
 
                 if (pudoModificar) MessageBox.Show("La direccion se modifico correctamente");
-                else MessageBox.Show("La direccion no se pudo modificar correctamente");
             }
             catch (CampoVacioException exception)
             {
@@ -128,7 +127,6 @@ namespace FrbaCommerce.ABM_Cliente
                 cliente.SetIdDireccion(idDireccion);
                 pudoModificar = comunicador.ModificarCliente(idCliente, cliente);
                 if (pudoModificar) MessageBox.Show("El cliente se modifico correctamente");
-                else MessageBox.Show("El cliente no se pudo modificar correctamente");
             }
             catch (CampoVacioException exception)
             {
