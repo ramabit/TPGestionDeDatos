@@ -110,11 +110,12 @@
             // 
             // dropdownCalificacion
             // 
-            this.dropdownCalificacion.Location = new System.Drawing.Point(278, 49);
+            this.dropdownCalificacion.Location = new System.Drawing.Point(276, 47);
             this.dropdownCalificacion.Name = "dropdownCalificacion";
-            this.dropdownCalificacion.Size = new System.Drawing.Size(120, 20);
+            this.dropdownCalificacion.ReadOnly = true;
+            this.dropdownCalificacion.Size = new System.Drawing.Size(43, 20);
             this.dropdownCalificacion.TabIndex = 17;
-            this.dropdownCalificacion.Text = "---";
+            this.dropdownCalificacion.Text = " ---";
             this.dropdownCalificacion.SelectedItemChanged += new System.EventHandler(this.dropdownCalificacion_SelectedItemChanged);
             // 
             // Calificar

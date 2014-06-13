@@ -15,6 +15,8 @@ namespace FrbaCommerce.Facturar_Publicaciones
         private BuilderDeComandos builderDeComandos = new BuilderDeComandos();
         private SqlCommand command;
         private IList<SqlParameter> parametros = new List<SqlParameter>();
+        int cantidadMin;
+        int cantidadMax;
 
         public Facturar()
         {
@@ -23,10 +25,8 @@ namespace FrbaCommerce.Facturar_Publicaciones
 
         private void Facturar_Load(object sender, EventArgs e)
         {
-          // dropdownCalificacion.Items.Add(10);
            CargarCostosPublicacionPorFacturar();
-           CargarComisionesVentasPorFacturar();
-           
+           CargarComisionesVentasPorFacturar();  
         }
 
         private void CargarCostosPublicacionPorFacturar()
@@ -54,7 +54,7 @@ namespace FrbaCommerce.Facturar_Publicaciones
              + " where u.id = @id and p.usuario_id = u.id and c.publicacion_id = p.id"
              + " and c.facturada = 0 and p.estado = 'Finalizada'";
 
-            int cantidadMin = (int)builderDeComandos.Crear(cantidadMinimaComisiones, parametros).ExecuteScalar();
+            cantidadMin = (int)builderDeComandos.Crear(cantidadMinimaComisiones, parametros).ExecuteScalar();
 
             parametros.Clear();
             parametros.Add(new SqlParameter("@id", UsuarioSesion.Usuario.id));
@@ -64,24 +64,21 @@ namespace FrbaCommerce.Facturar_Publicaciones
              + " where u.id = @id and p.usuario_id = u.id and c.publicacion_id = p.id"
              + " and c.facturada = 0";
 
-            int cantidadMax = (int)builderDeComandos.Crear(cantidadMaximaComisiones, parametros).ExecuteScalar();
+            cantidadMax = (int)builderDeComandos.Crear(cantidadMaximaComisiones, parametros).ExecuteScalar();
 
             dropDownFacturar.Text = cantidadMin.ToString();
-            while (cantidadMin <= cantidadMax)
+            labelMinimo.Text = cantidadMin.ToString();
+            labelMaximo.Text = cantidadMax.ToString();
+            while (cantidadMax >= cantidadMin)
             {
-                dropDownFacturar.Items.Add(cantidadMin);
-                cantidadMin++;
+                dropDownFacturar.Items.Add(cantidadMax);
+                cantidadMax--;
             }
         }
 
         private void botonFacturar_Click(object sender, EventArgs e)
         {
-
-        }
-
-        private void labelCantCompras_Click(object sender, EventArgs e)
-        {
-
+          
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -90,5 +87,6 @@ namespace FrbaCommerce.Facturar_Publicaciones
             new MenuPrincipal().ShowDialog();
             this.Close();
         }
+
     }
 }
