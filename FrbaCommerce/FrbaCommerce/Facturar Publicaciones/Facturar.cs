@@ -31,6 +31,7 @@ namespace FrbaCommerce.Facturar_Publicaciones
 
         private void CargarCostosPublicacionPorFacturar()
         {
+            parametros.Clear();
             parametros.Add(new SqlParameter("@id", UsuarioSesion.Usuario.id));
 
             String cantidadCostos = "select COUNT(p.id) from LOS_SUPER_AMIGOS.Publicacion p,"
@@ -45,7 +46,32 @@ namespace FrbaCommerce.Facturar_Publicaciones
 
         private void CargarComisionesVentasPorFacturar()
         {
+            parametros.Clear();
+            parametros.Add(new SqlParameter("@id", UsuarioSesion.Usuario.id));
 
+            String cantidadMinimaComisiones = "select COUNT(c.id) from LOS_SUPER_AMIGOS.Usuario u,"
+             + " LOS_SUPER_AMIGOS.Compra c, LOS_SUPER_AMIGOS.Publicacion p"
+             + " where u.id = @id and p.usuario_id = u.id and c.publicacion_id = p.id"
+             + " and c.facturada = 0 and p.estado = 'Finalizada'";
+
+            int cantidadMin = (int)builderDeComandos.Crear(cantidadMinimaComisiones, parametros).ExecuteScalar();
+
+            parametros.Clear();
+            parametros.Add(new SqlParameter("@id", UsuarioSesion.Usuario.id));
+
+            String cantidadMaximaComisiones = "select COUNT(c.id) from LOS_SUPER_AMIGOS.Usuario u,"
+             + " LOS_SUPER_AMIGOS.Compra c, LOS_SUPER_AMIGOS.Publicacion p"
+             + " where u.id = @id and p.usuario_id = u.id and c.publicacion_id = p.id"
+             + " and c.facturada = 0";
+
+            int cantidadMax = (int)builderDeComandos.Crear(cantidadMaximaComisiones, parametros).ExecuteScalar();
+
+            dropDownFacturar.Text = cantidadMin.ToString();
+            while (cantidadMin <= cantidadMax)
+            {
+                dropDownFacturar.Items.Add(cantidadMin);
+                cantidadMin++;
+            }
         }
 
         private void botonFacturar_Click(object sender, EventArgs e)
@@ -56,6 +82,13 @@ namespace FrbaCommerce.Facturar_Publicaciones
         private void labelCantCompras_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            new MenuPrincipal().ShowDialog();
+            this.Close();
         }
     }
 }

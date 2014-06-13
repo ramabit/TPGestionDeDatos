@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.labelComisiones = new System.Windows.Forms.Label();
-            this.domainUpDownFacturar = new System.Windows.Forms.DomainUpDown();
+            this.dropDownFacturar = new System.Windows.Forms.DomainUpDown();
             this.label1 = new System.Windows.Forms.Label();
             this.botonFacturar = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
@@ -51,14 +51,14 @@
             this.labelComisiones.Text = "Comisiones por ventas a facturar";
             this.labelComisiones.Click += new System.EventHandler(this.labelCantCompras_Click);
             // 
-            // domainUpDownFacturar
+            // dropDownFacturar
             // 
-            this.domainUpDownFacturar.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.domainUpDownFacturar.Location = new System.Drawing.Point(261, 65);
-            this.domainUpDownFacturar.Name = "domainUpDownFacturar";
-            this.domainUpDownFacturar.Size = new System.Drawing.Size(55, 23);
-            this.domainUpDownFacturar.TabIndex = 1;
-            this.domainUpDownFacturar.Text = "0";
+            this.dropDownFacturar.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dropDownFacturar.Location = new System.Drawing.Point(261, 65);
+            this.dropDownFacturar.Name = "dropDownFacturar";
+            this.dropDownFacturar.Size = new System.Drawing.Size(55, 23);
+            this.dropDownFacturar.TabIndex = 1;
+            this.dropDownFacturar.Text = "0";
             // 
             // label1
             // 
@@ -89,6 +89,7 @@
             this.button1.TabIndex = 4;
             this.button1.Text = "< Volver al menu principal";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // labelMin
             // 
@@ -155,7 +156,7 @@
             this.Controls.Add(this.button1);
             this.Controls.Add(this.botonFacturar);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.domainUpDownFacturar);
+            this.Controls.Add(this.dropDownFacturar);
             this.Controls.Add(this.labelComisiones);
             this.Name = "Facturar";
             this.Text = "Facturar Publicaciones";
@@ -168,7 +169,7 @@
         #endregion
 
         private System.Windows.Forms.Label labelComisiones;
-        private System.Windows.Forms.DomainUpDown domainUpDownFacturar;
+        private System.Windows.Forms.DomainUpDown dropDownFacturar;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button botonFacturar;
         private System.Windows.Forms.Button button1;
