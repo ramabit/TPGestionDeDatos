@@ -404,6 +404,7 @@ fecha datetime,
 usuario_id numeric(18,0),
 publicacion_id numeric(18,0),
 calificacion_id numeric(18,0) default null,
+facturada bit default 0,
 PRIMARY KEY (id),
 FOREIGN KEY (usuario_id) REFERENCES LOS_SUPER_AMIGOS.Usuario (id),
 FOREIGN KEY (publicacion_id) REFERENCES LOS_SUPER_AMIGOS.Publicacion (id),
@@ -434,6 +435,7 @@ monto numeric(18,2),
 cantidad numeric(18,0),
 factura_nro numeric(18,0),
 publicacion_id numeric(18,0),
+es_comision_venta bit default 1,
 PRIMARY KEY (id),
 FOREIGN KEY (factura_nro) REFERENCES LOS_SUPER_AMIGOS.Factura (nro),
 FOREIGN KEY (publicacion_id) REFERENCES LOS_SUPER_AMIGOS.Publicacion (id)
@@ -574,7 +576,7 @@ SET IDENTITY_INSERT LOS_SUPER_AMIGOS.Visibilidad ON;
 GO
 
 INSERT INTO LOS_SUPER_AMIGOS.Visibilidad
-([id],[descripcion],[precio],[porcentaje], [duracion])
+([id],[descripcion],[porcentaje],[precio],[duracion])
 SELECT DISTINCT Publicacion_Visibilidad_Cod, Publicacion_Visibilidad_Desc, Publicacion_Visibilidad_Porcentaje, Publicacion_Visibilidad_Precio, 7 FROM gd_esquema.Maestra
 GO
 
@@ -657,6 +659,8 @@ INSERT INTO LOS_SUPER_AMIGOS.Factura
 SELECT DISTINCT Factura_Nro, Factura_Fecha, Factura_Total, (SELECT id FROM LOS_SUPER_AMIGOS.Forma_Pago WHERE descripcion = Forma_Pago_Desc)
 FROM gd_esquema.Maestra 
 WHERE ISNULL(Factura_Nro,-1) != -1
+GO
+
 
 -- INSERTAR Items_Factura
 INSERT INTO LOS_SUPER_AMIGOS.Item_Factura
@@ -681,3 +685,5 @@ SELECT SUM(o.cantidad), o.publicacion_id
 FROM LOS_SUPER_AMIGOS.Compra o
 GROUP BY o.publicacion_id
 GO
+
+

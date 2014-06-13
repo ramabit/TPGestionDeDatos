@@ -74,6 +74,7 @@
             this.botonFacturar.TabIndex = 3;
             this.botonFacturar.Text = "Facturar";
             this.botonFacturar.UseVisualStyleBackColor = true;
+            this.botonFacturar.Click += new System.EventHandler(this.botonFacturar_Click);
             // 
             // button1
             // 
