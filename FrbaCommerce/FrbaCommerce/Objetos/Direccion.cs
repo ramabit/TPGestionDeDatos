@@ -10,12 +10,12 @@ namespace FrbaCommerce
 {
     class Direccion
     {
-        private String calle = "";
-        private String numero = "";
-        private String piso = "";
-        private String departamento = "";
-        private String codigoPostal = "";
-        private String localidad = "";
+        private String calle;
+        private String numero;
+        private String piso;
+        private String departamento;
+        private String codigoPostal;
+        private String localidad;
         private Decimal id;
         private String query;
         private IList<SqlParameter> parametros = new List<SqlParameter>();

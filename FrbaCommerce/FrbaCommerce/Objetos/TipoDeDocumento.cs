@@ -10,12 +10,6 @@ namespace FrbaCommerce.Objetos
         private Decimal id;
         private String nombre;
 
-        public TipoDeDocumento()
-        {
-            this.id = 0;
-            this.nombre = "";
-        }
-
         public void SetId(Decimal id)
         {
             this.id = id;
