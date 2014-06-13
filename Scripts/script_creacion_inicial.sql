@@ -125,7 +125,7 @@ BEGIN
 	INSERT INTO LOS_SUPER_AMIGOS.Empresa (razon_social, nombre_de_contacto, cuit, fecha_creacion, mail, telefono, ciudad, direccion_id, usuario_id) values (@razon_social, @nombre_de_contacto, @cuit, @fecha_creacion, @mail, @telefono, @ciudad, @direccion_id, @usuario_id)
 	SET @empresa_id = SCOPE_IDENTITY();	
 END
-=======
+
 IF OBJECT_ID('LOS_SUPER_AMIGOS.VistaCantidadVendida') IS NOT NULL
 DROP VIEW LOS_SUPER_AMIGOS.VistaCantidadVendida
 GO
