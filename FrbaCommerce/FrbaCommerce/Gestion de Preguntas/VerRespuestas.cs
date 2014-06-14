@@ -25,6 +25,7 @@ namespace FrbaCommerce.Gestion_de_Preguntas
         private void VerRespuestas_Load(object sender, EventArgs e)
         {
             cargarPreguntas();
+            hayRespuestas();
         }
 
         private void cargarPreguntas()
@@ -36,11 +37,22 @@ namespace FrbaCommerce.Gestion_de_Preguntas
             parametros.Clear();
             parametros.Add(new SqlParameter("@usuario", idUsuarioActual));
 
-            command = builderDeComandos.Crear("SELECT publicacion_id, pregunta, respuesta FROM LOS_SUPER_AMIGOS.Pregunta WHERE usuario_id = @usuario and respuesta != null", parametros);
+            command = builderDeComandos.Crear("SELECT publicacion_id, descripcion, respuesta FROM LOS_SUPER_AMIGOS.Pregunta WHERE usuario_id = @usuario and respuesta != null", parametros);
             adapter.SelectCommand = command;
             adapter.Fill(preguntas);
             dataGridView1.DataSource = preguntas.Tables[0].DefaultView;
-            dataGridView1.Columns[1].Visible = false;
+            dataGridView1.Columns[1].Visible = false;            
+        }
+
+        private void hayRespuestas()
+        {
+            if (dataGridView1.RowCount == 1)
+            {
+                MessageBox.Show("No hay respuestas");
+                this.Hide();
+                new MenuPrincipal().ShowDialog();
+                this.Close();
+            }
         }
 
         private void AgregarBotonDatosPublicacion()

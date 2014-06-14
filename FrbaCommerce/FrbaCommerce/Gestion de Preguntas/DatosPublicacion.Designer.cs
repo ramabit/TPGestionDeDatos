@@ -35,12 +35,12 @@
             this.labelStock = new System.Windows.Forms.Label();
             this.labelPrecio = new System.Windows.Forms.Label();
             this.botonAceptar = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
+            this.labelPublicacionDatos = new System.Windows.Forms.Label();
+            this.labelTipoDatos = new System.Windows.Forms.Label();
+            this.labelEstadoDatos = new System.Windows.Forms.Label();
+            this.labelVencimientoDatos = new System.Windows.Forms.Label();
+            this.labelStockDatos = new System.Windows.Forms.Label();
+            this.labelPrecioDatos = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // labelPublicacion
@@ -109,69 +109,69 @@
             // 
             // label1
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(131, 37);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(35, 13);
-            this.label1.TabIndex = 7;
-            this.label1.Text = "label1";
+            this.labelPublicacionDatos.AutoSize = true;
+            this.labelPublicacionDatos.Location = new System.Drawing.Point(131, 37);
+            this.labelPublicacionDatos.Name = "label1";
+            this.labelPublicacionDatos.Size = new System.Drawing.Size(35, 13);
+            this.labelPublicacionDatos.TabIndex = 7;
+            this.labelPublicacionDatos.Text = "label1";
             // 
             // label2
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(131, 66);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(35, 13);
-            this.label2.TabIndex = 8;
-            this.label2.Text = "label2";
+            this.labelTipoDatos.AutoSize = true;
+            this.labelTipoDatos.Location = new System.Drawing.Point(131, 66);
+            this.labelTipoDatos.Name = "label2";
+            this.labelTipoDatos.Size = new System.Drawing.Size(35, 13);
+            this.labelTipoDatos.TabIndex = 8;
+            this.labelTipoDatos.Text = "label2";
             // 
             // label3
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(131, 98);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(35, 13);
-            this.label3.TabIndex = 9;
-            this.label3.Text = "label3";
+            this.labelEstadoDatos.AutoSize = true;
+            this.labelEstadoDatos.Location = new System.Drawing.Point(131, 98);
+            this.labelEstadoDatos.Name = "label3";
+            this.labelEstadoDatos.Size = new System.Drawing.Size(35, 13);
+            this.labelEstadoDatos.TabIndex = 9;
+            this.labelEstadoDatos.Text = "label3";
             // 
             // label4
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(131, 127);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(35, 13);
-            this.label4.TabIndex = 10;
-            this.label4.Text = "label4";
+            this.labelVencimientoDatos.AutoSize = true;
+            this.labelVencimientoDatos.Location = new System.Drawing.Point(131, 127);
+            this.labelVencimientoDatos.Name = "label4";
+            this.labelVencimientoDatos.Size = new System.Drawing.Size(35, 13);
+            this.labelVencimientoDatos.TabIndex = 10;
+            this.labelVencimientoDatos.Text = "label4";
             // 
             // label5
             // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(131, 161);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(35, 13);
-            this.label5.TabIndex = 11;
-            this.label5.Text = "label5";
+            this.labelStockDatos.AutoSize = true;
+            this.labelStockDatos.Location = new System.Drawing.Point(131, 161);
+            this.labelStockDatos.Name = "label5";
+            this.labelStockDatos.Size = new System.Drawing.Size(35, 13);
+            this.labelStockDatos.TabIndex = 11;
+            this.labelStockDatos.Text = "label5";
             // 
             // label6
             // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(131, 189);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(35, 13);
-            this.label6.TabIndex = 12;
-            this.label6.Text = "label6";
+            this.labelPrecioDatos.AutoSize = true;
+            this.labelPrecioDatos.Location = new System.Drawing.Point(131, 189);
+            this.labelPrecioDatos.Name = "label6";
+            this.labelPrecioDatos.Size = new System.Drawing.Size(35, 13);
+            this.labelPrecioDatos.TabIndex = 12;
+            this.labelPrecioDatos.Text = "label6";
             // 
             // DatosPublicacion
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(294, 292);
-            this.Controls.Add(this.label6);
-            this.Controls.Add(this.label5);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.labelPrecioDatos);
+            this.Controls.Add(this.labelStockDatos);
+            this.Controls.Add(this.labelVencimientoDatos);
+            this.Controls.Add(this.labelEstadoDatos);
+            this.Controls.Add(this.labelTipoDatos);
+            this.Controls.Add(this.labelPublicacionDatos);
             this.Controls.Add(this.botonAceptar);
             this.Controls.Add(this.labelPrecio);
             this.Controls.Add(this.labelStock);
@@ -196,11 +196,11 @@
         private System.Windows.Forms.Label labelStock;
         private System.Windows.Forms.Label labelPrecio;
         private System.Windows.Forms.Button botonAceptar;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label labelPublicacionDatos;
+        private System.Windows.Forms.Label labelTipoDatos;
+        private System.Windows.Forms.Label labelEstadoDatos;
+        private System.Windows.Forms.Label labelVencimientoDatos;
+        private System.Windows.Forms.Label labelStockDatos;
+        private System.Windows.Forms.Label labelPrecioDatos;
     }
 }
