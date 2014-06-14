@@ -99,11 +99,17 @@ namespace FrbaCommerce.Comprar_Ofertar
 
         private void buttonConfirmarCompra_Click(object sender, EventArgs e)
         {
-            int val = 0;
-            if (!Int32.TryParse(textBoxCant.Text, out val))
+            uint val = 0;
+            if (!UInt32.TryParse(textBoxCant.Text, out val))
             {
-                MessageBox.Show("Solo puede ingresar un número entero");
+                MessageBox.Show("Solo puede ingresar un número entero positivo");
                 textBoxCant.Clear();
+                return;
+            }
+
+            if (Convert.ToInt32(textBoxCant.Text) == 0)
+            {
+                MessageBox.Show("No puede hacer un pedido por 0 unidades");
                 return;
             }
 
