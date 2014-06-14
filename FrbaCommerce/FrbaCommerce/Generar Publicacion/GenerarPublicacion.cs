@@ -14,10 +14,6 @@ namespace FrbaCommerce.Generar_Publicacion
 {
     public partial class GenerarPublicacion : Form
     {
-        private BuilderDeComandos builderDeComandos = new BuilderDeComandos();
-        private String query;
-        private SqlCommand command;
-        private IList<SqlParameter> parametros = new List<SqlParameter>();
         private ComunicadorConBaseDeDatos comunicador = new ComunicadorConBaseDeDatos();
 
         public GenerarPublicacion()
@@ -82,7 +78,6 @@ namespace FrbaCommerce.Generar_Publicacion
             Double duracion = Convert.ToDouble(comunicador.selectFromWhere("duracion", "Visibilidad", "descripcion", visibilidadDescripcion));
             String fechaDeVencimiento = Convert.ToString(Convert.ToDateTime(fechaDeInicio).AddDays(duracion));
 
-            
             try
             {
                 Publicacion publicacion = new Publicacion();

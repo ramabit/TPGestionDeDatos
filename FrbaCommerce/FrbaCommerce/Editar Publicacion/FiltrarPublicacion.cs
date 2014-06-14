@@ -16,6 +16,7 @@ namespace FrbaCommerce.Editar_Publicacion
         private String query;
         private SqlCommand command;
         private IList<SqlParameter> parametros = new List<SqlParameter>();
+        private ComunicadorConBaseDeDatos comunicador = new ComunicadorConBaseDeDatos();
         
         public FiltrarPublicacion()
         {
@@ -35,33 +36,59 @@ namespace FrbaCommerce.Editar_Publicacion
 
         private void CargarPublicacion()
         {
-            command = builderDeComandos.Crear("SELECT p.id, u.username Username, p.tipo 'Tipo de publicacion', p.estado Estado, p.descripcion Descripcion, p.fecha_inicio 'Fecha de inicio', p.fecha_vencimiento 'Fecha de vencimiento', r.descripcion Rubro, v.descripcion Visibilidad, p.se_realizan_preguntas 'Permite preguntas', p.stock Stock, p.precio Precio FROM LOS_SUPER_AMIGOS.Publicacion p, LOS_SUPER_AMIGOS.Rubro r, LOS_SUPER_AMIGOS.Visibilidad v, LOS_SUPER_AMIGOS.Usuario u WHERE p.rubro_id = r.id AND p.visibilidad_id = v.id AND p.usuario_id = u.id AND p.usuario_id = @idUsuario", parametros);
-            command.Parameters.Add(new SqlParameter("@idUsuario", UsuarioSesion.Usuario.id));
+            dataGridView_Publicacion.DataSource = comunicador.SelectPublicacionesParaFiltro();
+            CargarColumnaModificacion();
+        }
+
+        private void CargarColumnaModificacion()
+        {
+            if (dataGridView_Publicacion.Columns.Contains("Modificar"))
+                dataGridView_Publicacion.Columns.Remove("Modificar");
+            DataGridViewButtonColumn botonColumnaModificar = new DataGridViewButtonColumn();
+            botonColumnaModificar.Text = "Modificar";
+            botonColumnaModificar.Name = "Modificar";
+            botonColumnaModificar.UseColumnTextForButtonValue = true;
+            dataGridView_Publicacion.Columns.Add(botonColumnaModificar);
+            dataGridView_Publicacion.CellClick +=
+                new DataGridViewCellEventHandler(dataGridView_Publicacion_CellClick);
+        }
+
+        private void button_Buscar_Click(object sender, EventArgs e)
+        {
+            String filtro = CalcularFiltro();
+            /*
+            query = "SELECT * FROM Publicacion WHERE " + filtro;
+
+            command = builderDeComandos.Crear(query, parametros);
+
             DataSet publicaciones = new DataSet();
             SqlDataAdapter adapter = new SqlDataAdapter();
             adapter.SelectCommand = command;
             adapter.Fill(publicaciones);
             dataGridView_Publicacion.DataSource = publicaciones.Tables[0].DefaultView;
-            if (dataGridView_Publicacion.Columns.Contains("modificar"))
-                dataGridView_Publicacion.Columns.Remove("modificar");
-            AgregarColumnaDeModificacion();
-            AgregarListenerBotonDeModificacion();
+             *
+             * */
+            dataGridView_Publicacion.DataSource = comunicador.SelectPublicacionesParaFiltroConFiltro(filtro);
         }
 
-        private void AgregarColumnaDeModificacion()
+        private String CalcularFiltro()
         {
-            DataGridViewButtonColumn botonColumnaModificar = new DataGridViewButtonColumn();
-            botonColumnaModificar.Text = "modificar";
-            botonColumnaModificar.Name = "modificar";
-            botonColumnaModificar.UseColumnTextForButtonValue = true;
-            dataGridView_Publicacion.Columns.Add(botonColumnaModificar);
+            String filtro = "";
+            return filtro;
         }
 
-        private void AgregarListenerBotonDeModificacion()
+        private void button_Limpiar_Click(object sender, EventArgs e)
         {
-            // Add a CellClick handler to handle clicks in the button column.
-            dataGridView_Publicacion.CellClick +=
-                new DataGridViewCellEventHandler(dataGridView_Publicacion_CellClick);
+            textBox_Descripcion.Text = "";
+            CargarPublicacion();
+        }
+
+        private void button_Cancelar_Click(object sender, EventArgs e)
+        {
+
+            this.Hide();
+            new MenuPrincipal().ShowDialog();
+            this.Close();
         }
 
         private void dataGridView_Publicacion_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -73,42 +100,6 @@ namespace FrbaCommerce.Editar_Publicacion
                 new Editar_Publicacion.EditarPublicacion(idPublicacionAModificiar).ShowDialog();
                 CargarPublicacion();
             }
-        }
-
-        private void button_Buscar_Click(object sender, EventArgs e)
-        {
-            String filtro = "";
-
-            if (textBox_Descripcion.Text != "") filtro += "descripcion like '" + textBox_Descripcion.Text + "%'";
-
-            query = "SELECT * FROM Publicacion WHERE " + filtro;
-
-            command = builderDeComandos.Crear(query, parametros);
-
-            DataSet publicaciones = new DataSet();
-            SqlDataAdapter adapter = new SqlDataAdapter();
-            adapter.SelectCommand = command;
-            adapter.Fill(publicaciones);
-            dataGridView_Publicacion.DataSource = publicaciones.Tables[0].DefaultView;
-        }
-
-        private void button_Limpiar_Click(object sender, EventArgs e)
-        {
-            textBox_Descripcion.Text = "";
-            CargarPublicacion();
-        }
-
-        private void button_Cancelar_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
-
-        private void button_Cancelar_Click_1(object sender, EventArgs e)
-        {
-
-            this.Hide();
-            new MenuPrincipal().ShowDialog();
-            this.Close();
         }
     }
 }

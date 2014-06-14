@@ -39,6 +39,18 @@ namespace FrbaCommerce
             return datos.Tables[0];
         }
 
+        public DataTable SelectDataTableConUsuario(String que, String deDonde, String condiciones)
+        {
+            parametros.Clear();
+            parametros.Add(new SqlParameter("@idUsuario", 2));//UsuarioSesion.Usuario.id));
+            command = builderDeComandos.Crear("SELECT " + que + " FROM " + deDonde + " WHERE " + condiciones, parametros);
+            DataSet datos = new DataSet();
+            SqlDataAdapter adapter = new SqlDataAdapter();
+            adapter.SelectCommand = command;
+            adapter.Fill(datos);
+            return datos.Tables[0];
+        }
+
         public Decimal ObtenerIdDe(TipoDeDocumento tipoDeDocumento)
         {
             if (tipoDeDocumento.GetNombre() == "") 
@@ -541,6 +553,60 @@ namespace FrbaCommerce
             Decimal idPublicacionNueva = (Decimal)parametroOutput.Value;
             publicacion.SetId(idPublicacionNueva);
             return idPublicacionNueva;
+        }
+
+        public Boolean ModificarPublicacion(Decimal idPublicacion, Publicacion publicacion)
+        {
+            query = "UPDATE LOS_SUPER_AMIGOS.Publicacion SET estado = @estado, descripcion = @descripcion, fecha_inicio = @fecha_inicio, fecha_vencimiento = @fecha_vencimiento, rubro_id = @rubro_id, visibilidad_id = @visibilidad_id, stock = @stock, precio = @precio WHERE id = @idPublicacion";
+            parametros.Clear();
+            parametros.Add(new SqlParameter("@estado", publicacion.GetEstado()));
+            parametros.Add(new SqlParameter("@descripcion", publicacion.GetDescripcion()));
+            parametros.Add(new SqlParameter("@fecha_inicio", publicacion.GetFechaDeInicio()));
+            parametros.Add(new SqlParameter("@fecha_vencimiento", publicacion.GetFechaDeVencimiento()));
+            parametros.Add(new SqlParameter("@stock", publicacion.GetStock()));
+            parametros.Add(new SqlParameter("@precio", publicacion.GetPrecio()));
+            parametros.Add(new SqlParameter("@rubro_id", publicacion.GetIdRubro()));
+            parametros.Add(new SqlParameter("@visibilidad_id", publicacion.GetIdVisibilidad()));
+            parametros.Add(new SqlParameter("@idPublicacion", idPublicacion));
+
+            int filasAfectadas = builderDeComandos.Crear(query, parametros).ExecuteNonQuery();
+
+            if (filasAfectadas == 1) return true;
+            return false;
+        }
+
+        public Publicacion ObtenerPublicacion(Decimal idPublicacion)
+        {
+            Publicacion nuevoPublicacion = new Publicacion();
+            query = "SELECT * FROM LOS_SUPER_AMIGOS.Publicacion WHERE id = @idPublicacion";
+            parametros.Clear();
+            parametros.Add(new SqlParameter("@idPublicacion", idPublicacion));
+            SqlDataReader readerPublicacion = builderDeComandos.Crear(query, parametros).ExecuteReader();
+            if (readerPublicacion.Read())
+            {
+                nuevoPublicacion.SetTipo(Convert.ToString(readerPublicacion["tipo"]));
+                nuevoPublicacion.SetEstado(Convert.ToString(readerPublicacion["estado"]));
+                nuevoPublicacion.SetDescripcion(Convert.ToString(readerPublicacion["descripcion"]));
+                nuevoPublicacion.SetFechaDeInicio(Convert.ToString(readerPublicacion["fecha_inicio"]));
+                nuevoPublicacion.SetFechaDeVencimiento(Convert.ToString(readerPublicacion["fecha_vencimiento"]));
+                nuevoPublicacion.SetStock(Convert.ToString(readerPublicacion["stock"]));
+                nuevoPublicacion.SetPrecio(Convert.ToString(readerPublicacion["precio"]));
+                nuevoPublicacion.SetIdRubro(Convert.ToDecimal(readerPublicacion["rubro_id"]));
+                nuevoPublicacion.SetIdVisibilidad(Convert.ToDecimal(readerPublicacion["visibilidad_id"]));
+                nuevoPublicacion.SetIdUsuario(Convert.ToDecimal(readerPublicacion["usuario_id"]));
+                return nuevoPublicacion;
+            }
+            return nuevoPublicacion;
+        }
+
+        public DataTable SelectPublicacionesParaFiltroConFiltro(String filtro)
+        {
+            return this.SelectDataTableConUsuario("p.id, u.username Username, p.tipo 'Tipo de publicacion', p.estado Estado, p.descripcion Descripcion, p.fecha_inicio 'Fecha de inicio', p.fecha_vencimiento 'Fecha de vencimiento', r.descripcion Rubro, v.descripcion Visibilidad, p.se_realizan_preguntas 'Permite preguntas', p.stock Stock, p.precio Precio", "LOS_SUPER_AMIGOS.Publicacion p, LOS_SUPER_AMIGOS.Rubro r, LOS_SUPER_AMIGOS.Visibilidad v, LOS_SUPER_AMIGOS.Usuario u", "p.rubro_id = r.id AND p.visibilidad_id = v.id AND p.usuario_id = u.id AND p.usuario_id = @idUsuario" + filtro);
+        }
+
+        public DataTable SelectPublicacionesParaFiltro()
+        {
+            return this.SelectPublicacionesParaFiltroConFiltro("");
         }
     }
 }

@@ -74,6 +74,7 @@
             this.button_Buscar.TabIndex = 1;
             this.button_Buscar.Text = "Buscar";
             this.button_Buscar.UseVisualStyleBackColor = true;
+            this.button_Buscar.Click += new System.EventHandler(this.button_Buscar_Click);
             // 
             // button_Limpiar
             // 
@@ -83,6 +84,7 @@
             this.button_Limpiar.TabIndex = 2;
             this.button_Limpiar.Text = "Limpiar";
             this.button_Limpiar.UseVisualStyleBackColor = true;
+            this.button_Limpiar.Click += new System.EventHandler(this.button_Limpiar_Click);
             // 
             // button_Cancelar
             // 
@@ -92,7 +94,7 @@
             this.button_Cancelar.TabIndex = 3;
             this.button_Cancelar.Text = "Cancelar";
             this.button_Cancelar.UseVisualStyleBackColor = true;
-            this.button_Cancelar.Click += new System.EventHandler(this.button_Cancelar_Click_1);
+            this.button_Cancelar.Click += new System.EventHandler(this.button_Cancelar_Click);
             // 
             // dataGridView_Publicacion
             // 
