@@ -12,10 +12,6 @@ namespace FrbaCommerce.Editar_Publicacion
 {
     public partial class FiltrarPublicacion : Form
     {
-        private BuilderDeComandos builderDeComandos = new BuilderDeComandos();
-        private String query;
-        private SqlCommand command;
-        private IList<SqlParameter> parametros = new List<SqlParameter>();
         private ComunicadorConBaseDeDatos comunicador = new ComunicadorConBaseDeDatos();
         
         public FiltrarPublicacion()
@@ -56,18 +52,6 @@ namespace FrbaCommerce.Editar_Publicacion
         private void button_Buscar_Click(object sender, EventArgs e)
         {
             String filtro = CalcularFiltro();
-            /*
-            query = "SELECT * FROM Publicacion WHERE " + filtro;
-
-            command = builderDeComandos.Crear(query, parametros);
-
-            DataSet publicaciones = new DataSet();
-            SqlDataAdapter adapter = new SqlDataAdapter();
-            adapter.SelectCommand = command;
-            adapter.Fill(publicaciones);
-            dataGridView_Publicacion.DataSource = publicaciones.Tables[0].DefaultView;
-             *
-             * */
             dataGridView_Publicacion.DataSource = comunicador.SelectPublicacionesParaFiltroConFiltro(filtro);
         }
 
