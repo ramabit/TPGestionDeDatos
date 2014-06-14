@@ -130,7 +130,7 @@ namespace FrbaCommerce.Objetos
 
         #region Miembros de Comunicable
 
-        string Comunicable.GetQuery()
+        string Comunicable.GetQueryCrear()
         {
             return "LOS_SUPER_AMIGOS.crear_empresa";
         }
@@ -148,6 +148,11 @@ namespace FrbaCommerce.Objetos
             parametros.Add(new SqlParameter("@direccion_id", this.idDireccion));
             parametros.Add(new SqlParameter("@usuario_id", this.idUsuario));
             return parametros;
+        }
+
+        string Comunicable.GetQueryModificar()
+        {
+            return "UPDATE LOS_SUPER_AMIGOS.Empresa SET razon_social = @razon_social, nombre_de_contacto = @nombre_de_contacto, cuit = @cuit, fecha_creacion = @fecha_creacion, mail = @mail, telefono = @telefono, ciudad = @ciudad  WHERE id = @idEmpresa";
         }
 
         #endregion

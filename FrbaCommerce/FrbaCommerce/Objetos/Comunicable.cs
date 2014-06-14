@@ -8,7 +8,9 @@ namespace FrbaCommerce.Objetos
 {
     interface Comunicable
     {
-        String GetQuery();
+        String GetQueryCrear();
+        String GetQueryModificar();
+        
         IList<SqlParameter> GetParametros();
     }
 }

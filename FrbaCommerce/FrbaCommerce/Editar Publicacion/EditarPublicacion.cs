@@ -144,7 +144,7 @@ namespace FrbaCommerce.Editar_Publicacion
                 publicacion.SetPrecio(precio);
                 publicacion.SetIdRubro(idRubro);
                 publicacion.SetIdVisibilidad(idVisibilidad);
-                Boolean pudoModificar = comunicador.ModificarPublicacion(idPublicacion, publicacion);
+                Boolean pudoModificar = comunicador.Modificar(idPublicacion, publicacion);
                 if (pudoModificar) MessageBox.Show("La visibilidad se modifico correctamente");
             }
             catch (CampoVacioException exception)

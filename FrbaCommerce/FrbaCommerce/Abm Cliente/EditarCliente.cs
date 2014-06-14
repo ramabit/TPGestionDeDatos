@@ -98,7 +98,7 @@ namespace FrbaCommerce.ABM_Cliente
                 direccion.SetDepartamento(departamento);
                 direccion.SetCodigoPostal(codigoPostal);
                 direccion.SetLocalidad(localidad);
-                pudoModificar = comunicador.ModificarDireccion(idDireccion, direccion);
+                pudoModificar = comunicador.Modificar(idDireccion, direccion);
 
                 if (pudoModificar) MessageBox.Show("La direccion se modifico correctamente");
             }
@@ -120,7 +120,7 @@ namespace FrbaCommerce.ABM_Cliente
                 cliente.SetIdTipoDeDocumento(idTipoDeDocumento);
                 cliente.SetNumeroDeDocumento(numeroDeDocumento);
                 cliente.SetIdDireccion(idDireccion);
-                pudoModificar = comunicador.ModificarCliente(idCliente, cliente);
+                pudoModificar = comunicador.Modificar(idCliente, cliente);
                 if (pudoModificar) MessageBox.Show("El cliente se modifico correctamente");
             }
             catch (CampoVacioException exception)

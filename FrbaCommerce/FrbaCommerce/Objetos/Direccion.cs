@@ -101,7 +101,7 @@ namespace FrbaCommerce
 
         #region Miembros de Comunicable
 
-        string Comunicable.GetQuery()
+        string Comunicable.GetQueryCrear()
         {
             return "LOS_SUPER_AMIGOS.crear_direccion";
         }
@@ -116,6 +116,11 @@ namespace FrbaCommerce
             parametros.Add(new SqlParameter("@cod_postal", this.codigoPostal));
             parametros.Add(new SqlParameter("@localidad", this.localidad));
             return parametros;
+        }
+
+        string Comunicable.GetQueryModificar()
+        {
+            return "UPDATE LOS_SUPER_AMIGOS.Direccion SET calle = @calle, numero = @numero, piso = @piso, depto = @departamento, cod_postal = @codigoPostal, localidad = @localidad WHERE id = @idDireccion";
         }
 
         #endregion

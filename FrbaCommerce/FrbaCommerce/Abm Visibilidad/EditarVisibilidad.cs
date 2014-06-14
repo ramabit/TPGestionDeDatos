@@ -52,7 +52,7 @@ namespace FrbaCommerce.ABM_Visibilidad
                 visibilidad.SetPrecioPorPublicar(precioPorPublicar);
                 visibilidad.SetPorcentajePorVenta(porcentajePorVenta);
                 visibilidad.SetDuracion(duracion);
-                Boolean pudoModificar = comunicador.ModificarVisibilidad(idVisibilidad, visibilidad);
+                Boolean pudoModificar = comunicador.Modificar(idVisibilidad, visibilidad);
                 if (pudoModificar) MessageBox.Show("La visibilidad se modifico correctamente");
             }
             catch (CampoVacioException exception)

@@ -97,7 +97,7 @@ namespace FrbaCommerce.ABM_Cliente
                 cliente.SetNumeroDeDocumento(numeroDeDocumento);
                 cliente.SetIdDireccion(idDireccion);
                 cliente.SetIdUsuario(idUsuario);
-                Decimal idCliente = comunicador.CrearClienteNuevo(cliente);
+                Decimal idCliente = comunicador.CrearCliente(cliente);
                 if (idCliente > 0) MessageBox.Show("Se agrego el cliente correctamente");
             }
             catch (CampoVacioException exception)

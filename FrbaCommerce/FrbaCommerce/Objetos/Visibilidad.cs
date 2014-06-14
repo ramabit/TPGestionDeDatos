@@ -75,7 +75,7 @@ namespace FrbaCommerce.Objetos
 
         #region Miembros de Comunicable
 
-        string Comunicable.GetQuery()
+        string Comunicable.GetQueryCrear()
         {
             return "LOS_SUPER_AMIGOS.crear_visibilidad";
         }
@@ -88,6 +88,11 @@ namespace FrbaCommerce.Objetos
             parametros.Add(new SqlParameter("@porcentaje", this.porcentajePorVenta));
             parametros.Add(new SqlParameter("@duracion", this.duracion));
             return parametros;
+        }
+
+        string Comunicable.GetQueryModificar()
+        {
+            return "UPDATE LOS_SUPER_AMIGOS.Visibilidad SET descripcion = @descripcion, precio = @precioporPublicar, porcentaje = @porcentajeDeVenta, duracion = @duracion WHERE id = @idVisibilidad";
         }
 
         #endregion
