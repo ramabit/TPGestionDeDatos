@@ -59,11 +59,6 @@ namespace FrbaCommerce
             return (Decimal)parametroOutput.Value;
         }
 
-        public Decimal CrearDireccion(Direccion direccion)
-        {
-            return this.Crear(direccion);
-        }
-
         public Boolean ModificarDireccion(Decimal idDireccion, Direccion direccion)
         {
             query = "UPDATE LOS_SUPER_AMIGOS.Direccion SET calle = @calle, numero = @numero, piso = @piso, depto = @departamento, cod_postal = @codigoPostal, localidad = @localidad WHERE id = @idDireccion";
@@ -102,17 +97,6 @@ namespace FrbaCommerce
             return nuevaDireccion;
         }
 
-        public Decimal CrearClienteNuevo(Cliente cliente)
-        {
-            if (!pasoControlDeRegistro(cliente.GetIdTipoDeDocumento(), cliente.GetNumeroDeDocumento()))
-                throw new ClienteYaExisteException();
-
-            if (!pasoControlDeUnicidad(cliente.GetTelefono(), "telefono", "Cliente"))
-                throw new TelefonoYaExisteException();
-
-            return this.Crear(cliente);
-        }
-
         public Decimal CrearCliente(Cliente cliente)
         {
             if (!pasoControlDeRegistro(cliente.GetIdTipoDeDocumento(), cliente.GetNumeroDeDocumento()))
@@ -121,26 +105,7 @@ namespace FrbaCommerce
             if (!pasoControlDeUnicidad(cliente.GetTelefono(), "telefono", "Cliente"))
                 throw new TelefonoYaExisteException();
 
-            query = "LOS_SUPER_AMIGOS.crear_cliente";
-            parametros.Clear();
-            parametroOutput = new SqlParameter("@cliente_id", SqlDbType.Decimal);
-            parametroOutput.Direction = ParameterDirection.Output;
-            parametros.Add(new SqlParameter("@nombre", cliente.GetNombre()));
-            parametros.Add(new SqlParameter("@apellido", cliente.GetApellido()));
-            parametros.Add(new SqlParameter("@tipo_de_documento_id", cliente.GetIdTipoDeDocumento()));
-            parametros.Add(new SqlParameter("@documento", cliente.GetNumeroDeDocumento()));
-            parametros.Add(new SqlParameter("@fecha_nacimiento", cliente.GetFechaDeNacimiento()));
-            parametros.Add(new SqlParameter("@mail", cliente.GetMail()));
-            parametros.Add(new SqlParameter("@telefono", cliente.GetTelefono()));
-            parametros.Add(new SqlParameter("@direccion_id", cliente.GetIdDireccion()));
-            parametros.Add(new SqlParameter("@usuario_id", cliente.GetIdUsuario()));
-            parametros.Add(parametroOutput);
-            command = builderDeComandos.Crear(query, parametros);
-            command.CommandType = CommandType.StoredProcedure;
-            command.ExecuteNonQuery();
-            Decimal idClienteNuevo = (Decimal)parametroOutput.Value;
-            cliente.SetId(idClienteNuevo);
-            return idClienteNuevo;
+            return this.Crear(cliente);
         }
 
         public Decimal CrearEmpresa(Empresa empresa)
@@ -154,26 +119,25 @@ namespace FrbaCommerce
             if (!pasoControlDeRegistroDeRazonSocial(empresa.GetRazonSocial()))
                 throw new RazonSocialYaExisteException();
 
-            query = "LOS_SUPER_AMIGOS.crear_empresa";
-            parametros.Clear();
-            parametroOutput = new SqlParameter("@empresa_id", SqlDbType.Decimal);
-            parametroOutput.Direction = ParameterDirection.Output;
-            parametros.Add(new SqlParameter("@razon_social", empresa.GetRazonSocial()));
-            parametros.Add(new SqlParameter("@nombre_de_contacto", empresa.GetNombreDeContacto()));
-            parametros.Add(new SqlParameter("@cuit", empresa.GetCuit()));
-            parametros.Add(new SqlParameter("@fecha_creacion", empresa.GetFechaDeCreacion()));
-            parametros.Add(new SqlParameter("@mail", empresa.GetMail()));
-            parametros.Add(new SqlParameter("@telefono", empresa.GetTelefono()));
-            parametros.Add(new SqlParameter("@ciudad", empresa.GetCiudad()));
-            parametros.Add(new SqlParameter("@direccion_id", empresa.GetIdDireccion()));
-            parametros.Add(new SqlParameter("@usuario_id", empresa.GetIdUsuario()));
-            parametros.Add(parametroOutput);
-            command = builderDeComandos.Crear(query, parametros);
-            command.CommandType = CommandType.StoredProcedure;
-            command.ExecuteNonQuery();
-            Decimal idEmpresaNuevo = (Decimal)parametroOutput.Value;
-            empresa.SetId(idEmpresaNuevo);
-            return idEmpresaNuevo;
+            return this.Crear(empresa);
+        }
+
+        public Decimal CrearDireccion(Direccion direccion)
+        {
+            return this.Crear(direccion);
+        }
+
+        public Decimal CrearPublicacion(Publicacion publicacion)
+        {
+            return this.Crear(publicacion);
+        }
+
+        public Decimal CrearVisibilidad(Visibilidad visibilidad)
+        {
+            if (!pasoControlDeUnicidad(visibilidad.GetDescripcion(), "descripcion", "Visibilidad"))
+                throw new VisibilidadYaExisteException();
+
+            return this.Crear(visibilidad);
         }
 
         public Boolean ModificarCliente(Decimal idCliente, Cliente cliente)
@@ -275,28 +239,6 @@ namespace FrbaCommerce
             return nuevoEmpresa;
         }
 
-        public Decimal CrearVisibilidad(Visibilidad visibilidad)
-        {
-            if (!pasoControlDeUnicidad(visibilidad.GetDescripcion(), "descripcion", "Visibilidad"))
-                throw new VisibilidadYaExisteException();
-
-            query = "LOS_SUPER_AMIGOS.crear_visibilidad";
-            parametros.Clear();
-            parametroOutput = new SqlParameter("@visibilidad_id", SqlDbType.Decimal);
-            parametroOutput.Direction = ParameterDirection.Output;
-            parametros.Add(new SqlParameter("@descripcion", visibilidad.GetDescripcion()));
-            parametros.Add(new SqlParameter("@precio", visibilidad.GetPrecioPorPublicar()));
-            parametros.Add(new SqlParameter("@porcentaje", visibilidad.GetPorcentajePorVenta()));
-            parametros.Add(new SqlParameter("@duracion", visibilidad.GetDuracion()));
-            parametros.Add(parametroOutput);
-            command = builderDeComandos.Crear(query, parametros);
-            command.CommandType = CommandType.StoredProcedure;
-            command.ExecuteNonQuery();
-            Decimal idVisibilidadNueva = (Decimal)parametroOutput.Value;
-            visibilidad.SetId(idVisibilidadNueva);
-            return idVisibilidadNueva;
-        }
-
         public Boolean ModificarVisibilidad(Decimal idVisibilidad, Visibilidad visibilidad)
         {
             if (!pasoControlDeUnicidad(visibilidad.GetDescripcion(), "descripcion", "Visibilidad", idVisibilidad))
@@ -340,31 +282,6 @@ namespace FrbaCommerce
             parametros.Clear();
             parametros.Add(new SqlParameter("@" + param1, param2));
             return builderDeComandos.Crear(query, parametros).ExecuteScalar();
-        }
-
-        public Decimal CrearPublicacion(Publicacion publicacion)
-        {
-            query = "LOS_SUPER_AMIGOS.crear_publicacion";
-            parametros.Clear();
-            parametroOutput = new SqlParameter("@publicacion_id", SqlDbType.Decimal);
-            parametroOutput.Direction = ParameterDirection.Output;
-            parametros.Add(new SqlParameter("@tipo", publicacion.GetTipo()));
-            parametros.Add(new SqlParameter("@estado", publicacion.GetEstado()));
-            parametros.Add(new SqlParameter("@descripcion", publicacion.GetDescripcion()));
-            parametros.Add(new SqlParameter("@fecha_inicio", publicacion.GetFechaDeInicio()));
-            parametros.Add(new SqlParameter("@fecha_vencimiento", publicacion.GetFechaDeVencimiento()));
-            parametros.Add(new SqlParameter("@stock", publicacion.GetStock()));
-            parametros.Add(new SqlParameter("@precio", publicacion.GetPrecio()));
-            parametros.Add(new SqlParameter("@rubro_id", publicacion.GetIdRubro()));
-            parametros.Add(new SqlParameter("@visibilidad_id", publicacion.GetIdVisibilidad()));
-            parametros.Add(new SqlParameter("@usuario_id", publicacion.GetIdUsuario()));
-            parametros.Add(parametroOutput);
-            command = builderDeComandos.Crear(query, parametros);
-            command.CommandType = CommandType.StoredProcedure;
-            command.ExecuteNonQuery();
-            Decimal idPublicacionNueva = (Decimal)parametroOutput.Value;
-            publicacion.SetId(idPublicacionNueva);
-            return idPublicacionNueva;
         }
 
         public Boolean ModificarPublicacion(Decimal idPublicacion, Publicacion publicacion)

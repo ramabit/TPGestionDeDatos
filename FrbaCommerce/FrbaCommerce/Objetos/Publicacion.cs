@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using FrbaCommerce.Exceptions;
+using System.Data.SqlClient;
 
 namespace FrbaCommerce.Objetos
 {
-    class Publicacion
+    class Publicacion : Comunicable
     {
         private Decimal id;
         private String tipo;
@@ -144,5 +145,30 @@ namespace FrbaCommerce.Objetos
             return this.precio;
         }
 
+
+        #region Miembros de Comunicable
+
+        string Comunicable.GetQuery()
+        {
+            return "LOS_SUPER_AMIGOS.crear_publicacion";
+        }
+
+        IList<System.Data.SqlClient.SqlParameter> Comunicable.GetParametros()
+        {
+            IList<SqlParameter> parametros = new List<SqlParameter>();
+            parametros.Add(new SqlParameter("@tipo", this.tipo));
+            parametros.Add(new SqlParameter("@estado", this.estado));
+            parametros.Add(new SqlParameter("@descripcion", this.descripcion));
+            parametros.Add(new SqlParameter("@fecha_inicio", this.fechaDeInicio));
+            parametros.Add(new SqlParameter("@fecha_vencimiento", this.fechaDeVencimiento));
+            parametros.Add(new SqlParameter("@stock", this.stock));
+            parametros.Add(new SqlParameter("@precio", this.precio));
+            parametros.Add(new SqlParameter("@rubro_id", this.idRubro));
+            parametros.Add(new SqlParameter("@visibilidad_id", this.idVisibilidad));
+            parametros.Add(new SqlParameter("@usuario_id", this.idUsuario));
+            return parametros;
+        }
+
+        #endregion
     }
 }

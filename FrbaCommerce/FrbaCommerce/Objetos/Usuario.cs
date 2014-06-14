@@ -5,7 +5,7 @@ using System.Text;
 
 namespace FrbaCommerce.Objetos
 {
-    class Usuario
+    class Usuario : Comunicable
     {
         private Decimal id;
         private String username;
@@ -40,5 +40,19 @@ namespace FrbaCommerce.Objetos
         {
             return this.password;
         }
+
+        #region Miembros de Comunicable
+
+        string Comunicable.GetQuery()
+        {
+            return "LOS_SUPER_AMIGOS.crear_usuario";
+        }
+
+        IList<System.Data.SqlClient.SqlParameter> Comunicable.GetParametros()
+        {
+            return new IList<System.Data.SqlClient.SqlParameter>;
+        }
+
+        #endregion
     }
 }

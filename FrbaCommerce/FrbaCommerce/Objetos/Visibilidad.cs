@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using FrbaCommerce.Exceptions;
+using System.Data.SqlClient;
 
 namespace FrbaCommerce.Objetos
 {
-    class Visibilidad
+    class Visibilidad : Comunicable
     {
         private Decimal id;
         private String descripcion;
@@ -71,5 +72,24 @@ namespace FrbaCommerce.Objetos
         {
             return this.duracion;
         }
+
+        #region Miembros de Comunicable
+
+        string Comunicable.GetQuery()
+        {
+            return "LOS_SUPER_AMIGOS.crear_visibilidad";
+        }
+
+        IList<System.Data.SqlClient.SqlParameter> Comunicable.GetParametros()
+        {
+            IList<SqlParameter> parametros = new List<SqlParameter>();
+            parametros.Add(new SqlParameter("@descripcion", this.descripcion));
+            parametros.Add(new SqlParameter("@precio", this.precioPorPublicar));
+            parametros.Add(new SqlParameter("@porcentaje", this.porcentajePorVenta));
+            parametros.Add(new SqlParameter("@duracion", this.duracion));
+            return parametros;
+        }
+
+        #endregion
     }
 }

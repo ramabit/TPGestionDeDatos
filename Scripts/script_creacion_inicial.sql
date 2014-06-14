@@ -129,12 +129,12 @@ CREATE PROCEDURE LOS_SUPER_AMIGOS.crear_empresa
 	@ciudad nvarchar(50),
 	@direccion_id numeric(18,0),
 	@usuario_id numeric(18,0),
-	@empresa_id numeric(18,0) OUTPUT
+	@id numeric(18,0) OUTPUT
 AS
 BEGIN
 	SET NOCOUNT ON;
 	INSERT INTO LOS_SUPER_AMIGOS.Empresa (razon_social, nombre_de_contacto, cuit, fecha_creacion, mail, telefono, ciudad, direccion_id, usuario_id) values (@razon_social, @nombre_de_contacto, @cuit, @fecha_creacion, @mail, @telefono, @ciudad, @direccion_id, @usuario_id)
-	SET @empresa_id = SCOPE_IDENTITY();	
+	SET @id = SCOPE_IDENTITY();	
 END
 GO
 
@@ -182,12 +182,12 @@ CREATE PROCEDURE LOS_SUPER_AMIGOS.crear_visibilidad
 	@precio numeric(18,2),
 	@porcentaje numeric(18,0),
 	@duracion numeric(18,0),
-	@visibilidad_id numeric(18,0) OUTPUT
+	@id numeric(18,0) OUTPUT
 AS
 BEGIN
 	SET NOCOUNT ON;
 	INSERT INTO LOS_SUPER_AMIGOS.Visibilidad (descripcion, precio, porcentaje, duracion) values (@descripcion, @precio, @porcentaje, @duracion);
-	SET @visibilidad_id = SCOPE_IDENTITY();
+	SET @id = SCOPE_IDENTITY();
 END
 GO
 
@@ -202,12 +202,12 @@ CREATE PROCEDURE LOS_SUPER_AMIGOS.crear_publicacion
 	@stock numeric(18,0),
 	@precio numeric(18,0),
 	@usuario_id numeric(18,0),
-	@publicacion_id numeric(18,0) OUTPUT
+	@d numeric(18,0) OUTPUT
 AS
 BEGIN
 	SET NOCOUNT ON;
 	INSERT INTO LOS_SUPER_AMIGOS.Publicacion (tipo, estado, descripcion, fecha_inicio, fecha_vencimiento, rubro_id, visibilidad_id, precio, stock, usuario_id) values (@tipo, @estado, @descripcion, @fecha_inicio, @fecha_vencimiento, @rubro_id, @visibilidad_id, @precio, @stock, @usuario_id);
-	SET @publicacion_id = SCOPE_IDENTITY();
+	SET @id = SCOPE_IDENTITY();
 END
 GO
 
