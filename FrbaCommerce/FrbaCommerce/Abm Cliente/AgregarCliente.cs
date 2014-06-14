@@ -71,7 +71,7 @@ namespace FrbaCommerce.ABM_Cliente
                 MessageBox.Show("Faltan completar campos en direccion");
                 return;
             }
-            Decimal idDireccion = comunicador.Crear(direccion);
+            Decimal idDireccion = comunicador.CrearDireccion(direccion);
 
             // Si el cliente lo crea el admin, crea un nuevo usuario predeterminado. Si lo crea un nuevo registro de usuario, usa el que viene por parametro
             Decimal idUsuario;
@@ -97,7 +97,7 @@ namespace FrbaCommerce.ABM_Cliente
                 cliente.SetNumeroDeDocumento(numeroDeDocumento);
                 cliente.SetIdDireccion(idDireccion);
                 cliente.SetIdUsuario(idUsuario);
-                Decimal idCliente = comunicador.CrearCliente(cliente);
+                Decimal idCliente = comunicador.CrearClienteNuevo(cliente);
                 if (idCliente > 0) MessageBox.Show("Se agrego el cliente correctamente");
             }
             catch (CampoVacioException exception)

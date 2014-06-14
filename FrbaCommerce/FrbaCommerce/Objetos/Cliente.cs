@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using FrbaCommerce.Exceptions;
+using System.Data.SqlClient;
 
 namespace FrbaCommerce.Objetos
 {
-    class Cliente
+    class Cliente : Comunicable
     {
         private Decimal id;
         private String nombre;
@@ -130,5 +131,29 @@ namespace FrbaCommerce.Objetos
         {
             return this.idUsuario;
         }
+
+        #region Miembros de Comunicable
+
+        string Comunicable.GetQuery()
+        {
+            return "LOS_SUPER_AMIGOS.crear_cliente";
+        }
+
+        IList<System.Data.SqlClient.SqlParameter> Comunicable.GetParametros()
+        {
+            IList<SqlParameter> parametros = new List<SqlParameter>();
+            parametros.Add(new SqlParameter("@nombre", this.nombre));
+            parametros.Add(new SqlParameter("@apellido", this.apellido));
+            parametros.Add(new SqlParameter("@tipo_de_documento_id", this.idTipoDeDocumento));
+            parametros.Add(new SqlParameter("@documento", this.numeroDeDocumento));
+            parametros.Add(new SqlParameter("@fecha_nacimiento", this.fechaDeNacimiento));
+            parametros.Add(new SqlParameter("@mail", this.mail));
+            parametros.Add(new SqlParameter("@telefono", this.telefono));
+            parametros.Add(new SqlParameter("@direccion_id", this.idDireccion));
+            parametros.Add(new SqlParameter("@usuario_id", this.idUsuario));
+            return parametros;
+        }
+
+        #endregion
     }
 }

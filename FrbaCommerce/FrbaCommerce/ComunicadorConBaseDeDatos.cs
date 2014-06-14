@@ -59,6 +59,11 @@ namespace FrbaCommerce
             return (Decimal)parametroOutput.Value;
         }
 
+        public Decimal CrearDireccion(Direccion direccion)
+        {
+            return this.Crear(direccion);
+        }
+
         public Boolean ModificarDireccion(Decimal idDireccion, Direccion direccion)
         {
             query = "UPDATE LOS_SUPER_AMIGOS.Direccion SET calle = @calle, numero = @numero, piso = @piso, depto = @departamento, cod_postal = @codigoPostal, localidad = @localidad WHERE id = @idDireccion";
@@ -95,6 +100,17 @@ namespace FrbaCommerce
                 return nuevaDireccion;
             }
             return nuevaDireccion;
+        }
+
+        public Decimal CrearClienteNuevo(Cliente cliente)
+        {
+            if (!pasoControlDeRegistro(cliente.GetIdTipoDeDocumento(), cliente.GetNumeroDeDocumento()))
+                throw new ClienteYaExisteException();
+
+            if (!pasoControlDeUnicidad(cliente.GetTelefono(), "telefono", "Cliente"))
+                throw new TelefonoYaExisteException();
+
+            return this.Crear(cliente);
         }
 
         public Decimal CrearCliente(Cliente cliente)

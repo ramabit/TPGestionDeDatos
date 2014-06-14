@@ -110,12 +110,12 @@ CREATE PROCEDURE LOS_SUPER_AMIGOS.crear_cliente
 	@telefono numeric(18,0),
 	@direccion_id numeric(18,0),
 	@usuario_id numeric(18,0),
-	@cliente_id numeric(18,0) OUTPUT
+	@id numeric(18,0) OUTPUT
 AS
 BEGIN
 	SET NOCOUNT ON;
 	INSERT INTO LOS_SUPER_AMIGOS.Cliente (nombre, apellido, fecha_nacimiento, tipo_de_documento_id, documento, mail, telefono, direccion_id, usuario_id) values (@nombre, @apellido, @fecha_nacimiento, @tipo_de_documento_id, @documento, @mail, @telefono, @direccion_id, @usuario_id);
-	SET @cliente_id = SCOPE_IDENTITY();	
+	SET @id = SCOPE_IDENTITY();	
 END
 GO
 
