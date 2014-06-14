@@ -53,9 +53,7 @@ namespace FrbaCommerce.ABM_Cliente
 
         private void CargarTipoDeDocumento(Decimal idTipoDeDocumento)
         {
-            TipoDeDocumento tipoDeDocumento = new TipoDeDocumento();
-            tipoDeDocumento.SetId(idTipoDeDocumento);
-            comboBox_TipoDeDocumento.SelectedValue = comunicador.ObtenerNombreDe(tipoDeDocumento);
+            comboBox_TipoDeDocumento.SelectedValue = (String) comunicador.selectFromWhere("nombre", "TipoDeDocumento", "id", Convert.ToString(idTipoDeDocumento));
         }
 
         private void CargarDireccion(Decimal idDireccion)
@@ -74,7 +72,7 @@ namespace FrbaCommerce.ABM_Cliente
             // Guarda en variables todos los campos de entrada
             String nombre = textBox_Nombre.Text;
             String apellido = textBox_Apellido.Text;
-            String tipoDeDocumentoNombre = comboBox_TipoDeDocumento.Text;
+            String tipoDeDocumento = comboBox_TipoDeDocumento.Text;
             String numeroDeDocumento = textBox_NumeroDeDoc.Text;
             String fechaDeNacimiento = textBox_FechaDeNacimiento.Text;
             String mail = textBox_Mail.Text;
@@ -88,10 +86,7 @@ namespace FrbaCommerce.ABM_Cliente
 
             Boolean pudoModificar;
 
-            // Averigua el id del tipo de documento a partir del nombre del tipo de documento
-            TipoDeDocumento tipoDeDocumento = new TipoDeDocumento();
-            tipoDeDocumento.SetNombre(tipoDeDocumentoNombre);
-            Decimal idTipoDeDocumento = comunicador.ObtenerIdDe(tipoDeDocumento);
+            Decimal idTipoDeDocumento = (Decimal) comunicador.selectFromWhere("id", "TipoDeDocumento", "nombre", tipoDeDocumento);
 
             // Update direccion
             try

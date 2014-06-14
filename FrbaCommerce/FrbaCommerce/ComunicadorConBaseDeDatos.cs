@@ -51,30 +51,6 @@ namespace FrbaCommerce
             return datos.Tables[0];
         }
 
-        public Decimal ObtenerIdDe(TipoDeDocumento tipoDeDocumento)
-        {
-            if (tipoDeDocumento.GetNombre() == "") 
-                throw new FaltanDefinirAtributosException();
-            query = "SELECT id FROM LOS_SUPER_AMIGOS.TipoDeDocumento WHERE nombre = @tipoDeDocumento";
-            parametros.Clear();
-            parametros.Add(new SqlParameter("@tipoDeDocumento", tipoDeDocumento.GetNombre()));
-            Decimal idTipoDeDocumento = (Decimal)builderDeComandos.Crear(query, parametros).ExecuteScalar();
-            tipoDeDocumento.SetId(idTipoDeDocumento);
-            return idTipoDeDocumento;
-        }
-
-        public String ObtenerNombreDe(TipoDeDocumento tipoDeDocumento)
-        {
-            if (tipoDeDocumento.GetId() == 0)
-                throw new FaltanDefinirAtributosException();
-            query = "SELECT nombre FROM LOS_SUPER_AMIGOS.TipoDeDocumento WHERE id = @idTipoDeDocumento";
-            parametros.Clear();
-            parametros.Add(new SqlParameter("@idTipoDeDocumento", tipoDeDocumento.GetId()));
-            String nombreTipoDeDocumento = (String)builderDeComandos.Crear(query, parametros).ExecuteScalar();
-            tipoDeDocumento.SetNombre(nombreTipoDeDocumento);
-            return nombreTipoDeDocumento;
-        }
-
         public Decimal CrearDireccion(Direccion direccion)
         {
             query = "LOS_SUPER_AMIGOS.crear_direccion";

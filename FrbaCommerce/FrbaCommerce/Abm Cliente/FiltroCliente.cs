@@ -70,9 +70,7 @@ namespace FrbaCommerce.ABM_Cliente
             if (textBox_Apellido.Text != "") filtro += "AND " + "c.apellido LIKE '" + textBox_Apellido.Text + "%'";
             if (textBox_Mail.Text != "") filtro += "AND " + "c.mail LIKE '" + textBox_Mail.Text + "%'";
             if (textBox_NumeroDeDoc.Text != "") filtro += "AND " + "c.documento LIKE '" + textBox_NumeroDeDoc.Text + "%'";
-            TipoDeDocumento tipoDeDocumento = new TipoDeDocumento();
-            tipoDeDocumento.SetNombre(comboBox_TipoDeDoc.Text);
-            Decimal idTipoDeDocumento = comunicador.ObtenerIdDe(tipoDeDocumento);
+            Decimal idTipoDeDocumento = (Decimal)comunicador.selectFromWhere("id", "TipoDeDocumento", "nombre", comboBox_TipoDeDoc.Text);
             filtro += "AND " + "c.tipo_de_documento_id = " + idTipoDeDocumento;
             return filtro;
         }

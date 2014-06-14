@@ -53,10 +53,7 @@ namespace FrbaCommerce.ABM_Cliente
             String codigoPostal = textBox_CodigoPostal.Text;
             String localidad = textBox_Localidad.Text;
 
-            // Averigua el id del tipo de documento a partir del nombre del tipo de documento
-            TipoDeDocumento tipoDeDocumentoObjeto = new TipoDeDocumento();
-            tipoDeDocumentoObjeto.SetNombre(tipoDeDocumento);
-            Decimal idTipoDeDocumento = comunicador.ObtenerIdDe(tipoDeDocumentoObjeto);
+            Decimal idTipoDeDocumento = (Decimal) comunicador.selectFromWhere("id", "TipoDeDocumento", "nombre", tipoDeDocumento);
 
             // Crea una direccion y se guarda su id
             Direccion direccion = new Direccion();
