@@ -155,6 +155,24 @@ namespace FrbaCommerce.Objetos
             return "UPDATE LOS_SUPER_AMIGOS.Empresa SET razon_social = @razon_social, nombre_de_contacto = @nombre_de_contacto, cuit = @cuit, fecha_creacion = @fecha_creacion, mail = @mail, telefono = @telefono, ciudad = @ciudad  WHERE id = @idEmpresa";
         }
 
+        public string GetQueryObtener()
+        {
+            return "SELECT * FROM LOS_SUPER_AMIGOS.Empresa WHERE id = @idEmpresa";
+        }
+
+        public void CargarInformacion(SqlDataReader reader)
+        {
+            this.razonSocial = Convert.ToString(reader["razon_social"]);
+            this.nombreDeContacto = Convert.ToString(reader["nombre_de_contacto"]);
+            this.fechaDeCreacion = Convert.ToString(reader["fecha_creacion"]);
+            this.cuit = Convert.ToString(reader["cuit"]);
+            this.mail = Convert.ToString(reader["mail"]);
+            this.telefono = Convert.ToString(reader["telefono"]);
+            this.ciudad = Convert.ToString(reader["ciudad"]);
+            this.idDireccion = Convert.ToDecimal(reader["direccion_id"]);
+            this.idUsuario = Convert.ToDecimal(reader["usuario_id"]);
+        }
+
         #endregion
     }
 }

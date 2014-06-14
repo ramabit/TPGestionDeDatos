@@ -95,6 +95,19 @@ namespace FrbaCommerce.Objetos
             return "UPDATE LOS_SUPER_AMIGOS.Visibilidad SET descripcion = @descripcion, precio = @precioporPublicar, porcentaje = @porcentajeDeVenta, duracion = @duracion WHERE id = @idVisibilidad";
         }
 
+        string Comunicable.GetQueryObtener()
+        {
+            return "SELECT * FROM LOS_SUPER_AMIGOS.Visibilidad WHERE id = @idVisibilidad";
+        }
+
+        void Comunicable.CargarInformacion(SqlDataReader reader)
+        {
+            this.descripcion = Convert.ToString(reader["descripcion"]);
+            this.precioPorPublicar = Convert.ToString(reader["precio"]);
+            this.porcentajePorVenta = Convert.ToString(reader["porcentaje"]);
+            this.duracion =  Convert.ToString(reader["duracion"]);
+        }
+
         #endregion
     }
 }

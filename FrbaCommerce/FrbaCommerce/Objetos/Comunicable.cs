@@ -10,7 +10,8 @@ namespace FrbaCommerce.Objetos
     {
         String GetQueryCrear();
         String GetQueryModificar();
-        
+        String GetQueryObtener();
+        void CargarInformacion(SqlDataReader reader);
         IList<SqlParameter> GetParametros();
     }
 }

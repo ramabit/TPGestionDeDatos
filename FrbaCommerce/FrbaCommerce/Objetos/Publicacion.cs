@@ -174,6 +174,25 @@ namespace FrbaCommerce.Objetos
             return "UPDATE LOS_SUPER_AMIGOS.Publicacion SET estado = @estado, descripcion = @descripcion, fecha_inicio = @fecha_inicio, fecha_vencimiento = @fecha_vencimiento, rubro_id = @rubro_id, visibilidad_id = @visibilidad_id, stock = @stock, precio = @precio WHERE id = @idPublicacion";
         }
 
+        string Comunicable.GetQueryObtener()
+        {
+            return "SELECT * FROM LOS_SUPER_AMIGOS.Publicacion WHERE id = @idPublicacion";
+        }
+
+        void Comunicable.CargarInformacion(SqlDataReader reader)
+        {
+            this.tipo = Convert.ToString(reader["tipo"]);
+            this.estado = Convert.ToString(reader["estado"]);
+            this.descripcion = Convert.ToString(reader["descripcion"]);
+            this.fechaDeInicio = Convert.ToString(reader["fecha_inicio"]);
+            this.fechaDeVencimiento = Convert.ToString(reader["fecha_vencimiento"]);
+            this.stock = Convert.ToString(reader["stock"]);
+            this.precio = Convert.ToString(reader["precio"]);
+            this.idRubro = Convert.ToDecimal(reader["rubro_id"]);
+            this.idVisibilidad = Convert.ToDecimal(reader["visibilidad_id"]);
+            this.idUsuario = Convert.ToDecimal(reader["usuario_id"]);
+        }
+
         #endregion
     }
 }

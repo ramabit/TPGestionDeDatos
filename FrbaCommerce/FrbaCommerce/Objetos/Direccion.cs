@@ -123,6 +123,21 @@ namespace FrbaCommerce
             return "UPDATE LOS_SUPER_AMIGOS.Direccion SET calle = @calle, numero = @numero, piso = @piso, depto = @departamento, cod_postal = @codigoPostal, localidad = @localidad WHERE id = @idDireccion";
         }
 
+        string Comunicable.GetQueryObtener()
+        {
+            return "SELECT * FROM LOS_SUPER_AMIGOS.Direccion WHERE id = @id";
+        }
+
+        void Comunicable.CargarInformacion(SqlDataReader reader)
+        {
+            this.calle = Convert.ToString(reader["calle"]);
+            this.numero = Convert.ToString(reader["numero"]);
+            this.piso = Convert.ToString(reader["piso"]);
+            this.departamento = Convert.ToString(reader["depto"]);
+            this.codigoPostal = Convert.ToString(reader["cod_postal"]);
+            this.localidad = Convert.ToString(reader["localidad"]);
+        }
+
         #endregion
     }
 }

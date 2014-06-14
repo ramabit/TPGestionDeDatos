@@ -139,9 +139,20 @@ namespace FrbaCommerce.Objetos
             return "LOS_SUPER_AMIGOS.crear_cliente";
         }
 
+        string Comunicable.GetQueryModificar()
+        {
+            return "UPDATE LOS_SUPER_AMIGOS.Cliente SET nombre = @nombre, apellido = @apellido, tipo_de_documento_id = @tipo_de_documento_id, documento = @documento, fecha_nacimiento = @fecha_nacimiento, mail = @mail, telefono = @telefono WHERE id = @idCliente";
+        }
+
+        string Comunicable.GetQueryObtener()
+        {
+            return "SELECT * FROM LOS_SUPER_AMIGOS.Cliente WHERE id = @id";
+        }
+
         IList<System.Data.SqlClient.SqlParameter> Comunicable.GetParametros()
         {
             IList<SqlParameter> parametros = new List<SqlParameter>();
+            parametros.Clear();
             parametros.Add(new SqlParameter("@nombre", this.nombre));
             parametros.Add(new SqlParameter("@apellido", this.apellido));
             parametros.Add(new SqlParameter("@tipo_de_documento_id", this.idTipoDeDocumento));
@@ -154,9 +165,17 @@ namespace FrbaCommerce.Objetos
             return parametros;
         }
 
-        string Comunicable.GetQueryModificar()
+        void Comunicable.CargarInformacion(SqlDataReader reader)
         {
-            return "UPDATE LOS_SUPER_AMIGOS.Cliente SET nombre = @nombre, apellido = @apellido, tipo_de_documento_id = @tipo_de_documento_id, documento = @documento, fecha_nacimiento = @fecha_nacimiento, mail = @mail, telefono = @telefono WHERE id = @idCliente";
+            this.nombre = Convert.ToString(reader["nombre"]);
+            this.apellido = Convert.ToString(reader["apellido"]);
+            this.fechaDeNacimiento = Convert.ToString(reader["fecha_nacimiento"]);
+            this.mail = Convert.ToString(reader["mail"]);
+            this.telefono = Convert.ToString(reader["telefono"]);
+            this.idTipoDeDocumento = Convert.ToDecimal(reader["tipo_de_documento_id"]);
+            this.numeroDeDocumento = Convert.ToString(reader["documento"]);
+            this.idDireccion = Convert.ToDecimal(reader["direccion_id"]);
+            this.idUsuario = Convert.ToDecimal(reader["usuario_id"]);
         }
 
         #endregion

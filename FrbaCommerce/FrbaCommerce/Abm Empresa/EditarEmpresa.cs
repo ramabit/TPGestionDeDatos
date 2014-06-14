@@ -107,7 +107,7 @@ namespace FrbaCommerce.ABM_Empresa
                 empresa.SetTelefono(telefono);
                 empresa.SetCiudad(ciudad);
 
-                pudoModificar = comunicador.ModificarEmpresa(idEmpresa, empresa);
+                pudoModificar = comunicador.Modificar(idEmpresa, empresa);
                 if (pudoModificar) MessageBox.Show("La empresa se modifico correctamente");
             }
             catch (CampoVacioException exception)

@@ -62,30 +62,26 @@ namespace FrbaCommerce
         public Boolean Modificar(Decimal id, Comunicable objeto)
         {
             query = objeto.GetQueryModificar();
+            parametros.Clear();
             parametros = objeto.GetParametros();
             int filasAfectadas = builderDeComandos.Crear(query, parametros).ExecuteNonQuery();
             if (filasAfectadas == 1) return true;
             return false;
         }
 
-        public Direccion ObtenerDireccion(Decimal idDireccion)
+        public Comunicable Obtener(Decimal id, Type clase)
         {
-            Direccion nuevaDireccion = new Direccion();
-            query = "SELECT calle, numero, piso, depto, cod_postal, localidad FROM LOS_SUPER_AMIGOS.Direccion WHERE id = @idDireccion";
+            Comunicable objeto = (Comunicable)Activator.CreateInstance(clase);
+            query = objeto.GetQueryObtener();
             parametros.Clear();
-            parametros.Add(new SqlParameter("@idDireccion", idDireccion));
-            SqlDataReader readerDireccion = builderDeComandos.Crear(query, parametros).ExecuteReader();
-            if (readerDireccion.Read())
+            parametros.Add(new SqlParameter("@id", id));
+            SqlDataReader reader = builderDeComandos.Crear(query, parametros).ExecuteReader();
+            if (reader.Read())
             {
-                nuevaDireccion.SetCalle(Convert.ToString(readerDireccion["calle"]));
-                nuevaDireccion.SetNumero(Convert.ToString(readerDireccion["numero"]));
-                nuevaDireccion.SetPiso(Convert.ToString(readerDireccion["piso"]));
-                nuevaDireccion.SetDepartamento(Convert.ToString(readerDireccion["depto"]));
-                nuevaDireccion.SetCodigoPostal(Convert.ToString(readerDireccion["cod_postal"]));
-                nuevaDireccion.SetLocalidad(Convert.ToString(readerDireccion["localidad"]));
-                return nuevaDireccion;
+                objeto.CargarInformacion(reader);
+                return objeto;
             }
-            return nuevaDireccion;
+            return objeto;
         }
 
         public Decimal CrearCliente(Cliente cliente)
@@ -131,140 +127,39 @@ namespace FrbaCommerce
             return this.Crear(visibilidad);
         }
 
-        public Boolean ModificarCliente(Decimal idCliente, Cliente cliente)
-        {
-            if (!pasoControlDeRegistro(cliente.GetIdTipoDeDocumento(), cliente.GetNumeroDeDocumento(), idCliente))
-                throw new ClienteYaExisteException();
-
-            if (!pasoControlDeUnicidad(cliente.GetTelefono(), "telefono", "Cliente", idCliente))
-                throw new TelefonoYaExisteException();
-
-            query = "UPDATE LOS_SUPER_AMIGOS.Cliente SET nombre = @nombre, apellido = @apellido, tipo_de_documento_id = @tipo_de_documento_id, documento = @documento, fecha_nacimiento = @fecha_nacimiento, mail = @mail, telefono = @telefono WHERE id = @idCliente";
-            parametros.Clear();
-            parametros.Add(new SqlParameter("@nombre", cliente.GetNombre()));
-            parametros.Add(new SqlParameter("@apellido", cliente.GetApellido()));
-            parametros.Add(new SqlParameter("@tipo_de_documento_id", cliente.GetIdTipoDeDocumento()));
-            parametros.Add(new SqlParameter("@documento", cliente.GetNumeroDeDocumento()));
-            parametros.Add(new SqlParameter("@fecha_nacimiento", cliente.GetFechaDeNacimiento()));
-            parametros.Add(new SqlParameter("@mail", cliente.GetMail()));
-            parametros.Add(new SqlParameter("@telefono", cliente.GetTelefono()));
-            parametros.Add(new SqlParameter("@idCliente", idCliente));
-
-            int filasAfectadas = builderDeComandos.Crear(query, parametros).ExecuteNonQuery();
-
-            if (filasAfectadas == 1) return true;
-            return false;
-        }
-
-        public Boolean ModificarEmpresa(Decimal idEmpresa, Empresa empresa)
-        {
-            if (!pasoControlDeRegistroDeCuit(empresa.GetCuit(), idEmpresa))
-                throw new CuitYaExisteException();
-
-            if (!pasoControlDeUnicidad(empresa.GetTelefono(), "telefono", "Empresa", idEmpresa))
-                throw new TelefonoYaExisteException();
-
-            if (!pasoControlDeRegistroDeRazonSocial(empresa.GetRazonSocial(), idEmpresa))
-                throw new RazonSocialYaExisteException();
-
-            query = "UPDATE LOS_SUPER_AMIGOS.Empresa SET razon_social = @razon_social, nombre_de_contacto = @nombre_de_contacto, cuit = @cuit, fecha_creacion = @fecha_creacion, mail = @mail, telefono = @telefono, ciudad = @ciudad  WHERE id = @idEmpresa";
-            parametros.Clear();
-            parametros.Add(new SqlParameter("@razon_social", empresa.GetRazonSocial()));
-            parametros.Add(new SqlParameter("@nombre_de_contacto", empresa.GetNombreDeContacto()));
-            parametros.Add(new SqlParameter("@cuit", empresa.GetCuit()));
-            parametros.Add(new SqlParameter("@fecha_creacion", empresa.GetFechaDeCreacion()));
-            parametros.Add(new SqlParameter("@mail", empresa.GetMail()));
-            parametros.Add(new SqlParameter("@telefono", empresa.GetTelefono()));
-            parametros.Add(new SqlParameter("@ciudad", empresa.GetCiudad()));
-            parametros.Add(new SqlParameter("@idEmpresa", idEmpresa));
-
-            int filasAfectadas = builderDeComandos.Crear(query, parametros).ExecuteNonQuery();
-
-            if (filasAfectadas == 1) return true;
-            return false;
-        }
-
         public Cliente ObtenerCliente(Decimal idCliente)
         {
-            Cliente nuevoCliente = new Cliente();
-            query = "SELECT * FROM LOS_SUPER_AMIGOS.Cliente WHERE id = @idCliente";
-            parametros.Clear();
-            parametros.Add(new SqlParameter("@idCliente", idCliente));
-            SqlDataReader readerCliente = builderDeComandos.Crear(query, parametros).ExecuteReader();
-            if (readerCliente.Read())
-            {
-                nuevoCliente.SetNombre(Convert.ToString(readerCliente["nombre"]));
-                nuevoCliente.SetApellido(Convert.ToString(readerCliente["apellido"]));
-                nuevoCliente.SetFechaDeNacimiento(Convert.ToString(readerCliente["fecha_nacimiento"]));
-                nuevoCliente.SetMail(Convert.ToString(readerCliente["mail"]));
-                nuevoCliente.SetTelefono(Convert.ToString(readerCliente["telefono"]));
-                nuevoCliente.SetIdTipoDeDocumento(Convert.ToDecimal(readerCliente["tipo_de_documento_id"]));
-                nuevoCliente.SetNumeroDeDocumento(Convert.ToString(readerCliente["documento"]));
-                nuevoCliente.SetIdDireccion(Convert.ToDecimal(readerCliente["direccion_id"]));
-                nuevoCliente.SetIdUsuario(Convert.ToDecimal(readerCliente["usuario_id"]));
-                return nuevoCliente;
-            }
-            return nuevoCliente;
+            Cliente objeto = new Cliente();
+            Type clase = objeto.GetType();
+            return (Cliente) this.Obtener(idCliente, clase);
         }
 
         public Empresa ObtenerEmpresa(Decimal idEmpresa)
         {
-            Empresa nuevoEmpresa = new Empresa();
-            query = "SELECT * FROM LOS_SUPER_AMIGOS.Empresa WHERE id = @idEmpresa";
-            parametros.Clear();
-            parametros.Add(new SqlParameter("@idEmpresa", idEmpresa));
-            SqlDataReader readerEmpresa = builderDeComandos.Crear(query, parametros).ExecuteReader();
-            if (readerEmpresa.Read())
-            {
-                nuevoEmpresa.SetRazonSocial(Convert.ToString(readerEmpresa["razon_social"]));
-                nuevoEmpresa.SetNombreDeContacto(Convert.ToString(readerEmpresa["nombre_de_contacto"]));
-                nuevoEmpresa.SetFechaDeCreacion(Convert.ToString(readerEmpresa["fecha_creacion"]));
-                nuevoEmpresa.SetCuit(Convert.ToString(readerEmpresa["cuit"]));
-                nuevoEmpresa.SetMail(Convert.ToString(readerEmpresa["mail"]));
-                nuevoEmpresa.SetTelefono(Convert.ToString(readerEmpresa["telefono"]));
-                nuevoEmpresa.SetCiudad(Convert.ToString(readerEmpresa["ciudad"]));
-                nuevoEmpresa.SetIdDireccion(Convert.ToDecimal(readerEmpresa["direccion_id"]));
-                nuevoEmpresa.SetIdUsuario(Convert.ToDecimal(readerEmpresa["usuario_id"]));
-                return nuevoEmpresa;
-            }
-            return nuevoEmpresa;
+            Empresa objeto = new Empresa();
+            Type clase = objeto.GetType();
+            return (Empresa)this.Obtener(idEmpresa, clase);
         }
 
-        public Boolean ModificarVisibilidad(Decimal idVisibilidad, Visibilidad visibilidad)
+        public Direccion ObtenerDireccion(Decimal idDireccion)
         {
-            if (!pasoControlDeUnicidad(visibilidad.GetDescripcion(), "descripcion", "Visibilidad", idVisibilidad))
-                throw new VisibilidadYaExisteException();
-
-            query = "UPDATE LOS_SUPER_AMIGOS.Visibilidad SET descripcion = @descripcion, precio = @precioporPublicar, porcentaje = @porcentajeDeVenta, duracion = @duracion WHERE id = @idVisibilidad";
-            parametros.Clear();
-            parametros.Add(new SqlParameter("@descripcion", visibilidad.GetDescripcion()));
-            parametros.Add(new SqlParameter("@precioporPublicar", visibilidad.GetPrecioPorPublicar()));
-            parametros.Add(new SqlParameter("@porcentajeDeVenta", visibilidad.GetPorcentajePorVenta()));
-            parametros.Add(new SqlParameter("@duracion", visibilidad.GetDuracion()));
-            parametros.Add(new SqlParameter("@idVisibilidad", idVisibilidad));
-
-            int filasAfectadas = builderDeComandos.Crear(query, parametros).ExecuteNonQuery();
-
-            if (filasAfectadas == 1) return true;
-            return false;
+            Direccion objeto = new Direccion();
+            Type clase = objeto.GetType();
+            return (Direccion)this.Obtener(idDireccion, clase);
         }
 
         public Visibilidad ObtenerVisibilidad(Decimal idVisibilidad)
         {
-            Visibilidad nuevoVisibilidad = new Visibilidad();
-            query = "SELECT * FROM LOS_SUPER_AMIGOS.Visibilidad WHERE id = @idVisibilidad";
-            parametros.Clear();
-            parametros.Add(new SqlParameter("@idVisibilidad", idVisibilidad));
-            SqlDataReader readerVisibilidad = builderDeComandos.Crear(query, parametros).ExecuteReader();
-            if (readerVisibilidad.Read())
-            {
-                nuevoVisibilidad.SetDescripcion(Convert.ToString(readerVisibilidad["descripcion"]));
-                nuevoVisibilidad.SetPrecioPorPublicar(Convert.ToString(readerVisibilidad["precio"]));
-                nuevoVisibilidad.SetPorcentajePorVenta(Convert.ToString(readerVisibilidad["porcentaje"]));
-                nuevoVisibilidad.SetDuracion(Convert.ToString(readerVisibilidad["duracion"]));
-                return nuevoVisibilidad;
-            }
-            return nuevoVisibilidad;
+            Visibilidad objeto = new Visibilidad();
+            Type clase = objeto.GetType();
+            return (Visibilidad)this.Obtener(idVisibilidad, clase);
+        }
+
+        public Publicacion ObtenerPublicacion(Decimal idPublicacion)
+        {
+            Publicacion objeto = new Publicacion();
+            Type clase = objeto.GetType();
+            return (Publicacion)this.Obtener(idPublicacion, clase);
         }
 
         public Object SelectFromWhere(String que, String deDonde, String param1, String param2)
@@ -273,50 +168,6 @@ namespace FrbaCommerce
             parametros.Clear();
             parametros.Add(new SqlParameter("@" + param1, param2));
             return builderDeComandos.Crear(query, parametros).ExecuteScalar();
-        }
-
-        public Boolean ModificarPublicacion(Decimal idPublicacion, Publicacion publicacion)
-        {
-            query = "UPDATE LOS_SUPER_AMIGOS.Publicacion SET estado = @estado, descripcion = @descripcion, fecha_inicio = @fecha_inicio, fecha_vencimiento = @fecha_vencimiento, rubro_id = @rubro_id, visibilidad_id = @visibilidad_id, stock = @stock, precio = @precio WHERE id = @idPublicacion";
-            parametros.Clear();
-            parametros.Add(new SqlParameter("@estado", publicacion.GetEstado()));
-            parametros.Add(new SqlParameter("@descripcion", publicacion.GetDescripcion()));
-            parametros.Add(new SqlParameter("@fecha_inicio", publicacion.GetFechaDeInicio()));
-            parametros.Add(new SqlParameter("@fecha_vencimiento", publicacion.GetFechaDeVencimiento()));
-            parametros.Add(new SqlParameter("@stock", publicacion.GetStock()));
-            parametros.Add(new SqlParameter("@precio", publicacion.GetPrecio()));
-            parametros.Add(new SqlParameter("@rubro_id", publicacion.GetIdRubro()));
-            parametros.Add(new SqlParameter("@visibilidad_id", publicacion.GetIdVisibilidad()));
-            parametros.Add(new SqlParameter("@idPublicacion", idPublicacion));
-
-            int filasAfectadas = builderDeComandos.Crear(query, parametros).ExecuteNonQuery();
-
-            if (filasAfectadas == 1) return true;
-            return false;
-        }
-
-        public Publicacion ObtenerPublicacion(Decimal idPublicacion)
-        {
-            Publicacion nuevoPublicacion = new Publicacion();
-            query = "SELECT * FROM LOS_SUPER_AMIGOS.Publicacion WHERE id = @idPublicacion";
-            parametros.Clear();
-            parametros.Add(new SqlParameter("@idPublicacion", idPublicacion));
-            SqlDataReader readerPublicacion = builderDeComandos.Crear(query, parametros).ExecuteReader();
-            if (readerPublicacion.Read())
-            {
-                nuevoPublicacion.SetTipo(Convert.ToString(readerPublicacion["tipo"]));
-                nuevoPublicacion.SetEstado(Convert.ToString(readerPublicacion["estado"]));
-                nuevoPublicacion.SetDescripcion(Convert.ToString(readerPublicacion["descripcion"]));
-                nuevoPublicacion.SetFechaDeInicio(Convert.ToString(readerPublicacion["fecha_inicio"]));
-                nuevoPublicacion.SetFechaDeVencimiento(Convert.ToString(readerPublicacion["fecha_vencimiento"]));
-                nuevoPublicacion.SetStock(Convert.ToString(readerPublicacion["stock"]));
-                nuevoPublicacion.SetPrecio(Convert.ToString(readerPublicacion["precio"]));
-                nuevoPublicacion.SetIdRubro(Convert.ToDecimal(readerPublicacion["rubro_id"]));
-                nuevoPublicacion.SetIdVisibilidad(Convert.ToDecimal(readerPublicacion["visibilidad_id"]));
-                nuevoPublicacion.SetIdUsuario(Convert.ToDecimal(readerPublicacion["usuario_id"]));
-                return nuevoPublicacion;
-            }
-            return nuevoPublicacion;
         }
 
         public DataTable SelectDataTable(String que, String deDonde)
