@@ -180,7 +180,7 @@ GO
 CREATE PROCEDURE LOS_SUPER_AMIGOS.crear_visibilidad
 	@descripcion nvarchar(255),
 	@precio numeric(18,2),
-	@porcentaje numeric(18,0),
+	@porcentaje numeric(18,2),
 	@duracion numeric(18,0),
 	@id numeric(18,0) OUTPUT
 AS
@@ -331,7 +331,7 @@ create table LOS_SUPER_AMIGOS.Visibilidad
 id numeric(18,0) identity(1,1),
 descripcion nvarchar(255),
 precio numeric(18,2),
-porcentaje numeric(18,0),
+porcentaje numeric(18,2),
 duracion numeric(18,0),
 habilitado bit default 1,
 PRIMARY KEY (id)
