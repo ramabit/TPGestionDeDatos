@@ -63,7 +63,6 @@ namespace FrbaCommerce.Editar_Publicacion
 
         private void button_Limpiar_Click(object sender, EventArgs e)
         {
-            textBox_Descripcion.Text = "";
             CargarPublicacion();
         }
 

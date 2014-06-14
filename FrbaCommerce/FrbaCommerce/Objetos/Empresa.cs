@@ -142,7 +142,7 @@ namespace FrbaCommerce.Objetos
 
         public string GetQueryObtener()
         {
-            return "SELECT * FROM LOS_SUPER_AMIGOS.Empresa WHERE id = @idEmpresa";
+            return "SELECT * FROM LOS_SUPER_AMIGOS.Empresa WHERE id = @id";
         }
 
         IList<System.Data.SqlClient.SqlParameter> Comunicable.GetParametros()
