@@ -202,7 +202,7 @@ CREATE PROCEDURE LOS_SUPER_AMIGOS.crear_publicacion
 	@stock numeric(18,0),
 	@precio numeric(18,0),
 	@usuario_id numeric(18,0),
-	@d numeric(18,0) OUTPUT
+	@id numeric(18,0) OUTPUT
 AS
 BEGIN
 	SET NOCOUNT ON;
@@ -424,7 +424,7 @@ PRIMARY KEY (id),
 
 create table LOS_SUPER_AMIGOS.Factura
 (
-nro numeric(18,0),
+nro numeric(18,0) identity(1,1),
 fecha DATETIME,
 total numeric(18,2),
 forma_pago_id numeric(18,0),
@@ -671,6 +671,9 @@ SELECT DISTINCT Forma_Pago_Desc
 FROM gd_esquema.Maestra 
 WHERE ISNULL(Forma_Pago_Desc,'') != ''
 
+
+SET IDENTITY_INSERT LOS_SUPER_AMIGOS.Factura ON;
+GO
 -- INSERTAR Facturas
 INSERT INTO LOS_SUPER_AMIGOS.Factura
    ( [nro], [fecha], [total], [forma_pago_id])
@@ -678,7 +681,8 @@ SELECT DISTINCT Factura_Nro, Factura_Fecha, Factura_Total, (SELECT id FROM LOS_S
 FROM gd_esquema.Maestra 
 WHERE ISNULL(Factura_Nro,-1) != -1
 GO
-
+SET IDENTITY_INSERT LOS_SUPER_AMIGOS.Factura OFF;
+GO
 
 -- INSERTAR Items_Factura
 INSERT INTO LOS_SUPER_AMIGOS.Item_Factura
