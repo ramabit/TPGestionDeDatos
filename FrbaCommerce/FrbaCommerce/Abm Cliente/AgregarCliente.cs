@@ -32,7 +32,7 @@ namespace FrbaCommerce.ABM_Cliente
 
         private void CargarTipoDeDocumentos()
         {
-            comboBox_TipoDeDocumento.DataSource = comunicador.SelectDataTable("nombre", "TipoDeDocumento");
+            comboBox_TipoDeDocumento.DataSource = comunicador.SelectDataTable("nombre", "LOS_SUPER_AMIGOS.TipoDeDocumento");
             comboBox_TipoDeDocumento.ValueMember = "nombre";
         }
 
@@ -53,7 +53,7 @@ namespace FrbaCommerce.ABM_Cliente
             String codigoPostal = textBox_CodigoPostal.Text;
             String localidad = textBox_Localidad.Text;
 
-            Decimal idTipoDeDocumento = (Decimal) comunicador.selectFromWhere("id", "TipoDeDocumento", "nombre", tipoDeDocumento);
+            Decimal idTipoDeDocumento = (Decimal) comunicador.SelectFromWhere("id", "TipoDeDocumento", "nombre", tipoDeDocumento);
 
             // Crea una direccion y se guarda su id
             Direccion direccion = new Direccion();
@@ -71,7 +71,7 @@ namespace FrbaCommerce.ABM_Cliente
                 MessageBox.Show("Faltan completar campos en direccion");
                 return;
             }
-            Decimal idDireccion = comunicador.CrearDireccion(direccion);
+            Decimal idDireccion = comunicador.Crear(direccion);
 
             // Si el cliente lo crea el admin, crea un nuevo usuario predeterminado. Si lo crea un nuevo registro de usuario, usa el que viene por parametro
             Decimal idUsuario;

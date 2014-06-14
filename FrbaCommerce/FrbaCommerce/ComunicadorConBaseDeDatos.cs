@@ -17,59 +17,46 @@ namespace FrbaCommerce
         private SqlCommand command;
         private BuilderDeComandos builderDeComandos = new BuilderDeComandos();
 
-        public DataTable SelectDataTable(String que, String deDonde)
+        public Decimal CrearUsuario()
         {
+            query = "LOS_SUPER_AMIGOS.crear_usuario";
             parametros.Clear();
-            command = builderDeComandos.Crear("SELECT " + que + " FROM " + deDonde, parametros);
-            DataSet datos = new DataSet();
-            SqlDataAdapter adapter = new SqlDataAdapter();
-            adapter.SelectCommand = command;
-            adapter.Fill(datos);
-            return datos.Tables[0];
-        }
-
-        public DataTable SelectDataTable(String que, String deDonde, String condiciones)
-        {
-            parametros.Clear();
-            command = builderDeComandos.Crear("SELECT " + que + " FROM " + deDonde + " WHERE " + condiciones, parametros);
-            DataSet datos = new DataSet();
-            SqlDataAdapter adapter = new SqlDataAdapter();
-            adapter.SelectCommand = command;
-            adapter.Fill(datos);
-            return datos.Tables[0];
-        }
-
-        public DataTable SelectDataTableConUsuario(String que, String deDonde, String condiciones)
-        {
-            parametros.Clear();
-            parametros.Add(new SqlParameter("@idUsuario", 2));//UsuarioSesion.Usuario.id));
-            command = builderDeComandos.Crear("SELECT " + que + " FROM " + deDonde + " WHERE " + condiciones, parametros);
-            DataSet datos = new DataSet();
-            SqlDataAdapter adapter = new SqlDataAdapter();
-            adapter.SelectCommand = command;
-            adapter.Fill(datos);
-            return datos.Tables[0];
-        }
-
-        public Decimal CrearDireccion(Direccion direccion)
-        {
-            query = "LOS_SUPER_AMIGOS.crear_direccion";
-            parametros.Clear();
-            parametroOutput = new SqlParameter("@direccion_id", SqlDbType.Decimal);
+            parametroOutput = new SqlParameter("@usuario_id", SqlDbType.Decimal);
             parametroOutput.Direction = ParameterDirection.Output;
-            parametros.Add(new SqlParameter("@calle", direccion.GetCalle()));
-            parametros.Add(new SqlParameter("@numero", direccion.GetNumero()));
-            parametros.Add(new SqlParameter("@piso", direccion.GetPiso()));
-            parametros.Add(new SqlParameter("@depto", direccion.GetDepartamento()));
-            parametros.Add(new SqlParameter("@cod_postal", direccion.GetCodigoPostal()));
-            parametros.Add(new SqlParameter("@localidad", direccion.GetLocalidad()));
             parametros.Add(parametroOutput);
             command = builderDeComandos.Crear(query, parametros);
             command.CommandType = CommandType.StoredProcedure;
             command.ExecuteNonQuery();
-            Decimal idDireccionNueva = (Decimal)parametroOutput.Value;
-            direccion.SetId(idDireccionNueva);
-            return idDireccionNueva;
+            return (Decimal)parametroOutput.Value;
+        }
+
+        public Decimal CrearUsuarioConValores(String username, String password)
+        {
+            query = "LOS_SUPER_AMIGOS.crear_usuario_con_valores";
+            parametros.Clear();
+            parametroOutput = new SqlParameter("@usuario_id", SqlDbType.Decimal);
+            parametroOutput.Direction = ParameterDirection.Output;
+            parametros.Add(new SqlParameter("@username", username));
+            parametros.Add(new SqlParameter("@password", HashSha256.getHash(password)));
+            parametros.Add(parametroOutput);
+            command = builderDeComandos.Crear(query, parametros);
+            command.CommandType = CommandType.StoredProcedure;
+            command.ExecuteNonQuery();
+            return (Decimal)parametroOutput.Value;
+        }
+
+        public Decimal Crear(Comunicable objeto)
+        {
+            query = objeto.GetQuery();
+            parametros.Clear();
+            parametros = objeto.GetParametros();
+            parametroOutput = new SqlParameter("@id", SqlDbType.Decimal);
+            parametroOutput.Direction = ParameterDirection.Output;
+            parametros.Add(parametroOutput);
+            command = builderDeComandos.Crear(query, parametros);
+            command.CommandType = CommandType.StoredProcedure;
+            command.ExecuteNonQuery();
+            return (Decimal)parametroOutput.Value;
         }
 
         public Boolean ModificarDireccion(Decimal idDireccion, Direccion direccion)
@@ -110,34 +97,6 @@ namespace FrbaCommerce
             return nuevaDireccion;
         }
 
-        public Decimal CrearUsuario()
-        {
-            query = "LOS_SUPER_AMIGOS.crear_usuario";
-            parametros.Clear();
-            parametroOutput = new SqlParameter("@usuario_id", SqlDbType.Decimal);
-            parametroOutput.Direction = ParameterDirection.Output;
-            parametros.Add(parametroOutput);
-            command = builderDeComandos.Crear(query, parametros);
-            command.CommandType = CommandType.StoredProcedure;
-            command.ExecuteNonQuery();
-            return (Decimal) parametroOutput.Value;
-        }
-
-        public Decimal CrearUsuarioConValores(String username, String password)
-        {
-            query = "LOS_SUPER_AMIGOS.crear_usuario_con_valores";
-            parametros.Clear();
-            parametroOutput = new SqlParameter("@usuario_id", SqlDbType.Decimal);
-            parametroOutput.Direction = ParameterDirection.Output;
-            parametros.Add(new SqlParameter("@username", username));
-            parametros.Add(new SqlParameter("@password", HashSha256.getHash(password)));
-            parametros.Add(parametroOutput);
-            command = builderDeComandos.Crear(query, parametros);
-            command.CommandType = CommandType.StoredProcedure;
-            command.ExecuteNonQuery();
-            return (Decimal) parametroOutput.Value;
-        }
-
         public Decimal CrearCliente(Cliente cliente)
         {
             if (!pasoControlDeRegistro(cliente.GetIdTipoDeDocumento(), cliente.GetNumeroDeDocumento()))
@@ -166,20 +125,6 @@ namespace FrbaCommerce
             Decimal idClienteNuevo = (Decimal)parametroOutput.Value;
             cliente.SetId(idClienteNuevo);
             return idClienteNuevo;
-        }
-
-        private bool pasoControlDeRegistro(Decimal tipoDeDocumento, String numeroDeDocumento)
-        {
-            query = "SELECT COUNT(*) FROM LOS_SUPER_AMIGOS.Cliente WHERE tipo_de_documento_id = @tipoDeDocumento AND documento = @numeroDeDocumento";
-            parametros.Clear();
-            parametros.Add(new SqlParameter("@tipoDeDocumento", tipoDeDocumento));
-            parametros.Add(new SqlParameter("@numeroDeDocumento", Convert.ToDecimal(numeroDeDocumento)));
-            int cantidad = (int)builderDeComandos.Crear(query, parametros).ExecuteScalar();
-            if (cantidad > 0)
-            {
-                return false;
-            }
-            return true;
         }
 
         public Decimal CrearEmpresa(Empresa empresa)
@@ -215,32 +160,6 @@ namespace FrbaCommerce
             return idEmpresaNuevo;
         }
 
-        private bool pasoControlDeRegistroDeRazonSocial(String razonSocial)
-        {
-            query = "SELECT COUNT(*) FROM LOS_SUPER_AMIGOS.Empresa WHERE razon_social = @razonSocial";
-            parametros.Clear();
-            parametros.Add(new SqlParameter("@razonSocial", razonSocial));
-            int cantidad = (int)builderDeComandos.Crear(query, parametros).ExecuteScalar();
-            if (cantidad > 0)
-            {
-                return false;
-            }
-            return true;
-        }
-
-        private bool pasoControlDeRegistroDeCuit(String cuit)
-        {
-            query = "SELECT COUNT(*) FROM LOS_SUPER_AMIGOS.Empresa WHERE cuit = @cuit";
-            parametros.Clear();
-            parametros.Add(new SqlParameter("@cuit", cuit));
-            int cantidad = (int)builderDeComandos.Crear(query, parametros).ExecuteScalar();
-            if (cantidad > 0)
-            {
-                return false;
-            }
-            return true;
-        }
-
         public Boolean ModificarCliente(Decimal idCliente, Cliente cliente)
         {
             if (!pasoControlDeRegistro(cliente.GetIdTipoDeDocumento(), cliente.GetNumeroDeDocumento(), idCliente))
@@ -264,21 +183,6 @@ namespace FrbaCommerce
 
             if (filasAfectadas == 1) return true;
             return false;
-        }
-
-        private bool pasoControlDeRegistro(Decimal tipoDeDocumento, String numeroDeDocumento, Decimal idCliente)
-        {
-            query = "SELECT COUNT(*) FROM LOS_SUPER_AMIGOS.Cliente WHERE tipo_de_documento_id = @tipoDeDocumento AND documento = @numeroDeDocumento AND id != @idCliente";
-            parametros.Clear();
-            parametros.Add(new SqlParameter("@tipoDeDocumento", tipoDeDocumento));
-            parametros.Add(new SqlParameter("@numeroDeDocumento", numeroDeDocumento));
-            parametros.Add(new SqlParameter("@idCliente", idCliente));
-            int cantidad = (int)builderDeComandos.Crear(query, parametros).ExecuteScalar();
-            if (cantidad > 0)
-            {
-                return false;
-            }
-            return true;
         }
 
         public Boolean ModificarEmpresa(Decimal idEmpresa, Empresa empresa)
@@ -307,34 +211,6 @@ namespace FrbaCommerce
 
             if (filasAfectadas == 1) return true;
             return false;
-        }
-
-        private bool pasoControlDeRegistroDeRazonSocial(String razonSocial, Decimal idEmpresa)
-        {
-            query = "SELECT COUNT(*) FROM LOS_SUPER_AMIGOS.Empresa WHERE razon_social = @razonSocial AND id != @idEmpresa";
-            parametros.Clear();
-            parametros.Add(new SqlParameter("@razonSocial", razonSocial));
-            parametros.Add(new SqlParameter("@idEmpresa", idEmpresa));
-            int cantidad = (int)builderDeComandos.Crear(query, parametros).ExecuteScalar();
-            if (cantidad > 0)
-            {
-                return false;
-            }
-            return true;
-        }
-
-        private bool pasoControlDeRegistroDeCuit(String cuit, Decimal idEmpresa)
-        {
-            query = "SELECT COUNT(*) FROM LOS_SUPER_AMIGOS.Empresa WHERE cuit = @cuit AND id != @idEmpresa";
-            parametros.Clear();
-            parametros.Add(new SqlParameter("@cuit", cuit));
-            parametros.Add(new SqlParameter("@idEmpresa", idEmpresa));
-            int cantidad = (int)builderDeComandos.Crear(query, parametros).ExecuteScalar();
-            if (cantidad > 0)
-            {
-                return false;
-            }
-            return true;
         }
 
         public Cliente ObtenerCliente(Decimal idCliente)
@@ -381,36 +257,6 @@ namespace FrbaCommerce
                 return nuevoEmpresa;
             }
             return nuevoEmpresa;
-        }
-
-        public DataTable SelectClientesParaFiltroConFiltro(String filtro)
-        {
-            return this.SelectDataTable("c.id, u.username Username, c.nombre Nombre, c.apellido Apellido, td.nombre 'Tipo de Documento', c.documento Documento, c.fecha_nacimiento 'Fecha de Nacimiento', c.mail Mail, c.telefono Telefono, d.calle Calle, d.numero Numero, d.piso Piso, d.depto Departamento, d.cod_postal 'Codigo postal', d.localidad Localidad", "LOS_SUPER_AMIGOS.Cliente c, LOS_SUPER_AMIGOS.TipoDeDocumento td, LOS_SUPER_AMIGOS.Direccion d, LOS_SUPER_AMIGOS.Usuario u", "c.tipo_de_documento_id = td.id AND c.direccion_id = d.id AND c.usuario_id = u.id " + filtro);
-        }
-
-        public DataTable SelectClientesParaFiltro()
-        {
-            return this.SelectClientesParaFiltroConFiltro("");
-        }
-
-        public DataTable SelectEmpresasParaFiltroConFiltro(String filtro)
-        {
-            return this.SelectDataTable("e.id, u.username Username, e.razon_social 'Razon Social', e.nombre_de_contacto 'Nombre de contacto', e.cuit 'CUIT', e.fecha_creacion 'Fecha de creacion', e.mail 'Mail', e.telefono 'Telefono', e.ciudad Ciudad, d.calle Calle, d.numero Numero, d.piso Piso, d.depto Departamento, d.cod_postal 'Codigo Postal', d.localidad Localidad", "LOS_SUPER_AMIGOS.Empresa e, LOS_SUPER_AMIGOS.Direccion d, LOS_SUPER_AMIGOS.Usuario u", "e.direccion_id = d.id AND e.usuario_id = u.id " + filtro);
-        }
-
-        public DataTable SelectEmpresasParaFiltro()
-        {
-            return this.SelectEmpresasParaFiltroConFiltro("");
-        }
-
-        public DataTable SelectVisibilidadesParaFiltroConFiltro(String filtro)
-        {
-            return this.SelectDataTable("v.id, v.descripcion Descripcion, v.precio Precio, v.porcentaje Porcentaje, v.duracion Duracion", "LOS_SUPER_AMIGOS.Visibilidad v", filtro);
-        }
-
-        public DataTable SelectVisibilidadesParaFiltro()
-        {
-            return this.SelectDataTable("v.id, v.descripcion Descripcion, v.precio Precio, v.porcentaje Porcentaje, v.duracion Duracion", "LOS_SUPER_AMIGOS.Visibilidad v");
         }
 
         public Decimal CrearVisibilidad(Visibilidad visibilidad)
@@ -472,33 +318,7 @@ namespace FrbaCommerce
             return nuevoVisibilidad;
         }
 
-        private bool pasoControlDeUnicidad(String que, String aQue, String enDonde)
-        {
-            query = "SELECT COUNT(*) FROM LOS_SUPER_AMIGOS." + enDonde + " WHERE " + aQue + " = @" + aQue;
-            parametros.Clear();
-            parametros.Add(new SqlParameter("@" + aQue, que));
-            int cantidad = (int)builderDeComandos.Crear(query, parametros).ExecuteScalar();
-            if (cantidad > 0)
-            {
-                return false;
-            }
-            return true;
-        }
-
-        private bool pasoControlDeUnicidad(String que, String aQue, String enDonde, Decimal id)
-        {
-            query = "SELECT COUNT(*) FROM LOS_SUPER_AMIGOS." + enDonde + " WHERE " + aQue + " = @" + aQue + " AND id != " + id;
-            parametros.Clear();
-            parametros.Add(new SqlParameter("@" + aQue, que));
-            int cantidad = (int)builderDeComandos.Crear(query, parametros).ExecuteScalar();
-            if (cantidad > 0)
-            {
-                return false;
-            }
-            return true;
-        }
-
-        public Object selectFromWhere(String que, String deDonde, String param1, String param2)
+        public Object SelectFromWhere(String que, String deDonde, String param1, String param2)
         {
             query = "SELECT " + que + " FROM LOS_SUPER_AMIGOS." + deDonde + " WHERE " + param1 + " = @" + param1;
             parametros.Clear();
@@ -575,6 +395,70 @@ namespace FrbaCommerce
             return nuevoPublicacion;
         }
 
+        public DataTable SelectDataTable(String que, String deDonde)
+        {
+            parametros.Clear();
+            command = builderDeComandos.Crear("SELECT " + que + " FROM " + deDonde, parametros);
+            DataSet datos = new DataSet();
+            SqlDataAdapter adapter = new SqlDataAdapter();
+            adapter.SelectCommand = command;
+            adapter.Fill(datos);
+            return datos.Tables[0];
+        }
+
+        public DataTable SelectDataTable(String que, String deDonde, String condiciones)
+        {
+            parametros.Clear();
+            command = builderDeComandos.Crear("SELECT " + que + " FROM " + deDonde + " WHERE " + condiciones, parametros);
+            DataSet datos = new DataSet();
+            SqlDataAdapter adapter = new SqlDataAdapter();
+            adapter.SelectCommand = command;
+            adapter.Fill(datos);
+            return datos.Tables[0];
+        }
+
+        public DataTable SelectDataTableConUsuario(String que, String deDonde, String condiciones)
+        {
+            parametros.Clear();
+            parametros.Add(new SqlParameter("@idUsuario", 2));//UsuarioSesion.Usuario.id));
+            command = builderDeComandos.Crear("SELECT " + que + " FROM " + deDonde + " WHERE " + condiciones, parametros);
+            DataSet datos = new DataSet();
+            SqlDataAdapter adapter = new SqlDataAdapter();
+            adapter.SelectCommand = command;
+            adapter.Fill(datos);
+            return datos.Tables[0];
+        }
+
+        public DataTable SelectClientesParaFiltroConFiltro(String filtro)
+        {
+            return this.SelectDataTable("c.id, u.username Username, c.nombre Nombre, c.apellido Apellido, td.nombre 'Tipo de Documento', c.documento Documento, c.fecha_nacimiento 'Fecha de Nacimiento', c.mail Mail, c.telefono Telefono, d.calle Calle, d.numero Numero, d.piso Piso, d.depto Departamento, d.cod_postal 'Codigo postal', d.localidad Localidad", "LOS_SUPER_AMIGOS.Cliente c, LOS_SUPER_AMIGOS.TipoDeDocumento td, LOS_SUPER_AMIGOS.Direccion d, LOS_SUPER_AMIGOS.Usuario u", "c.tipo_de_documento_id = td.id AND c.direccion_id = d.id AND c.usuario_id = u.id " + filtro);
+        }
+
+        public DataTable SelectClientesParaFiltro()
+        {
+            return this.SelectClientesParaFiltroConFiltro("");
+        }
+
+        public DataTable SelectEmpresasParaFiltroConFiltro(String filtro)
+        {
+            return this.SelectDataTable("e.id, u.username Username, e.razon_social 'Razon Social', e.nombre_de_contacto 'Nombre de contacto', e.cuit 'CUIT', e.fecha_creacion 'Fecha de creacion', e.mail 'Mail', e.telefono 'Telefono', e.ciudad Ciudad, d.calle Calle, d.numero Numero, d.piso Piso, d.depto Departamento, d.cod_postal 'Codigo Postal', d.localidad Localidad", "LOS_SUPER_AMIGOS.Empresa e, LOS_SUPER_AMIGOS.Direccion d, LOS_SUPER_AMIGOS.Usuario u", "e.direccion_id = d.id AND e.usuario_id = u.id " + filtro);
+        }
+
+        public DataTable SelectEmpresasParaFiltro()
+        {
+            return this.SelectEmpresasParaFiltroConFiltro("");
+        }
+
+        public DataTable SelectVisibilidadesParaFiltroConFiltro(String filtro)
+        {
+            return this.SelectDataTable("v.id, v.descripcion Descripcion, v.precio Precio, v.porcentaje Porcentaje, v.duracion Duracion", "LOS_SUPER_AMIGOS.Visibilidad v", filtro);
+        }
+
+        public DataTable SelectVisibilidadesParaFiltro()
+        {
+            return this.SelectDataTable("v.id, v.descripcion Descripcion, v.precio Precio, v.porcentaje Porcentaje, v.duracion Duracion", "LOS_SUPER_AMIGOS.Visibilidad v");
+        }
+
         public DataTable SelectPublicacionesParaFiltroConFiltro(String filtro)
         {
             return this.SelectDataTableConUsuario("p.id, u.username Username, p.tipo 'Tipo de publicacion', p.estado Estado, p.descripcion Descripcion, p.fecha_inicio 'Fecha de inicio', p.fecha_vencimiento 'Fecha de vencimiento', r.descripcion Rubro, v.descripcion Visibilidad, p.se_realizan_preguntas 'Permite preguntas', p.stock Stock, p.precio Precio", "LOS_SUPER_AMIGOS.Publicacion p, LOS_SUPER_AMIGOS.Rubro r, LOS_SUPER_AMIGOS.Visibilidad v, LOS_SUPER_AMIGOS.Usuario u", "p.rubro_id = r.id AND p.visibilidad_id = v.id AND p.usuario_id = u.id AND p.usuario_id = @idUsuario" + filtro);
@@ -584,5 +468,115 @@ namespace FrbaCommerce
         {
             return this.SelectPublicacionesParaFiltroConFiltro("");
         }
+
+        private bool pasoControlDeUnicidad(String que, String aQue, String enDonde)
+        {
+            query = "SELECT COUNT(*) FROM LOS_SUPER_AMIGOS." + enDonde + " WHERE " + aQue + " = @" + aQue;
+            parametros.Clear();
+            parametros.Add(new SqlParameter("@" + aQue, que));
+            int cantidad = (int)builderDeComandos.Crear(query, parametros).ExecuteScalar();
+            if (cantidad > 0)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        private bool pasoControlDeUnicidad(String que, String aQue, String enDonde, Decimal id)
+        {
+            query = "SELECT COUNT(*) FROM LOS_SUPER_AMIGOS." + enDonde + " WHERE " + aQue + " = @" + aQue + " AND id != " + id;
+            parametros.Clear();
+            parametros.Add(new SqlParameter("@" + aQue, que));
+            int cantidad = (int)builderDeComandos.Crear(query, parametros).ExecuteScalar();
+            if (cantidad > 0)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        private bool pasoControlDeRegistro(Decimal tipoDeDocumento, String numeroDeDocumento)
+        {
+            query = "SELECT COUNT(*) FROM LOS_SUPER_AMIGOS.Cliente WHERE tipo_de_documento_id = @tipoDeDocumento AND documento = @numeroDeDocumento";
+            parametros.Clear();
+            parametros.Add(new SqlParameter("@tipoDeDocumento", tipoDeDocumento));
+            parametros.Add(new SqlParameter("@numeroDeDocumento", Convert.ToDecimal(numeroDeDocumento)));
+            int cantidad = (int)builderDeComandos.Crear(query, parametros).ExecuteScalar();
+            if (cantidad > 0)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        private bool pasoControlDeRegistro(Decimal tipoDeDocumento, String numeroDeDocumento, Decimal idCliente)
+        {
+            query = "SELECT COUNT(*) FROM LOS_SUPER_AMIGOS.Cliente WHERE tipo_de_documento_id = @tipoDeDocumento AND documento = @numeroDeDocumento AND id != @idCliente";
+            parametros.Clear();
+            parametros.Add(new SqlParameter("@tipoDeDocumento", tipoDeDocumento));
+            parametros.Add(new SqlParameter("@numeroDeDocumento", numeroDeDocumento));
+            parametros.Add(new SqlParameter("@idCliente", idCliente));
+            int cantidad = (int)builderDeComandos.Crear(query, parametros).ExecuteScalar();
+            if (cantidad > 0)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        private bool pasoControlDeRegistroDeRazonSocial(String razonSocial)
+        {
+            query = "SELECT COUNT(*) FROM LOS_SUPER_AMIGOS.Empresa WHERE razon_social = @razonSocial";
+            parametros.Clear();
+            parametros.Add(new SqlParameter("@razonSocial", razonSocial));
+            int cantidad = (int)builderDeComandos.Crear(query, parametros).ExecuteScalar();
+            if (cantidad > 0)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        private bool pasoControlDeRegistroDeRazonSocial(String razonSocial, Decimal idEmpresa)
+        {
+            query = "SELECT COUNT(*) FROM LOS_SUPER_AMIGOS.Empresa WHERE razon_social = @razonSocial AND id != @idEmpresa";
+            parametros.Clear();
+            parametros.Add(new SqlParameter("@razonSocial", razonSocial));
+            parametros.Add(new SqlParameter("@idEmpresa", idEmpresa));
+            int cantidad = (int)builderDeComandos.Crear(query, parametros).ExecuteScalar();
+            if (cantidad > 0)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        private bool pasoControlDeRegistroDeCuit(String cuit)
+        {
+            query = "SELECT COUNT(*) FROM LOS_SUPER_AMIGOS.Empresa WHERE cuit = @cuit";
+            parametros.Clear();
+            parametros.Add(new SqlParameter("@cuit", cuit));
+            int cantidad = (int)builderDeComandos.Crear(query, parametros).ExecuteScalar();
+            if (cantidad > 0)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        private bool pasoControlDeRegistroDeCuit(String cuit, Decimal idEmpresa)
+        {
+            query = "SELECT COUNT(*) FROM LOS_SUPER_AMIGOS.Empresa WHERE cuit = @cuit AND id != @idEmpresa";
+            parametros.Clear();
+            parametros.Add(new SqlParameter("@cuit", cuit));
+            parametros.Add(new SqlParameter("@idEmpresa", idEmpresa));
+            int cantidad = (int)builderDeComandos.Crear(query, parametros).ExecuteScalar();
+            if (cantidad > 0)
+            {
+                return false;
+            }
+            return true;
+        }
+
     }
 }

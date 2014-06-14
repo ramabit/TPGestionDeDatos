@@ -29,7 +29,7 @@ namespace FrbaCommerce.ABM_Cliente
 
         private void CargarTiposDeDocumento()
         {
-            comboBox_TipoDeDoc.DataSource = comunicador.SelectDataTable("nombre", "TipoDeDocumento");
+            comboBox_TipoDeDoc.DataSource = comunicador.SelectDataTable("nombre", "LOS_SUPER_AMIGOS.TipoDeDocumento");
             comboBox_TipoDeDoc.ValueMember = "nombre";
         }
 
@@ -70,7 +70,7 @@ namespace FrbaCommerce.ABM_Cliente
             if (textBox_Apellido.Text != "") filtro += "AND " + "c.apellido LIKE '" + textBox_Apellido.Text + "%'";
             if (textBox_Mail.Text != "") filtro += "AND " + "c.mail LIKE '" + textBox_Mail.Text + "%'";
             if (textBox_NumeroDeDoc.Text != "") filtro += "AND " + "c.documento LIKE '" + textBox_NumeroDeDoc.Text + "%'";
-            Decimal idTipoDeDocumento = (Decimal)comunicador.selectFromWhere("id", "TipoDeDocumento", "nombre", comboBox_TipoDeDoc.Text);
+            Decimal idTipoDeDocumento = (Decimal)comunicador.SelectFromWhere("id", "TipoDeDocumento", "nombre", comboBox_TipoDeDoc.Text);
             filtro += "AND " + "c.tipo_de_documento_id = " + idTipoDeDocumento;
             return filtro;
         }

@@ -32,7 +32,7 @@ namespace FrbaCommerce.ABM_Cliente
 
         private void CargarTipoDeDocumentos()
         {
-            comboBox_TipoDeDocumento.DataSource = comunicador.SelectDataTable("nombre", "TipoDeDocumento");
+            comboBox_TipoDeDocumento.DataSource = comunicador.SelectDataTable("nombre", "LOS_SUPER_AMIGOS.TipoDeDocumento");
             comboBox_TipoDeDocumento.ValueMember = "nombre";
         }
 
@@ -53,7 +53,7 @@ namespace FrbaCommerce.ABM_Cliente
 
         private void CargarTipoDeDocumento(Decimal idTipoDeDocumento)
         {
-            comboBox_TipoDeDocumento.SelectedValue = (String) comunicador.selectFromWhere("nombre", "TipoDeDocumento", "id", Convert.ToString(idTipoDeDocumento));
+            comboBox_TipoDeDocumento.SelectedValue = (String) comunicador.SelectFromWhere("nombre", "TipoDeDocumento", "id", Convert.ToString(idTipoDeDocumento));
         }
 
         private void CargarDireccion(Decimal idDireccion)
@@ -86,7 +86,7 @@ namespace FrbaCommerce.ABM_Cliente
 
             Boolean pudoModificar;
 
-            Decimal idTipoDeDocumento = (Decimal) comunicador.selectFromWhere("id", "TipoDeDocumento", "nombre", tipoDeDocumento);
+            Decimal idTipoDeDocumento = (Decimal) comunicador.SelectFromWhere("id", "TipoDeDocumento", "nombre", tipoDeDocumento);
 
             // Update direccion
             try

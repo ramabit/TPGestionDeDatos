@@ -167,12 +167,12 @@ CREATE PROCEDURE LOS_SUPER_AMIGOS.crear_direccion
 	@depto nvarchar(5),
 	@cod_postal nvarchar(50),
 	@localidad nvarchar(50),
-	@direccion_id numeric(18,0) OUTPUT
+	@id numeric(18,0) OUTPUT
 AS
 BEGIN
 	SET NOCOUNT ON;
 	INSERT INTO LOS_SUPER_AMIGOS.Direccion (calle, numero, piso, depto, cod_postal, localidad) values (@calle, @numero, @piso, @depto, @cod_postal, @localidad);
-	SET @direccion_id = SCOPE_IDENTITY();
+	SET @id = SCOPE_IDENTITY();
 END
 GO
 

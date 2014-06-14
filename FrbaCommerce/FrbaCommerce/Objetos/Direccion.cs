@@ -5,10 +5,11 @@ using System.Text;
 using System.Data.SqlClient;
 using System.Data;
 using FrbaCommerce.Exceptions;
+using FrbaCommerce.Objetos;
 
 namespace FrbaCommerce
 {
-    class Direccion
+    class Direccion : Comunicable
     {
         private Decimal id;
         private String calle;
@@ -97,5 +98,26 @@ namespace FrbaCommerce
         {
             return this.id;
         }
+
+        #region Miembros de Comunicable
+
+        string Comunicable.GetQuery()
+        {
+            return "LOS_SUPER_AMIGOS.crear_direccion";
+        }
+
+        IList<SqlParameter> Comunicable.GetParametros()
+        {
+            IList<SqlParameter> parametros = new List<SqlParameter>();
+            parametros.Add(new SqlParameter("@calle", this.calle));
+            parametros.Add(new SqlParameter("@numero", this.numero));
+            parametros.Add(new SqlParameter("@piso", this.piso));
+            parametros.Add(new SqlParameter("@depto", this.departamento));
+            parametros.Add(new SqlParameter("@cod_postal", this.codigoPostal));
+            parametros.Add(new SqlParameter("@localidad", this.localidad));
+            return parametros;
+        }
+
+        #endregion
     }
 }
