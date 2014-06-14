@@ -73,9 +73,9 @@ namespace FrbaCommerce.Generar_Publicacion
             String stock = textBox_Stock.Text;
             String precio = textBox_Precio.Text;
 
-            Decimal idRubro = (Decimal) comunicador.selectFromWhere("id", "Rubro", "descripcion", rubro);
-            Decimal idVisibilidad = Convert.ToDecimal(comunicador.selectFromWhere("id", "Visibilidad", "descripcion", visibilidadDescripcion));
-            Double duracion = Convert.ToDouble(comunicador.selectFromWhere("duracion", "Visibilidad", "descripcion", visibilidadDescripcion));
+            Decimal idRubro = (Decimal) comunicador.SelectFromWhere("id", "Rubro", "descripcion", rubro);
+            Decimal idVisibilidad = Convert.ToDecimal(comunicador.SelectFromWhere("id", "Visibilidad", "descripcion", visibilidadDescripcion));
+            Double duracion = Convert.ToDouble(comunicador.SelectFromWhere("duracion", "Visibilidad", "descripcion", visibilidadDescripcion));
             String fechaDeVencimiento = Convert.ToString(Convert.ToDateTime(fechaDeInicio).AddDays(duracion));
 
             try

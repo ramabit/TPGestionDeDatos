@@ -47,7 +47,7 @@ namespace FrbaCommerce.Editar_Publicacion
             DataTable estados = new DataTable();
             estados.Columns.Add("estados");
 
-            String estado = (String) comunicador.selectFromWhere("estado", "Publicacion", "id", Convert.ToString(idPublicacion));
+            String estado = (String) comunicador.SelectFromWhere("estado", "Publicacion", "id", Convert.ToString(idPublicacion));
 
             if (estado == "Borrador") CargarSegunBorrador(estados);
             if (estado == "Publicada") CargarSegunPublicada(estados);
@@ -111,8 +111,8 @@ namespace FrbaCommerce.Editar_Publicacion
             textBox_FechaDeInicio.Text = publicacion.GetFechaDeInicio();
             textBox_Precio.Text = publicacion.GetPrecio();
             textBox_Stock.Text = publicacion.GetStock();
-            comboBox_Rubro.SelectedValue = (String) comunicador.selectFromWhere("descripcion", "Rubro", "id", Convert.ToString(publicacion.GetIdRubro()));
-            comboBox_Visibilidad.SelectedValue = (String) comunicador.selectFromWhere("descripcion", "Visibilidad", "id", Convert.ToString(publicacion.GetIdVisibilidad())); ;
+            comboBox_Rubro.SelectedValue = (String) comunicador.SelectFromWhere("descripcion", "Rubro", "id", Convert.ToString(publicacion.GetIdRubro()));
+            comboBox_Visibilidad.SelectedValue = (String) comunicador.SelectFromWhere("descripcion", "Visibilidad", "id", Convert.ToString(publicacion.GetIdVisibilidad())); ;
             comboBox_TiposDePublicacion.SelectedValue = publicacion.GetTipo();
             comboBox_Estado.SelectedValue = publicacion.GetEstado();
         }
@@ -129,9 +129,9 @@ namespace FrbaCommerce.Editar_Publicacion
             String stock = textBox_Stock.Text;
             String precio = textBox_Precio.Text;
 
-            Decimal idRubro = (Decimal) comunicador.selectFromWhere("id", "Rubro", "descripcion", rubro);
-            Decimal idVisibilidad = (Decimal)comunicador.selectFromWhere("id", "Visibilidad", "descripcion", visibilidad);
-            Double duracion = Convert.ToDouble(comunicador.selectFromWhere("duracion", "Visibilidad", "id", Convert.ToString(idVisibilidad)));
+            Decimal idRubro = (Decimal) comunicador.SelectFromWhere("id", "Rubro", "descripcion", rubro);
+            Decimal idVisibilidad = (Decimal)comunicador.SelectFromWhere("id", "Visibilidad", "descripcion", visibilidad);
+            Double duracion = Convert.ToDouble(comunicador.SelectFromWhere("duracion", "Visibilidad", "id", Convert.ToString(idVisibilidad)));
 
             try
             {
