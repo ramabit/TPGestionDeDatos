@@ -723,7 +723,7 @@ GO
 CREATE TRIGGER finalizar_x_fin_stock ON LOS_SUPER_AMIGOS.Compra
 FOR INSERT
 AS
-BEGIN TRANSACTION
+BEGIN
 	IF((SELECT (p.stock - v.cant_vendida)
 		FROM inserted i, LOS_SUPER_AMIGOS.Publicacion p, LOS_SUPER_AMIGOS.VistaCantidadVendida v
 		WHERE i.publicacion_id = p.id and
@@ -731,5 +731,5 @@ BEGIN TRANSACTION
 	UPDATE LOS_SUPER_AMIGOS.Publicacion 
 	SET estado = 'Finalizada'
 	FROM inserted i, LOS_SUPER_AMIGOS.Publicacion p
-	WHERE p.id = i.publicacion_id		
-GO
+	WHERE p.id = i.publicacion_id	
+END
