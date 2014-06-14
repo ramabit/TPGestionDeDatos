@@ -153,10 +153,19 @@ namespace FrbaCommerce.Objetos
             return "LOS_SUPER_AMIGOS.crear_publicacion";
         }
 
+        string Comunicable.GetQueryModificar()
+        {
+            return "UPDATE LOS_SUPER_AMIGOS.Publicacion SET estado = @estado, descripcion = @descripcion, fecha_inicio = @fecha_inicio, fecha_vencimiento = @fecha_vencimiento, rubro_id = @rubro_id, visibilidad_id = @visibilidad_id, stock = @stock, precio = @precio WHERE id = @id";
+        }
+
+        string Comunicable.GetQueryObtener()
+        {
+            return "SELECT * FROM LOS_SUPER_AMIGOS.Publicacion WHERE id = @id";
+        }
+
         IList<System.Data.SqlClient.SqlParameter> Comunicable.GetParametros()
         {
             IList<SqlParameter> parametros = new List<SqlParameter>();
-            parametros.Add(new SqlParameter("@tipo", this.tipo));
             parametros.Add(new SqlParameter("@estado", this.estado));
             parametros.Add(new SqlParameter("@descripcion", this.descripcion));
             parametros.Add(new SqlParameter("@fecha_inicio", this.fechaDeInicio));
@@ -167,16 +176,6 @@ namespace FrbaCommerce.Objetos
             parametros.Add(new SqlParameter("@visibilidad_id", this.idVisibilidad));
             parametros.Add(new SqlParameter("@usuario_id", this.idUsuario));
             return parametros;
-        }
-
-        string Comunicable.GetQueryModificar()
-        {
-            return "UPDATE LOS_SUPER_AMIGOS.Publicacion SET estado = @estado, descripcion = @descripcion, fecha_inicio = @fecha_inicio, fecha_vencimiento = @fecha_vencimiento, rubro_id = @rubro_id, visibilidad_id = @visibilidad_id, stock = @stock, precio = @precio WHERE id = @idPublicacion";
-        }
-
-        string Comunicable.GetQueryObtener()
-        {
-            return "SELECT * FROM LOS_SUPER_AMIGOS.Publicacion WHERE id = @idPublicacion";
         }
 
         void Comunicable.CargarInformacion(SqlDataReader reader)

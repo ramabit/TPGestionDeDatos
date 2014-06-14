@@ -64,6 +64,7 @@ namespace FrbaCommerce
             query = objeto.GetQueryModificar();
             parametros.Clear();
             parametros = objeto.GetParametros();
+            parametros.Add(new SqlParameter("@id", id));
             int filasAfectadas = builderDeComandos.Crear(query, parametros).ExecuteNonQuery();
             if (filasAfectadas == 1) return true;
             return false;
@@ -244,11 +245,8 @@ namespace FrbaCommerce
             return this.SelectPublicacionesParaFiltroConFiltro("");
         }
 
-        private bool pasoControlDeUnicidad(String que, String aQue, String enDonde)
+        private bool ControlDeUnicidad(String query, IList<SqlParameter> parametros)
         {
-            query = "SELECT COUNT(*) FROM LOS_SUPER_AMIGOS." + enDonde + " WHERE " + aQue + " = @" + aQue;
-            parametros.Clear();
-            parametros.Add(new SqlParameter("@" + aQue, que));
             int cantidad = (int)builderDeComandos.Crear(query, parametros).ExecuteScalar();
             if (cantidad > 0)
             {
@@ -257,17 +255,20 @@ namespace FrbaCommerce
             return true;
         }
 
+        private bool pasoControlDeUnicidad(String que, String aQue, String enDonde)
+        {
+            query = "SELECT COUNT(*) FROM LOS_SUPER_AMIGOS." + enDonde + " WHERE " + aQue + " = @" + aQue;
+            parametros.Clear();
+            parametros.Add(new SqlParameter("@" + aQue, que));
+            return ControlDeUnicidad(query, parametros);
+        }
+
         private bool pasoControlDeUnicidad(String que, String aQue, String enDonde, Decimal id)
         {
             query = "SELECT COUNT(*) FROM LOS_SUPER_AMIGOS." + enDonde + " WHERE " + aQue + " = @" + aQue + " AND id != " + id;
             parametros.Clear();
             parametros.Add(new SqlParameter("@" + aQue, que));
-            int cantidad = (int)builderDeComandos.Crear(query, parametros).ExecuteScalar();
-            if (cantidad > 0)
-            {
-                return false;
-            }
-            return true;
+            return ControlDeUnicidad(query, parametros);
         }
 
         private bool pasoControlDeRegistro(Decimal tipoDeDocumento, String numeroDeDocumento)
@@ -276,12 +277,7 @@ namespace FrbaCommerce
             parametros.Clear();
             parametros.Add(new SqlParameter("@tipoDeDocumento", tipoDeDocumento));
             parametros.Add(new SqlParameter("@numeroDeDocumento", Convert.ToDecimal(numeroDeDocumento)));
-            int cantidad = (int)builderDeComandos.Crear(query, parametros).ExecuteScalar();
-            if (cantidad > 0)
-            {
-                return false;
-            }
-            return true;
+            return ControlDeUnicidad(query, parametros);
         }
 
         private bool pasoControlDeRegistro(Decimal tipoDeDocumento, String numeroDeDocumento, Decimal idCliente)
@@ -291,12 +287,7 @@ namespace FrbaCommerce
             parametros.Add(new SqlParameter("@tipoDeDocumento", tipoDeDocumento));
             parametros.Add(new SqlParameter("@numeroDeDocumento", numeroDeDocumento));
             parametros.Add(new SqlParameter("@idCliente", idCliente));
-            int cantidad = (int)builderDeComandos.Crear(query, parametros).ExecuteScalar();
-            if (cantidad > 0)
-            {
-                return false;
-            }
-            return true;
+            return ControlDeUnicidad(query, parametros);
         }
 
         private bool pasoControlDeRegistroDeRazonSocial(String razonSocial)
@@ -304,12 +295,7 @@ namespace FrbaCommerce
             query = "SELECT COUNT(*) FROM LOS_SUPER_AMIGOS.Empresa WHERE razon_social = @razonSocial";
             parametros.Clear();
             parametros.Add(new SqlParameter("@razonSocial", razonSocial));
-            int cantidad = (int)builderDeComandos.Crear(query, parametros).ExecuteScalar();
-            if (cantidad > 0)
-            {
-                return false;
-            }
-            return true;
+            return ControlDeUnicidad(query, parametros);
         }
 
         private bool pasoControlDeRegistroDeRazonSocial(String razonSocial, Decimal idEmpresa)
@@ -318,12 +304,7 @@ namespace FrbaCommerce
             parametros.Clear();
             parametros.Add(new SqlParameter("@razonSocial", razonSocial));
             parametros.Add(new SqlParameter("@idEmpresa", idEmpresa));
-            int cantidad = (int)builderDeComandos.Crear(query, parametros).ExecuteScalar();
-            if (cantidad > 0)
-            {
-                return false;
-            }
-            return true;
+            return ControlDeUnicidad(query, parametros);
         }
 
         private bool pasoControlDeRegistroDeCuit(String cuit)
@@ -331,12 +312,7 @@ namespace FrbaCommerce
             query = "SELECT COUNT(*) FROM LOS_SUPER_AMIGOS.Empresa WHERE cuit = @cuit";
             parametros.Clear();
             parametros.Add(new SqlParameter("@cuit", cuit));
-            int cantidad = (int)builderDeComandos.Crear(query, parametros).ExecuteScalar();
-            if (cantidad > 0)
-            {
-                return false;
-            }
-            return true;
+            return ControlDeUnicidad(query, parametros);
         }
 
         private bool pasoControlDeRegistroDeCuit(String cuit, Decimal idEmpresa)
@@ -345,12 +321,7 @@ namespace FrbaCommerce
             parametros.Clear();
             parametros.Add(new SqlParameter("@cuit", cuit));
             parametros.Add(new SqlParameter("@idEmpresa", idEmpresa));
-            int cantidad = (int)builderDeComandos.Crear(query, parametros).ExecuteScalar();
-            if (cantidad > 0)
-            {
-                return false;
-            }
-            return true;
+            return ControlDeUnicidad(query, parametros);
         }
 
     }

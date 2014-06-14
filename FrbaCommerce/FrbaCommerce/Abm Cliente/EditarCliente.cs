@@ -38,7 +38,7 @@ namespace FrbaCommerce.ABM_Cliente
 
         private void CargarDatos()
         {
-            Cliente cliente = comunicador.ObtenerClienteNuevo(idCliente);
+            Cliente cliente = comunicador.ObtenerCliente(idCliente);
 
             this.idDireccion = cliente.GetIdDireccion();
             textBox_Nombre.Text = cliente.GetNombre();

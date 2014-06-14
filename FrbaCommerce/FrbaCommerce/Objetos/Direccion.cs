@@ -106,6 +106,16 @@ namespace FrbaCommerce
             return "LOS_SUPER_AMIGOS.crear_direccion";
         }
 
+        string Comunicable.GetQueryModificar()
+        {
+            return "UPDATE LOS_SUPER_AMIGOS.Direccion SET calle = @calle, numero = @numero, piso = @piso, depto = @depto, cod_postal = @cod_postal, localidad = @localidad WHERE id = @id";
+        }
+
+        string Comunicable.GetQueryObtener()
+        {
+            return "SELECT * FROM LOS_SUPER_AMIGOS.Direccion WHERE id = @id";
+        }
+
         IList<SqlParameter> Comunicable.GetParametros()
         {
             IList<SqlParameter> parametros = new List<SqlParameter>();
@@ -116,16 +126,6 @@ namespace FrbaCommerce
             parametros.Add(new SqlParameter("@cod_postal", this.codigoPostal));
             parametros.Add(new SqlParameter("@localidad", this.localidad));
             return parametros;
-        }
-
-        string Comunicable.GetQueryModificar()
-        {
-            return "UPDATE LOS_SUPER_AMIGOS.Direccion SET calle = @calle, numero = @numero, piso = @piso, depto = @departamento, cod_postal = @codigoPostal, localidad = @localidad WHERE id = @idDireccion";
-        }
-
-        string Comunicable.GetQueryObtener()
-        {
-            return "SELECT * FROM LOS_SUPER_AMIGOS.Direccion WHERE id = @id";
         }
 
         void Comunicable.CargarInformacion(SqlDataReader reader)

@@ -80,6 +80,16 @@ namespace FrbaCommerce.Objetos
             return "LOS_SUPER_AMIGOS.crear_visibilidad";
         }
 
+        string Comunicable.GetQueryModificar()
+        {
+            return "UPDATE LOS_SUPER_AMIGOS.Visibilidad SET descripcion = @descripcion, precio = @precio, porcentaje = @porcentaje, duracion = @duracion WHERE id = @id";
+        }
+
+        string Comunicable.GetQueryObtener()
+        {
+            return "SELECT * FROM LOS_SUPER_AMIGOS.Visibilidad WHERE id = @id";
+        }
+
         IList<System.Data.SqlClient.SqlParameter> Comunicable.GetParametros()
         {
             IList<SqlParameter> parametros = new List<SqlParameter>();
@@ -88,16 +98,6 @@ namespace FrbaCommerce.Objetos
             parametros.Add(new SqlParameter("@porcentaje", this.porcentajePorVenta));
             parametros.Add(new SqlParameter("@duracion", this.duracion));
             return parametros;
-        }
-
-        string Comunicable.GetQueryModificar()
-        {
-            return "UPDATE LOS_SUPER_AMIGOS.Visibilidad SET descripcion = @descripcion, precio = @precioporPublicar, porcentaje = @porcentajeDeVenta, duracion = @duracion WHERE id = @idVisibilidad";
-        }
-
-        string Comunicable.GetQueryObtener()
-        {
-            return "SELECT * FROM LOS_SUPER_AMIGOS.Visibilidad WHERE id = @idVisibilidad";
         }
 
         void Comunicable.CargarInformacion(SqlDataReader reader)

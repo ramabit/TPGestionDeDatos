@@ -135,6 +135,16 @@ namespace FrbaCommerce.Objetos
             return "LOS_SUPER_AMIGOS.crear_empresa";
         }
 
+        string Comunicable.GetQueryModificar()
+        {
+            return "UPDATE LOS_SUPER_AMIGOS.Empresa SET razon_social = @razon_social, nombre_de_contacto = @nombre_de_contacto, cuit = @cuit, fecha_creacion = @fecha_creacion, mail = @mail, telefono = @telefono, ciudad = @ciudad  WHERE id = @id";
+        }
+
+        public string GetQueryObtener()
+        {
+            return "SELECT * FROM LOS_SUPER_AMIGOS.Empresa WHERE id = @idEmpresa";
+        }
+
         IList<System.Data.SqlClient.SqlParameter> Comunicable.GetParametros()
         {
             IList<SqlParameter> parametros = new List<SqlParameter>();
@@ -148,16 +158,6 @@ namespace FrbaCommerce.Objetos
             parametros.Add(new SqlParameter("@direccion_id", this.idDireccion));
             parametros.Add(new SqlParameter("@usuario_id", this.idUsuario));
             return parametros;
-        }
-
-        string Comunicable.GetQueryModificar()
-        {
-            return "UPDATE LOS_SUPER_AMIGOS.Empresa SET razon_social = @razon_social, nombre_de_contacto = @nombre_de_contacto, cuit = @cuit, fecha_creacion = @fecha_creacion, mail = @mail, telefono = @telefono, ciudad = @ciudad  WHERE id = @idEmpresa";
-        }
-
-        public string GetQueryObtener()
-        {
-            return "SELECT * FROM LOS_SUPER_AMIGOS.Empresa WHERE id = @idEmpresa";
         }
 
         public void CargarInformacion(SqlDataReader reader)
