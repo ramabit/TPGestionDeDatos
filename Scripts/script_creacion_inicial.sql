@@ -226,7 +226,6 @@ BEGIN
 END
 GO
 
-
 create table LOS_SUPER_AMIGOS.Usuario
 (
 id numeric(18,0) IDENTITY(1,1),
@@ -719,4 +718,18 @@ FROM LOS_SUPER_AMIGOS.Compra o
 GROUP BY o.publicacion_id
 GO
 
+-- TRIGGERS
 
+CREATE TRIGGER finalizar_x_fin_stock ON LOS_SUPER_AMIGOS.Compra
+FOR INSERT
+AS
+BEGIN TRANSACTION
+	IF((SELECT (p.stock - v.cant_vendida)
+		FROM inserted i, LOS_SUPER_AMIGOS.Publicacion p, LOS_SUPER_AMIGOS.VistaCantidadVendida v
+		WHERE i.publicacion_id = p.id and
+			  i.publicacion_id = v.publicacion_id) = 0)
+	UPDATE LOS_SUPER_AMIGOS.Publicacion 
+	SET estado = 'Finalizada'
+	FROM inserted i, LOS_SUPER_AMIGOS.Publicacion p
+	WHERE p.id = i.publicacion_id		
+GO
