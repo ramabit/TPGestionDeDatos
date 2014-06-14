@@ -180,7 +180,7 @@
             this.Controls.Add(this.labelTipo);
             this.Controls.Add(this.labelPublicacion);
             this.Name = "DatosPublicacion";
-            this.Text = "VerPublicacionParcial";
+            this.Text = "Datos Publicacion";
             this.Load += new System.EventHandler(this.DatosPublicacion_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
