@@ -215,6 +215,12 @@
     <Compile Include="Exceptions\TelefonoYaExisteException.cs" />
     <Compile Include="Exceptions\VisibilidadYaExisteException.cs" />
     <Compile Include="Objetos\Objeto.cs" />
+    <Compile Include="Gestion de Preguntas\DatosPublicacion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Gestion de Preguntas\DatosPublicacion.designer.cs">
+      <DependentUpon>DatosPublicacion.cs</DependentUpon>
+    </Compile>
     <Compile Include="Objetos\Cliente.cs" />
     <Compile Include="Objetos\Comunicable.cs" />
     <Compile Include="Objetos\Direccion.cs" />
@@ -385,6 +391,7 @@
     <EmbeddedResource Include="Generar Publicacion\GenerarPublicacion.resx">
       <DependentUpon>GenerarPublicacion.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Gestion de Preguntas\DatosPublicacion.resx" />
     <EmbeddedResource Include="Login\CambiarContrasena.resx">
       <DependentUpon>CambiarContrasena.cs</DependentUpon>
     </EmbeddedResource>
