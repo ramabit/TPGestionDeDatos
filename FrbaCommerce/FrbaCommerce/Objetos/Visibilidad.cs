@@ -7,7 +7,7 @@ using System.Data.SqlClient;
 
 namespace FrbaCommerce.Objetos
 {
-    class Visibilidad : Comunicable
+    class Visibilidad : Objeto, Comunicable
     {
         private Decimal id;
         private String descripcion;
@@ -41,6 +41,10 @@ namespace FrbaCommerce.Objetos
         {
             if (precioPorPublicar == "")
                 throw new CampoVacioException();
+
+            if (!esDouble(precioPorPublicar))
+                throw new NoEsNumeroException();
+
             this.precioPorPublicar = precioPorPublicar;
         }
 
@@ -53,6 +57,10 @@ namespace FrbaCommerce.Objetos
         {
             if (porcentajePorVenta == "")
                 throw new CampoVacioException();
+
+            if (!esDouble(porcentajePorVenta))
+                throw new NoEsNumeroException();
+
             this.porcentajePorVenta = porcentajePorVenta;
         }
 
@@ -65,6 +73,10 @@ namespace FrbaCommerce.Objetos
         {
             if (duracion == "")
                 throw new CampoVacioException();
+
+            if (!esNumero(duracion))
+                throw new NoEsNumeroException();
+
             this.duracion = duracion;
         }
 

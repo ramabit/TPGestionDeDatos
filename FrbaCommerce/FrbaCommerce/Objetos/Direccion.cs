@@ -9,7 +9,7 @@ using FrbaCommerce.Objetos;
 
 namespace FrbaCommerce
 {
-    class Direccion : Comunicable
+    class Direccion : Objeto, Comunicable
     {
         private Decimal id;
         private String calle;
@@ -30,6 +30,10 @@ namespace FrbaCommerce
         {
             if (numero == "")
                 throw new CampoVacioException();
+
+            if (!esNumero(numero))
+                throw new NoEsNumeroException();
+
             this.numero = numero;
         }
 
@@ -37,6 +41,10 @@ namespace FrbaCommerce
         {
             if (piso == "")
                 throw new CampoVacioException();
+
+            if (!esNumero(piso))
+                throw new NoEsNumeroException();
+
             this.piso = piso;
         }
 
@@ -51,11 +59,17 @@ namespace FrbaCommerce
         {
             if (codigoPostal == "")
                 throw new CampoVacioException();
+
+            if (!esNumero(codigoPostal))
+                throw new NoEsNumeroException();
+
             this.codigoPostal = codigoPostal;
         }
 
         public void SetLocalidad(String localidad)
         {
+            if (localidad == "")
+                throw new CampoVacioException();
             this.localidad = localidad;
         }
 

@@ -7,7 +7,7 @@ using System.Data.SqlClient;
 
 namespace FrbaCommerce.Objetos
 {
-    class Empresa : Comunicable
+    class Empresa : Objeto, Comunicable
     {
         private Decimal id;
         private String razonSocial;
@@ -44,6 +44,8 @@ namespace FrbaCommerce.Objetos
 
         public void SetNombreDeContacto(String nombreDeContacto)
         {
+            if (nombreDeContacto == "")
+                throw new CampoVacioException();
             this.nombreDeContacto = nombreDeContacto;
         }
 
@@ -56,6 +58,10 @@ namespace FrbaCommerce.Objetos
         {
             if (cuit == "")
                 throw new CampoVacioException();
+
+            if (!esNumero(cuit))
+                throw new NoEsNumeroException();
+
             this.cuit = cuit;
         }
 
@@ -78,6 +84,8 @@ namespace FrbaCommerce.Objetos
 
         public void SetCiudad(String ciudad)
         {
+            if (ciudad == "")
+                throw new CampoVacioException();
             this.ciudad = ciudad;
         }
 
@@ -100,6 +108,12 @@ namespace FrbaCommerce.Objetos
 
         public void SetTelefono(String telefono)
         {
+            if (telefono == "")
+                throw new CampoVacioException();
+
+            if (!esNumero(telefono))
+                throw new NoEsNumeroException();
+
             this.telefono = telefono;
         }
 
@@ -110,6 +124,8 @@ namespace FrbaCommerce.Objetos
 
         public void SetIdDireccion(Decimal idDireccion)
         {
+            if (idDireccion == 0)
+                throw new CampoVacioException();
             this.idDireccion = idDireccion;
         }
 
@@ -120,6 +136,8 @@ namespace FrbaCommerce.Objetos
 
         public void SetIdUsuario(Decimal idUsuario)
         {
+            if (idUsuario == 0)
+                throw new CampoVacioException();
             this.idUsuario = idUsuario;
         }
 

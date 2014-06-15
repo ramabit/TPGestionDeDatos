@@ -7,7 +7,7 @@ using System.Data.SqlClient;
 
 namespace FrbaCommerce.Objetos
 {
-    class Publicacion : Comunicable
+    class Publicacion : Objeto, Comunicable
     {
         private Decimal id;
         private String tipo;
@@ -93,6 +93,8 @@ namespace FrbaCommerce.Objetos
 
         public void SetIdRubro(Decimal idRubro)
         {
+            if (idRubro == 0)
+                throw new CampoVacioException();
             this.idRubro = idRubro;
         }
 
@@ -103,6 +105,8 @@ namespace FrbaCommerce.Objetos
 
         public void SetIdUsuario(Decimal idUsuario)
         {
+            if (idUsuario == 0)
+                throw new CampoVacioException();
             this.idUsuario = idUsuario;
         }
 
@@ -113,6 +117,8 @@ namespace FrbaCommerce.Objetos
 
         public void SetIdVisibilidad(Decimal idVisibilidad)
         {
+            if (idVisibilidad == 0)
+                throw new CampoVacioException();
             this.idVisibilidad = idVisibilidad;
         }
 
@@ -125,6 +131,10 @@ namespace FrbaCommerce.Objetos
         {
             if (stock == "")
                 throw new CampoVacioException();
+
+            if (!esNumero(stock))
+                throw new NoEsNumeroException();
+
             this.stock = stock;
         }
 
@@ -137,6 +147,10 @@ namespace FrbaCommerce.Objetos
         {
             if (precio == "")
                 throw new CampoVacioException();
+
+            if (!esNumero(precio))
+                throw new NoEsNumeroException();
+
             this.precio = precio;
         }
 
