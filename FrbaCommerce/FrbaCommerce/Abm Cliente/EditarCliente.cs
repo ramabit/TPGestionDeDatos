@@ -107,6 +107,11 @@ namespace FrbaCommerce.ABM_Cliente
                 MessageBox.Show("Faltan completar campos en direccion");
                 return;
             }
+            catch (NoEsNumeroException exception)
+            {
+                MessageBox.Show("Datos mal ingresados");
+                return;
+            }
 
             // Update cliente
             try
@@ -126,6 +131,11 @@ namespace FrbaCommerce.ABM_Cliente
             catch (CampoVacioException exception)
             {
                 MessageBox.Show("Faltan completar campos");
+                return;
+            }
+            catch (NoEsNumeroException exception)
+            {
+                MessageBox.Show("Datos mal ingresados");
                 return;
             }
             catch (ClienteYaExisteException exception)

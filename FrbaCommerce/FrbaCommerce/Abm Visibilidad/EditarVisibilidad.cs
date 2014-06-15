@@ -60,6 +60,11 @@ namespace FrbaCommerce.ABM_Visibilidad
                 MessageBox.Show("Faltan completar campos");
                 return;
             }
+            catch (NoEsNumeroException exception)
+            {
+                MessageBox.Show("Datos mal ingresados");
+                return;
+            }
             catch (TelefonoYaExisteException exception)
             {
                 MessageBox.Show("Ya existe esa descripcion");

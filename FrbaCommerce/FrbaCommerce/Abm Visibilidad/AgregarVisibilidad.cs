@@ -33,6 +33,7 @@ namespace FrbaCommerce.ABM_Visibilidad
             String porcentajePorVenta = textBox_PorcentajePorVenta.Text;
             String duracion = textBox_Duracion.Text;
 
+            // Insert Visibilidad
             try
             {
                 Visibilidad visibilidad = new Visibilidad();
@@ -46,6 +47,11 @@ namespace FrbaCommerce.ABM_Visibilidad
             catch (CampoVacioException exception)
             {
                 MessageBox.Show("Faltan completar campos");
+                return;
+            }
+            catch (NoEsNumeroException exception)
+            {
+                MessageBox.Show("Datos mal ingresados");
                 return;
             }
             catch (TelefonoYaExisteException exception)

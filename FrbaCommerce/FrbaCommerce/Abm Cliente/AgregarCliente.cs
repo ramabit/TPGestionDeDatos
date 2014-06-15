@@ -71,6 +71,11 @@ namespace FrbaCommerce.ABM_Cliente
                 MessageBox.Show("Faltan completar campos en direccion");
                 return;
             }
+            catch (NoEsNumeroException exception)
+            {
+                MessageBox.Show("Datos mal ingresados");
+                return;
+            }
             Decimal idDireccion = comunicador.CrearDireccion(direccion);
 
             // Si el cliente lo crea el admin, crea un nuevo usuario predeterminado. Si lo crea un nuevo registro de usuario, usa el que viene por parametro
@@ -103,6 +108,11 @@ namespace FrbaCommerce.ABM_Cliente
             catch (CampoVacioException exception)
             {
                 MessageBox.Show("Faltan completar campos");
+                return;
+            }
+            catch (NoEsNumeroException exception)
+            {
+                MessageBox.Show("Datos mal ingresados");
                 return;
             }
             catch (ClienteYaExisteException exception)

@@ -133,6 +133,7 @@ namespace FrbaCommerce.Editar_Publicacion
             Decimal idVisibilidad = (Decimal)comunicador.SelectFromWhere("id", "Visibilidad", "descripcion", visibilidad);
             Double duracion = Convert.ToDouble(comunicador.SelectFromWhere("duracion", "Visibilidad", "id", Convert.ToString(idVisibilidad)));
 
+            // Update Publicacion
             try
             {
                 Publicacion publicacion = new Publicacion();
@@ -150,6 +151,11 @@ namespace FrbaCommerce.Editar_Publicacion
             catch (CampoVacioException exception)
             {
                 MessageBox.Show("Faltan completar campos");
+                return;
+            }
+            catch (NoEsNumeroException exception)
+            {
+                MessageBox.Show("Datos mal ingresados");
                 return;
             }
 

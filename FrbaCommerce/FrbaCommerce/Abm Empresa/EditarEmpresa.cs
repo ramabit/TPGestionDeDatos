@@ -94,6 +94,11 @@ namespace FrbaCommerce.ABM_Empresa
                 MessageBox.Show("Faltan completar campos en direccion");
                 return;
             }
+            catch (NoEsNumeroException exception)
+            {
+                MessageBox.Show("Datos mal ingresados");
+                return;
+            }
 
             // Update empresa
             try
@@ -113,6 +118,11 @@ namespace FrbaCommerce.ABM_Empresa
             catch (CampoVacioException exception)
             {
                 MessageBox.Show("Faltan completar campos");
+                return;
+            }
+            catch (NoEsNumeroException exception)
+            {
+                MessageBox.Show("Datos mal ingresados");
                 return;
             }
             catch (TelefonoYaExisteException exception)

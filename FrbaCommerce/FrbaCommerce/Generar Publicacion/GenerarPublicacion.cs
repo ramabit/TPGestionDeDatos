@@ -78,6 +78,7 @@ namespace FrbaCommerce.Generar_Publicacion
             Double duracion = Convert.ToDouble(comunicador.SelectFromWhere("duracion", "Visibilidad", "descripcion", visibilidadDescripcion));
             String fechaDeVencimiento = Convert.ToString(Convert.ToDateTime(fechaDeInicio).AddDays(duracion));
 
+            // Insert Publicacion
             try
             {
                 Publicacion publicacion = new Publicacion();
@@ -97,6 +98,11 @@ namespace FrbaCommerce.Generar_Publicacion
             catch (CampoVacioException exception)
             {
                 MessageBox.Show("Faltan completar campos");
+                return;
+            }
+            catch (NoEsNumeroException exception)
+            {
+                MessageBox.Show("Datos mal ingresados");
                 return;
             }
             
