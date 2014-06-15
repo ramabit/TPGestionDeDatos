@@ -70,7 +70,7 @@ namespace FrbaCommerce.Objetos
                 throw new CampoVacioException();
 
             if (!esNumero(numeroDeDocumento))
-                throw new NoEsNumeroException();
+                throw new FormatoInvalidoException();
 
             this.numeroDeDocumento = numeroDeDocumento;
         }
@@ -84,6 +84,10 @@ namespace FrbaCommerce.Objetos
         {
             if (fechaDeNacimiento == "")
                 throw new CampoVacioException();
+
+            if (!esFecha(fechaDeNacimiento))
+                throw new FormatoInvalidoException();
+
             this.fechaDeNacimiento = fechaDeNacimiento;
         }
 
@@ -110,7 +114,7 @@ namespace FrbaCommerce.Objetos
                 throw new CampoVacioException();
 
             if (!esNumero(telefono))
-                throw new NoEsNumeroException();
+                throw new FormatoInvalidoException();
 
             this.telefono = telefono;
         }

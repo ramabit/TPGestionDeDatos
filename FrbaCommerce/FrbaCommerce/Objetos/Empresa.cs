@@ -60,7 +60,7 @@ namespace FrbaCommerce.Objetos
                 throw new CampoVacioException();
 
             if (!esNumero(cuit))
-                throw new NoEsNumeroException();
+                throw new FormatoInvalidoException();
 
             this.cuit = cuit;
         }
@@ -74,6 +74,10 @@ namespace FrbaCommerce.Objetos
         {
             if (fechaDeCreacion == "")
                 throw new CampoVacioException();
+
+            if (!esFecha(fechaDeCreacion))
+                throw new FormatoInvalidoException();
+
             this.fechaDeCreacion = fechaDeCreacion;
         }
 
@@ -112,7 +116,7 @@ namespace FrbaCommerce.Objetos
                 throw new CampoVacioException();
 
             if (!esNumero(telefono))
-                throw new NoEsNumeroException();
+                throw new FormatoInvalidoException();
 
             this.telefono = telefono;
         }

@@ -43,7 +43,7 @@ namespace FrbaCommerce.Objetos
                 throw new CampoVacioException();
 
             if (!esDouble(precioPorPublicar))
-                throw new NoEsNumeroException();
+                throw new FormatoInvalidoException();
 
             this.precioPorPublicar = precioPorPublicar;
         }
@@ -59,7 +59,7 @@ namespace FrbaCommerce.Objetos
                 throw new CampoVacioException();
 
             if (!esDouble(porcentajePorVenta))
-                throw new NoEsNumeroException();
+                throw new FormatoInvalidoException();
 
             this.porcentajePorVenta = porcentajePorVenta;
         }
@@ -75,7 +75,7 @@ namespace FrbaCommerce.Objetos
                 throw new CampoVacioException();
 
             if (!esNumero(duracion))
-                throw new NoEsNumeroException();
+                throw new FormatoInvalidoException();
 
             this.duracion = duracion;
         }

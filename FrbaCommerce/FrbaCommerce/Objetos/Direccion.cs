@@ -32,7 +32,7 @@ namespace FrbaCommerce
                 throw new CampoVacioException();
 
             if (!esNumero(numero))
-                throw new NoEsNumeroException();
+                throw new FormatoInvalidoException();
 
             this.numero = numero;
         }
@@ -43,7 +43,7 @@ namespace FrbaCommerce
                 throw new CampoVacioException();
 
             if (!esNumero(piso))
-                throw new NoEsNumeroException();
+                throw new FormatoInvalidoException();
 
             this.piso = piso;
         }
@@ -61,7 +61,7 @@ namespace FrbaCommerce
                 throw new CampoVacioException();
 
             if (!esNumero(codigoPostal))
-                throw new NoEsNumeroException();
+                throw new FormatoInvalidoException();
 
             this.codigoPostal = codigoPostal;
         }

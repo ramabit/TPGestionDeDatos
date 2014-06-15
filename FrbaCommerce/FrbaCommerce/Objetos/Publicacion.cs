@@ -71,6 +71,10 @@ namespace FrbaCommerce.Objetos
         {
             if (fechaDeInicio == "")
                 throw new CampoVacioException();
+
+            if (!esFecha(fechaDeInicio))
+                throw new FormatoInvalidoException();
+
             this.fechaDeInicio = fechaDeInicio;
         }
 
@@ -83,6 +87,10 @@ namespace FrbaCommerce.Objetos
         {
             if (fechaDeVencimiento == "")
                 throw new CampoVacioException();
+
+            if (!esFecha(fechaDeVencimiento))
+                throw new FormatoInvalidoException();
+
             this.fechaDeVencimiento = fechaDeVencimiento;
         }
 
@@ -133,7 +141,7 @@ namespace FrbaCommerce.Objetos
                 throw new CampoVacioException();
 
             if (!esNumero(stock))
-                throw new NoEsNumeroException();
+                throw new FormatoInvalidoException();
 
             this.stock = stock;
         }
@@ -149,7 +157,7 @@ namespace FrbaCommerce.Objetos
                 throw new CampoVacioException();
 
             if (!esNumero(precio))
-                throw new NoEsNumeroException();
+                throw new FormatoInvalidoException();
 
             this.precio = precio;
         }
