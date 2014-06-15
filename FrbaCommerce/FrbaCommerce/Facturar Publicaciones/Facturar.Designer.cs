@@ -79,9 +79,9 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(12, 269);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(342, 13);
+            this.label1.Size = new System.Drawing.Size(334, 13);
             this.label1.TabIndex = 2;
-            this.label1.Text = "*Recuerde que si acumula 10 compras sin facturar, será deshabilitado. ";
+            this.label1.Text = "*Recuerde que si acumula 10 ventas sin facturar, será deshabilitado. ";
             // 
             // botonFacturar
             // 
