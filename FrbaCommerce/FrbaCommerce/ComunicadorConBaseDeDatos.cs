@@ -171,6 +171,14 @@ namespace FrbaCommerce
             return builderDeComandos.Crear(query, parametros).ExecuteScalar();
         }
 
+        public Object SelectFromWhere(String que, String deDonde, String param1, Decimal param2)
+        {
+            query = "SELECT " + que + " FROM LOS_SUPER_AMIGOS." + deDonde + " WHERE " + param1 + " = @" + param1;
+            parametros.Clear();
+            parametros.Add(new SqlParameter("@" + param1, param2));
+            return builderDeComandos.Crear(query, parametros).ExecuteScalar();
+        }
+
         public DataTable SelectDataTable(String que, String deDonde)
         {
             parametros.Clear();
