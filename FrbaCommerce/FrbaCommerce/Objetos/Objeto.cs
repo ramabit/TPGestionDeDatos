@@ -18,5 +18,11 @@ namespace FrbaCommerce.Objetos
             Double number1 = 0;
             return Double.TryParse(numString, out number1); // devuelve true si pudo convertirlo, es decir, es numero
         }
+
+        public Boolean esFecha(String dateString)
+        {
+            DateTime date = DateTime.Now;
+            return DateTime.TryParse(dateString, out date); // devuelve true si pudo convertirlo, es decir, es numero
+        }
     }
 }
