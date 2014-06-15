@@ -92,6 +92,7 @@ namespace FrbaCommerce.Generar_Publicacion
                 publicacion.SetIdRubro(idRubro);
                 publicacion.SetIdVisibilidad(idVisibilidad);
                 publicacion.SetIdUsuario(3);//Convert.ToDecimal(UsuarioSesion.usuario));
+                publicacion.SetPregunta(pregunta);
                 Decimal idPublicacion = comunicador.CrearPublicacion(publicacion);
                 if (idPublicacion > 0) MessageBox.Show("Se agrego la publicacion correctamente");
             }

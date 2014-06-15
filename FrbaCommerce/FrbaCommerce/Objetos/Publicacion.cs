@@ -20,6 +20,7 @@ namespace FrbaCommerce.Objetos
         private Decimal idUsuario;
         private String stock;
         private String precio;
+        private Boolean pregunta;
 
         public void SetId(Decimal id)
         {
@@ -167,6 +168,16 @@ namespace FrbaCommerce.Objetos
             return this.precio;
         }
 
+        public void SetPregunta(Boolean pregunta)
+        {
+            this.pregunta = pregunta;
+        }
+
+        public Boolean GetPregunta()
+        {
+            return this.pregunta;
+        }
+
 
         #region Miembros de Comunicable
 
@@ -177,7 +188,7 @@ namespace FrbaCommerce.Objetos
 
         string Comunicable.GetQueryModificar()
         {
-            return "UPDATE LOS_SUPER_AMIGOS.Publicacion SET estado = @estado, descripcion = @descripcion, fecha_inicio = @fecha_inicio, fecha_vencimiento = @fecha_vencimiento, rubro_id = @rubro_id, visibilidad_id = @visibilidad_id, stock = @stock, precio = @precio WHERE id = @id";
+            return "UPDATE LOS_SUPER_AMIGOS.Publicacion SET estado = @estado, descripcion = @descripcion, fecha_inicio = @fecha_inicio, fecha_vencimiento = @fecha_vencimiento, rubro_id = @rubro_id, visibilidad_id = @visibilidad_id, stock = @stock, precio = @precio, se_realizan_preguntas = @se_realizan_preguntas WHERE id = @id";
         }
 
         string Comunicable.GetQueryObtener()
@@ -188,6 +199,7 @@ namespace FrbaCommerce.Objetos
         IList<System.Data.SqlClient.SqlParameter> Comunicable.GetParametros()
         {
             IList<SqlParameter> parametros = new List<SqlParameter>();
+            parametros.Add(new SqlParameter("@tipo", this.tipo));
             parametros.Add(new SqlParameter("@estado", this.estado));
             parametros.Add(new SqlParameter("@descripcion", this.descripcion));
             parametros.Add(new SqlParameter("@fecha_inicio", this.fechaDeInicio));
@@ -197,6 +209,7 @@ namespace FrbaCommerce.Objetos
             parametros.Add(new SqlParameter("@rubro_id", this.idRubro));
             parametros.Add(new SqlParameter("@visibilidad_id", this.idVisibilidad));
             parametros.Add(new SqlParameter("@usuario_id", this.idUsuario));
+            parametros.Add(new SqlParameter("@se_realizan_preguntas", this.pregunta));
             return parametros;
         }
 
@@ -212,6 +225,7 @@ namespace FrbaCommerce.Objetos
             this.idRubro = Convert.ToDecimal(reader["rubro_id"]);
             this.idVisibilidad = Convert.ToDecimal(reader["visibilidad_id"]);
             this.idUsuario = Convert.ToDecimal(reader["usuario_id"]);
+            this.pregunta = Convert.ToBoolean(reader["se_realizan_preguntas"]);
         }
 
         #endregion

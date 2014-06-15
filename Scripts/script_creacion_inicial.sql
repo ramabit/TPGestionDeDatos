@@ -202,11 +202,12 @@ CREATE PROCEDURE LOS_SUPER_AMIGOS.crear_publicacion
 	@stock numeric(18,0),
 	@precio numeric(18,0),
 	@usuario_id numeric(18,0),
+	@se_realizan_preguntas bit,
 	@id numeric(18,0) OUTPUT
 AS
 BEGIN
 	SET NOCOUNT ON;
-	INSERT INTO LOS_SUPER_AMIGOS.Publicacion (tipo, estado, descripcion, fecha_inicio, fecha_vencimiento, rubro_id, visibilidad_id, precio, stock, usuario_id) values (@tipo, @estado, @descripcion, @fecha_inicio, @fecha_vencimiento, @rubro_id, @visibilidad_id, @precio, @stock, @usuario_id);
+	INSERT INTO LOS_SUPER_AMIGOS.Publicacion (tipo, estado, descripcion, fecha_inicio, fecha_vencimiento, rubro_id, visibilidad_id, precio, stock, usuario_id, se_realizan_preguntas) values (@tipo, @estado, @descripcion, @fecha_inicio, @fecha_vencimiento, @rubro_id, @visibilidad_id, @precio, @stock, @usuario_id, @se_realizan_preguntas);
 	SET @id = SCOPE_IDENTITY();
 END
 GO
@@ -354,7 +355,7 @@ fecha_inicio datetime,
 fecha_vencimiento datetime,
 rubro_id numeric(18,0),
 visibilidad_id numeric(18,0),
-se_realizan_preguntas bit default 1,
+se_realizan_preguntas bit,
 stock numeric(18,0),
 precio numeric(18,0),
 habilitado bit default 1,
