@@ -42,6 +42,15 @@
             this.label4 = new System.Windows.Forms.Label();
             this.labelMinimo = new System.Windows.Forms.Label();
             this.labelMaximo = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.labelMonto = new System.Windows.Forms.Label();
+            this.labelMontoCalculado = new System.Windows.Forms.Label();
+            this.radioButtonEfectivo = new System.Windows.Forms.RadioButton();
+            this.radioButtonTarjeta = new System.Windows.Forms.RadioButton();
+            this.textBoxNumero = new System.Windows.Forms.TextBox();
+            this.labelNumero = new System.Windows.Forms.Label();
+            this.labelBanco = new System.Windows.Forms.Label();
+            this.textBoxBanco = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // labelComisiones
@@ -63,11 +72,12 @@
             this.dropDownFacturar.Size = new System.Drawing.Size(55, 23);
             this.dropDownFacturar.TabIndex = 1;
             this.dropDownFacturar.Text = "0";
+            this.dropDownFacturar.SelectedItemChanged += new System.EventHandler(this.dropDownFacturar_SelectedItemChanged);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(9, 193);
+            this.label1.Location = new System.Drawing.Point(12, 269);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(342, 13);
             this.label1.TabIndex = 2;
@@ -76,7 +86,7 @@
             // botonFacturar
             // 
             this.botonFacturar.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.botonFacturar.Location = new System.Drawing.Point(238, 139);
+            this.botonFacturar.Location = new System.Drawing.Point(238, 219);
             this.botonFacturar.Name = "botonFacturar";
             this.botonFacturar.Size = new System.Drawing.Size(111, 37);
             this.botonFacturar.TabIndex = 3;
@@ -87,7 +97,7 @@
             // button1
             // 
             this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.Location = new System.Drawing.Point(12, 226);
+            this.button1.Location = new System.Drawing.Point(12, 304);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(193, 32);
             this.button1.TabIndex = 4;
@@ -183,11 +193,110 @@
             this.labelMaximo.TabIndex = 13;
             this.labelMaximo.Text = "0";
             // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.Location = new System.Drawing.Point(253, 136);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(104, 17);
+            this.label5.TabIndex = 14;
+            this.label5.Text = "Forma de pago";
+            // 
+            // labelMonto
+            // 
+            this.labelMonto.AutoSize = true;
+            this.labelMonto.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelMonto.Location = new System.Drawing.Point(54, 157);
+            this.labelMonto.Name = "labelMonto";
+            this.labelMonto.Size = new System.Drawing.Size(116, 20);
+            this.labelMonto.TabIndex = 15;
+            this.labelMonto.Text = "Monto a pagar:";
+            // 
+            // labelMontoCalculado
+            // 
+            this.labelMontoCalculado.AutoSize = true;
+            this.labelMontoCalculado.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelMontoCalculado.Location = new System.Drawing.Point(163, 158);
+            this.labelMontoCalculado.Name = "labelMontoCalculado";
+            this.labelMontoCalculado.Size = new System.Drawing.Size(18, 20);
+            this.labelMontoCalculado.TabIndex = 16;
+            this.labelMontoCalculado.Text = "0";
+            // 
+            // radioButtonEfectivo
+            // 
+            this.radioButtonEfectivo.AutoSize = true;
+            this.radioButtonEfectivo.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radioButtonEfectivo.Location = new System.Drawing.Point(269, 158);
+            this.radioButtonEfectivo.Name = "radioButtonEfectivo";
+            this.radioButtonEfectivo.Size = new System.Drawing.Size(67, 19);
+            this.radioButtonEfectivo.TabIndex = 17;
+            this.radioButtonEfectivo.TabStop = true;
+            this.radioButtonEfectivo.Text = "Efectivo";
+            this.radioButtonEfectivo.UseVisualStyleBackColor = true;
+            this.radioButtonEfectivo.CheckedChanged += new System.EventHandler(this.radioButtonEfectivo_CheckedChanged);
+            // 
+            // radioButtonTarjeta
+            // 
+            this.radioButtonTarjeta.AutoSize = true;
+            this.radioButtonTarjeta.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radioButtonTarjeta.Location = new System.Drawing.Point(268, 179);
+            this.radioButtonTarjeta.Name = "radioButtonTarjeta";
+            this.radioButtonTarjeta.Size = new System.Drawing.Size(120, 19);
+            this.radioButtonTarjeta.TabIndex = 18;
+            this.radioButtonTarjeta.TabStop = true;
+            this.radioButtonTarjeta.Text = "Tarjeta de credito";
+            this.radioButtonTarjeta.UseVisualStyleBackColor = true;
+            this.radioButtonTarjeta.CheckedChanged += new System.EventHandler(this.radioButtonTarjeta_CheckedChanged);
+            // 
+            // textBoxNumero
+            // 
+            this.textBoxNumero.Location = new System.Drawing.Point(444, 179);
+            this.textBoxNumero.Name = "textBoxNumero";
+            this.textBoxNumero.Size = new System.Drawing.Size(100, 20);
+            this.textBoxNumero.TabIndex = 19;
+            // 
+            // labelNumero
+            // 
+            this.labelNumero.AutoSize = true;
+            this.labelNumero.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelNumero.Location = new System.Drawing.Point(396, 181);
+            this.labelNumero.Name = "labelNumero";
+            this.labelNumero.Size = new System.Drawing.Size(52, 15);
+            this.labelNumero.TabIndex = 20;
+            this.labelNumero.Text = "Numero";
+            // 
+            // labelBanco
+            // 
+            this.labelBanco.AutoSize = true;
+            this.labelBanco.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelBanco.Location = new System.Drawing.Point(399, 203);
+            this.labelBanco.Name = "labelBanco";
+            this.labelBanco.Size = new System.Drawing.Size(42, 15);
+            this.labelBanco.TabIndex = 21;
+            this.labelBanco.Text = "Banco";
+            // 
+            // textBoxBanco
+            // 
+            this.textBoxBanco.Location = new System.Drawing.Point(445, 202);
+            this.textBoxBanco.Name = "textBoxBanco";
+            this.textBoxBanco.Size = new System.Drawing.Size(100, 20);
+            this.textBoxBanco.TabIndex = 22;
+            // 
             // Facturar
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(584, 273);
+            this.ClientSize = new System.Drawing.Size(581, 348);
+            this.Controls.Add(this.textBoxBanco);
+            this.Controls.Add(this.labelBanco);
+            this.Controls.Add(this.labelNumero);
+            this.Controls.Add(this.textBoxNumero);
+            this.Controls.Add(this.radioButtonTarjeta);
+            this.Controls.Add(this.radioButtonEfectivo);
+            this.Controls.Add(this.labelMontoCalculado);
+            this.Controls.Add(this.labelMonto);
+            this.Controls.Add(this.label5);
             this.Controls.Add(this.labelMaximo);
             this.Controls.Add(this.labelMinimo);
             this.Controls.Add(this.label4);
@@ -226,5 +335,14 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label labelMinimo;
         private System.Windows.Forms.Label labelMaximo;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label labelMonto;
+        private System.Windows.Forms.Label labelMontoCalculado;
+        private System.Windows.Forms.RadioButton radioButtonEfectivo;
+        private System.Windows.Forms.RadioButton radioButtonTarjeta;
+        private System.Windows.Forms.TextBox textBoxNumero;
+        private System.Windows.Forms.Label labelNumero;
+        private System.Windows.Forms.Label labelBanco;
+        private System.Windows.Forms.TextBox textBoxBanco;
     }
 }

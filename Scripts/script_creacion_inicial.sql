@@ -666,9 +666,7 @@ WHERE ISNULL(Compra_Cantidad, 0) != 0 and ISNULL(Calificacion_Codigo,0) != 0
 -- INSERTAR Formas_Pago
 INSERT INTO LOS_SUPER_AMIGOS.Forma_Pago
    ( [descripcion])
-SELECT DISTINCT Forma_Pago_Desc
-FROM gd_esquema.Maestra 
-WHERE ISNULL(Forma_Pago_Desc,'') != ''
+values('Efectivo'),('Tarjeta de credito')
 
 
 SET IDENTITY_INSERT LOS_SUPER_AMIGOS.Factura ON;

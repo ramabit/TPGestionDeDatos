@@ -26,7 +26,49 @@ namespace FrbaCommerce.Facturar_Publicaciones
         private void Facturar_Load(object sender, EventArgs e)
         {
            CargarCostosPublicacionPorFacturar();
-           CargarComisionesVentasPorFacturar();  
+           CargarComisionesVentasPorFacturar();
+           CalcularMonto();
+           radioButtonEfectivo.Checked = true;
+           textBoxBanco.Enabled = false;
+           textBoxNumero.Enabled = false;
+        }
+
+        private void CalcularMonto()
+        {
+            int valor;
+            Int32.TryParse(dropDownFacturar.Text, out valor);
+
+            parametros.Clear();
+            parametros.Add(new SqlParameter("@id", UsuarioSesion.Usuario.id));
+            parametros.Add(new SqlParameter("@cant", valor));
+
+            String monto = "create table LOS_SUPER_AMIGOS.Compra_Comision"
+                        + " (compra_id numeric(18,0),"
+                        + " compra_fecha datetime,"
+                        + " compra_publicacion numeric(18,0),"
+                        + " compra_cantidad numeric(18,0))"
+                        + " insert into LOS_SUPER_AMIGOS.Compra_Comision"
+                        + " (compra_id, compra_fecha, compra_publicacion, compra_cantidad)"
+                        + " select top (@cant) c.id, c.fecha, c.publicacion_id, c.cantidad"
+                        + " from LOS_SUPER_AMIGOS.Usuario u, LOS_SUPER_AMIGOS.Compra c, LOS_SUPER_AMIGOS.Publicacion p"
+                        + " where u.id = @id and p.usuario_id = u.id and c.publicacion_id = p.id and c.facturada = 0"
+                        + " order by c.fecha"
+                        + " select ISNULL((select  sum(cc.compra_cantidad * p.precio * v.porcentaje)"
+                        + " from LOS_SUPER_AMIGOS.Compra_Comision cc, LOS_SUPER_AMIGOS.Compra c,"
+                        + " LOS_SUPER_AMIGOS.Publicacion p, LOS_SUPER_AMIGOS.Visibilidad v"
+                        + " where cc.compra_id = c.id and c.publicacion_id = p.id and p.visibilidad_id = v.id)"
+                        + " + (select sum(v.precio)"
+                        + " from LOS_SUPER_AMIGOS.Publicacion p, LOS_SUPER_AMIGOS.Visibilidad v, LOS_SUPER_AMIGOS.Usuario u"
+                        + " where p.costo_pagado = 0 and p.visibilidad_id = v.id and p.usuario_id = u.id and u.id = @id"
+                        + " and p.estado = 'Finalizada'),0)";
+            Double montoCalculado = Convert.ToDouble(builderDeComandos.Crear(monto, parametros).ExecuteScalar());
+            labelMontoCalculado.Text = montoCalculado.ToString();
+
+
+            // Borro tabla temporal con monto
+            String borroTablaTemporal = "drop table LOS_SUPER_AMIGOS.Compra_Comision";
+            parametros.Clear();
+            builderDeComandos.Crear(borroTablaTemporal, parametros).ExecuteNonQuery();
         }
 
         private void CargarCostosPublicacionPorFacturar()
@@ -79,24 +121,59 @@ namespace FrbaCommerce.Facturar_Publicaciones
         private void botonFacturar_Click(object sender, EventArgs e)
         {
           
-
+            // Creo la nueva factura
             String creoFactura = "insert LOS_SUPER_AMIGOS.Factura"
                                 + "(fecha) values(GETDATE())";
             parametros.Clear();
             builderDeComandos.Crear(creoFactura, parametros).ExecuteNonQuery();
 
+            // Obtengo el id de la nueva factura
             String idFactura = "select top 1 f.nro from LOS_SUPER_AMIGOS.Factura f order by f.nro DESC";
             parametros.Clear();
             Decimal idFact = (Decimal)builderDeComandos.Crear(idFactura,parametros).ExecuteScalar();
 
-            long valor;
-            if (Int64.TryParse(dropDownFacturar.Text, out valor))
-            {
-                parametros.Clear();
-                parametros.Add(new SqlParameter("@id", UsuarioSesion.Usuario.id));
-                parametros.Add(new SqlParameter("@cant", valor));
-            }
+            // Inserto los items factura de costos de publicaciones finalizadas
+            String costo_publicacion = "insert LOS_SUPER_AMIGOS.Item_Factura"
+                        + " (cantidad, factura_nro, monto, publicacion_id)"
+                        + " select 1, @idF, v.precio, p.id"
+                        + " from LOS_SUPER_AMIGOS.Publicacion p, LOS_SUPER_AMIGOS.Visibilidad v, LOS_SUPER_AMIGOS.Usuario u"
+                        + " where p.costo_pagado = 0 and p.visibilidad_id = v.id and p.usuario_id = u.id and u.id = @id"
+                        + " and p.estado = 'Finalizada'";
+            parametros.Clear();
+            parametros.Add(new SqlParameter("@id", UsuarioSesion.Usuario.id));
+            parametros.Add(new SqlParameter("@idF", idFact));
+            builderDeComandos.Crear(costo_publicacion, parametros).ExecuteNonQuery();
 
+            // Actualizo campo costo pagado
+            String costoPagado = "declare @pid numeric(18,0)"
+                            + " declare publ_cursor cursor for"
+                            + " (select p.id from LOS_SUPER_AMIGOS.Publicacion p,"
+                            + " LOS_SUPER_AMIGOS.Visibilidad v, LOS_SUPER_AMIGOS.Usuario u"
+                            + " where p.costo_pagado = 0 and p.visibilidad_id = v.id and p.usuario_id = u.id"
+                            + " and u.id = 72 and p.estado = 'Finalizada')"
+                            + " open publ_cursor"
+                            + " fetch next from publ_cursor into @pid"
+                            + " while @@FETCH_STATUS = 0"
+                            + " Begin "
+                            + " update LOS_SUPER_AMIGOS.Publicacion"
+                            + " set costo_pagado = 1"
+                            + " where id = @pid"
+                            + " fetch next from publ_cursor into @pid"
+                            + " End"
+                            + " close publ_cursor"
+                            + " deallocate publ_cursor";
+            parametros.Clear();
+            parametros.Add(new SqlParameter("@id", UsuarioSesion.Usuario.id));
+            builderDeComandos.Crear(costoPagado, parametros).ExecuteNonQuery();
+
+            int valor;
+            Int32.TryParse(dropDownFacturar.Text, out valor);
+            
+            parametros.Clear();
+            parametros.Add(new SqlParameter("@id", UsuarioSesion.Usuario.id));
+            parametros.Add(new SqlParameter("@cant", valor));
+            
+            // Obtengo las ventas que voy a facturar pagando su comision
             String obtengoComprasPorComisionar = "create table LOS_SUPER_AMIGOS.Compra_Comision"
                                             + " (compra_id numeric(18,0),"
                                              + " compra_fecha datetime,"
@@ -104,23 +181,71 @@ namespace FrbaCommerce.Facturar_Publicaciones
                                              + " compra_cantidad numeric(18,0))"
                         + " insert into LOS_SUPER_AMIGOS.Compra_Comision"
                         + " (compra_id, compra_fecha, compra_publicacion, compra_cantidad)"
-                         + " select top @cant c.id, c.fecha, c.publicacion_id, c.cantidad"
+                         + " select top (@cant) c.id, c.fecha, c.publicacion_id, c.cantidad"
                         + " from LOS_SUPER_AMIGOS.Usuario u, LOS_SUPER_AMIGOS.Compra c, LOS_SUPER_AMIGOS.Publicacion p"
                         + " where u.id = @id and p.usuario_id = u.id and c.publicacion_id = p.id and c.facturada = 0"
                         + " order by c.fecha";
             builderDeComandos.Crear(obtengoComprasPorComisionar,parametros).ExecuteNonQuery();
 
+
+            // Creo los items factura de las comisiones por ventas
             parametros.Clear();
             parametros.Add(new SqlParameter("@idF", idFact));
-
             String creoItemsFactura = "insert LOS_SUPER_AMIGOS.Item_Factura"
                         + " (factura_nro, publicacion_id, cantidad, monto)"
                         + " (select  @idF, cc.compra_publicacion, cc.compra_cantidad, cc.compra_cantidad * p.precio * v.porcentaje"
                         + " from LOS_SUPER_AMIGOS.Compra_Comision cc, LOS_SUPER_AMIGOS.Compra c,"
                         + " LOS_SUPER_AMIGOS.Publicacion p, LOS_SUPER_AMIGOS.Visibilidad v"
                         + " where cc.compra_id = c.id and c.publicacion_id = p.id and p.visibilidad_id = v.id)";
-
             builderDeComandos.Crear(creoItemsFactura, parametros).ExecuteNonQuery();
+
+            // Actualizo el campo facturada en las compras que facturo
+            String ventaFacturada = "declare @cid numeric(18,0)"
+                                + " declare compra_cursor cursor for"
+                                + " (select c.id from LOS_SUPER_AMIGOS.Compra_Comision cc,"
+                                + " LOS_SUPER_AMIGOS.Compra c, LOS_SUPER_AMIGOS.Publicacion p,"
+                                + " LOS_SUPER_AMIGOS.Visibilidad v"
+                                + " where cc.compra_id = c.id and c.publicacion_id = p.id and p.visibilidad_id = v.id)"
+                                + " open compra_cursor"
+                                + " fetch next from compra_cursor into @cid"
+                                + " while @@FETCH_STATUS = 0"
+                                + " Begin"
+                                + " update LOS_SUPER_AMIGOS.Compra"
+                                + " set facturada = 1"
+                                + " where id = @cid"
+                                + " fetch next from compra_cursor into @cid"
+                                + " End"
+                                + " close compra_cursor"
+                                + " deallocate compra_cursor";
+            parametros.Clear();
+            builderDeComandos.Crear(ventaFacturada,parametros).ExecuteNonQuery();
+
+            // Inserto el total en la factura
+            String actualizoTotal = "update LOS_SUPER_AMIGOS.Factura"
+                               + " set total = (select SUM(i.monto)"
+                               + " from LOS_SUPER_AMIGOS.Item_Factura i"
+                               + " where i.factura_nro = nro) where nro = @idF";
+            parametros.Clear();
+            parametros.Add(new SqlParameter("@idF", idFact));
+            builderDeComandos.Crear(actualizoTotal, parametros).ExecuteNonQuery();
+
+            
+            // Borro tabla temporal con ventas que se facturan pagando comision
+            String borroTablaTemporal = "drop table LOS_SUPER_AMIGOS.Compra_Comision";
+            parametros.Clear();
+            builderDeComandos.Crear(borroTablaTemporal, parametros).ExecuteNonQuery();
+
+            if (labelCantidadCostos.Text != "0" || dropDownFacturar.Text != "0")
+            {
+                MessageBox.Show("Factura realizada");
+            }
+            else
+            {
+                MessageBox.Show("No hay nada para facturar");
+            }
+            CargarCostosPublicacionPorFacturar();
+            CargarCostosPublicacionPorFacturar();
+            CalcularMonto();
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -128,6 +253,29 @@ namespace FrbaCommerce.Facturar_Publicaciones
             this.Hide();
             new MenuPrincipal().ShowDialog();
             this.Close();
+        }
+
+        private void radioButtonTarjeta_CheckedChanged(object sender, EventArgs e)
+        {
+            if (radioButtonTarjeta.Checked)
+            {
+                textBoxNumero.Enabled = true;
+                textBoxBanco.Enabled = true;
+            }
+            else
+            {
+                textBoxNumero.Enabled = false;
+                textBoxBanco.Enabled = false;
+            }
+        }
+
+        private void radioButtonEfectivo_CheckedChanged(object sender, EventArgs e)
+        {
+        }
+
+        private void dropDownFacturar_SelectedItemChanged(object sender, EventArgs e)
+        {
+            CalcularMonto();
         }
 
     }
