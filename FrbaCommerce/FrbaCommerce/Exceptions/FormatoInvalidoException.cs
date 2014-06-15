@@ -5,7 +5,7 @@ using System.Text;
 
 namespace FrbaCommerce.Exceptions
 {
-    class NoEsNumeroException : Exception
+    class FormatoInvalidoException : Exception
     {
     }
 }
