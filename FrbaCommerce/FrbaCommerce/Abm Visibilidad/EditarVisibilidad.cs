@@ -35,6 +35,7 @@ namespace FrbaCommerce.ABM_Visibilidad
             textBox_PrecioPorPublicar.Text = visibilidad.GetPrecioPorPublicar();
             textBox_PorcentajePorVenta.Text = visibilidad.GetPorcentajePorVenta();
             textBox_Duracion.Text = visibilidad.GetDuracion();
+            checkBox_Habilitado.Checked = Convert.ToBoolean(comunicador.SelectFromWhere("habilitado", "Visibilidad", "id", idVisibilidad));
         }
 
         private void button_Guardar_Click(object sender, EventArgs e)

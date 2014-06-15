@@ -42,6 +42,7 @@ namespace FrbaCommerce.ABM_Empresa
             textBox_Telefono.Text = empresa.GetTelefono();
             textBox_Ciudad.Text = empresa.GetCiudad();
             CargarDireccion(idDireccion);
+            checkBox_Habilitado.Checked = Convert.ToBoolean(comunicador.SelectFromWhere("habilitado", "Empresa", "id", idEmpresa));
         }
 
         private void CargarDireccion(Decimal idDireccion)

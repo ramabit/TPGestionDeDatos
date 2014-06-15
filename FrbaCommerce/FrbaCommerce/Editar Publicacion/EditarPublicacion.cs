@@ -115,6 +115,8 @@ namespace FrbaCommerce.Editar_Publicacion
             comboBox_Visibilidad.SelectedValue = (String) comunicador.SelectFromWhere("descripcion", "Visibilidad", "id", Convert.ToString(publicacion.GetIdVisibilidad())); ;
             comboBox_TiposDePublicacion.SelectedValue = publicacion.GetTipo();
             comboBox_Estado.SelectedValue = publicacion.GetEstado();
+            radioButton_Pregunta.Checked = Convert.ToBoolean(comunicador.SelectFromWhere("se_realizan_preguntas", "Publicacion", "id", idPublicacion));
+            checkBox_Habilitado.Checked = Convert.ToBoolean(comunicador.SelectFromWhere("habilitado", "Publicacion", "id", idPublicacion));
         }
 
         private void button_Guardar_Click(object sender, EventArgs e)

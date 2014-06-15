@@ -49,11 +49,12 @@ namespace FrbaCommerce.ABM_Cliente
             textBox_Telefono.Text = cliente.GetTelefono();
             CargarDireccion(idDireccion);
             CargarTipoDeDocumento(cliente.GetIdTipoDeDocumento());
+            checkBox_Habilitado.Checked = Convert.ToBoolean(comunicador.SelectFromWhere("habilitado", "Cliente", "id", idCliente));
         }
 
         private void CargarTipoDeDocumento(Decimal idTipoDeDocumento)
         {
-            comboBox_TipoDeDocumento.SelectedValue = (String) comunicador.SelectFromWhere("nombre", "TipoDeDocumento", "id", Convert.ToString(idTipoDeDocumento));
+            comboBox_TipoDeDocumento.SelectedValue = (String) comunicador.SelectFromWhere("nombre", "TipoDeDocumento", "id", idTipoDeDocumento);
         }
 
         private void CargarDireccion(Decimal idDireccion)

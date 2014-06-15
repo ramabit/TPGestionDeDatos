@@ -106,8 +106,8 @@ namespace FrbaCommerce.Objetos
         {
             IList<SqlParameter> parametros = new List<SqlParameter>();
             parametros.Add(new SqlParameter("@descripcion", this.descripcion));
-            parametros.Add(new SqlParameter("@precio", this.precioPorPublicar));
-            parametros.Add(new SqlParameter("@porcentaje", this.porcentajePorVenta));
+            parametros.Add(new SqlParameter("@precio", Convert.ToDouble(this.precioPorPublicar)));
+            parametros.Add(new SqlParameter("@porcentaje", Convert.ToDouble(this.porcentajePorVenta)));
             parametros.Add(new SqlParameter("@duracion", this.duracion));
             return parametros;
         }
