@@ -94,7 +94,7 @@ namespace FrbaCommerce.ABM_Empresa
                 MessageBox.Show("Faltan completar campos en direccion");
                 return;
             }
-            catch (NoEsNumeroException exception)
+            catch (FormatoInvalidoException exception)
             {
                 MessageBox.Show("Datos mal ingresados");
                 return;
@@ -120,7 +120,7 @@ namespace FrbaCommerce.ABM_Empresa
                 MessageBox.Show("Faltan completar campos");
                 return;
             }
-            catch (NoEsNumeroException exception)
+            catch (FormatoInvalidoException exception)
             {
                 MessageBox.Show("Datos mal ingresados");
                 return;

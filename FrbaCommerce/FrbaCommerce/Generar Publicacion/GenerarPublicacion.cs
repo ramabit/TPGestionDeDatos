@@ -100,7 +100,7 @@ namespace FrbaCommerce.Generar_Publicacion
                 MessageBox.Show("Faltan completar campos");
                 return;
             }
-            catch (NoEsNumeroException exception)
+            catch (FormatoInvalidoException exception)
             {
                 MessageBox.Show("Datos mal ingresados");
                 return;
