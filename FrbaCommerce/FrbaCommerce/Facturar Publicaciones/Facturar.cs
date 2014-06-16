@@ -43,9 +43,6 @@ namespace FrbaCommerce.Facturar_Publicaciones
             parametros.Add(new SqlParameter("@id", UsuarioSesion.Usuario.id));
             parametros.Add(new SqlParameter("@cant", valor));
 
-
-
-
             String monto = "create table LOS_SUPER_AMIGOS.Compra_Comision"
                         + " (compra_id numeric(18,0),"
                         + " compra_fecha datetime,"
@@ -57,14 +54,14 @@ namespace FrbaCommerce.Facturar_Publicaciones
                         + " from LOS_SUPER_AMIGOS.Usuario u, LOS_SUPER_AMIGOS.Compra c, LOS_SUPER_AMIGOS.Publicacion p"
                         + " where u.id = @id and p.usuario_id = u.id and c.publicacion_id = p.id and c.facturada = 0"
                         + " order by c.fecha"
-                        + " select ISNULL((select  sum(cc.compra_cantidad * p.precio * v.porcentaje)"
+                        + " select (select  isnull( (select sum(cc.compra_cantidad * p.precio * v.porcentaje)"
                         + " from LOS_SUPER_AMIGOS.Compra_Comision cc, LOS_SUPER_AMIGOS.Compra c,"
                         + " LOS_SUPER_AMIGOS.Publicacion p, LOS_SUPER_AMIGOS.Visibilidad v"
-                        + " where cc.compra_id = c.id and c.publicacion_id = p.id and p.visibilidad_id = v.id)"
-                        + " + (select sum(v.precio)"
+                        + " where cc.compra_id = c.id and c.publicacion_id = p.id and p.visibilidad_id = v.id),0))"
+                        + " + (select isnull( (select sum(v.precio)"
                         + " from LOS_SUPER_AMIGOS.Publicacion p, LOS_SUPER_AMIGOS.Visibilidad v, LOS_SUPER_AMIGOS.Usuario u"
                         + " where p.costo_pagado = 0 and p.visibilidad_id = v.id and p.usuario_id = u.id and u.id = @id"
-                        + " and p.estado = 'Finalizada'),0)";
+                        + " and p.estado = 'Finalizada'),0))";
             Double montoCalculado = Convert.ToDouble(builderDeComandos.Crear(monto, parametros).ExecuteScalar());
             labelMontoCalculado.Text = montoCalculado.ToString();
 
@@ -248,7 +245,7 @@ namespace FrbaCommerce.Facturar_Publicaciones
                 MessageBox.Show("No hay nada para facturar");
             }
             CargarCostosPublicacionPorFacturar();
-            CargarCostosPublicacionPorFacturar();
+            CargarComisionesVentasPorFacturar();
             CalcularMonto();
         }
 
