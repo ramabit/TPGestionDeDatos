@@ -188,7 +188,7 @@ namespace FrbaCommerce.Objetos
 
         string Comunicable.GetQueryModificar()
         {
-            return "UPDATE LOS_SUPER_AMIGOS.Publicacion SET estado = @estado, descripcion = @descripcion, fecha_inicio = @fecha_inicio, fecha_vencimiento = @fecha_vencimiento, rubro_id = @rubro_id, visibilidad_id = @visibilidad_id, stock = @stock, precio = @precio, se_realizan_preguntas = @se_realizan_preguntas WHERE id = @id";
+            return "UPDATE LOS_SUPER_AMIGOS.Publicacion SET tipo = @tipo, estado = @estado, descripcion = @descripcion, fecha_inicio = @fecha_inicio, fecha_vencimiento = @fecha_vencimiento, rubro_id = @rubro_id, visibilidad_id = @visibilidad_id, stock = @stock, precio = @precio, se_realizan_preguntas = @se_realizan_preguntas WHERE id = @id";
         }
 
         string Comunicable.GetQueryObtener()
@@ -208,7 +208,6 @@ namespace FrbaCommerce.Objetos
             parametros.Add(new SqlParameter("@precio", this.precio));
             parametros.Add(new SqlParameter("@rubro_id", this.idRubro));
             parametros.Add(new SqlParameter("@visibilidad_id", this.idVisibilidad));
-            parametros.Add(new SqlParameter("@usuario_id", this.idUsuario));
             parametros.Add(new SqlParameter("@se_realizan_preguntas", this.pregunta));
             return parametros;
         }

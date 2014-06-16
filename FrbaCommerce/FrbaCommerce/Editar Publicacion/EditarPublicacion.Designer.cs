@@ -43,7 +43,6 @@
             this.label5 = new System.Windows.Forms.Label();
             this.textBox_FechaDeInicio = new System.Windows.Forms.TextBox();
             this.comboBox_Rubro = new System.Windows.Forms.ComboBox();
-            this.radioButton_Pregunta = new System.Windows.Forms.RadioButton();
             this.comboBox_Visibilidad = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -54,6 +53,7 @@
             this.textBox_Stock = new System.Windows.Forms.TextBox();
             this.label_precio = new System.Windows.Forms.Label();
             this.label_stock = new System.Windows.Forms.Label();
+            this.checkBox_Pregunta = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -131,6 +131,7 @@
             // 
             // comboBox_TiposDePublicacion
             // 
+            this.comboBox_TiposDePublicacion.Enabled = false;
             this.comboBox_TiposDePublicacion.FormattingEnabled = true;
             this.comboBox_TiposDePublicacion.Location = new System.Drawing.Point(112, 13);
             this.comboBox_TiposDePublicacion.Name = "comboBox_TiposDePublicacion";
@@ -148,12 +149,12 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.checkBox_Pregunta);
             this.groupBox2.Controls.Add(this.monthCalendar_FechaDeInicio);
             this.groupBox2.Controls.Add(this.button_FechaDeInicio);
             this.groupBox2.Controls.Add(this.label5);
             this.groupBox2.Controls.Add(this.textBox_FechaDeInicio);
             this.groupBox2.Controls.Add(this.comboBox_Rubro);
-            this.groupBox2.Controls.Add(this.radioButton_Pregunta);
             this.groupBox2.Controls.Add(this.comboBox_Visibilidad);
             this.groupBox2.Controls.Add(this.label4);
             this.groupBox2.Controls.Add(this.label3);
@@ -205,17 +206,6 @@
             this.comboBox_Rubro.Name = "comboBox_Rubro";
             this.comboBox_Rubro.Size = new System.Drawing.Size(250, 21);
             this.comboBox_Rubro.TabIndex = 8;
-            // 
-            // radioButton_Pregunta
-            // 
-            this.radioButton_Pregunta.AutoSize = true;
-            this.radioButton_Pregunta.Location = new System.Drawing.Point(6, 127);
-            this.radioButton_Pregunta.Name = "radioButton_Pregunta";
-            this.radioButton_Pregunta.Size = new System.Drawing.Size(110, 17);
-            this.radioButton_Pregunta.TabIndex = 7;
-            this.radioButton_Pregunta.TabStop = true;
-            this.radioButton_Pregunta.Text = "Permite preguntas";
-            this.radioButton_Pregunta.UseVisualStyleBackColor = true;
             // 
             // comboBox_Visibilidad
             // 
@@ -304,6 +294,16 @@
             this.label_stock.TabIndex = 0;
             this.label_stock.Text = "Stock";
             // 
+            // checkBox_Pregunta
+            // 
+            this.checkBox_Pregunta.AutoSize = true;
+            this.checkBox_Pregunta.Location = new System.Drawing.Point(9, 133);
+            this.checkBox_Pregunta.Name = "checkBox_Pregunta";
+            this.checkBox_Pregunta.Size = new System.Drawing.Size(106, 17);
+            this.checkBox_Pregunta.TabIndex = 15;
+            this.checkBox_Pregunta.Text = "Permite pregunta";
+            this.checkBox_Pregunta.UseVisualStyleBackColor = true;
+            // 
             // EditarPublicacion
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -347,7 +347,6 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox textBox_FechaDeInicio;
         private System.Windows.Forms.ComboBox comboBox_Rubro;
-        private System.Windows.Forms.RadioButton radioButton_Pregunta;
         private System.Windows.Forms.ComboBox comboBox_Visibilidad;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
@@ -358,5 +357,6 @@
         private System.Windows.Forms.TextBox textBox_Stock;
         private System.Windows.Forms.Label label_precio;
         private System.Windows.Forms.Label label_stock;
+        private System.Windows.Forms.CheckBox checkBox_Pregunta;
     }
 }

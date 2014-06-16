@@ -47,11 +47,12 @@ namespace FrbaCommerce.Editar_Publicacion
             DataTable estados = new DataTable();
             estados.Columns.Add("estados");
 
-            String estado = (String) comunicador.SelectFromWhere("estado", "Publicacion", "id", Convert.ToString(idPublicacion));
+            String estado = (String) comunicador.SelectFromWhere("estado", "Publicacion", "id", idPublicacion);
 
             if (estado == "Borrador") CargarSegunBorrador(estados);
             if (estado == "Publicada") CargarSegunPublicada(estados);
             if (estado == "Pausada") CargarSegunPausada(estados);
+            if (estado == "Finalizada") CargarSegunFinalizada(estados);
 
             comboBox_Estado.DataSource = estados;
             comboBox_Estado.ValueMember = "estados";
@@ -61,7 +62,6 @@ namespace FrbaCommerce.Editar_Publicacion
         {
             estados.Rows.Add("Borrador");
             estados.Rows.Add("Publicada");
-            comboBox_TiposDePublicacion.Enabled = false;
         }
 
         private void CargarSegunPublicada(DataTable estados)
@@ -69,12 +69,10 @@ namespace FrbaCommerce.Editar_Publicacion
             estados.Rows.Add("Publicada");
             estados.Rows.Add("Pausada");
             estados.Rows.Add("Finalizada");
-            textBox_Descripcion.Enabled = false;
-            textBox_FechaDeInicio.Enabled = false;
-            button_FechaDeInicio.Enabled = false;
-            comboBox_Rubro.Enabled = false;
-            comboBox_Visibilidad.Enabled = false;
-            comboBox_TiposDePublicacion.Enabled = false;
+            DesactivarCamposDeCaracteristicasComunes();
+            DesactivarCamposDeCaracteristicasEspeciales();
+            textBox_Descripcion.Enabled = true;
+            textBox_Stock.Enabled = true;
         }
 
         private void CargarSegunPausada(DataTable estados)
@@ -82,12 +80,30 @@ namespace FrbaCommerce.Editar_Publicacion
             estados.Rows.Add("Publicada");
             estados.Rows.Add("Pausada");
             estados.Rows.Add("Finalizada");
+            DesactivarCamposDeCaracteristicasComunes();
+            DesactivarCamposDeCaracteristicasEspeciales();
+        }
+
+        private void CargarSegunFinalizada(DataTable estados)
+        {
+            estados.Rows.Add("Finalizada");
+            comboBox_Estado.Enabled = false;
+            DesactivarCamposDeCaracteristicasComunes();
+            DesactivarCamposDeCaracteristicasEspeciales();
+        }
+
+        private void DesactivarCamposDeCaracteristicasComunes()
+        {
             textBox_Descripcion.Enabled = false;
             textBox_FechaDeInicio.Enabled = false;
             button_FechaDeInicio.Enabled = false;
             comboBox_Rubro.Enabled = false;
             comboBox_Visibilidad.Enabled = false;
-            comboBox_TiposDePublicacion.Enabled = false;
+            checkBox_Pregunta.Enabled = false;
+        }
+
+        private void DesactivarCamposDeCaracteristicasEspeciales()
+        {
             textBox_Precio.Enabled = false;
             textBox_Stock.Enabled = false;
         }
@@ -111,11 +127,11 @@ namespace FrbaCommerce.Editar_Publicacion
             textBox_FechaDeInicio.Text = publicacion.GetFechaDeInicio();
             textBox_Precio.Text = publicacion.GetPrecio();
             textBox_Stock.Text = publicacion.GetStock();
-            comboBox_Rubro.SelectedValue = (String) comunicador.SelectFromWhere("descripcion", "Rubro", "id", Convert.ToString(publicacion.GetIdRubro()));
-            comboBox_Visibilidad.SelectedValue = (String) comunicador.SelectFromWhere("descripcion", "Visibilidad", "id", Convert.ToString(publicacion.GetIdVisibilidad())); ;
+            comboBox_Rubro.SelectedValue = (String) comunicador.SelectFromWhere("descripcion", "Rubro", "id", publicacion.GetIdRubro());
+            comboBox_Visibilidad.SelectedValue = (String) comunicador.SelectFromWhere("descripcion", "Visibilidad", "id", publicacion.GetIdVisibilidad()); ;
             comboBox_TiposDePublicacion.SelectedValue = publicacion.GetTipo();
             comboBox_Estado.SelectedValue = publicacion.GetEstado();
-            radioButton_Pregunta.Checked = Convert.ToBoolean(comunicador.SelectFromWhere("se_realizan_preguntas", "Publicacion", "id", idPublicacion));
+            checkBox_Pregunta.Checked = Convert.ToBoolean(comunicador.SelectFromWhere("se_realizan_preguntas", "Publicacion", "id", idPublicacion));
             checkBox_Habilitado.Checked = Convert.ToBoolean(comunicador.SelectFromWhere("habilitado", "Publicacion", "id", idPublicacion));
         }
 
@@ -127,13 +143,13 @@ namespace FrbaCommerce.Editar_Publicacion
             String fechaDeInicio = textBox_FechaDeInicio.Text;
             String rubro = comboBox_Rubro.Text;
             String visibilidad = comboBox_Visibilidad.Text;
-            Boolean pregunta = radioButton_Pregunta.Checked;
+            Boolean pregunta = checkBox_Pregunta.Checked;
             String stock = textBox_Stock.Text;
             String precio = textBox_Precio.Text;
 
             Decimal idRubro = (Decimal) comunicador.SelectFromWhere("id", "Rubro", "descripcion", rubro);
             Decimal idVisibilidad = (Decimal)comunicador.SelectFromWhere("id", "Visibilidad", "descripcion", visibilidad);
-            Double duracion = Convert.ToDouble(comunicador.SelectFromWhere("duracion", "Visibilidad", "id", Convert.ToString(idVisibilidad)));
+            Double duracion = Convert.ToDouble(comunicador.SelectFromWhere("duracion", "Visibilidad", "id", idVisibilidad));
 
             // Update Publicacion
             try
