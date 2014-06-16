@@ -17,6 +17,7 @@ namespace FrbaCommerce.Comprar_Ofertar
         private BuilderDeComandos builderDeComandos = new BuilderDeComandos();
         public Object SelectedItem { get; set; }
         decimal idUsuarioActual = UsuarioSesion.Usuario.id;
+        private ComunicadorConBaseDeDatos comunicador = new ComunicadorConBaseDeDatos();
 
         DataTable tablaTemporal;
         int totalPaginas;
@@ -40,23 +41,9 @@ namespace FrbaCommerce.Comprar_Ofertar
 
         private void CargarRubros()
         {
-            DataSet rubros = new DataSet();
-            SqlDataAdapter adapter = new SqlDataAdapter();
-            parametros = new List<SqlParameter>();
-            command = builderDeComandos.Crear("SELECT DISTINCT descripcion FROM LOS_SUPER_AMIGOS.Rubro  where habilitado = 1", parametros);
-            adapter.SelectCommand = command;
-            adapter.Fill(rubros);            
-            comboBoxRubro.DataSource = rubros.Tables[0].DefaultView;
+            comboBoxRubro.DataSource = comunicador.SelectDataTable("descripcion", "LOS_SUPER_AMIGOS.Rubro", "habilitado = 1");
             comboBoxRubro.ValueMember = "descripcion";
             comboBoxRubro.SelectedIndex = -1;
-        }
-
-        private void botonLimpiar_Click(object sender, EventArgs e)
-        {
-            textBoxDescripcion.Clear();
-            comboBoxRubro.SelectedIndex = -1;            
-            labelNrosPagina.Text = "";
-            dataGridView1.DataSource = null;            
         }
 
         private void botonBuscar_Click(object sender, EventArgs e)
@@ -66,20 +53,21 @@ namespace FrbaCommerce.Comprar_Ofertar
             parametros.Clear();
             parametros.Add(new SqlParameter("@usuario", idUsuarioActual));
             DataTable busquedaTemporal = new DataTable();
-            String filtro = "and usuario_id != @usuario";            
+            String filtro = "and publicacion.usuario_id != @usuario";            
 
             if (textBoxDescripcion.Text != "")
-            {                
-                filtro += " and " + "descripcion like '%" + textBoxDescripcion.Text + "%'";                
+            {
+                filtro += " and publicacion.descripcion like '%" + textBoxDescripcion.Text + "%'";                
             }            
 
             if (comboBoxRubro.Text != "")
             {
-                parametros.Add(new SqlParameter("@rubro", comboBoxRubro.Text));
-                filtro += " and " + "rubro_id = (SELECT id FROM LOS_SUPER_AMIGOS.Rubro WHERE descripcion = @rubro)";                
+                String idRubro = Convert.ToString(comunicador.SelectFromWhere("id", "Rubro", "descripcion", comboBoxRubro.Text));
+                parametros.Add(new SqlParameter("@idRubro", idRubro));
+                filtro += " and publicacion.rubro_id = @idRubro";                
             }
 
-            String query = "SELECT id, descripcion, precio, tipo FROM LOS_SUPER_AMIGOS.Publicacion WHERE (estado = 'Publicada' or estado = 'Pausada') " + filtro + " ORDER BY visibilidad_id";
+            String query = "SELECT publicacion.id, publicacion.descripcion, publicacion.precio, publicacion.tipo FROM LOS_SUPER_AMIGOS.Publicacion publicacion, LOS_SUPER_AMIGOS.Visibilidad visibilidad WHERE publicacion.visibilidad_id = visibilidad.id AND (publicacion.estado = 'Publicada' or publicacion.estado = 'Pausada') " + filtro + " ORDER BY visibilidad.precio DESC";
             
             command = builderDeComandos.Crear(query, parametros);
             adapter.SelectCommand = command;            
@@ -280,6 +268,14 @@ namespace FrbaCommerce.Comprar_Ofertar
             this.Hide();
             new VerPublicacion(idPublicacionElegida).ShowDialog();
             this.Close();
+        }
+
+        private void botonLimpiar_Click(object sender, EventArgs e)
+        {
+            textBoxDescripcion.Clear();
+            comboBoxRubro.SelectedIndex = -1;
+            labelNrosPagina.Text = "";
+            dataGridView1.DataSource = null;
         }
 
         private void botonVolver_Click(object sender, EventArgs e)

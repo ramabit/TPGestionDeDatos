@@ -20,8 +20,6 @@ namespace FrbaCommerce.Listado_Estadistico
         {
             CargarTrimestres();
             CargarTiposDeListados();
-            comboBox_Trimestre.SelectedIndex = -1;
-            comboBox_TipoDeListado.SelectedIndex = -1;
         }
 
         private void CargarTrimestres()
@@ -34,6 +32,7 @@ namespace FrbaCommerce.Listado_Estadistico
             trimestres.Rows.Add("4to trimestre (Octubre - Diciembre");
             comboBox_Trimestre.DataSource = trimestres;
             comboBox_Trimestre.ValueMember = "trimestres";
+            comboBox_Trimestre.SelectedIndex = -1;
         }
 
         private void CargarTiposDeListados()
@@ -46,11 +45,33 @@ namespace FrbaCommerce.Listado_Estadistico
             tiposDeListados.Rows.Add("Clientes con mayor cantidad de publicaciones sin calificar");
             comboBox_TipoDeListado.DataSource = tiposDeListados;
             comboBox_TipoDeListado.ValueMember = "tiposDeListados";
+            comboBox_TipoDeListado.SelectedIndex = -1;
         }
 
         private void button_Buscar_Click(object sender, EventArgs e)
         {
+            String anio = textBox_Anio.Text;
+            String trimestre = comboBox_Trimestre.Text;
+            String tipoDeListado = comboBox_TipoDeListado.Text;
 
+            String queryParaObtenerResultados = GetQueryObtenerResultados(tipoDeListado);
+        }
+
+        private string GetQueryObtenerResultados(String tipoDeListado)
+        {
+            switch (tipoDeListado)
+            {
+                case "Vendedores con mayor cantidad de productos no vendidos":
+                    return "";
+                case "Vendedores con mayor facturacion":
+                    return "";
+                case "Vendedores con mayores calificaciones":
+                    return "";
+                case "Clientes con mayor cantidad de publicaciones sin calificar":
+                    return "";
+                default:
+                    return "";
+            }
         }
 
         private void button_Limpiar_Click(object sender, EventArgs e)

@@ -36,12 +36,13 @@
             // 
             // dataGridViewCompras
             // 
+            this.dataGridViewCompras.AllowUserToAddRows = false;
+            this.dataGridViewCompras.AllowUserToDeleteRows = false;
             this.dataGridViewCompras.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewCompras.Location = new System.Drawing.Point(12, 63);
             this.dataGridViewCompras.Name = "dataGridViewCompras";
             this.dataGridViewCompras.Size = new System.Drawing.Size(551, 180);
             this.dataGridViewCompras.TabIndex = 0;
-            this.dataGridViewCompras.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewCompras_CellContentClick);
             // 
             // labelTitulo
             // 

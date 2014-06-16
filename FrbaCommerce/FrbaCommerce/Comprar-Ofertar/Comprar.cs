@@ -59,7 +59,7 @@ namespace FrbaCommerce.Comprar_Ofertar
             {
                 parametros.Clear();
                 parametros.Add(new SqlParameter("@usuario", vendedorId));
-                String queryEmpresa = "SELECT * FROM LOS_SUPER_AMIGOS.Empresa WHERE usuario_id = @usuario and habilitado = 1)";
+                String queryEmpresa = "SELECT * FROM LOS_SUPER_AMIGOS.Empresa WHERE usuario_id = @usuario and habilitado = 1";
                 SqlDataReader readerEmpresa = builderDeComandos.Crear(queryEmpresa, parametros).ExecuteReader();
                 readerEmpresa.Read();
                 labelNombre.Text = (String)readerEmpresa["razon_social"];
