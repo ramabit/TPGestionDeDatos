@@ -731,3 +731,13 @@ BEGIN
 	FROM inserted i, LOS_SUPER_AMIGOS.Publicacion p
 	WHERE p.id = i.publicacion_id	
 END
+
+-- CREAR USUARIO ADMIN 
+insert  into LOS_SUPER_AMIGOS.Usuario
+(username, password)
+values('admin','e6b87050bfcb8143fcb8db0170a4dc9ed00d904ddd3e2a4ad1b1e8dc0fdc9be7')
+-- la contraseña es la encriptacion de "w23e"
+
+insert into LOS_SUPER_AMIGOS.Rol_x_Usuario
+(rol_id,usuario_id)
+select top 1 1 ,id from LOS_SUPER_AMIGOS.Usuario order by id DESC
