@@ -16,6 +16,7 @@ namespace FrbaCommerce.Historial_Cliente
         private String query;
         private SqlCommand command;
         private IList<SqlParameter> parametros = new List<SqlParameter>();
+        private ComunicadorConBaseDeDatos comunicador = new ComunicadorConBaseDeDatos();
 
         public Historial()
         {
@@ -43,9 +44,9 @@ namespace FrbaCommerce.Historial_Cliente
         {
             String opcion = comboBox_opciones.Text;
 
-            if (opcion == "Compras") CargarInformacion("SELECT publicacion.descripcion Producto, compra.cantidad Cantidad, publicacion.precio Precio, compra.fecha Fecha, a_quien.username 'A quien' FROM LOS_SUPER_AMIGOS.Compra compra, LOS_SUPER_AMIGOS.Publicacion publicacion, LOS_SUPER_AMIGOS.Usuario a_quien  WHERE compra.publicacion_id = publicacion.id AND publicacion.usuario_id = a_quien.id AND compra.usuario_id = @idUsuario");
-            if (opcion == "Ofertas") CargarInformacion("SELECT publicacion.descripcion Producto, compra.cantidad Cantidad, publicacion.precio Precio, compra.fecha Fecha, a_quien.username 'A quien' FROM LOS_SUPER_AMIGOS.Compra compra, LOS_SUPER_AMIGOS.Publicacion publicacion, LOS_SUPER_AMIGOS.Usuario a_quien  WHERE compra.publicacion_id = publicacion.id AND publicacion.usuario_id = a_quien.id AND compra.usuario_id = @idUsuario");
-            if (opcion == "Calificaciones") CargarInformacion("SELECT publicacion.descripcion Producto, oferta.monto Cantidad, publicacion.precio Precio, oferta.fecha Fecha, a_quien.username 'A quien', LOS_SUPER_AMIGOS.gano_subasta(oferta.id) 'Gano la subasta' FROM LOS_SUPER_AMIGOS.Oferta oferta, LOS_SUPER_AMIGOS.Publicacion publicacion, LOS_SUPER_AMIGOS.Usuario a_quien  WHERE oferta.publicacion_id = publicacion.id AND publicacion.usuario_id = a_quien.id AND oferta.usuario_id = @idUsuario");
+            if (opcion == "Compras") CargarInformacion("publicacion.descripcion Producto, compra.cantidad Cantidad, publicacion.precio Precio, compra.fecha Fecha, a_quien.username 'A quien'", "LOS_SUPER_AMIGOS.Compra compra, LOS_SUPER_AMIGOS.Publicacion publicacion, LOS_SUPER_AMIGOS.Usuario a_quien", "compra.publicacion_id = publicacion.id AND publicacion.usuario_id = a_quien.id AND compra.usuario_id = @idUsuario");
+            if (opcion == "Ofertas") CargarInformacion("user1.username 'De', user2.username 'A quien', oferta.monto 'Monto ofertado', oferta.fecha 'Cuando oferto', publicacion.descripcion 'Publicacion', LOS_SUPER_AMIGOS.gano_subasta(oferta.id) 'Gano la subasta'", "LOS_SUPER_AMIGOS.Oferta oferta, LOS_SUPER_AMIGOS.Publicacion publicacion, LOS_SUPER_AMIGOS.Usuario user1, LOS_SUPER_AMIGOS.Usuario user2", "oferta.publicacion_id = publicacion.id AND oferta.usuario_id = user1.id AND publicacion.usuario_id = user2.id AND (oferta.usuario_id = @idUsuario OR publicacion.usuario_id = @idUsuario)");
+            if (opcion == "Calificaciones") CargarInformacion("user1.username 'De', user2.username 'A quien', calificacion.cantidad_estrellas 'Estrellas', calificacion.descripcion 'Descripcion calificacion', publicacion.descripcion 'Publicacion', publicacion.tipo 'Tipo de publicacion', compra.fecha 'Cuando', compra.cantidad 'Cuantos productos', (compra.cantidad * publicacion.precio) 'Monto pagado'", "LOS_SUPER_AMIGOS.Compra compra, LOS_SUPER_AMIGOS.Calificacion calificacion, LOS_SUPER_AMIGOS.Publicacion publicacion, LOS_SUPER_AMIGOS.Usuario user1, LOS_SUPER_AMIGOS.Usuario user2", "compra.calificacion_id = calificacion.id AND compra.usuario_id = user1.id AND publicacion.usuario_id = user2.id AND compra.publicacion_id = publicacion.id AND (compra.usuario_id = @idUsuario OR publicacion.usuario_id = @idUsuario)");
         }
 
         public void CargarInformacion(String query)
@@ -57,6 +58,11 @@ namespace FrbaCommerce.Historial_Cliente
             adapter.SelectCommand = command;
             adapter.Fill(compras);
             dataGridView_Historial.DataSource = compras.Tables[0].DefaultView;
+        }
+
+        public void CargarInformacion(String select, String from, String where)
+        {
+            dataGridView_Historial.DataSource = comunicador.SelectDataTableConUsuario(select, from, where);
         }
 
         private void button_Buscar_Click(object sender, EventArgs e)

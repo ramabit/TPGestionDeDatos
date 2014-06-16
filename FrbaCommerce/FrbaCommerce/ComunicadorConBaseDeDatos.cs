@@ -204,7 +204,7 @@ namespace FrbaCommerce
         public DataTable SelectDataTableConUsuario(String que, String deDonde, String condiciones)
         {
             parametros.Clear();
-            parametros.Add(new SqlParameter("@idUsuario", 2));//UsuarioSesion.Usuario.id));
+            parametros.Add(new SqlParameter("@idUsuario", UsuarioSesion.Usuario.id));
             command = builderDeComandos.Crear("SELECT " + que + " FROM " + deDonde + " WHERE " + condiciones, parametros);
             DataSet datos = new DataSet();
             SqlDataAdapter adapter = new SqlDataAdapter();

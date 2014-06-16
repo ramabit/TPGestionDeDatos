@@ -175,34 +175,34 @@
       <DependentUpon>Listado.cs</DependentUpon>
     </Compile>
     <Compile Include="BuilderDeComandos.cs" />
-    <Compile Include="Calificar Vendedor\Comprar-Ofertar\BuscadorPublicaciones.cs">
+    <Compile Include="Comprar-Ofertar\BuscadorPublicaciones.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Calificar Vendedor\Comprar-Ofertar\BuscadorPublicaciones.Designer.cs">
+    <Compile Include="Comprar-Ofertar\BuscadorPublicaciones.Designer.cs">
       <DependentUpon>BuscadorPublicaciones.cs</DependentUpon>
     </Compile>
-    <Compile Include="Calificar Vendedor\Comprar-Ofertar\Comprar.cs">
+    <Compile Include="Comprar-Ofertar\Comprar.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Calificar Vendedor\Comprar-Ofertar\Comprar.Designer.cs">
+    <Compile Include="Comprar-Ofertar\Comprar.Designer.cs">
       <DependentUpon>Comprar.cs</DependentUpon>
     </Compile>
-    <Compile Include="Calificar Vendedor\Comprar-Ofertar\Ofertar.cs">
+    <Compile Include="Comprar-Ofertar\Ofertar.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Calificar Vendedor\Comprar-Ofertar\Ofertar.Designer.cs">
+    <Compile Include="Comprar-Ofertar\Ofertar.Designer.cs">
       <DependentUpon>Ofertar.cs</DependentUpon>
     </Compile>
-    <Compile Include="Calificar Vendedor\Comprar-Ofertar\Preguntar.cs">
+    <Compile Include="Comprar-Ofertar\Preguntar.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Calificar Vendedor\Comprar-Ofertar\Preguntar.designer.cs">
+    <Compile Include="Comprar-Ofertar\Preguntar.designer.cs">
       <DependentUpon>Preguntar.cs</DependentUpon>
     </Compile>
-    <Compile Include="Calificar Vendedor\Comprar-Ofertar\VerPublicacion.cs">
+    <Compile Include="Comprar-Ofertar\VerPublicacion.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Calificar Vendedor\Comprar-Ofertar\VerPublicacion.Designer.cs">
+    <Compile Include="Comprar-Ofertar\VerPublicacion.Designer.cs">
       <DependentUpon>VerPublicacion.cs</DependentUpon>
     </Compile>
     <Compile Include="ComunicadorConBaseDeDatos.cs" />
@@ -364,19 +364,19 @@
     <EmbeddedResource Include="Calificar Vendedor\Listado.resx">
       <DependentUpon>Listado.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Calificar Vendedor\Comprar-Ofertar\BuscadorPublicaciones.resx">
+    <EmbeddedResource Include="Comprar-Ofertar\BuscadorPublicaciones.resx">
       <DependentUpon>BuscadorPublicaciones.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Calificar Vendedor\Comprar-Ofertar\Comprar.resx">
+    <EmbeddedResource Include="Comprar-Ofertar\Comprar.resx">
       <DependentUpon>Comprar.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Calificar Vendedor\Comprar-Ofertar\Ofertar.resx">
+    <EmbeddedResource Include="Comprar-Ofertar\Ofertar.resx">
       <DependentUpon>Ofertar.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Calificar Vendedor\Comprar-Ofertar\Preguntar.resx">
+    <EmbeddedResource Include="Comprar-Ofertar\Preguntar.resx">
       <DependentUpon>Preguntar.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Calificar Vendedor\Comprar-Ofertar\VerPublicacion.resx">
+    <EmbeddedResource Include="Comprar-Ofertar\VerPublicacion.resx">
       <DependentUpon>VerPublicacion.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Editar Publicacion\EditarPublicacion.resx">
