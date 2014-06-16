@@ -13,10 +13,11 @@ namespace FrbaCommerce.Facturar_Publicaciones
     public partial class Facturar : Form
     {
         private BuilderDeComandos builderDeComandos = new BuilderDeComandos();
-        private SqlCommand command;
         private IList<SqlParameter> parametros = new List<SqlParameter>();
         int cantidadMin;
         int cantidadMax;
+        private SqlCommand command;
+        private String formaDePago;
 
         public Facturar()
         {
@@ -174,6 +175,46 @@ namespace FrbaCommerce.Facturar_Publicaciones
             parametros.Add(new SqlParameter("@id", UsuarioSesion.Usuario.id));
             parametros.Add(new SqlParameter("@cant", valor));
             
+            // Creo una tabla con todas las ventas por facturar
+            String totalidadVentasFacturar = "create table LOS_SUPER_AMIGOS.Compra_Comision"
+                                    + " (compra_id numeric(18,0),"
+                                    + " compra_fecha datetime,"
+                                    + " compra_publicacion numeric(18,0),"
+                                    + " compra_cantidad numeric(18,0))"
+                                    + " insert into LOS_SUPER_AMIGOS.Compra_Comision"
+                                    + " (compra_id, compra_fecha, compra_publicacion, compra_cantidad)" 
+                                    + " select top (@cant) c.id, c.fecha, c.publicacion_id, c.cantidad"
+                                    + " from LOS_SUPER_AMIGOS.Usuario u, LOS_SUPER_AMIGOS.Compra c, LOS_SUPER_AMIGOS.Publicacion p"
+                                    + " where u.id = @id and p.usuario_id = u.id and c.publicacion_id = p.id and c.facturada = 0"
+                                    + " order by c.fecha";
+            builderDeComandos.Crear(totalidadVentasFacturar, parametros).ExecuteNonQuery();
+
+
+            String consulta = "LOS_SUPER_AMIGOS.SacarBonificaciones";
+            parametros.Clear();
+            parametros.Add(new SqlParameter("@id", UsuarioSesion.Usuario.id));
+            SqlParameter parametroContador = new SqlParameter("@id", SqlDbType.Int);
+            parametroContador.Direction = ParameterDirection.Output;
+            parametros.Add(parametroContador);
+            SqlParameter parametroMonto = new SqlParameter("@id", SqlDbType.Decimal);
+            parametroMonto.Direction = ParameterDirection.Output;
+            parametros.Add(parametroMonto);
+            command = builderDeComandos.Crear(consulta, parametros);
+            command.CommandType = CommandType.StoredProcedure;
+            command.ExecuteNonQuery();
+
+            int cantidadDeBonificaciones = (int)parametroContador.Value;
+            Decimal montoDescontadoBonificaciones = 0;
+            montoDescontadoBonificaciones = (Decimal)parametroMonto.Value;
+
+            String borroTablaBon = "drop table LOS_SUPER_AMIGOS.Compra_Comision";
+            parametros.Clear();
+            builderDeComandos.Crear(borroTablaBon, parametros).ExecuteNonQuery();
+
+
+            parametros.Clear();
+            parametros.Add(new SqlParameter("@id", UsuarioSesion.Usuario.id));
+            parametros.Add(new SqlParameter("@cant", valor - cantidadDeBonificaciones));
             // Obtengo las ventas que voy a facturar pagando su comision
             String obtengoComprasPorComisionar = "create table LOS_SUPER_AMIGOS.Compra_Comision"
                                             + " (compra_id numeric(18,0),"
@@ -230,7 +271,15 @@ namespace FrbaCommerce.Facturar_Publicaciones
             parametros.Add(new SqlParameter("@idF", idFact));
             builderDeComandos.Crear(actualizoTotal, parametros).ExecuteNonQuery();
 
-            
+            // Inserto la forma de pago en la factura
+            String formaPago = "update LOS_SUPER_AMIGOS.Factura"
+                        + " set forma_pago_id = (select f.id from LOS_SUPER_AMIGOS.Forma_Pago f where f.descripcion = @pago)"
+                        + " where id = @idF";
+            parametros.Clear();
+            parametros.Add(new SqlParameter("@idF", idFact));
+            parametros.Add(new SqlParameter("@pago", formaDePago));
+            builderDeComandos.Crear(formaPago, parametros).ExecuteNonQuery();
+
             // Borro tabla temporal con ventas que se facturan pagando comision
             String borroTablaTemporal = "drop table LOS_SUPER_AMIGOS.Compra_Comision";
             parametros.Clear();
@@ -238,7 +287,7 @@ namespace FrbaCommerce.Facturar_Publicaciones
 
             if (labelCantidadCostos.Text != "0" || dropDownFacturar.Text != "0")
             {
-                MessageBox.Show("Factura realizada");
+                MessageBox.Show("Factura realizada. Por bonificaciones se desconto: " + montoDescontadoBonificaciones);
             }
             else
             {
@@ -262,6 +311,7 @@ namespace FrbaCommerce.Facturar_Publicaciones
             {
                 textBoxNumero.Enabled = true;
                 textBoxBanco.Enabled = true;
+                formaDePago = "Tarjeta de credito";
             }
             else
             {
@@ -272,6 +322,10 @@ namespace FrbaCommerce.Facturar_Publicaciones
 
         private void radioButtonEfectivo_CheckedChanged(object sender, EventArgs e)
         {
+            if (radioButtonEfectivo.Checked)
+            {
+                formaDePago = "Efectivo";
+            }
         }
 
         private void dropDownFacturar_SelectedItemChanged(object sender, EventArgs e)
