@@ -98,6 +98,15 @@ DROP VIEW LOS_SUPER_AMIGOS.VistaCantidadVendida
 IF OBJECT_ID('LOS_SUPER_AMIGOS.VistaOfertaMax') IS NOT NULL
 DROP VIEW LOS_SUPER_AMIGOS.VistaOfertaMax
 
+IF OBJECT_ID('LOS_SUPER_AMIGOS.finalizar_x_fin_stock') IS NOT NULL
+DROP TRIGGER LOS_SUPER_AMIGOS.finalizar_x_fin_stock
+
+IF OBJECT_ID('LOS_SUPER_AMIGOS.agregar_valor_default_de_nueva_visiblidad_en_comisiones') IS NOT NULL
+DROP TRIGGER LOS_SUPER_AMIGOS.agregar_valor_default_de_nueva_visiblidad_en_comisiones
+
+IF OBJECT_ID('LOS_SUPER_AMIGOS.agregar_valor_default_de_nuevo_usuario_en_comisiones') IS NOT NULL
+DROP TRIGGER LOS_SUPER_AMIGOS.agregar_valor_default_de_nueva_visiblidad_en_comisiones
+
 GO
 
 CREATE PROCEDURE LOS_SUPER_AMIGOS.crear_cliente
@@ -453,9 +462,15 @@ PRIMARY KEY (usuario_id, visibilidad_id),
 FOREIGN KEY (usuario_id) REFERENCES LOS_SUPER_AMIGOS.Usuario (id),
 FOREIGN KEY (visibilidad_id) REFERENCES LOS_SUPER_AMIGOS.Visibilidad (id),
 )
-
+GO
 -- INSERTAR Usuario
+-- CREAR USUARIO ADMIN
+DECLARE @id_admin numeric(18,0)
+exec LOS_SUPER_AMIGOS.crear_usuario_con_valores 'admin', 'e6b87050bfcb8143fcb8db0170a4dc9ed00d904ddd3e2a4ad1b1e8dc0fdc9be7', @id_admin output
+-- la contraseña es la encriptacion de "w23e"
 
+-- Setea al nuevo admin, el rol Administrador que es el 1
+INSERT INTO LOS_SUPER_AMIGOS.Rol_x_Usuario (rol_id,usuario_id) VALUES (1, @id_admin)
 
 -- INSERTAR Direcciones de Empresas
 INSERT INTO LOS_SUPER_AMIGOS.Direccion
@@ -692,7 +707,7 @@ GO
 -- INSERTA Comisiones_Usuario_x_Visibilidad
 INSERT INTO LOS_SUPER_AMIGOS.Comisiones_Usuario_x_Visibilidad
 ([usuario_id], [visibilidad_id], [contador_comisiones])
-select u.id id_usuario, v.id id_visibilidad, COUNT(c.id) ventas
+select u.id id_usuario, v.id id_visibilidad, (COUNT(c.id)%10) ventas
 from LOS_SUPER_AMIGOS.Usuario u, LOS_SUPER_AMIGOS.Visibilidad v, 
 LOS_SUPER_AMIGOS.Compra c, LOS_SUPER_AMIGOS.Publicacion p
 where p.usuario_id = u.id and p.visibilidad_id = v.id and c.publicacion_id = p.id
@@ -731,3 +746,27 @@ BEGIN
 	FROM inserted i, LOS_SUPER_AMIGOS.Publicacion p
 	WHERE p.id = i.publicacion_id	
 END
+GO
+
+CREATE TRIGGER agregar_valor_default_de_nueva_visiblidad_en_comisiones ON LOS_SUPER_AMIGOS.Visibilidad
+FOR INSERT
+AS
+BEGIN
+	INSERT INTO LOS_SUPER_AMIGOS.Comisiones_Usuario_x_Visibilidad 
+			([usuario_id], [visibilidad_id], [contador_comisiones])
+			SELECT DISTINCT comision.usuario_id, inserted.id, 0
+			FROM LOS_SUPER_AMIGOS.Comisiones_Usuario_x_Visibilidad comision, INSERTED inserted 	
+END
+GO
+
+CREATE TRIGGER agregar_valor_default_de_nuevo_usuario_en_comisiones ON LOS_SUPER_AMIGOS.Usuario
+FOR INSERT
+AS
+BEGIN
+	INSERT INTO LOS_SUPER_AMIGOS.Comisiones_Usuario_x_Visibilidad 
+			([usuario_id], [visibilidad_id], [contador_comisiones])
+			SELECT DISTINCT inserted.id, visibilidad.id, 0
+			FROM LOS_SUPER_AMIGOS.Visibilidad visibilidad, INSERTED inserted 	
+END
+GO
+
