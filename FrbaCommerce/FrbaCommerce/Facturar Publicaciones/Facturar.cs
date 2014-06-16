@@ -33,6 +33,7 @@ namespace FrbaCommerce.Facturar_Publicaciones
            textBoxNumero.Enabled = false;
         }
 
+        // Calculo el monto a pagar en la factura
         private void CalcularMonto()
         {
             int valor;
@@ -41,6 +42,9 @@ namespace FrbaCommerce.Facturar_Publicaciones
             parametros.Clear();
             parametros.Add(new SqlParameter("@id", UsuarioSesion.Usuario.id));
             parametros.Add(new SqlParameter("@cant", valor));
+
+
+
 
             String monto = "create table LOS_SUPER_AMIGOS.Compra_Comision"
                         + " (compra_id numeric(18,0),"
