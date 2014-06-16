@@ -75,8 +75,8 @@ namespace FrbaCommerce.Objetos
             if (fechaDeCreacion.ToString() == "")
                 throw new CampoVacioException();
 
-            if (!esFecha(fechaDeCreacion.ToString()))
-                throw new FormatoInvalidoException();
+            if (!esFechaPasada(fechaDeNacimiento))
+                throw new FechaPasadaException();
 
             this.fechaDeCreacion = fechaDeCreacion;
         }

@@ -85,8 +85,8 @@ namespace FrbaCommerce.Objetos
             if (fechaDeNacimiento.ToString() == "")
                 throw new CampoVacioException();
 
-            if (!esFecha(fechaDeNacimiento.ToString()))
-                throw new FormatoInvalidoException();
+            if (!esFechaPasada(fechaDeNacimiento))
+                throw new FechaPasadaException();
 
             this.fechaDeNacimiento = fechaDeNacimiento;
         }

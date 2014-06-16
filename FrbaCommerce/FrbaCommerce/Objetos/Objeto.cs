@@ -19,10 +19,14 @@ namespace FrbaCommerce.Objetos
             return Double.TryParse(numString, out number1); // devuelve true si pudo convertirlo, es decir, es numero
         }
 
-        public Boolean esFecha(String dateString)
+        public Boolean esFechaPasada(DateTime dateTime)
         {
-            DateTime date = DateTime.Now;
-            return DateTime.TryParse(dateString, out date); // devuelve true si pudo convertirlo, es decir, es numero
+            DateTime dateNow = DateTime.Now;
+            int comparacion = dateTime.CompareTo(dateNow);
+            if (comparacion >= 0)
+                return false;
+            else
+                return true;
         }
     }
 }

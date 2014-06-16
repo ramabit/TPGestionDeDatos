@@ -106,6 +106,11 @@ namespace FrbaCommerce.Generar_Publicacion
                 MessageBox.Show("Datos mal ingresados");
                 return;
             }
+            catch (FechaPasadaException exception)
+            {
+                MessageBox.Show("Fecha no valida");
+                return;
+            }
             
             VolverAlMenuPrincipal();
         }

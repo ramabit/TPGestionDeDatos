@@ -210,6 +210,7 @@
     <Compile Include="Exceptions\CampoVacioException.cs" />
     <Compile Include="Exceptions\ClienteYaExisteException.cs" />
     <Compile Include="Exceptions\CuitYaExisteException.cs" />
+    <Compile Include="Exceptions\FechaPasadaException.cs" />
     <Compile Include="Exceptions\FormatoInvalidoException.cs" />
     <Compile Include="Exceptions\RazonSocialYaExisteException.cs" />
     <Compile Include="Exceptions\TelefonoYaExisteException.cs" />

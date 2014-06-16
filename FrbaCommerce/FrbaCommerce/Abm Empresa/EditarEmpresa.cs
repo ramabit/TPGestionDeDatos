@@ -141,6 +141,11 @@ namespace FrbaCommerce.ABM_Empresa
                 MessageBox.Show("RazonSocial ya existe");
                 return;
             }
+            catch (FechaPasadaException exception)
+            {
+                MessageBox.Show("Fecha no valida");
+                return;
+            }
 
             this.Close();
         }

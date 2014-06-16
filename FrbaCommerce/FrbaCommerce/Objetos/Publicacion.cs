@@ -73,8 +73,8 @@ namespace FrbaCommerce.Objetos
             if (fechaDeInicio.ToString() == "")
                 throw new CampoVacioException();
 
-            if (!esFecha(fechaDeInicio.ToString()))
-                throw new FormatoInvalidoException();
+            if (esFechaPasada(fechaDeInicio))
+                throw new FechaPasadaException();
 
             this.fechaDeInicio = fechaDeInicio;
         }
@@ -88,9 +88,6 @@ namespace FrbaCommerce.Objetos
         {
             if (fechaDeVencimiento.ToString() == "")
                 throw new CampoVacioException();
-
-            if (!esFecha(fechaDeVencimiento.ToString()))
-                throw new FormatoInvalidoException();
 
             this.fechaDeVencimiento = fechaDeVencimiento;
         }
@@ -158,7 +155,7 @@ namespace FrbaCommerce.Objetos
                 throw new CampoVacioException();
 
             if (!esNumero(precio))
-                throw new FormatoInvalidoException();
+                throw new FechaPasadaException();
 
             this.precio = precio;
         }

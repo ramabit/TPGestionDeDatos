@@ -149,6 +149,11 @@ namespace FrbaCommerce.ABM_Cliente
                 MessageBox.Show("El telefono ya existe");
                 return;
             }
+            catch (FechaPasadaException exception)
+            {
+                MessageBox.Show("Fecha no valida");
+                return;
+            }
 
             this.Close();
         }
