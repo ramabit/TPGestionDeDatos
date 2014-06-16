@@ -624,13 +624,12 @@ BEGIN
 END
 GO
 
--- SET IDENTITY_INSERT to ON.
 SET IDENTITY_INSERT LOS_SUPER_AMIGOS.Publicacion ON;
 GO
 
 INSERT INTO LOS_SUPER_AMIGOS.Publicacion
-([id], [descripcion], [stock], [fecha_inicio], [fecha_vencimiento], [precio], [rubro_id], [visibilidad_id], [usuario_id], [estado], [tipo], [costo_pagado])
-SELECT DISTINCT Publicacion_Cod, Publicacion_Descripcion, Publicacion_Stock, Publicacion_Fecha, Publicacion_Fecha_Venc, Publicacion_Precio, (SELECT id FROM LOS_SUPER_AMIGOS.Rubro r WHERE Publicacion_Rubro_Descripcion = r.descripcion), Publicacion_Visibilidad_Cod, LOS_SUPER_AMIGOS.agregar_id_publ(Publ_Cli_Dni, Publ_Empresa_Razon_Social),Publicacion_Estado,Publicacion_Tipo, 1 FROM gd_esquema.Maestra
+([id], [descripcion], [stock], [fecha_inicio], [fecha_vencimiento], [precio], [rubro_id], [visibilidad_id], [usuario_id], [estado], [tipo], [costo_pagado], [se_realizan_preguntas])
+SELECT DISTINCT Publicacion_Cod, Publicacion_Descripcion, Publicacion_Stock, Publicacion_Fecha, Publicacion_Fecha_Venc, Publicacion_Precio, (SELECT id FROM LOS_SUPER_AMIGOS.Rubro r WHERE Publicacion_Rubro_Descripcion = r.descripcion), Publicacion_Visibilidad_Cod, LOS_SUPER_AMIGOS.agregar_id_publ(Publ_Cli_Dni, Publ_Empresa_Razon_Social),Publicacion_Estado,Publicacion_Tipo, 1, 1 FROM gd_esquema.Maestra
 WHERE ISNULL(Publicacion_Rubro_Descripcion, '') != ''
 
 SET IDENTITY_INSERT LOS_SUPER_AMIGOS.Publicacion OFF;
