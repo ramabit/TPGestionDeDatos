@@ -124,7 +124,7 @@ namespace FrbaCommerce.Editar_Publicacion
         {
             Publicacion publicacion = comunicador.ObtenerPublicacion(idPublicacion);
             textBox_Descripcion.Text = publicacion.GetDescripcion();
-            textBox_FechaDeInicio.Text = publicacion.GetFechaDeInicio();
+            textBox_FechaDeInicio.Text = Convert.ToString(publicacion.GetFechaDeInicio());
             textBox_Precio.Text = publicacion.GetPrecio();
             textBox_Stock.Text = publicacion.GetStock();
             comboBox_Rubro.SelectedValue = (String) comunicador.SelectFromWhere("descripcion", "Rubro", "id", publicacion.GetIdRubro());

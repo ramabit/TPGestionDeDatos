@@ -14,7 +14,7 @@ namespace FrbaCommerce.Objetos
         private String apellido;
         private Decimal idTipoDeDocumento;
         private String numeroDeDocumento;
-        private String fechaDeNacimiento;
+        private DateTime fechaDeNacimiento;
         private String mail;
         private String telefono;
         private Decimal idDireccion;
@@ -80,18 +80,18 @@ namespace FrbaCommerce.Objetos
             return this.numeroDeDocumento;
         }
 
-        public void SetFechaDeNacimiento(String fechaDeNacimiento)
+        public void SetFechaDeNacimiento(DateTime fechaDeNacimiento)
         {
-            if (fechaDeNacimiento == "")
+            if (fechaDeNacimiento.ToString() == "")
                 throw new CampoVacioException();
 
-            if (!esFecha(fechaDeNacimiento))
+            if (!esFecha(fechaDeNacimiento.ToString()))
                 throw new FormatoInvalidoException();
 
             this.fechaDeNacimiento = fechaDeNacimiento;
         }
 
-        public String GetFechaDeNacimiento()
+        public DateTime GetFechaDeNacimiento()
         {
             return this.fechaDeNacimiento;
         }
@@ -186,7 +186,7 @@ namespace FrbaCommerce.Objetos
         {
             this.nombre = Convert.ToString(reader["nombre"]);
             this.apellido = Convert.ToString(reader["apellido"]);
-            this.fechaDeNacimiento = Convert.ToString(reader["fecha_nacimiento"]);
+            this.fechaDeNacimiento = Convert.ToDateTime(reader["fecha_nacimiento"]);
             this.mail = Convert.ToString(reader["mail"]);
             this.telefono = Convert.ToString(reader["telefono"]);
             this.idTipoDeDocumento = Convert.ToDecimal(reader["tipo_de_documento_id"]);

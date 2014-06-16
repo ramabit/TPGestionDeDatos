@@ -37,7 +37,7 @@ namespace FrbaCommerce.ABM_Empresa
             textBox_RazonSocial.Text = empresa.GetRazonSocial();
             textBox_NombreDeContacto.Text = empresa.GetNombreDeContacto();
             textBox_CUIT.Text = empresa.GetCuit();
-            textBox_FechaDeCreacion.Text = empresa.GetFechaDeCreacion();
+            textBox_FechaDeCreacion.Text = Convert.ToString(empresa.GetFechaDeCreacion());
             textBox_Mail.Text = empresa.GetMail();
             textBox_Telefono.Text = empresa.GetTelefono();
             textBox_Ciudad.Text = empresa.GetCiudad();
@@ -63,7 +63,7 @@ namespace FrbaCommerce.ABM_Empresa
             String razonSocial = textBox_RazonSocial.Text;
             String nombreDeContacto = textBox_NombreDeContacto.Text;
             String cuit = textBox_CUIT.Text;
-            String fechaDeCreacion = textBox_FechaDeCreacion.Text;
+            DateTime fechaDeCreacion = Convert.ToDateTime(textBox_FechaDeCreacion.Text);
             String mail = textBox_Mail.Text;
             String telefono = textBox_Telefono.Text;
             String ciudad = textBox_Ciudad.Text;

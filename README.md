@@ -1,18 +1,8 @@
-#Generar publicacion
-- [ ] Agregar validaciones
-
-# General de ABM Filtro
-- [ ] Poner el texto de los headers en mayuscula
-
-# General de ABM Agregar
-- [ ] Informar si se crea un cliente/empresa con un campo que ya existe y debe ser unico
-
 #Otros
 - [ ] Tener en cuenta que pasa si se no se completan los campos
 - [ ] Agregar rubro_id en publicacion en DER
-- [ ] Modificar el usuario_id en generar_publicacion
-- [ ] Modificar la fecha de vencimiento en generar_publicacion
-- [ ] Agregar restriccion de borrador y activa
+- [x] Modificar la fecha de vencimiento en generar_publicacion
+- [x] Agregar restriccion de borrador y activa
 - [ ] No dejar crear usuarios que empiecen con USER
 - [ ] Incluir CUIL en Cliente: https://groups.google.com/forum/#!topic/gestiondedatos/qxvswJBzfIk
 - [ ] Diferencia entre dado de baja e inhabilitado: https://groups.google.com/forum/#!topic/gestiondedatos/TM9z10uu934
@@ -24,6 +14,7 @@
 - [x] Casos repetidos de dni en Tabla maestra
 - [ ] Crear un stored procedure para insertar una calificacion y obtener el id. O pensar en un trigger
 - [ ] Hardcodeo un 7 en duracion. Si se fijan siempre es 7. Habria que buscar la forma de no hardcodearlo.
-- [ ] Agregar validaciones en editar (cliente, empresa)
-- [ ] Instanciar objetos.
+- [ ] Ojo con el habilitado en editar
+- [x] Migrar bien el porcentaje
+- [ ] Se puede habilitar y deshabilitar publicaciones. Si es asi, en que estados?
 

@@ -79,9 +79,9 @@ namespace FrbaCommerce.Objetos
             this.fechaDeInicio = fechaDeInicio;
         }
 
-        public String GetFechaDeInicio()
+        public DateTime GetFechaDeInicio()
         {
-            return this.fechaDeInicio.ToString();
+            return this.fechaDeInicio;
         }
 
         public void SetFechaDeVencimiento(DateTime fechaDeVencimiento)
@@ -95,9 +95,9 @@ namespace FrbaCommerce.Objetos
             this.fechaDeVencimiento = fechaDeVencimiento;
         }
 
-        public String GetFechaDeVencimiento()
+        public DateTime GetFechaDeVencimiento()
         {
-            return this.fechaDeVencimiento.ToString();
+            return this.fechaDeVencimiento;
         }
 
         public void SetIdRubro(Decimal idRubro)

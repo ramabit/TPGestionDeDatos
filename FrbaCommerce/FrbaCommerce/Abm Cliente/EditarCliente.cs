@@ -44,7 +44,7 @@ namespace FrbaCommerce.ABM_Cliente
             textBox_Nombre.Text = cliente.GetNombre();
             textBox_Apellido.Text = cliente.GetApellido();
             textBox_NumeroDeDoc.Text = cliente.GetNumeroDeDocumento();
-            textBox_FechaDeNacimiento.Text = cliente.GetFechaDeNacimiento();
+            textBox_FechaDeNacimiento.Text = Convert.ToString(cliente.GetFechaDeNacimiento());
             textBox_Mail.Text = cliente.GetMail();
             textBox_Telefono.Text = cliente.GetTelefono();
             CargarDireccion(idDireccion);
@@ -75,7 +75,7 @@ namespace FrbaCommerce.ABM_Cliente
             String apellido = textBox_Apellido.Text;
             String tipoDeDocumento = comboBox_TipoDeDocumento.Text;
             String numeroDeDocumento = textBox_NumeroDeDoc.Text;
-            String fechaDeNacimiento = textBox_FechaDeNacimiento.Text;
+            DateTime fechaDeNacimiento = Convert.ToDateTime(textBox_FechaDeNacimiento.Text);
             String mail = textBox_Mail.Text;
             String telefono = textBox_Telefono.Text;
             String calle = textBox_Calle.Text;
