@@ -692,7 +692,7 @@ GO
 -- INSERTA Comisiones_Usuario_x_Visibilidad
 INSERT INTO LOS_SUPER_AMIGOS.Comisiones_Usuario_x_Visibilidad
 ([usuario_id], [visibilidad_id], [contador_comisiones])
-select u.id id_usuario, v.id id_visibilidad, COUNT(c.id) ventas
+select u.id id_usuario, v.id id_visibilidad, (COUNT(c.id)%10) ventas
 from LOS_SUPER_AMIGOS.Usuario u, LOS_SUPER_AMIGOS.Visibilidad v, 
 LOS_SUPER_AMIGOS.Compra c, LOS_SUPER_AMIGOS.Publicacion p
 where p.usuario_id = u.id and p.visibilidad_id = v.id and c.publicacion_id = p.id
