@@ -13,7 +13,7 @@ namespace FrbaCommerce.Objetos
         private String razonSocial;
         private String nombreDeContacto;
         private String cuit;
-        private String fechaDeCreacion;
+        private DateTime fechaDeCreacion;
         private String mail;
         private String telefono;
         private String ciudad;
@@ -70,18 +70,18 @@ namespace FrbaCommerce.Objetos
             return this.cuit;
         }
 
-        public void SetFechaDeCreacion(String fechaDeCreacion)
+        public void SetFechaDeCreacion(DateTime fechaDeCreacion)
         {
-            if (fechaDeCreacion == "")
+            if (fechaDeCreacion.ToString() == "")
                 throw new CampoVacioException();
 
-            if (!esFecha(fechaDeCreacion))
+            if (!esFecha(fechaDeCreacion.ToString()))
                 throw new FormatoInvalidoException();
 
             this.fechaDeCreacion = fechaDeCreacion;
         }
 
-        public String GetFechaDeCreacion()
+        public DateTime GetFechaDeCreacion()
         {
             return this.fechaDeCreacion;
         }

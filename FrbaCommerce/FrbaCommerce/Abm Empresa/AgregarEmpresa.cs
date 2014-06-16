@@ -36,7 +36,7 @@ namespace FrbaCommerce.ABM_Empresa
             String razonSocial = textBox_RazonSocial.Text;
             String nombreDeContacto = textBox_NombreDeContacto.Text;
             String cuit = textBox_CUIT.Text;
-            String fechaDeCreacion = textBox_FechaDeCreacion.Text;
+            DateTime fechaDeCreacion = Convert.ToDateTime(textBox_FechaDeCreacion.Text);
             String mail = textBox_Mail.Text;
             String telefono = textBox_Telefono.Text;
             String ciudad = textBox_Ciudad.Text;
