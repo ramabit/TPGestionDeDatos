@@ -392,6 +392,9 @@
       <DependentUpon>GenerarPublicacion.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Gestion de Preguntas\DatosPublicacion.resx" />
+    <EmbeddedResource Include="Listado Estadistico\Estadisticas.resx">
+      <DependentUpon>Estadisticas.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Login\CambiarContrasena.resx">
       <DependentUpon>CambiarContrasena.cs</DependentUpon>
     </EmbeddedResource>
