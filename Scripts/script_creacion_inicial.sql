@@ -463,14 +463,6 @@ FOREIGN KEY (usuario_id) REFERENCES LOS_SUPER_AMIGOS.Usuario (id),
 FOREIGN KEY (visibilidad_id) REFERENCES LOS_SUPER_AMIGOS.Visibilidad (id),
 )
 GO
--- INSERTAR Usuario
--- CREAR USUARIO ADMIN
-DECLARE @id_admin numeric(18,0)
-exec LOS_SUPER_AMIGOS.crear_usuario_con_valores 'admin', 'e6b87050bfcb8143fcb8db0170a4dc9ed00d904ddd3e2a4ad1b1e8dc0fdc9be7', @id_admin output
--- la contraseña es la encriptacion de "w23e"
-
--- Setea al nuevo admin, el rol Administrador que es el 1
-INSERT INTO LOS_SUPER_AMIGOS.Rol_x_Usuario (rol_id,usuario_id) VALUES (1, @id_admin)
 
 -- INSERTAR Direcciones de Empresas
 INSERT INTO LOS_SUPER_AMIGOS.Direccion
@@ -568,6 +560,15 @@ INSERT INTO LOS_SUPER_AMIGOS.Rol_x_Usuario
 	[usuario_id]
 )
 SELECT (SELECT id FROM LOS_SUPER_AMIGOS.Rol WHERE nombre = 'Cliente'), usuario_id FROM LOS_SUPER_AMIGOS.Cliente
+
+-- INSERTAR Usuario
+-- CREAR USUARIO ADMIN
+DECLARE @id_admin numeric(18,0)
+exec LOS_SUPER_AMIGOS.crear_usuario_con_valores 'admin', 'e6b87050bfcb8143fcb8db0170a4dc9ed00d904ddd3e2a4ad1b1e8dc0fdc9be7', @id_admin output
+-- la contraseña es la encriptacion de "w23e"
+
+-- Setea al nuevo admin, el rol Administrador que es el 1
+INSERT INTO LOS_SUPER_AMIGOS.Rol_x_Usuario (rol_id,usuario_id) VALUES (1, @id_admin)
 
 -- INSERTAR Funcionalidad
 INSERT INTO LOS_SUPER_AMIGOS.Funcionalidad
