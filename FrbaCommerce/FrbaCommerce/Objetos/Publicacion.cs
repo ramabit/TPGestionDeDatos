@@ -208,6 +208,7 @@ namespace FrbaCommerce.Objetos
             parametros.Add(new SqlParameter("@precio", this.precio));
             parametros.Add(new SqlParameter("@rubro_id", this.idRubro));
             parametros.Add(new SqlParameter("@visibilidad_id", this.idVisibilidad));
+            parametros.Add(new SqlParameter("@usuario_id", this.idUsuario));
             parametros.Add(new SqlParameter("@se_realizan_preguntas", this.pregunta));
             return parametros;
         }

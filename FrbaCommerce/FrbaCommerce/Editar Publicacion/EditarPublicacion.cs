@@ -155,6 +155,7 @@ namespace FrbaCommerce.Editar_Publicacion
             try
             {
                 Publicacion publicacion = new Publicacion();
+                publicacion.SetTipo(tipo);
                 publicacion.SetEstado(estado);
                 publicacion.SetDescripcion(descripcion);
                 publicacion.SetFechaDeInicio(fechaDeInicio);
@@ -164,7 +165,7 @@ namespace FrbaCommerce.Editar_Publicacion
                 publicacion.SetIdRubro(idRubro);
                 publicacion.SetIdVisibilidad(idVisibilidad);
                 Boolean pudoModificar = comunicador.Modificar(idPublicacion, publicacion);
-                if (pudoModificar) MessageBox.Show("La visibilidad se modifico correctamente");
+                if (pudoModificar) MessageBox.Show("La publicacion se modifico correctamente");
             }
             catch (CampoVacioException exception)
             {
