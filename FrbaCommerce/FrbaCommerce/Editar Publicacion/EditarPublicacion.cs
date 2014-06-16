@@ -140,7 +140,7 @@ namespace FrbaCommerce.Editar_Publicacion
             String tipo = comboBox_TiposDePublicacion.Text;
             String estado = comboBox_Estado.Text;
             String descripcion = textBox_Descripcion.Text;
-            String fechaDeInicio = textBox_FechaDeInicio.Text;
+            DateTime fechaDeInicio = Convert.ToDateTime(textBox_FechaDeInicio.Text);
             String rubro = comboBox_Rubro.Text;
             String visibilidad = comboBox_Visibilidad.Text;
             Boolean pregunta = checkBox_Pregunta.Checked;
@@ -159,7 +159,7 @@ namespace FrbaCommerce.Editar_Publicacion
                 publicacion.SetEstado(estado);
                 publicacion.SetDescripcion(descripcion);
                 publicacion.SetFechaDeInicio(fechaDeInicio);
-                publicacion.SetFechaDeVencimiento(Convert.ToString(Convert.ToDateTime(fechaDeInicio).AddDays(duracion)));
+                publicacion.SetFechaDeVencimiento(Convert.ToDateTime(Convert.ToString(Convert.ToDateTime(fechaDeInicio).AddDays(duracion))));
                 publicacion.SetStock(stock);
                 publicacion.SetPrecio(precio);
                 publicacion.SetIdRubro(idRubro);

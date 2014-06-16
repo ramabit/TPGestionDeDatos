@@ -13,8 +13,8 @@ namespace FrbaCommerce.Objetos
         private String tipo;
         private String estado;
         private String descripcion;
-        private String fechaDeInicio;
-        private String fechaDeVencimiento;
+        private DateTime fechaDeInicio;
+        private DateTime fechaDeVencimiento;
         private Decimal idRubro;
         private Decimal idVisibilidad;
         private Decimal idUsuario;
@@ -68,12 +68,12 @@ namespace FrbaCommerce.Objetos
             return this.descripcion;
         }
 
-        public void SetFechaDeInicio(String fechaDeInicio)
+        public void SetFechaDeInicio(DateTime fechaDeInicio)
         {
-            if (fechaDeInicio == "")
+            if (fechaDeInicio.ToString() == "")
                 throw new CampoVacioException();
 
-            if (!esFecha(fechaDeInicio))
+            if (!esFecha(fechaDeInicio.ToString()))
                 throw new FormatoInvalidoException();
 
             this.fechaDeInicio = fechaDeInicio;
@@ -81,15 +81,15 @@ namespace FrbaCommerce.Objetos
 
         public String GetFechaDeInicio()
         {
-            return this.fechaDeInicio;
+            return this.fechaDeInicio.ToString();
         }
 
-        public void SetFechaDeVencimiento(String fechaDeVencimiento)
+        public void SetFechaDeVencimiento(DateTime fechaDeVencimiento)
         {
-            if (fechaDeVencimiento == "")
+            if (fechaDeVencimiento.ToString() == "")
                 throw new CampoVacioException();
 
-            if (!esFecha(fechaDeVencimiento))
+            if (!esFecha(fechaDeVencimiento.ToString()))
                 throw new FormatoInvalidoException();
 
             this.fechaDeVencimiento = fechaDeVencimiento;
@@ -97,7 +97,7 @@ namespace FrbaCommerce.Objetos
 
         public String GetFechaDeVencimiento()
         {
-            return this.fechaDeVencimiento;
+            return this.fechaDeVencimiento.ToString();
         }
 
         public void SetIdRubro(Decimal idRubro)
@@ -218,8 +218,8 @@ namespace FrbaCommerce.Objetos
             this.tipo = Convert.ToString(reader["tipo"]);
             this.estado = Convert.ToString(reader["estado"]);
             this.descripcion = Convert.ToString(reader["descripcion"]);
-            this.fechaDeInicio = Convert.ToString(reader["fecha_inicio"]);
-            this.fechaDeVencimiento = Convert.ToString(reader["fecha_vencimiento"]);
+            this.fechaDeInicio = Convert.ToDateTime(reader["fecha_inicio"]);
+            this.fechaDeVencimiento = Convert.ToDateTime(reader["fecha_vencimiento"]);
             this.stock = Convert.ToString(reader["stock"]);
             this.precio = Convert.ToString(reader["precio"]);
             this.idRubro = Convert.ToDecimal(reader["rubro_id"]);

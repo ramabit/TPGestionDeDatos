@@ -86,3 +86,4 @@ C:\Documents and Settings\Administrador\Mis documentos\Gestion de datos\gddfer\F
 C:\Users\Fer\Documents\GitHub\gddfer\FrbaCommerce\FrbaCommerce\obj\Debug\FrbaCommerce.Comprar_Ofertar.Ofertar.resources
 C:\Users\Fer\Documents\GitHub\gddfer\FrbaCommerce\FrbaCommerce\obj\Debug\FrbaCommerce.Comprar_Ofertar.Preguntar.resources
 C:\Users\Fer\Documents\GitHub\gddfer\FrbaCommerce\FrbaCommerce\obj\Debug\FrbaCommerce.Gestion_de_Preguntas.DatosPublicacion.resources
+C:\Users\Fer\Documents\GitHub\gddfer\FrbaCommerce\FrbaCommerce\obj\Debug\FrbaCommerce.Listado_Estadistico.Estadisticas.resources

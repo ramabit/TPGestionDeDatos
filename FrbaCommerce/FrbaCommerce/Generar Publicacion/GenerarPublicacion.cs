@@ -66,7 +66,7 @@ namespace FrbaCommerce.Generar_Publicacion
             String tipo = comboBox_TiposDePublicacion.Text;
             String estado = comboBox_Estado.Text;
             String descripcion = textBox_Descripcion.Text;
-            String fechaDeInicio = textBox_FechaDeInicio.Text;
+            DateTime fechaDeInicio = Convert.ToDateTime(textBox_FechaDeInicio.Text);
             String rubro = comboBox_Rubro.Text;
             String visibilidadDescripcion = comboBox_Visibilidad.Text;
             Boolean pregunta = radioButton_Pregunta.Checked;
@@ -76,7 +76,7 @@ namespace FrbaCommerce.Generar_Publicacion
             Decimal idRubro = (Decimal) comunicador.SelectFromWhere("id", "Rubro", "descripcion", rubro);
             Decimal idVisibilidad = Convert.ToDecimal(comunicador.SelectFromWhere("id", "Visibilidad", "descripcion", visibilidadDescripcion));
             Double duracion = Convert.ToDouble(comunicador.SelectFromWhere("duracion", "Visibilidad", "descripcion", visibilidadDescripcion));
-            String fechaDeVencimiento = Convert.ToString(Convert.ToDateTime(fechaDeInicio).AddDays(duracion));
+            DateTime fechaDeVencimiento = Convert.ToDateTime(Convert.ToString(Convert.ToDateTime(fechaDeInicio).AddDays(duracion)));
 
             // Insert Publicacion
             try
