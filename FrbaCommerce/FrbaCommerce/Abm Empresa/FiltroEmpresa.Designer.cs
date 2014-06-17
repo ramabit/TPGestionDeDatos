@@ -1,4 +1,5 @@
-﻿namespace FrbaCommerce.ABM_Empresa
+﻿using System.Windows.Forms;
+namespace FrbaCommerce.ABM_Empresa
 {
     partial class FiltroEmpresa
     {
@@ -147,6 +148,7 @@
             this.dataGridView_Empresa.ReadOnly = true;
             this.dataGridView_Empresa.Size = new System.Drawing.Size(1068, 199);
             this.dataGridView_Empresa.TabIndex = 4;
+            this.dataGridView_Empresa.CellClick += new DataGridViewCellEventHandler(dataGridView_Empresa_CellClick);
             // 
             // FiltroEmpresa
             // 

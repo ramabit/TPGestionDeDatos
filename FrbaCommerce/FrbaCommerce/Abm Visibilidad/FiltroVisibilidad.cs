@@ -34,6 +34,7 @@ namespace FrbaCommerce.ABM_Visibilidad
         {
             dataGridView_Visibilidad.DataSource = comunicador.SelectVisibilidadesParaFiltro();
             CargarColumnaModificacion();
+            CargarColumnaEliminar();
         }
 
         private void CargarColumnaModificacion()
@@ -45,8 +46,17 @@ namespace FrbaCommerce.ABM_Visibilidad
             botonColumnaModificar.Name = "Modificar";
             botonColumnaModificar.UseColumnTextForButtonValue = true;
             dataGridView_Visibilidad.Columns.Add(botonColumnaModificar);
-            dataGridView_Visibilidad.CellClick +=
-                new DataGridViewCellEventHandler(dataGridView_Visibilidad_CellClick);
+        }
+
+        private void CargarColumnaEliminar()
+        {
+            if (dataGridView_Visibilidad.Columns.Contains("Eliminar"))
+                dataGridView_Visibilidad.Columns.Remove("Eliminar");
+            DataGridViewButtonColumn botonColumnaEliminar = new DataGridViewButtonColumn();
+            botonColumnaEliminar.Text = "Eliminar";
+            botonColumnaEliminar.Name = "Eliminar";
+            botonColumnaEliminar.UseColumnTextForButtonValue = true;
+            dataGridView_Visibilidad.Columns.Add(botonColumnaEliminar);
         }
 
         private void button_Buscar_Click(object sender, EventArgs e)
@@ -82,6 +92,13 @@ namespace FrbaCommerce.ABM_Visibilidad
             {
                 String idVisibilidadAModificiar = dataGridView_Visibilidad.Rows[e.RowIndex].Cells["id"].Value.ToString();
                 new EditarVisibilidad(idVisibilidadAModificiar).ShowDialog();
+                CargarVisibilidad();
+            }
+            if (e.ColumnIndex == dataGridView_Visibilidad.Columns["Eliminar"].Index && e.RowIndex >= 0)
+            {
+                String idVisibilidadAEliminar = dataGridView_Visibilidad.Rows[e.RowIndex].Cells["id"].Value.ToString();
+                Boolean resultado = comunicador.Eliminar(Convert.ToDecimal(idVisibilidadAEliminar), "Visibilidad");
+                if (resultado) MessageBox.Show("Se elimino correctamente");
                 CargarVisibilidad();
             }
         }

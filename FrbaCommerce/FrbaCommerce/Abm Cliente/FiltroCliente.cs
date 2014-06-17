@@ -42,6 +42,7 @@ namespace FrbaCommerce.ABM_Cliente
         {
             dataGridView_Cliente.DataSource = comunicador.SelectClientesParaFiltro();
             CargarColumnaModificacion();
+            CargarColumnaEliminar();
         }
 
         private void CargarColumnaModificacion()
@@ -53,8 +54,17 @@ namespace FrbaCommerce.ABM_Cliente
             botonColumnaModificar.Name = "Modificar";
             botonColumnaModificar.UseColumnTextForButtonValue = true;
             dataGridView_Cliente.Columns.Add(botonColumnaModificar);
-            dataGridView_Cliente.CellClick +=
-                new DataGridViewCellEventHandler(dataGridView_Cliente_CellClick);
+        }
+
+        private void CargarColumnaEliminar()
+        {
+            if (dataGridView_Cliente.Columns.Contains("Eliminar"))
+                dataGridView_Cliente.Columns.Remove("Eliminar");
+            DataGridViewButtonColumn botonColumnaEliminar = new DataGridViewButtonColumn();
+            botonColumnaEliminar.Text = "Eliminar";
+            botonColumnaEliminar.Name = "Eliminar";
+            botonColumnaEliminar.UseColumnTextForButtonValue = true;
+            dataGridView_Cliente.Columns.Add(botonColumnaEliminar);
         }
 
         private void button_Buscar_Click(object sender, EventArgs e)
@@ -99,6 +109,13 @@ namespace FrbaCommerce.ABM_Cliente
             {
                 String idClienteAModificar = dataGridView_Cliente.Rows[e.RowIndex].Cells["id"].Value.ToString();
                 new EditarCliente(idClienteAModificar).ShowDialog();
+                CargarClientes();
+            }
+            if (e.ColumnIndex == dataGridView_Cliente.Columns["Eliminar"].Index && e.RowIndex >= 0)
+            {
+                String idClienteAEliminar = dataGridView_Cliente.Rows[e.RowIndex].Cells["id"].Value.ToString();
+                Boolean resultado = comunicador.Eliminar(Convert.ToDecimal(idClienteAEliminar), "Cliente");
+                if (resultado) MessageBox.Show("Se elimino correctamente");
                 CargarClientes();
             }
         }

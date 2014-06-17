@@ -422,6 +422,7 @@ ciudad nvarchar(50),
 direccion_id numeric(18,0),
 habilitado bit default 1,
 usuario_id numeric(18,0),
+dado_de_baja bit default 0,
 PRIMARY KEY (id),
 FOREIGN KEY (usuario_id) REFERENCES LOS_SUPER_AMIGOS.Usuario (id),
 FOREIGN KEY (direccion_id) REFERENCES LOS_SUPER_AMIGOS.Direccion (id)
@@ -447,6 +448,7 @@ telefono numeric(18,0),
 direccion_id numeric(18,0),
 habilitado bit default 1,
 usuario_id numeric(18,0),
+dado_de_baja bit default 0,
 PRIMARY KEY (id),
 FOREIGN KEY (tipo_de_documento_id) REFERENCES LOS_SUPER_AMIGOS.TipoDeDocumento (id),
 FOREIGN KEY (usuario_id) REFERENCES LOS_SUPER_AMIGOS.Usuario (id),
@@ -494,6 +496,7 @@ precio numeric(18,2),
 porcentaje numeric(18,2),
 duracion numeric(18,0),
 habilitado bit default 1,
+dado_de_baja bit default 0,
 PRIMARY KEY (id)
 )
 

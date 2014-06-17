@@ -1,4 +1,5 @@
-﻿namespace FrbaCommerce.ABM_Visibilidad
+﻿using System.Windows.Forms;
+namespace FrbaCommerce.ABM_Visibilidad
 {
     partial class FiltroVisibilidad
     {
@@ -107,6 +108,7 @@
             this.dataGridView_Visibilidad.ReadOnly = true;
             this.dataGridView_Visibilidad.Size = new System.Drawing.Size(1068, 199);
             this.dataGridView_Visibilidad.TabIndex = 4;
+            this.dataGridView_Visibilidad.CellClick += new DataGridViewCellEventHandler(dataGridView_Visibilidad_CellClick);
             // 
             // FiltroVisibilidad
             // 

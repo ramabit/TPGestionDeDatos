@@ -34,6 +34,7 @@ namespace FrbaCommerce.ABM_Empresa
         {
             dataGridView_Empresa.DataSource = comunicador.SelectEmpresasParaFiltro();
             CargarColumnaModificacion();
+            CargarColumnaEliminar();
         }
 
         private void CargarColumnaModificacion()
@@ -47,6 +48,17 @@ namespace FrbaCommerce.ABM_Empresa
             dataGridView_Empresa.Columns.Add(botonColumnaModificar);
             dataGridView_Empresa.CellClick +=
                 new DataGridViewCellEventHandler(dataGridView_Empresa_CellClick);
+        }
+
+        private void CargarColumnaEliminar()
+        {
+            if (dataGridView_Empresa.Columns.Contains("Eliminar"))
+                dataGridView_Empresa.Columns.Remove("Eliminar");
+            DataGridViewButtonColumn botonColumnaEliminar = new DataGridViewButtonColumn();
+            botonColumnaEliminar.Text = "Eliminar";
+            botonColumnaEliminar.Name = "Eliminar";
+            botonColumnaEliminar.UseColumnTextForButtonValue = true;
+            dataGridView_Empresa.Columns.Add(botonColumnaEliminar);
         }
 
         private void button_Buscar_Click(object sender, EventArgs e)
@@ -86,6 +98,13 @@ namespace FrbaCommerce.ABM_Empresa
             {
                 String idEmpresaAModificar = dataGridView_Empresa.Rows[e.RowIndex].Cells["id"].Value.ToString();
                 new EditarEmpresa(idEmpresaAModificar).ShowDialog();
+                CargarEmpresas();
+            }
+            if (e.ColumnIndex == dataGridView_Empresa.Columns["Eliminar"].Index && e.RowIndex >= 0)
+            {
+                String idEmpresaAEliminar = dataGridView_Empresa.Rows[e.RowIndex].Cells["id"].Value.ToString();
+                Boolean resultado = comunicador.Eliminar(Convert.ToDecimal(idEmpresaAEliminar), "Empresa");
+                if (resultado) MessageBox.Show("Se elimino correctamente");
                 CargarEmpresas();
             }
         }

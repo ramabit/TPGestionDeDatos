@@ -1,4 +1,5 @@
-﻿namespace FrbaCommerce.ABM_Cliente
+﻿using System.Windows.Forms;
+namespace FrbaCommerce.ABM_Cliente
 {
     partial class FiltroCliente
     {
@@ -188,6 +189,7 @@
             this.dataGridView_Cliente.RowTemplate.ReadOnly = true;
             this.dataGridView_Cliente.Size = new System.Drawing.Size(1068, 199);
             this.dataGridView_Cliente.TabIndex = 4;
+            this.dataGridView_Cliente.CellClick += new DataGridViewCellEventHandler(dataGridView_Cliente_CellClick);
             // 
             // FiltroCliente
             // 

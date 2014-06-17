@@ -85,6 +85,16 @@ namespace FrbaCommerce
             return objeto;
         }
 
+        public Boolean Eliminar(Decimal id, String enDonde)
+        {
+            query = "UPDATE LOS_SUPER_AMIGOS." + enDonde + " SET dado_de_baja = 1 WHERE id = @id";
+            parametros.Clear();
+            parametros.Add(new SqlParameter("@id", id));
+            int filasAfectadas = builderDeComandos.Crear(query, parametros).ExecuteNonQuery();
+            if (filasAfectadas == 1) return true;
+            return false;
+        }
+
         public Decimal CrearCliente(Cliente cliente)
         {
             if (!pasoControlDeRegistro(cliente.GetIdTipoDeDocumento(), cliente.GetNumeroDeDocumento()))
@@ -211,7 +221,7 @@ namespace FrbaCommerce
         {
             return this.SelectDataTable("c.id, u.username Username, c.nombre Nombre, c.apellido Apellido, td.nombre 'Tipo de Documento', c.documento Documento, c.fecha_nacimiento 'Fecha de Nacimiento', c.mail Mail, c.telefono Telefono, d.calle Calle, d.numero Numero, d.piso Piso, d.depto Departamento, d.cod_postal 'Codigo postal', d.localidad Localidad"
                 , "LOS_SUPER_AMIGOS.Cliente c, LOS_SUPER_AMIGOS.TipoDeDocumento td, LOS_SUPER_AMIGOS.Direccion d, LOS_SUPER_AMIGOS.Usuario u"
-                , "c.tipo_de_documento_id = td.id AND c.direccion_id = d.id AND c.usuario_id = u.id " + filtro);
+                , "c.tipo_de_documento_id = td.id AND c.direccion_id = d.id AND c.usuario_id = u.id AND dado_de_baja = 0 " + filtro);
         }
 
         public DataTable SelectClientesParaFiltro()
@@ -223,7 +233,7 @@ namespace FrbaCommerce
         {
             return this.SelectDataTable("e.id, u.username Username, e.razon_social 'Razon Social', e.nombre_de_contacto 'Nombre de contacto', e.cuit 'CUIT', e.fecha_creacion 'Fecha de creacion', e.mail 'Mail', e.telefono 'Telefono', e.ciudad Ciudad, d.calle Calle, d.numero Numero, d.piso Piso, d.depto Departamento, d.cod_postal 'Codigo Postal', d.localidad Localidad"
                 , "LOS_SUPER_AMIGOS.Empresa e, LOS_SUPER_AMIGOS.Direccion d, LOS_SUPER_AMIGOS.Usuario u"
-                , "e.direccion_id = d.id AND e.usuario_id = u.id " + filtro);
+                , "e.direccion_id = d.id AND e.usuario_id = u.id AND dado_de_baja = 0 " + filtro);
         }
 
         public DataTable SelectEmpresasParaFiltro()
@@ -235,13 +245,14 @@ namespace FrbaCommerce
         {
             return this.SelectDataTable("v.id, v.descripcion Descripcion, v.precio Precio, v.porcentaje Porcentaje, v.duracion Duracion"
                 , "LOS_SUPER_AMIGOS.Visibilidad v"
-                , filtro);
+                , "dado_de_baja = 0 " + filtro);
         }
 
         public DataTable SelectVisibilidadesParaFiltro()
         {
             return this.SelectDataTable("v.id, v.descripcion Descripcion, v.precio Precio, v.porcentaje Porcentaje, v.duracion Duracion"
-                , "LOS_SUPER_AMIGOS.Visibilidad v");
+                , "LOS_SUPER_AMIGOS.Visibilidad v"
+                , "dado_de_baja = 0");
         }
 
         public DataTable SelectPublicacionesParaFiltroConFiltro(String filtro)
