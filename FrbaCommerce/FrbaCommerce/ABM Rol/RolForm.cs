@@ -42,7 +42,7 @@ namespace FrbaCommerce.ABM_Rol
         private void botonVolver_Click(object sender, EventArgs e)
         {
             this.Hide();
-            new MenuPrincipal().Show();
+            new MenuPrincipal().ShowDialog();
             this.Close();
         }
     }
