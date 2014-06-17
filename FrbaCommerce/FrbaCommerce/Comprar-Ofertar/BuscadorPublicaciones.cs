@@ -263,11 +263,14 @@ namespace FrbaCommerce.Comprar_Ofertar
         }
 
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
-        {            
-            int idPublicacionElegida = Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells["id"].Value);            
-            this.Hide();
-            new VerPublicacion(idPublicacionElegida).ShowDialog();
-            this.Close();
+        {
+            if (e.ColumnIndex == dataGridView1.Columns["Ver Publicacion"].Index)
+            {
+                int idPublicacionElegida = Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells["id"].Value);
+                this.Hide();
+                new VerPublicacion(idPublicacionElegida).ShowDialog();
+                this.Close();
+            }
         }
 
         private void botonLimpiar_Click(object sender, EventArgs e)

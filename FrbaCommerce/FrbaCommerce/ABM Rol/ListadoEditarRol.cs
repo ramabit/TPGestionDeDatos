@@ -91,9 +91,12 @@ namespace FrbaCommerce.ABM_Rol
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
 
-            String nombreRolAEditar = dataGridViewResultadosBusqueda.Rows[e.RowIndex].Cells["nombre"].Value.ToString();
-            this.Hide();
-            new EditarRol(nombreRolAEditar).Show();
+            if (e.ColumnIndex == dataGridViewResultadosBusqueda.Columns["Editar"].Index)
+            {
+                String nombreRolAEditar = dataGridViewResultadosBusqueda.Rows[e.RowIndex].Cells["nombre"].Value.ToString();
+                this.Hide();
+                new EditarRol(nombreRolAEditar).Show();
+            }
             
         }
 
