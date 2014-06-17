@@ -288,7 +288,7 @@ namespace FrbaCommerce.Facturar_Publicaciones
 
             if (labelCantidadCostos.Text != "0" || dropDownFacturar.Text != "0")
             {
-                MessageBox.Show("Factura realizada. Por bonificaciones se desconto: " + montoDescontadoBonificaciones);
+                MessageBox.Show("Factura realizada. Por bonificaciones se desconto: $" + montoDescontadoBonificaciones);
             }
             else
             {
