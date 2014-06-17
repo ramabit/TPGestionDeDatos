@@ -26,9 +26,7 @@ namespace FrbaCommerce.ABM_Rol
         private void ListadoEditarRol_Load(object sender, EventArgs e)
         {
             comboBoxEstadoRoles.Items.Add("Habilitado");
-            comboBoxEstadoRoles.Items.Add("Deshabilitado");
-            AgregarBotonEditar();
-            AgregarListenerBotonEditar();
+            comboBoxEstadoRoles.Items.Add("Deshabilitado");         
         }
 
         private void comboBoxEstadoRoles_SelectedIndexChanged(object sender, EventArgs e)
@@ -48,7 +46,8 @@ namespace FrbaCommerce.ABM_Rol
             command = builderDeComandos.Crear("SELECT DISTINCT * FROM LOS_SUPER_AMIGOS.Rol WHERE habilitado = @habilitado", parametros);
             adapter.SelectCommand = command;
             adapter.Fill(roles);
-            dataGridViewResultadosBusqueda.DataSource = roles.Tables[0].DefaultView;            
+            dataGridViewResultadosBusqueda.DataSource = roles.Tables[0].DefaultView;
+            AgregarBotonEditar();
         }
 
         private void botonBuscar_Click(object sender, EventArgs e)
@@ -70,6 +69,7 @@ namespace FrbaCommerce.ABM_Rol
             {
                 buttons.HeaderText = "Editar";
                 buttons.Text = "Editar";
+                buttons.Name = "Editar";
                 buttons.UseColumnTextForButtonValue = true;
                 buttons.AutoSizeMode =
                     DataGridViewAutoSizeColumnMode.AllCells;
@@ -78,14 +78,9 @@ namespace FrbaCommerce.ABM_Rol
             }
 
             dataGridViewResultadosBusqueda.Columns.Add(buttons);
-
-
-        }
-
-        private void AgregarListenerBotonEditar()
-        {
             dataGridViewResultadosBusqueda.CellClick +=
                 new DataGridViewCellEventHandler(dataGridView1_CellClick);
+
         }
 
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)

@@ -34,9 +34,7 @@ namespace FrbaCommerce.Comprar_Ofertar
                 
         private void BuscardorPublicaciones_Load(object sender, EventArgs e)
         {            
-            CargarRubros();
-            AgregarBotonVerPublicacion();
-            AgregarListenerBotonVerPublicacion();
+            CargarRubros();            
         }
 
         private void CargarRubros()
@@ -93,9 +91,10 @@ namespace FrbaCommerce.Comprar_Ofertar
                 }
                 calcularPaginas();
                 dataGridView1.DataSource = paginarDataGridView(ini, fin);
-                dataGridView1.Columns[1].Visible = false;
+                dataGridView1.Columns[0].Visible = false;
                 mostrarNrosPaginas(ini);
             }
+            AgregarBotonVerPublicacion();
         }
 
         private void calcularPaginas()
@@ -244,23 +243,20 @@ namespace FrbaCommerce.Comprar_Ofertar
             {
                 buttons.HeaderText = "Ver Publicacion";
                 buttons.Text = "Ver Publicacion";
+                buttons.Name = "Ver Publicacion";
                 buttons.UseColumnTextForButtonValue = true;
                 buttons.AutoSizeMode =
                     DataGridViewAutoSizeColumnMode.AllCells;
                 buttons.FlatStyle = FlatStyle.Standard;
                 buttons.CellTemplate.Style.BackColor = Color.Honeydew;
+                dataGridView1.CellClick +=
+                    new DataGridViewCellEventHandler(dataGridView1_CellClick);
             }
 
             dataGridView1.Columns.Add(buttons);
 
 
-        }
-
-        private void AgregarListenerBotonVerPublicacion()
-        {
-            dataGridView1.CellClick +=
-                new DataGridViewCellEventHandler(dataGridView1_CellClick);
-        }
+        }        
 
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {

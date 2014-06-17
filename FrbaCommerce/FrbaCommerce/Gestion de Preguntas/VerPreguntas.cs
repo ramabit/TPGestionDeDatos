@@ -22,7 +22,7 @@ namespace FrbaCommerce.Gestion_de_Preguntas
             InitializeComponent();
         }
 
-        private void VerRespuestas_Load(object sender, EventArgs e)
+        private void VerPreguntas_Load_1(object sender, EventArgs e)
         {
             cargarPreguntas();
             hayPreguntas();
@@ -35,13 +35,16 @@ namespace FrbaCommerce.Gestion_de_Preguntas
             parametros = new List<SqlParameter>();
 
             parametros.Clear();
-            parametros.Add(new SqlParameter("@usuario", idUsuarioActual));
-
-            command = builderDeComandos.Crear("SELECT publicacion_id, descripcion FROM LOS_SUPER_AMIGOS.Pregunta WHERE usuario_id = @usuario and respuesta = null", parametros);
+            parametros.Add(new SqlParameter("@usuario", idUsuarioActual));            
+            command = builderDeComandos.Crear("SELECT pregunta.publicacion_id, pregunta.id, pregunta.descripcion FROM LOS_SUPER_AMIGOS.Pregunta pregunta, LOS_SUPER_AMIGOS.Publicacion publicacion WHERE pregunta.respuesta = '' and pregunta.publicacion_id = publicacion.id and publicacion.usuario_id = @usuario", parametros);
             adapter.SelectCommand = command;
             adapter.Fill(preguntas);
             dataGridView1.DataSource = preguntas.Tables[0].DefaultView;
+            dataGridView1.Columns[0].Visible = false;
             dataGridView1.Columns[1].Visible = false;
+            AgregarBotonDatosPublicacion();
+            AgregarBotonResponder();
+            AgregarListenerBotones();
         }
 
         private void hayPreguntas()
@@ -61,6 +64,7 @@ namespace FrbaCommerce.Gestion_de_Preguntas
             {
                 buttons.HeaderText = "Datos Publicacion";
                 buttons.Text = "Datos Publicacion";
+                buttons.Name = "Datos Publicacion";
                 buttons.UseColumnTextForButtonValue = true;
                 buttons.AutoSizeMode =
                     DataGridViewAutoSizeColumnMode.AllCells;
@@ -77,6 +81,7 @@ namespace FrbaCommerce.Gestion_de_Preguntas
             {
                 buttons.HeaderText = "Responder";
                 buttons.Text = "Responder";
+                buttons.Name = "Responder";
                 buttons.UseColumnTextForButtonValue = true;
                 buttons.AutoSizeMode =
                     DataGridViewAutoSizeColumnMode.AllCells;
@@ -87,7 +92,7 @@ namespace FrbaCommerce.Gestion_de_Preguntas
             dataGridView1.Columns.Add(buttons);
         }
 
-        private void AgregarListenerBotonVerPublicacion()
+        private void AgregarListenerBotones()
         {
             dataGridView1.CellClick +=
                 new DataGridViewCellEventHandler(dataGridView1_CellClick);
@@ -96,6 +101,8 @@ namespace FrbaCommerce.Gestion_de_Preguntas
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             int idPublicacionElegida = Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells["publicacion_id"].Value);
+            int idPregunta = Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells["id"].Value);
+            String pregunta = dataGridView1.Rows[e.RowIndex].Cells["descripcion"].Value.ToString();
 
             if (e.ColumnIndex == dataGridView1.Columns["Datos Publicacion"].Index)
             {                
@@ -104,7 +111,9 @@ namespace FrbaCommerce.Gestion_de_Preguntas
 
             if (e.ColumnIndex == dataGridView1.Columns["Responder"].Index)
             {
-                new ResponderPregunta(idPublicacionElegida).ShowDialog();
+                this.Hide();
+                new ResponderPregunta(idPregunta, pregunta).ShowDialog();
+                this.Close();
             }
         }
 
@@ -113,6 +122,6 @@ namespace FrbaCommerce.Gestion_de_Preguntas
             this.Hide();
             new MenuPrincipal().ShowDialog();
             this.Close();
-        }
+        }        
     }
 }
