@@ -45,7 +45,7 @@ namespace FrbaCommerce.Registro_de_Usuario
 
             String rolElegido = this.comboBoxRol.Text;
             String usuario = this.textBoxUsuario.Text;
-            String contraseña = this.textBoxContraseña.Text;
+            String contraseña = this.textBoxPass.Text;
 
             if (usuario == "")
             {
@@ -62,6 +62,12 @@ namespace FrbaCommerce.Registro_de_Usuario
             if (rolElegido == "")
             {
                 MessageBox.Show("Debe seleccionarse un rol");
+                return;
+            }
+
+            if (textBoxPass.Text != textBoxPass2.Text)
+            {
+                MessageBox.Show("La contraseña no se repite correctamente");
                 return;
             }
 
@@ -82,10 +88,38 @@ namespace FrbaCommerce.Registro_de_Usuario
             if (rolElegido == "Cliente")
             {
                 new ABM_Cliente.AgregarCliente(usuario,contraseña).Show();
+
+                if (UsuarioSesion.Usuario.rol != "Administrador")
+                {
+                    UsuarioSesion.Usuario.rol = "Cliente";
+                    UsuarioSesion.Usuario.nombre = usuario;
+
+                    String idUsuario = "select top 1 id" 
+                                + " from LOS_SUPER_AMIGOS.Usuario"
+                                + " order by id DESC";
+                    parametros.Clear();
+                    Decimal idC = (Decimal)builderDeComandos.Crear(idUsuario,parametros).ExecuteScalar();
+
+                    UsuarioSesion.Usuario.id = idC;
+                }
             }
             else if (rolElegido == "Empresa")
             {
                 new ABM_Empresa.AgregarEmpresa("username", "password").Show();
+
+                if (UsuarioSesion.Usuario.rol != "Administrador")
+                {
+                    UsuarioSesion.Usuario.rol = "Empresa";
+                    UsuarioSesion.Usuario.nombre = usuario;
+
+                    String idUsuario = "select top 1 id"
+                                + " from LOS_SUPER_AMIGOS.Usuario"
+                                + " order by id DESC";
+                    parametros.Clear();
+                    Decimal idE = (Decimal)builderDeComandos.Crear(idUsuario, parametros).ExecuteScalar();
+
+                    UsuarioSesion.Usuario.id = idE;
+                }
             }
 
             
