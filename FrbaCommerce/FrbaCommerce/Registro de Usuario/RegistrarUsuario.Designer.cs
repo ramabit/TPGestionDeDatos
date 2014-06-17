@@ -33,11 +33,13 @@
             this.labelUsuario = new System.Windows.Forms.Label();
             this.labelContraseña = new System.Windows.Forms.Label();
             this.textBoxUsuario = new System.Windows.Forms.TextBox();
-            this.textBoxContraseña = new System.Windows.Forms.TextBox();
+            this.textBoxPass = new System.Windows.Forms.TextBox();
             this.botonSiguiente = new System.Windows.Forms.Button();
             this.comboBoxRol = new System.Windows.Forms.ComboBox();
             this.labelRol = new System.Windows.Forms.Label();
             this.labelAclaracion = new System.Windows.Forms.Label();
+            this.textBoxPass2 = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // botonVolver
@@ -65,7 +67,7 @@
             // 
             this.labelUsuario.AutoSize = true;
             this.labelUsuario.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelUsuario.Location = new System.Drawing.Point(37, 92);
+            this.labelUsuario.Location = new System.Drawing.Point(94, 80);
             this.labelUsuario.Name = "labelUsuario";
             this.labelUsuario.Size = new System.Drawing.Size(62, 17);
             this.labelUsuario.TabIndex = 7;
@@ -75,7 +77,7 @@
             // 
             this.labelContraseña.AutoSize = true;
             this.labelContraseña.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelContraseña.Location = new System.Drawing.Point(18, 131);
+            this.labelContraseña.Location = new System.Drawing.Point(71, 109);
             this.labelContraseña.Name = "labelContraseña";
             this.labelContraseña.Size = new System.Drawing.Size(86, 17);
             this.labelContraseña.TabIndex = 8;
@@ -84,23 +86,24 @@
             // textBoxUsuario
             // 
             this.textBoxUsuario.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBoxUsuario.Location = new System.Drawing.Point(114, 92);
+            this.textBoxUsuario.Location = new System.Drawing.Point(154, 77);
             this.textBoxUsuario.Name = "textBoxUsuario";
             this.textBoxUsuario.Size = new System.Drawing.Size(100, 21);
             this.textBoxUsuario.TabIndex = 9;
             // 
-            // textBoxContraseña
+            // textBoxPass
             // 
-            this.textBoxContraseña.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBoxContraseña.Location = new System.Drawing.Point(114, 131);
-            this.textBoxContraseña.Name = "textBoxContraseña";
-            this.textBoxContraseña.Size = new System.Drawing.Size(100, 21);
-            this.textBoxContraseña.TabIndex = 10;
+            this.textBoxPass.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBoxPass.Location = new System.Drawing.Point(155, 108);
+            this.textBoxPass.Name = "textBoxPass";
+            this.textBoxPass.Size = new System.Drawing.Size(100, 21);
+            this.textBoxPass.TabIndex = 10;
+            this.textBoxPass.UseSystemPasswordChar = true;
             // 
             // botonSiguiente
             // 
             this.botonSiguiente.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.botonSiguiente.Location = new System.Drawing.Point(216, 199);
+            this.botonSiguiente.Location = new System.Drawing.Point(216, 201);
             this.botonSiguiente.Name = "botonSiguiente";
             this.botonSiguiente.Size = new System.Drawing.Size(108, 50);
             this.botonSiguiente.TabIndex = 11;
@@ -112,7 +115,7 @@
             // 
             this.comboBoxRol.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.comboBoxRol.FormattingEnabled = true;
-            this.comboBoxRol.Location = new System.Drawing.Point(114, 168);
+            this.comboBoxRol.Location = new System.Drawing.Point(138, 172);
             this.comboBoxRol.Name = "comboBoxRol";
             this.comboBoxRol.Size = new System.Drawing.Size(121, 23);
             this.comboBoxRol.TabIndex = 12;
@@ -121,7 +124,7 @@
             // 
             this.labelRol.AutoSize = true;
             this.labelRol.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelRol.Location = new System.Drawing.Point(65, 172);
+            this.labelRol.Location = new System.Drawing.Point(107, 175);
             this.labelRol.Name = "labelRol";
             this.labelRol.Size = new System.Drawing.Size(34, 17);
             this.labelRol.TabIndex = 13;
@@ -137,16 +140,37 @@
             this.labelAclaracion.TabIndex = 14;
             this.labelAclaracion.Text = "* campos obligatorios";
             // 
+            // textBoxPass2
+            // 
+            this.textBoxPass2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBoxPass2.Location = new System.Drawing.Point(157, 141);
+            this.textBoxPass2.Name = "textBoxPass2";
+            this.textBoxPass2.Size = new System.Drawing.Size(100, 21);
+            this.textBoxPass2.TabIndex = 15;
+            this.textBoxPass2.UseSystemPasswordChar = true;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(24, 142);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(134, 17);
+            this.label2.TabIndex = 16;
+            this.label2.Text = "Repetir contraseña*";
+            // 
             // RegistrarUsuario
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(387, 333);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.textBoxPass2);
             this.Controls.Add(this.labelAclaracion);
             this.Controls.Add(this.labelRol);
             this.Controls.Add(this.comboBoxRol);
             this.Controls.Add(this.botonSiguiente);
-            this.Controls.Add(this.textBoxContraseña);
+            this.Controls.Add(this.textBoxPass);
             this.Controls.Add(this.textBoxUsuario);
             this.Controls.Add(this.labelContraseña);
             this.Controls.Add(this.labelUsuario);
@@ -167,10 +191,12 @@
         private System.Windows.Forms.Label labelUsuario;
         private System.Windows.Forms.Label labelContraseña;
         private System.Windows.Forms.TextBox textBoxUsuario;
-        private System.Windows.Forms.TextBox textBoxContraseña;
+        private System.Windows.Forms.TextBox textBoxPass;
         private System.Windows.Forms.Button botonSiguiente;
         private System.Windows.Forms.ComboBox comboBoxRol;
         private System.Windows.Forms.Label labelRol;
         private System.Windows.Forms.Label labelAclaracion;
+        private System.Windows.Forms.TextBox textBoxPass2;
+        private System.Windows.Forms.Label label2;
     }
 }
