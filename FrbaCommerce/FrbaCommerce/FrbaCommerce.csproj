@@ -392,9 +392,9 @@
     <EmbeddedResource Include="Generar Publicacion\GenerarPublicacion.resx">
       <DependentUpon>GenerarPublicacion.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Gestion de Preguntas\DatosPublicacion.resx" />
     <EmbeddedResource Include="Listado Estadistico\Estadisticas.resx">
       <DependentUpon>Estadisticas.cs</DependentUpon>
+	</EmbeddedResource>
     <EmbeddedResource Include="Gestion de Preguntas\ResponderPregunta.resx">
       <DependentUpon>ResponderPregunta.cs</DependentUpon>
     </EmbeddedResource>
