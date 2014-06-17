@@ -31,7 +31,7 @@ namespace FrbaCommerce.Comprar_Ofertar
 
         private void botonPreguntar_Click(object sender, EventArgs e)
         {
-            String sql = "INSERT INTO LOS_SUPER_AMIGOS.Pregunta(descripcion, respuesta, respuesta_fecha, usuario_id, publicacion_id) VALUES (@descripcion, NULL, NULL, @usuario, @publicacion)";
+            String sql = "INSERT INTO LOS_SUPER_AMIGOS.Pregunta(descripcion, respuesta, respuesta_fecha, usuario_id, publicacion_id) VALUES (@descripcion, '', NULL, @usuario, @publicacion)";
             DateTime fecha = DateTime.Now;
             parametros.Clear();
             parametros.Add(new SqlParameter("@descripcion", this.textBoxPregunta.Text));            

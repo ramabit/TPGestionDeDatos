@@ -28,55 +28,82 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            this.textBoxRespuesta = new System.Windows.Forms.TextBox();
+            this.botonVolver = new System.Windows.Forms.Button();
+            this.botonEnviar = new System.Windows.Forms.Button();
+            this.labelPregunta = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
-            // textBox1
+            // textBoxRespuesta
             // 
-            this.textBox1.Location = new System.Drawing.Point(26, 57);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(229, 20);
-            this.textBox1.TabIndex = 0;
+            this.textBoxRespuesta.Location = new System.Drawing.Point(291, 65);
+            this.textBoxRespuesta.MaxLength = 255;
+            this.textBoxRespuesta.Multiline = true;
+            this.textBoxRespuesta.Name = "textBoxRespuesta";
+            this.textBoxRespuesta.Size = new System.Drawing.Size(229, 121);
+            this.textBoxRespuesta.TabIndex = 0;
             // 
-            // button1
+            // botonVolver
             // 
-            this.button1.Location = new System.Drawing.Point(21, 194);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(87, 38);
-            this.button1.TabIndex = 1;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
+            this.botonVolver.Location = new System.Drawing.Point(111, 219);
+            this.botonVolver.Name = "botonVolver";
+            this.botonVolver.Size = new System.Drawing.Size(87, 38);
+            this.botonVolver.TabIndex = 1;
+            this.botonVolver.Text = "Cancelar";
+            this.botonVolver.UseVisualStyleBackColor = true;
+            this.botonVolver.Click += new System.EventHandler(this.botonVolver_Click);
             // 
-            // button2
+            // botonEnviar
             // 
-            this.button2.Location = new System.Drawing.Point(148, 194);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(106, 37);
-            this.button2.TabIndex = 2;
-            this.button2.Text = "button2";
-            this.button2.UseVisualStyleBackColor = true;
+            this.botonEnviar.Location = new System.Drawing.Point(354, 219);
+            this.botonEnviar.Name = "botonEnviar";
+            this.botonEnviar.Size = new System.Drawing.Size(93, 38);
+            this.botonEnviar.TabIndex = 2;
+            this.botonEnviar.Text = "Enviar";
+            this.botonEnviar.UseVisualStyleBackColor = true;
+            this.botonEnviar.Click += new System.EventHandler(this.botonEnviar_Click);
+            // 
+            // labelPregunta
+            // 
+            this.labelPregunta.Location = new System.Drawing.Point(26, 65);
+            this.labelPregunta.Name = "labelPregunta";
+            this.labelPregunta.Size = new System.Drawing.Size(232, 121);
+            this.labelPregunta.TabIndex = 3;
+            this.labelPregunta.Text = "label1";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(288, 24);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(79, 18);
+            this.label2.TabIndex = 12;
+            this.label2.Text = "Respuesta";
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(23, 19);
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(26, 24);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(35, 13);
-            this.label1.TabIndex = 3;
-            this.label1.Text = "label1";
+            this.label1.Size = new System.Drawing.Size(67, 18);
+            this.label1.TabIndex = 11;
+            this.label1.Text = "Pregunta";
             // 
             // ResponderPregunta
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(292, 270);
+            this.ClientSize = new System.Drawing.Size(547, 291);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.labelPregunta);
+            this.Controls.Add(this.botonEnviar);
+            this.Controls.Add(this.botonVolver);
+            this.Controls.Add(this.textBoxRespuesta);
             this.Name = "ResponderPregunta";
             this.Text = "ResponderPreguntas";
             this.Load += new System.EventHandler(this.ResponderPregunta_Load);
@@ -87,9 +114,11 @@
 
         #endregion
 
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.TextBox textBoxRespuesta;
+        private System.Windows.Forms.Button botonVolver;
+        private System.Windows.Forms.Button botonEnviar;
+        private System.Windows.Forms.Label labelPregunta;
+        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
     }
 }

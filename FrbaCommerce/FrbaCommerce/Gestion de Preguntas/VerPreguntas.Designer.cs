@@ -39,7 +39,7 @@
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Location = new System.Drawing.Point(23, 76);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(438, 195);
+            this.dataGridView1.Size = new System.Drawing.Size(323, 194);
             this.dataGridView1.TabIndex = 0;
             // 
             // button1
@@ -56,7 +56,7 @@
             // 
             this.labelTitulo.AutoSize = true;
             this.labelTitulo.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelTitulo.Location = new System.Drawing.Point(164, 24);
+            this.labelTitulo.Location = new System.Drawing.Point(98, 31);
             this.labelTitulo.Name = "labelTitulo";
             this.labelTitulo.Size = new System.Drawing.Size(149, 20);
             this.labelTitulo.TabIndex = 2;
@@ -66,12 +66,13 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(495, 339);
+            this.ClientSize = new System.Drawing.Size(364, 342);
             this.Controls.Add(this.labelTitulo);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.dataGridView1);
             this.Name = "VerPreguntas";
             this.Text = "VerPreguntas";
+            this.Load += new System.EventHandler(this.VerPreguntas_Load_1);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

@@ -38,7 +38,7 @@
             // 
             this.labelTitulo.AutoSize = true;
             this.labelTitulo.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelTitulo.Location = new System.Drawing.Point(144, 23);
+            this.labelTitulo.Location = new System.Drawing.Point(147, 25);
             this.labelTitulo.Name = "labelTitulo";
             this.labelTitulo.Size = new System.Drawing.Size(173, 20);
             this.labelTitulo.TabIndex = 0;
@@ -59,14 +59,14 @@
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Location = new System.Drawing.Point(20, 69);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(420, 197);
+            this.dataGridView1.Size = new System.Drawing.Size(435, 189);
             this.dataGridView1.TabIndex = 2;
             // 
             // VerRespuestas
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(457, 326);
+            this.ClientSize = new System.Drawing.Size(473, 327);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.botonVolver);
             this.Controls.Add(this.labelTitulo);

@@ -56,7 +56,7 @@
             // 
             this.botonVolver.Location = new System.Drawing.Point(25, 197);
             this.botonVolver.Name = "botonVolver";
-            this.botonVolver.Size = new System.Drawing.Size(86, 27);
+            this.botonVolver.Size = new System.Drawing.Size(95, 35);
             this.botonVolver.TabIndex = 2;
             this.botonVolver.Text = "Cancelar";
             this.botonVolver.UseVisualStyleBackColor = true;
@@ -64,9 +64,9 @@
             // 
             // botonPreguntar
             // 
-            this.botonPreguntar.Location = new System.Drawing.Point(138, 198);
+            this.botonPreguntar.Location = new System.Drawing.Point(155, 197);
             this.botonPreguntar.Name = "botonPreguntar";
-            this.botonPreguntar.Size = new System.Drawing.Size(98, 25);
+            this.botonPreguntar.Size = new System.Drawing.Size(96, 34);
             this.botonPreguntar.TabIndex = 3;
             this.botonPreguntar.Text = "Enviar";
             this.botonPreguntar.UseVisualStyleBackColor = true;
