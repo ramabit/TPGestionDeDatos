@@ -132,7 +132,7 @@ CREATE PROCEDURE LOS_SUPER_AMIGOS.SacarBonificaciones
  declare comision_cursor cursor for
  (select c.visibilidad_id, c.contador_comisiones 
 	from LOS_SUPER_AMIGOS.Comisiones_Usuario_x_Visibilidad c, LOS_SUPER_AMIGOS.Visibilidad v
-	where c.usuario_id = 72 and c.visibilidad_id = v.id and v.habilitado = 1 )
+	where c.usuario_id = @id and c.visibilidad_id = v.id and v.habilitado = 1 )
  set @monto_descontado = 0
  set @contador_bonificaciones = 0
  open comision_cursor
@@ -165,7 +165,7 @@ CREATE PROCEDURE LOS_SUPER_AMIGOS.SacarBonificaciones
 		
 		update LOS_SUPER_AMIGOS.Comisiones_Usuario_x_Visibilidad	
 		set contador_comisiones = 0
-		where  visibilidad_id = @vid and usuario_id = 72
+		where  visibilidad_id = @vid and usuario_id = @id
 		
 		set @monto_descontado = @monto_descontado + (select top 1 (c.cantidad * p.precio * v.porcentaje)
 													from LOS_SUPER_AMIGOS.Compra_Comision cc, LOS_SUPER_AMIGOS.Compra c,

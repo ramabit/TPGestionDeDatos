@@ -193,10 +193,10 @@ namespace FrbaCommerce.Facturar_Publicaciones
             String consulta = "LOS_SUPER_AMIGOS.SacarBonificaciones";
             parametros.Clear();
             parametros.Add(new SqlParameter("@id", UsuarioSesion.Usuario.id));
-            SqlParameter parametroContador = new SqlParameter("@id", SqlDbType.Int);
+            SqlParameter parametroContador = new SqlParameter("@contador_bonificaciones", SqlDbType.Int);
             parametroContador.Direction = ParameterDirection.Output;
             parametros.Add(parametroContador);
-            SqlParameter parametroMonto = new SqlParameter("@id", SqlDbType.Decimal);
+            SqlParameter parametroMonto = new SqlParameter("@monto_descontado", SqlDbType.Decimal);
             parametroMonto.Direction = ParameterDirection.Output;
             parametros.Add(parametroMonto);
             command = builderDeComandos.Crear(consulta, parametros);
@@ -274,7 +274,7 @@ namespace FrbaCommerce.Facturar_Publicaciones
             // Inserto la forma de pago en la factura
             String formaPago = "update LOS_SUPER_AMIGOS.Factura"
                         + " set forma_pago_id = (select f.id from LOS_SUPER_AMIGOS.Forma_Pago f where f.descripcion = @pago)"
-                        + " where id = @idF";
+                        + " where nro = @idF";
             parametros.Clear();
             parametros.Add(new SqlParameter("@idF", idFact));
             parametros.Add(new SqlParameter("@pago", formaDePago));
