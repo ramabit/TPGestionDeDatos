@@ -58,9 +58,33 @@ namespace FrbaCommerce.Listado_Estadistico
 
             String fechaDeInicio = ObtenerFechaDeInicio(anio, trimestre);
             String fechaDeFin = ObtenerFechaDeFin(anio, trimestre);
-            String queryParaObtenerResultados = GetQueryObtenerResultados(tipoDeListado, fechaDeInicio, fechaDeFin);
+            String fechaMedia = ObtenerFechaMedia(anio, trimestre);
+            String queryParaObtenerResultados = GetQueryObtenerResultados(tipoDeListado, fechaDeInicio, fechaMedia, fechaDeFin);
             
             dataGridView_Estadistica.DataSource = comunicador.SelectDataTable("*", queryParaObtenerResultados);
+        }
+
+        private String ObtenerFechaMedia(string anio, string trimestre)
+        {
+            String dia = "01";
+            String mes = ObtenerMesMedio(trimestre);
+            return dia + "/" + mes + "/" + anio;
+        }
+
+        private string ObtenerMesMedio(string trimestre)
+        {
+            switch (trimestre[0])
+            {
+                case '1':
+                    return "02";
+                case '2':
+                    return "05";
+                case '3':
+                    return "08";
+                case '4':
+                    return "11";
+            }
+            throw new Exception("No pudo obtener mes");
         }
 
         private String ObtenerFechaDeInicio(string anio, string trimestre)
@@ -109,12 +133,12 @@ namespace FrbaCommerce.Listado_Estadistico
             throw new Exception("No pudo obtener mes");
         }
 
-        private string GetQueryObtenerResultados(String tipoDeListado, String fechaDeInicio, String fechaDeFin)
+        private string GetQueryObtenerResultados(String tipoDeListado, String fechaDeInicio, String fechaMedia, String fechaDeFin)
         {
             switch (tipoDeListado)
             {
                 case "Vendedores con mayor cantidad de productos no vendidos":
-                    return "";
+                    return "LOS_SUPER_AMIGOS.vendedores_con_mayor_cantidad_de_publicaciones_sin_vender('" + fechaDeInicio + "', '" + fechaMedia + "' , '" + fechaDeFin + "')";
                 case "Vendedores con mayor facturacion":
                     return "LOS_SUPER_AMIGOS.vendedores_con_mayor_facturacion('" + fechaDeInicio + "', '" + fechaDeFin + "')";
                 case "Vendedores con mayores calificaciones":
