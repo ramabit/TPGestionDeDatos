@@ -181,7 +181,13 @@ namespace FrbaCommerce
 
         public DataTable SelectDataTable(String que, String deDonde)
         {
-            return this.SelectDataTable(que, deDonde, "true = true");
+            parametros.Clear();
+            command = builderDeComandos.Crear("SELECT " + que + " FROM " + deDonde, parametros);
+            DataSet datos = new DataSet();
+            SqlDataAdapter adapter = new SqlDataAdapter();
+            adapter.SelectCommand = command;
+            adapter.Fill(datos);
+            return datos.Tables[0];
         }
 
         public DataTable SelectDataTable(String que, String deDonde, String condiciones)

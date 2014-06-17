@@ -77,7 +77,7 @@ namespace FrbaCommerce.Editar_Publicacion
         private void dataGridView_Publicacion_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             // Controla que la celda que se clickeo fue la de modificar
-            if (e.ColumnIndex == dataGridView_Publicacion.Columns["modificar"].Index && e.RowIndex >= 0)
+            if (e.ColumnIndex == dataGridView_Publicacion.Columns["Modificar"].Index && e.RowIndex >= 0)
             {
                 String idPublicacionAModificiar = dataGridView_Publicacion.Rows[e.RowIndex].Cells["id"].Value.ToString();
                 new Editar_Publicacion.EditarPublicacion(idPublicacionAModificiar).ShowDialog();

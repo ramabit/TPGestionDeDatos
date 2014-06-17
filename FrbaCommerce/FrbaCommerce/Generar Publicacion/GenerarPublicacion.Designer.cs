@@ -34,10 +34,6 @@
             this.comboBox_TiposDePublicacion = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.monthCalendar_FechaDeInicio = new System.Windows.Forms.MonthCalendar();
-            this.button_FechaDeInicio = new System.Windows.Forms.Button();
-            this.label5 = new System.Windows.Forms.Label();
-            this.textBox_FechaDeInicio = new System.Windows.Forms.TextBox();
             this.comboBox_Rubro = new System.Windows.Forms.ComboBox();
             this.radioButton_Pregunta = new System.Windows.Forms.RadioButton();
             this.comboBox_Visibilidad = new System.Windows.Forms.ComboBox();
@@ -108,10 +104,6 @@
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.monthCalendar_FechaDeInicio);
-            this.groupBox2.Controls.Add(this.button_FechaDeInicio);
-            this.groupBox2.Controls.Add(this.label5);
-            this.groupBox2.Controls.Add(this.textBox_FechaDeInicio);
             this.groupBox2.Controls.Add(this.comboBox_Rubro);
             this.groupBox2.Controls.Add(this.radioButton_Pregunta);
             this.groupBox2.Controls.Add(this.comboBox_Visibilidad);
@@ -125,40 +117,6 @@
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Caracterisiticas comunes";
-            // 
-            // monthCalendar_FechaDeInicio
-            // 
-            this.monthCalendar_FechaDeInicio.Location = new System.Drawing.Point(198, 6);
-            this.monthCalendar_FechaDeInicio.Name = "monthCalendar_FechaDeInicio";
-            this.monthCalendar_FechaDeInicio.TabIndex = 14;
-            this.monthCalendar_FechaDeInicio.Visible = false;
-            this.monthCalendar_FechaDeInicio.DateSelected += new System.Windows.Forms.DateRangeEventHandler(this.monthCalendar_FechaDeInicio_DateSelected);
-            // 
-            // button_FechaDeInicio
-            // 
-            this.button_FechaDeInicio.Location = new System.Drawing.Point(282, 48);
-            this.button_FechaDeInicio.Name = "button_FechaDeInicio";
-            this.button_FechaDeInicio.Size = new System.Drawing.Size(80, 20);
-            this.button_FechaDeInicio.TabIndex = 11;
-            this.button_FechaDeInicio.Text = "Seleccionar";
-            this.button_FechaDeInicio.UseVisualStyleBackColor = true;
-            this.button_FechaDeInicio.Click += new System.EventHandler(this.button_FechaDeInicio_Click);
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(6, 51);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(79, 13);
-            this.label5.TabIndex = 10;
-            this.label5.Text = "Fecha de inicio";
-            // 
-            // textBox_FechaDeInicio
-            // 
-            this.textBox_FechaDeInicio.Location = new System.Drawing.Point(112, 48);
-            this.textBox_FechaDeInicio.Name = "textBox_FechaDeInicio";
-            this.textBox_FechaDeInicio.Size = new System.Drawing.Size(164, 20);
-            this.textBox_FechaDeInicio.TabIndex = 9;
             // 
             // comboBox_Rubro
             // 
@@ -341,10 +299,6 @@
         private System.Windows.Forms.Button button_Generar;
         private System.Windows.Forms.Button button_Cancelar;
         private System.Windows.Forms.Button button_Limpiar;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.TextBox textBox_FechaDeInicio;
-        private System.Windows.Forms.Button button_FechaDeInicio;
-        private System.Windows.Forms.MonthCalendar monthCalendar_FechaDeInicio;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.ComboBox comboBox_Estado;
     }

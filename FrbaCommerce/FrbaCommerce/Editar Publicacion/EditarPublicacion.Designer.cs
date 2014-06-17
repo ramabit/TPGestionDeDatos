@@ -38,10 +38,7 @@
             this.comboBox_TiposDePublicacion = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.monthCalendar_FechaDeInicio = new System.Windows.Forms.MonthCalendar();
-            this.button_FechaDeInicio = new System.Windows.Forms.Button();
-            this.label5 = new System.Windows.Forms.Label();
-            this.textBox_FechaDeInicio = new System.Windows.Forms.TextBox();
+            this.checkBox_Pregunta = new System.Windows.Forms.CheckBox();
             this.comboBox_Rubro = new System.Windows.Forms.ComboBox();
             this.comboBox_Visibilidad = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
@@ -53,7 +50,6 @@
             this.textBox_Stock = new System.Windows.Forms.TextBox();
             this.label_precio = new System.Windows.Forms.Label();
             this.label_stock = new System.Windows.Forms.Label();
-            this.checkBox_Pregunta = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -150,10 +146,6 @@
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.checkBox_Pregunta);
-            this.groupBox2.Controls.Add(this.monthCalendar_FechaDeInicio);
-            this.groupBox2.Controls.Add(this.button_FechaDeInicio);
-            this.groupBox2.Controls.Add(this.label5);
-            this.groupBox2.Controls.Add(this.textBox_FechaDeInicio);
             this.groupBox2.Controls.Add(this.comboBox_Rubro);
             this.groupBox2.Controls.Add(this.comboBox_Visibilidad);
             this.groupBox2.Controls.Add(this.label4);
@@ -167,37 +159,15 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Caracterisiticas comunes";
             // 
-            // monthCalendar_FechaDeInicio
+            // checkBox_Pregunta
             // 
-            this.monthCalendar_FechaDeInicio.Location = new System.Drawing.Point(198, 6);
-            this.monthCalendar_FechaDeInicio.Name = "monthCalendar_FechaDeInicio";
-            this.monthCalendar_FechaDeInicio.TabIndex = 14;
-            this.monthCalendar_FechaDeInicio.Visible = false;
-            // 
-            // button_FechaDeInicio
-            // 
-            this.button_FechaDeInicio.Location = new System.Drawing.Point(282, 48);
-            this.button_FechaDeInicio.Name = "button_FechaDeInicio";
-            this.button_FechaDeInicio.Size = new System.Drawing.Size(80, 20);
-            this.button_FechaDeInicio.TabIndex = 11;
-            this.button_FechaDeInicio.Text = "Seleccionar";
-            this.button_FechaDeInicio.UseVisualStyleBackColor = true;
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(6, 51);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(79, 13);
-            this.label5.TabIndex = 10;
-            this.label5.Text = "Fecha de inicio";
-            // 
-            // textBox_FechaDeInicio
-            // 
-            this.textBox_FechaDeInicio.Location = new System.Drawing.Point(112, 48);
-            this.textBox_FechaDeInicio.Name = "textBox_FechaDeInicio";
-            this.textBox_FechaDeInicio.Size = new System.Drawing.Size(164, 20);
-            this.textBox_FechaDeInicio.TabIndex = 9;
+            this.checkBox_Pregunta.AutoSize = true;
+            this.checkBox_Pregunta.Location = new System.Drawing.Point(9, 133);
+            this.checkBox_Pregunta.Name = "checkBox_Pregunta";
+            this.checkBox_Pregunta.Size = new System.Drawing.Size(106, 17);
+            this.checkBox_Pregunta.TabIndex = 15;
+            this.checkBox_Pregunta.Text = "Permite pregunta";
+            this.checkBox_Pregunta.UseVisualStyleBackColor = true;
             // 
             // comboBox_Rubro
             // 
@@ -294,16 +264,6 @@
             this.label_stock.TabIndex = 0;
             this.label_stock.Text = "Stock";
             // 
-            // checkBox_Pregunta
-            // 
-            this.checkBox_Pregunta.AutoSize = true;
-            this.checkBox_Pregunta.Location = new System.Drawing.Point(9, 133);
-            this.checkBox_Pregunta.Name = "checkBox_Pregunta";
-            this.checkBox_Pregunta.Size = new System.Drawing.Size(106, 17);
-            this.checkBox_Pregunta.TabIndex = 15;
-            this.checkBox_Pregunta.Text = "Permite pregunta";
-            this.checkBox_Pregunta.UseVisualStyleBackColor = true;
-            // 
             // EditarPublicacion
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -342,10 +302,6 @@
         private System.Windows.Forms.ComboBox comboBox_TiposDePublicacion;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.MonthCalendar monthCalendar_FechaDeInicio;
-        private System.Windows.Forms.Button button_FechaDeInicio;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.TextBox textBox_FechaDeInicio;
         private System.Windows.Forms.ComboBox comboBox_Rubro;
         private System.Windows.Forms.ComboBox comboBox_Visibilidad;
         private System.Windows.Forms.Label label4;

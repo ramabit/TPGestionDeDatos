@@ -70,12 +70,6 @@ namespace FrbaCommerce.Objetos
 
         public void SetFechaDeInicio(DateTime fechaDeInicio)
         {
-            if (fechaDeInicio.ToString() == "")
-                throw new CampoVacioException();
-
-            if (esFechaPasada(fechaDeInicio))
-                throw new FechaPasadaException();
-
             this.fechaDeInicio = fechaDeInicio;
         }
 
@@ -86,9 +80,6 @@ namespace FrbaCommerce.Objetos
 
         public void SetFechaDeVencimiento(DateTime fechaDeVencimiento)
         {
-            if (fechaDeVencimiento.ToString() == "")
-                throw new CampoVacioException();
-
             this.fechaDeVencimiento = fechaDeVencimiento;
         }
 

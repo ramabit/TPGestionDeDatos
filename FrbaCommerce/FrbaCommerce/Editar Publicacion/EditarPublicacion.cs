@@ -15,6 +15,7 @@ namespace FrbaCommerce.Editar_Publicacion
     public partial class EditarPublicacion : Form
     {
         private Decimal idPublicacion;
+        private String estadoInicial;
         private ComunicadorConBaseDeDatos comunicador = new ComunicadorConBaseDeDatos();
 
         public EditarPublicacion(String idPublicacion)
@@ -47,12 +48,13 @@ namespace FrbaCommerce.Editar_Publicacion
             DataTable estados = new DataTable();
             estados.Columns.Add("estados");
 
-            String estado = (String) comunicador.SelectFromWhere("estado", "Publicacion", "id", idPublicacion);
+            estadoInicial = (String) comunicador.SelectFromWhere("estado", "Publicacion", "id", idPublicacion);
+            
 
-            if (estado == "Borrador") CargarSegunBorrador(estados);
-            if (estado == "Publicada") CargarSegunPublicada(estados);
-            if (estado == "Pausada") CargarSegunPausada(estados);
-            if (estado == "Finalizada") CargarSegunFinalizada(estados);
+            if (estadoInicial == "Borrador") CargarSegunBorrador(estados);
+            if (estadoInicial == "Publicada") CargarSegunPublicada(estados);
+            if (estadoInicial == "Pausada") CargarSegunPausada(estados);
+            if (estadoInicial == "Finalizada") CargarSegunFinalizada(estados);
 
             comboBox_Estado.DataSource = estados;
             comboBox_Estado.ValueMember = "estados";
@@ -95,8 +97,6 @@ namespace FrbaCommerce.Editar_Publicacion
         private void DesactivarCamposDeCaracteristicasComunes()
         {
             textBox_Descripcion.Enabled = false;
-            textBox_FechaDeInicio.Enabled = false;
-            button_FechaDeInicio.Enabled = false;
             comboBox_Rubro.Enabled = false;
             comboBox_Visibilidad.Enabled = false;
             checkBox_Pregunta.Enabled = false;
@@ -124,7 +124,6 @@ namespace FrbaCommerce.Editar_Publicacion
         {
             Publicacion publicacion = comunicador.ObtenerPublicacion(idPublicacion);
             textBox_Descripcion.Text = publicacion.GetDescripcion();
-            textBox_FechaDeInicio.Text = Convert.ToString(publicacion.GetFechaDeInicio());
             textBox_Precio.Text = publicacion.GetPrecio();
             textBox_Stock.Text = publicacion.GetStock();
             comboBox_Rubro.SelectedValue = (String) comunicador.SelectFromWhere("descripcion", "Rubro", "id", publicacion.GetIdRubro());
@@ -140,16 +139,27 @@ namespace FrbaCommerce.Editar_Publicacion
             String tipo = comboBox_TiposDePublicacion.Text;
             String estado = comboBox_Estado.Text;
             String descripcion = textBox_Descripcion.Text;
-            DateTime fechaDeInicio = Convert.ToDateTime(textBox_FechaDeInicio.Text);
             String rubro = comboBox_Rubro.Text;
             String visibilidad = comboBox_Visibilidad.Text;
             Boolean pregunta = checkBox_Pregunta.Checked;
             String stock = textBox_Stock.Text;
             String precio = textBox_Precio.Text;
-
             Decimal idRubro = (Decimal) comunicador.SelectFromWhere("id", "Rubro", "descripcion", rubro);
             Decimal idVisibilidad = (Decimal)comunicador.SelectFromWhere("id", "Visibilidad", "descripcion", visibilidad);
             Double duracion = Convert.ToDouble(comunicador.SelectFromWhere("duracion", "Visibilidad", "id", idVisibilidad));
+            DateTime fechaDeInicio;
+            DateTime fechaDeVencimiento;
+
+            if (estadoInicial == "Borrador")
+            {
+                fechaDeInicio = DateTime.Now;
+                fechaDeVencimiento = Convert.ToDateTime(Convert.ToString(Convert.ToDateTime(fechaDeInicio).AddDays(duracion)));
+            }
+            else
+            {
+                fechaDeInicio = Convert.ToDateTime(comunicador.SelectFromWhere("fecha_inicio", "Publicacion", "id", idPublicacion));
+                fechaDeVencimiento = Convert.ToDateTime(comunicador.SelectFromWhere("fecha_vencimiento", "Publicacion", "id", idPublicacion));
+            }
 
             // Update Publicacion
             try
@@ -159,7 +169,8 @@ namespace FrbaCommerce.Editar_Publicacion
                 publicacion.SetEstado(estado);
                 publicacion.SetDescripcion(descripcion);
                 publicacion.SetFechaDeInicio(fechaDeInicio);
-                publicacion.SetFechaDeVencimiento(Convert.ToDateTime(Convert.ToString(Convert.ToDateTime(fechaDeInicio).AddDays(duracion))));
+                publicacion.SetFechaDeVencimiento(fechaDeVencimiento);
+                publicacion.SetPregunta(pregunta);
                 publicacion.SetStock(stock);
                 publicacion.SetPrecio(precio);
                 publicacion.SetIdRubro(idRubro);

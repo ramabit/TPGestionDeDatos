@@ -66,7 +66,7 @@ namespace FrbaCommerce.Generar_Publicacion
             String tipo = comboBox_TiposDePublicacion.Text;
             String estado = comboBox_Estado.Text;
             String descripcion = textBox_Descripcion.Text;
-            DateTime fechaDeInicio = Convert.ToDateTime(textBox_FechaDeInicio.Text);
+            DateTime fechaDeInicio = DateTime.Now;
             String rubro = comboBox_Rubro.Text;
             String visibilidadDescripcion = comboBox_Visibilidad.Text;
             Boolean pregunta = radioButton_Pregunta.Checked;
@@ -118,7 +118,6 @@ namespace FrbaCommerce.Generar_Publicacion
         private void button_Limpiar_Click(object sender, EventArgs e)
         {
             textBox_Descripcion.Text = "";
-            textBox_FechaDeInicio.Text = "";
             textBox_Precio.Text = "";
             textBox_Stock.Text = "";
             comboBox_Rubro.SelectedIndex = 0;
@@ -138,17 +137,6 @@ namespace FrbaCommerce.Generar_Publicacion
             this.Hide();
             new MenuPrincipal().ShowDialog();
             this.Close();
-        }
-
-        private void button_FechaDeInicio_Click(object sender, EventArgs e)
-        {
-            monthCalendar_FechaDeInicio.Visible = true;
-        }
-
-        private void monthCalendar_FechaDeInicio_DateSelected(object sender, System.Windows.Forms.DateRangeEventArgs e)
-        {
-            textBox_FechaDeInicio.Text = e.Start.ToShortDateString();
-            monthCalendar_FechaDeInicio.Visible = false;
         }
 
         private void comboBox_tiposDePublicacion_SelectedIndexChanged(object sender, EventArgs e)
