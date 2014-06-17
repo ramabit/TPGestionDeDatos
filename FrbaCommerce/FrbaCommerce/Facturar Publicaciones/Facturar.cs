@@ -189,7 +189,7 @@ namespace FrbaCommerce.Facturar_Publicaciones
                                     + " order by c.fecha";
             builderDeComandos.Crear(totalidadVentasFacturar, parametros).ExecuteNonQuery();
 
-
+            // Cobro las bonificaciones 
             String consulta = "LOS_SUPER_AMIGOS.SacarBonificaciones";
             parametros.Clear();
             parametros.Add(new SqlParameter("@id", UsuarioSesion.Usuario.id));
@@ -262,6 +262,15 @@ namespace FrbaCommerce.Facturar_Publicaciones
                                 + " deallocate compra_cursor";
             parametros.Clear();
             builderDeComandos.Crear(ventaFacturada,parametros).ExecuteNonQuery();
+
+            // Actualizo la tabla Comisiones_Usuario_x_Visibilidad
+            String actualizo = "LOS_SUPER_AMIGOS.Actualizar_Comisiones_Usuario_x_Visibilidad";
+            parametros.Clear();
+            parametros.Add(new SqlParameter("@usuario", UsuarioSesion.Usuario.id));
+            command = builderDeComandos.Crear(actualizo, parametros);
+            command.CommandType = CommandType.StoredProcedure;
+            command.ExecuteNonQuery();
+
 
             // Inserto el total en la factura
             String actualizoTotal = "update LOS_SUPER_AMIGOS.Factura"

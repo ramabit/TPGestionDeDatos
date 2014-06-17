@@ -89,6 +89,9 @@ DROP PROCEDURE LOS_SUPER_AMIGOS.crear_visibilidad
 IF OBJECT_ID('LOS_SUPER_AMIGOS.crear_publicacion', 'P') IS NOT NULL
 DROP PROCEDURE LOS_SUPER_AMIGOS.crear_publicacion
 
+IF OBJECT_ID('LOS_SUPER_AMIGOS.Actualizar_Comisiones_Usuario_x_Visibilidad', 'P') IS NOT NULL
+DROP PROCEDURE LOS_SUPER_AMIGOS.Actualizar_Comisiones_Usuario_x_Visibilidad
+
 IF OBJECT_ID('LOS_SUPER_AMIGOS.agregar_id_publ') IS NOT NULL
 DROP FUNCTION LOS_SUPER_AMIGOS.agregar_id_publ
 
@@ -180,6 +183,34 @@ CREATE PROCEDURE LOS_SUPER_AMIGOS.SacarBonificaciones
  close comision_cursor
  deallocate comision_cursor
  END
+GO
+
+CREATE PROCEDURE LOS_SUPER_AMIGOS.Actualizar_Comisiones_Usuario_x_Visibilidad
+	@usuario numeric(18,0)
+AS
+BEGIN
+ declare @vid numeric(18,0) 
+declare actualizo_comisiones cursor for
+	(select  v.id
+	from LOS_SUPER_AMIGOS.Compra_Comision cc, LOS_SUPER_AMIGOS.Compra c,
+	LOS_SUPER_AMIGOS.Publicacion p, LOS_SUPER_AMIGOS.Visibilidad v
+	where cc.compra_id = c.id and c.publicacion_id = p.id and p.visibilidad_id = v.id)
+	
+	open actualizo_comisiones
+	fetch next from actualizo_comisiones into @vid
+ 
+	while @@FETCH_STATUS = 0
+	Begin
+ 
+		update LOS_SUPER_AMIGOS.Comisiones_Usuario_x_Visibilidad
+		set contador_comisiones = contador_comisiones + 1
+		where visibilidad_id = @vid and usuario_id = @usuario
+		
+		fetch next from actualizo_comisiones into @vid
+	End
+	close actualizo_comisiones
+	deallocate actualizo_comisiones
+End
 GO
 
 CREATE PROCEDURE LOS_SUPER_AMIGOS.crear_cliente
