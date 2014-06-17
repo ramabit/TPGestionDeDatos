@@ -65,8 +65,8 @@ DROP TABLE LOS_SUPER_AMIGOS.Factura
 IF OBJECT_ID('LOS_SUPER_AMIGOS.Forma_Pago', 'U') IS NOT NULL
 DROP TABLE LOS_SUPER_AMIGOS.Forma_Pago
 
-IF OBJECT_ID('LOS_SUPER_AMIGOS.SacarBonificaciones', 'P') IS NOT NULL
-DROP PROCEDURE LOS_SUPER_AMIGOS.SacarBonificaciones
+IF OBJECT_ID('LOS_SUPER_AMIGOS.Hacer_Facturacion', 'P') IS NOT NULL
+DROP PROCEDURE LOS_SUPER_AMIGOS.Hacer_Facturacion
 
 IF OBJECT_ID('LOS_SUPER_AMIGOS.crear_cliente', 'P') IS NOT NULL
 DROP PROCEDURE LOS_SUPER_AMIGOS.crear_cliente
@@ -88,9 +88,6 @@ DROP PROCEDURE LOS_SUPER_AMIGOS.crear_visibilidad
 
 IF OBJECT_ID('LOS_SUPER_AMIGOS.crear_publicacion', 'P') IS NOT NULL
 DROP PROCEDURE LOS_SUPER_AMIGOS.crear_publicacion
-
-IF OBJECT_ID('LOS_SUPER_AMIGOS.Actualizar_Comisiones_Usuario_x_Visibilidad', 'P') IS NOT NULL
-DROP PROCEDURE LOS_SUPER_AMIGOS.Actualizar_Comisiones_Usuario_x_Visibilidad
 
 IF OBJECT_ID('LOS_SUPER_AMIGOS.agregar_id_publ') IS NOT NULL
 DROP FUNCTION LOS_SUPER_AMIGOS.agregar_id_publ
@@ -124,93 +121,65 @@ DROP TRIGGER LOS_SUPER_AMIGOS.agregar_valor_default_de_nueva_visiblidad_en_comis
 
 GO
 
-CREATE PROCEDURE LOS_SUPER_AMIGOS.SacarBonificaciones
+CREATE PROCEDURE LOS_SUPER_AMIGOS.Hacer_Facturacion
 	@id numeric(18,0),
 	@idF numeric(18,0),
 	@contador_bonificaciones int output,
 	@monto_descontado numeric(18,2) output
  as
  BEGIN
- declare @vid numeric(18,0) 
- declare @contc int
+ declare @vid numeric(18,0)
+ declare @compra_publicacion numeric(18,0) 
+ declare @compra_cantidad numeric(18,0) 
+ declare @precio numeric(18,0) 
+ declare @porcentaje numeric(18,2) 
+
  declare comision_cursor cursor for
- (select c.visibilidad_id, c.contador_comisiones 
-	from LOS_SUPER_AMIGOS.Comisiones_Usuario_x_Visibilidad c, LOS_SUPER_AMIGOS.Visibilidad v
-	where c.usuario_id = @id and c.visibilidad_id = v.id and v.habilitado = 1 )
+ (select cc.compra_publicacion, cc.compra_cantidad,p.precio, v.porcentaje, v.id
+		from LOS_SUPER_AMIGOS.Compra_Comision cc, LOS_SUPER_AMIGOS.Compra c,
+		LOS_SUPER_AMIGOS.Publicacion p, LOS_SUPER_AMIGOS.Visibilidad v
+		where cc.compra_id = c.id and c.publicacion_id = p.id and p.visibilidad_id = v.id)
  set @monto_descontado = 0
  set @contador_bonificaciones = 0
  open comision_cursor
- fetch next from comision_cursor into @vid, @contc
+ fetch next from comision_cursor into @compra_publicacion, @compra_cantidad, @precio, @porcentaje, @vid
  
  while @@FETCH_STATUS = 0
  Begin
 	
-	if(@contc >= 9 and isnull((select top 1 cc.compra_publicacion
-		from LOS_SUPER_AMIGOS.Compra_Comision cc, LOS_SUPER_AMIGOS.Compra c,
-		LOS_SUPER_AMIGOS.Publicacion p, LOS_SUPER_AMIGOS.Visibilidad v
-		where cc.compra_id = c.id and c.publicacion_id = p.id and p.visibilidad_id = v.id 
-		and v.id = @vid),0)!=0)
+	if((select c.contador_comisiones 
+	from LOS_SUPER_AMIGOS.Comisiones_Usuario_x_Visibilidad c, LOS_SUPER_AMIGOS.Visibilidad v
+	where c.usuario_id = @id and c.visibilidad_id = @vid and v.habilitado = 1 and c.visibilidad_id = v.id) >= 9)
+	
 	Begin
 		insert LOS_SUPER_AMIGOS.Item_Factura
 		(factura_nro, publicacion_id, cantidad, monto)
-		(select top 1 @idF, cc.compra_publicacion, cc.compra_cantidad, 0
-		from LOS_SUPER_AMIGOS.Compra_Comision cc, LOS_SUPER_AMIGOS.Compra c,
-		LOS_SUPER_AMIGOS.Publicacion p, LOS_SUPER_AMIGOS.Visibilidad v
-		where cc.compra_id = c.id and c.publicacion_id = p.id and p.visibilidad_id = v.id 
-		and v.id = @vid)
-		
-		update LOS_SUPER_AMIGOS.Compra
-		set facturada = 1
-		where (select top 1 c.id
-		from LOS_SUPER_AMIGOS.Compra_Comision cc, LOS_SUPER_AMIGOS.Compra c,
-		LOS_SUPER_AMIGOS.Publicacion p, LOS_SUPER_AMIGOS.Visibilidad v
-		where cc.compra_id = c.id and c.publicacion_id = p.id and p.visibilidad_id = v.id 
-		and v.id = @vid) = id 
+		values( @idF, @compra_publicacion, @compra_cantidad, 0)
 		
 		update LOS_SUPER_AMIGOS.Comisiones_Usuario_x_Visibilidad	
 		set contador_comisiones = 0
 		where  visibilidad_id = @vid and usuario_id = @id
 		
-		set @monto_descontado = @monto_descontado + (select top 1 (c.cantidad * p.precio * v.porcentaje)
-													from LOS_SUPER_AMIGOS.Compra_Comision cc, LOS_SUPER_AMIGOS.Compra c,
-													LOS_SUPER_AMIGOS.Publicacion p, LOS_SUPER_AMIGOS.Visibilidad v
-													where cc.compra_id = c.id and c.publicacion_id = p.id and p.visibilidad_id = v.id 
-													and v.id = @vid)
+		set @monto_descontado = @monto_descontado + (@compra_cantidad * @precio * @porcentaje)
+
 		set @contador_bonificaciones = @contador_bonificaciones + 1		
 	End
-	fetch next from comision_cursor into @vid, @contc
+	else
+	Begin
+		insert LOS_SUPER_AMIGOS.Item_Factura
+		(factura_nro, publicacion_id, cantidad, monto)
+		values( @idF, @compra_publicacion, @compra_cantidad, @compra_cantidad * @precio * @porcentaje)
+		
+		update LOS_SUPER_AMIGOS.Comisiones_Usuario_x_Visibilidad
+		set contador_comisiones = contador_comisiones + 1
+		where visibilidad_id = @vid and usuario_id = @id
+	End
+	
+	fetch next from comision_cursor into @compra_publicacion, @compra_cantidad, @precio, @porcentaje, @vid
  End
  close comision_cursor
  deallocate comision_cursor
  END
-GO
-
-CREATE PROCEDURE LOS_SUPER_AMIGOS.Actualizar_Comisiones_Usuario_x_Visibilidad
-	@usuario numeric(18,0)
-AS
-BEGIN
- declare @vid numeric(18,0) 
-declare actualizo_comisiones cursor for
-	(select  v.id
-	from LOS_SUPER_AMIGOS.Compra_Comision cc, LOS_SUPER_AMIGOS.Compra c,
-	LOS_SUPER_AMIGOS.Publicacion p, LOS_SUPER_AMIGOS.Visibilidad v
-	where cc.compra_id = c.id and c.publicacion_id = p.id and p.visibilidad_id = v.id)
-	
-	open actualizo_comisiones
-	fetch next from actualizo_comisiones into @vid
- 
-	while @@FETCH_STATUS = 0
-	Begin
- 
-		update LOS_SUPER_AMIGOS.Comisiones_Usuario_x_Visibilidad
-		set contador_comisiones = contador_comisiones + 1
-		where visibilidad_id = @vid and usuario_id = @usuario
-		
-		fetch next from actualizo_comisiones into @vid
-	End
-	close actualizo_comisiones
-	deallocate actualizo_comisiones
-End
 GO
 
 CREATE PROCEDURE LOS_SUPER_AMIGOS.crear_cliente
