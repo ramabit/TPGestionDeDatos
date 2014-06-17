@@ -193,6 +193,7 @@ namespace FrbaCommerce.Facturar_Publicaciones
             String consulta = "LOS_SUPER_AMIGOS.SacarBonificaciones";
             parametros.Clear();
             parametros.Add(new SqlParameter("@id", UsuarioSesion.Usuario.id));
+            parametros.Add(new SqlParameter("@idF", idFact));
             SqlParameter parametroContador = new SqlParameter("@contador_bonificaciones", SqlDbType.Int);
             parametroContador.Direction = ParameterDirection.Output;
             parametros.Add(parametroContador);

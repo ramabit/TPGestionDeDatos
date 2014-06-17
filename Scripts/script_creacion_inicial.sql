@@ -123,6 +123,7 @@ GO
 
 CREATE PROCEDURE LOS_SUPER_AMIGOS.SacarBonificaciones
 	@id numeric(18,0),
+	@idF numeric(18,0),
 	@contador_bonificaciones int output,
 	@monto_descontado numeric(18,2) output
  as
@@ -149,7 +150,7 @@ CREATE PROCEDURE LOS_SUPER_AMIGOS.SacarBonificaciones
 	Begin
 		insert LOS_SUPER_AMIGOS.Item_Factura
 		(factura_nro, publicacion_id, cantidad, monto)
-		(select top 1 177346, cc.compra_publicacion, cc.compra_cantidad, 0
+		(select top 1 @idF, cc.compra_publicacion, cc.compra_cantidad, 0
 		from LOS_SUPER_AMIGOS.Compra_Comision cc, LOS_SUPER_AMIGOS.Compra c,
 		LOS_SUPER_AMIGOS.Publicacion p, LOS_SUPER_AMIGOS.Visibilidad v
 		where cc.compra_id = c.id and c.publicacion_id = p.id and p.visibilidad_id = v.id 
