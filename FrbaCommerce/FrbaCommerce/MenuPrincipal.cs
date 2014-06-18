@@ -27,7 +27,6 @@ namespace FrbaCommerce
             funcionalidades.Add("Responder preguntas", new Gestion_de_Preguntas.VerPreguntas());
             funcionalidades.Add("Ver respuestas", new Gestion_de_Preguntas.VerRespuestas());
             funcionalidades.Add("Gestionar roles", new ABM_Rol.RolForm());
-            funcionalidades.Add("Gestionar usuarios", null);
             funcionalidades.Add("Generar factura", new Facturar_Publicaciones.Facturar());
             funcionalidades.Add("Crear empresa", new ABM_Empresa.AgregarEmpresa("empresaCreadoPorAdmin", "password"));
             funcionalidades.Add("Editar empresa", new ABM_Empresa.FiltroEmpresa());

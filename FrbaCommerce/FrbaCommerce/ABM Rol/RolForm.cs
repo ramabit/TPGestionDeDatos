@@ -19,19 +19,22 @@ namespace FrbaCommerce.ABM_Rol
         private void botonAgregarRol_Click(object sender, EventArgs e)
         {
             this.Hide();
-            new AgregarRol().Show();
+            new AgregarRol().ShowDialog();
+            this.Close();
         }
 
         private void botonEditarRol_Click(object sender, EventArgs e)
         {
             this.Hide();
-            new ListadoEditarRol().Show();            
+            new ListadoEditarRol().ShowDialog();
+            this.Close();
         }
 
         private void botonBajaRol_Click(object sender, EventArgs e)
         {
             this.Hide();
-            new BajaRol().Show();
+            new BajaRol().ShowDialog();
+            this.Close();
         }
 
         private void RolForm_Load(object sender, EventArgs e)

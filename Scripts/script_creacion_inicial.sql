@@ -862,7 +862,6 @@ VALUES
 	('Responder preguntas'),
 	('Ver respuestas'),
 	('Gestionar roles'),
-	('Gestionar usuarios'),
 	('Generar factura'),
 	('Crear empresa'),
 	('Editar empresa'),
@@ -905,14 +904,14 @@ VALUES
 	(4,2),
 	(5,2),
 	(6,2),
-	(9,2),
+	(8,2),
+	(17,2),
 	(18,2),
-	(19,2),
 	(2,3),
 	(3,3),
 	(5,3),
-	(9,3),
-	(18,3)
+	(8,3),
+	(17,3)
 
 -- FIN INSERTAR Funcionalidad_por_Rol
 

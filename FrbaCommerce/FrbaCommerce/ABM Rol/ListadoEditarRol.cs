@@ -65,6 +65,8 @@ namespace FrbaCommerce.ABM_Rol
 
         private void AgregarBotonEditar()
         {
+            if (dataGridViewResultadosBusqueda.Columns.Contains("Editar"))
+                dataGridViewResultadosBusqueda.Columns.Remove("Editar");
             DataGridViewButtonColumn buttons = new DataGridViewButtonColumn();
             {
                 buttons.HeaderText = "Editar";
@@ -90,7 +92,7 @@ namespace FrbaCommerce.ABM_Rol
             {
                 String nombreRolAEditar = dataGridViewResultadosBusqueda.Rows[e.RowIndex].Cells["nombre"].Value.ToString();
                 this.Hide();
-                new EditarRol(nombreRolAEditar).Show();
+                new EditarRol(nombreRolAEditar).ShowDialog();
             }
             
         }
@@ -98,7 +100,7 @@ namespace FrbaCommerce.ABM_Rol
         private void botonCancelar_Click(object sender, EventArgs e)
         {
             this.Hide();
-            new RolForm().Show();
+            new RolForm().ShowDialog();
             this.Close();
         }
 

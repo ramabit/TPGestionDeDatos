@@ -239,6 +239,8 @@ namespace FrbaCommerce.Comprar_Ofertar
 
         private void AgregarBotonVerPublicacion()
         {
+            if (dataGridView1.Columns.Contains("Ver Publicacion"))
+                dataGridView1.Columns.Remove("Ver Publicacion");
             DataGridViewButtonColumn buttons = new DataGridViewButtonColumn();
             {
                 buttons.HeaderText = "Ver Publicacion";
@@ -275,6 +277,7 @@ namespace FrbaCommerce.Comprar_Ofertar
             comboBoxRubro.SelectedIndex = -1;
             labelNrosPagina.Text = "";
             dataGridView1.DataSource = null;
+            dataGridView1.Columns.Remove("Ver Publicacion");
         }
 
         private void botonVolver_Click(object sender, EventArgs e)
