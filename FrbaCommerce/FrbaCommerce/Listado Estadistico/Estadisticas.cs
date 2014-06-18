@@ -71,6 +71,12 @@ namespace FrbaCommerce.Listado_Estadistico
             if (tipoDeListado == "Vendedores con mayor cantidad de productos no vendidos")
             {
                 progressBar.Visible = true;
+                progressBar.Value = 50;
+                String borrar = "IF OBJECT_ID('LOS_SUPER_AMIGOS.usuarios_por_visibilidad', 'U') IS NOT NULL"
+                            + " DROP TABLE LOS_SUPER_AMIGOS.usuarios_por_visibilidad";
+                parametros.Clear();
+                builderDeComandos.Crear(borrar, parametros).ExecuteNonQuery();
+
                 String crearTabla = "CREATE TABLE LOS_SUPER_AMIGOS.usuarios_por_visibilidad"
                                     + " (mes int,"
                                     + " visibilidad numeric(18,0),"
@@ -114,7 +120,7 @@ namespace FrbaCommerce.Listado_Estadistico
                 dataGridView_Estadistica.DataSource = datos.Tables[0];
                 return;
             }
-
+            progressBar.Visible = false;
             String queryParaObtenerResultados = GetQueryObtenerResultados(tipoDeListado, fechaDeInicio, fechaMedia, fechaDeFin);
             
             dataGridView_Estadistica.DataSource = comunicador.SelectDataTable("*", queryParaObtenerResultados);
