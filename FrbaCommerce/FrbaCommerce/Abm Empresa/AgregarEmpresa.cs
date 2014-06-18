@@ -94,6 +94,7 @@ namespace FrbaCommerce.ABM_Empresa
                 empresa.SetCiudad(ciudad);
                 empresa.SetIdDireccion(idDireccion);
                 empresa.SetIdUsuario(idUsuario);
+                empresa.SetHabilitado(true);
                 Decimal idEmpresa = comunicador.CrearEmpresa(empresa);
                 if (idEmpresa > 0) MessageBox.Show("Se agrego la empresa correctamente");
             }

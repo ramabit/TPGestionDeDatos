@@ -19,6 +19,7 @@ namespace FrbaCommerce.Objetos
         private String telefono;
         private Decimal idDireccion;
         private Decimal idUsuario;
+        private Boolean habilitado;
 
         public void SetId(Decimal id)
         {
@@ -149,6 +150,16 @@ namespace FrbaCommerce.Objetos
             return this.idUsuario;
         }
 
+        public void SetHabilitado(Boolean habilitado)
+        {
+            this.habilitado = habilitado;
+        }
+
+        public Boolean GetHabilitado()
+        {
+            return this.habilitado;
+        }
+
         #region Miembros de Comunicable
 
         string Comunicable.GetQueryCrear()
@@ -158,7 +169,7 @@ namespace FrbaCommerce.Objetos
 
         string Comunicable.GetQueryModificar()
         {
-            return "UPDATE LOS_SUPER_AMIGOS.Cliente SET nombre = @nombre, apellido = @apellido, tipo_de_documento_id = @tipo_de_documento_id, documento = @documento, fecha_nacimiento = @fecha_nacimiento, mail = @mail, telefono = @telefono WHERE id = @id";
+            return "UPDATE LOS_SUPER_AMIGOS.Cliente SET nombre = @nombre, apellido = @apellido, tipo_de_documento_id = @tipo_de_documento_id, documento = @documento, fecha_nacimiento = @fecha_nacimiento, mail = @mail, telefono = @telefono, habilitado = @habilitado WHERE id = @id";
         }
 
         string Comunicable.GetQueryObtener()
@@ -179,6 +190,7 @@ namespace FrbaCommerce.Objetos
             parametros.Add(new SqlParameter("@telefono", this.telefono));
             parametros.Add(new SqlParameter("@direccion_id", this.idDireccion));
             parametros.Add(new SqlParameter("@usuario_id", this.idUsuario));
+            parametros.Add(new SqlParameter("@habilitado", this.habilitado));
             return parametros;
         }
 

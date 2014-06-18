@@ -110,6 +110,7 @@ namespace FrbaCommerce.ABM_Cliente
                 String idClienteAModificar = dataGridView_Cliente.Rows[e.RowIndex].Cells["id"].Value.ToString();
                 new EditarCliente(idClienteAModificar).ShowDialog();
                 CargarClientes();
+                return;
             }
             if (e.ColumnIndex == dataGridView_Cliente.Columns["Eliminar"].Index && e.RowIndex >= 0)
             {
@@ -117,6 +118,7 @@ namespace FrbaCommerce.ABM_Cliente
                 Boolean resultado = comunicador.Eliminar(Convert.ToDecimal(idClienteAEliminar), "Cliente");
                 if (resultado) MessageBox.Show("Se elimino correctamente");
                 CargarClientes();
+                return;
             }
         }
     }

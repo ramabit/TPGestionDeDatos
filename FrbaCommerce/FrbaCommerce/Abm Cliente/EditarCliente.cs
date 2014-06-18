@@ -84,6 +84,7 @@ namespace FrbaCommerce.ABM_Cliente
             String departamento = textBox_Departamento.Text;
             String codigoPostal = textBox_CodigoPostal.Text;
             String localidad = textBox_Localidad.Text;
+            Boolean habilitado = checkBox_Habilitado.Checked;
 
             Boolean pudoModificar;
 
@@ -126,6 +127,7 @@ namespace FrbaCommerce.ABM_Cliente
                 cliente.SetIdTipoDeDocumento(idTipoDeDocumento);
                 cliente.SetNumeroDeDocumento(numeroDeDocumento);
                 cliente.SetIdDireccion(idDireccion);
+                cliente.SetHabilitado(habilitado);
                 pudoModificar = comunicador.Modificar(idCliente, cliente);
                 if (pudoModificar) MessageBox.Show("El cliente se modifico correctamente");
             }

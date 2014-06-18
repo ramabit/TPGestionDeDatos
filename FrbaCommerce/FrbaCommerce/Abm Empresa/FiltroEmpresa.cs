@@ -99,6 +99,7 @@ namespace FrbaCommerce.ABM_Empresa
                 String idEmpresaAModificar = dataGridView_Empresa.Rows[e.RowIndex].Cells["id"].Value.ToString();
                 new EditarEmpresa(idEmpresaAModificar).ShowDialog();
                 CargarEmpresas();
+                return;
             }
             if (e.ColumnIndex == dataGridView_Empresa.Columns["Eliminar"].Index && e.RowIndex >= 0)
             {
@@ -106,6 +107,7 @@ namespace FrbaCommerce.ABM_Empresa
                 Boolean resultado = comunicador.Eliminar(Convert.ToDecimal(idEmpresaAEliminar), "Empresa");
                 if (resultado) MessageBox.Show("Se elimino correctamente");
                 CargarEmpresas();
+                return;
             }
         }
     }

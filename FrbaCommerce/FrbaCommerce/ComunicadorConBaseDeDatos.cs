@@ -209,8 +209,8 @@ namespace FrbaCommerce
         {
             parametros.Clear();
             parametros.Add(new SqlParameter("@idUsuario", UsuarioSesion.Usuario.id));
-            command.CommandTimeout = 0;
             command = builderDeComandos.Crear("SELECT " + que + " FROM " + deDonde + " WHERE " + condiciones, parametros);
+            command.CommandTimeout = 0;
             DataSet datos = new DataSet();
             SqlDataAdapter adapter = new SqlDataAdapter();
             adapter.SelectCommand = command;

@@ -211,13 +211,14 @@ CREATE PROCEDURE LOS_SUPER_AMIGOS.crear_cliente
 	@telefono numeric(18,0),
 	@direccion_id numeric(18,0),
 	@usuario_id numeric(18,0),
+	@habilitado bit,
 	@id numeric(18,0) OUTPUT
 AS
 BEGIN
 	INSERT INTO LOS_SUPER_AMIGOS.Cliente 
-		(nombre, apellido, fecha_nacimiento, tipo_de_documento_id, documento, mail, telefono, direccion_id, usuario_id) 
+		(nombre, apellido, fecha_nacimiento, tipo_de_documento_id, documento, mail, telefono, direccion_id, usuario_id, habilitado) 
 	VALUES 
-		(@nombre, @apellido, @fecha_nacimiento, @tipo_de_documento_id, @documento, @mail, @telefono, @direccion_id, @usuario_id);
+		(@nombre, @apellido, @fecha_nacimiento, @tipo_de_documento_id, @documento, @mail, @telefono, @direccion_id, @usuario_id, @habilitado);
 	SET @id = SCOPE_IDENTITY();	
 END
 GO
@@ -232,13 +233,14 @@ CREATE PROCEDURE LOS_SUPER_AMIGOS.crear_empresa
 	@ciudad nvarchar(50),
 	@direccion_id numeric(18,0),
 	@usuario_id numeric(18,0),
+	@habilitado bit,
 	@id numeric(18,0) OUTPUT
 AS
 BEGIN
 	INSERT INTO LOS_SUPER_AMIGOS.Empresa 
-		(razon_social, nombre_de_contacto, cuit, fecha_creacion, mail, telefono, ciudad, direccion_id, usuario_id) 
+		(razon_social, nombre_de_contacto, cuit, fecha_creacion, mail, telefono, ciudad, direccion_id, usuario_id, habilitado) 
 	VALUES 
-		(@razon_social, @nombre_de_contacto, @cuit, @fecha_creacion, @mail, @telefono, @ciudad, @direccion_id, @usuario_id)
+		(@razon_social, @nombre_de_contacto, @cuit, @fecha_creacion, @mail, @telefono, @ciudad, @direccion_id, @usuario_id, @habilitado)
 	SET @id = SCOPE_IDENTITY();	
 END
 GO
@@ -315,13 +317,14 @@ CREATE PROCEDURE LOS_SUPER_AMIGOS.crear_publicacion
 	@precio numeric(18,0),
 	@usuario_id numeric(18,0),
 	@se_realizan_preguntas bit,
+	@habilitado bit,
 	@id numeric(18,0) OUTPUT
 AS
 BEGIN
 	INSERT INTO LOS_SUPER_AMIGOS.Publicacion
-		(tipo, estado, descripcion, fecha_inicio, fecha_vencimiento, rubro_id, visibilidad_id, precio, stock, usuario_id, se_realizan_preguntas)
+		(tipo, estado, descripcion, fecha_inicio, fecha_vencimiento, rubro_id, visibilidad_id, precio, stock, usuario_id, se_realizan_preguntas, habilitado)
 	VALUES
-		(@tipo, @estado, @descripcion, @fecha_inicio, @fecha_vencimiento, @rubro_id, @visibilidad_id, @precio, @stock, @usuario_id, @se_realizan_preguntas);
+		(@tipo, @estado, @descripcion, @fecha_inicio, @fecha_vencimiento, @rubro_id, @visibilidad_id, @precio, @stock, @usuario_id, @se_realizan_preguntas, @habilitado);
 	SET @id = SCOPE_IDENTITY();
 END
 GO
@@ -481,7 +484,7 @@ GO
 CREATE TABLE LOS_SUPER_AMIGOS.Usuario
 (
 	id numeric(18,0) IDENTITY(1,1),
-	username nvarchar(50) ,--
+	username nvarchar(50),
 	password nvarchar(150) DEFAULT '559aead08264d5795d3909718cdd05abd49572e84fe55590eef31a88a08fdffd', -- hash de 'A'
 	habilitado bit DEFAULT 1,
 	login_fallidos int DEFAULT 0,

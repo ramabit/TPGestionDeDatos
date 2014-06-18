@@ -73,6 +73,7 @@ namespace FrbaCommerce.ABM_Empresa
             String departamento = textBox_Departamento.Text;
             String codigoPostal = textBox_CodigoPostal.Text;
             String localidad = textBox_Localidad.Text;
+            Boolean habilitado = checkBox_Habilitado.Checked;
 
             Boolean pudoModificar;
 
@@ -112,7 +113,7 @@ namespace FrbaCommerce.ABM_Empresa
                 empresa.SetMail(mail);
                 empresa.SetTelefono(telefono);
                 empresa.SetCiudad(ciudad);
-
+                empresa.SetHabilitado(habilitado);
                 pudoModificar = comunicador.Modificar(idEmpresa, empresa);
                 if (pudoModificar) MessageBox.Show("La empresa se modifico correctamente");
             }

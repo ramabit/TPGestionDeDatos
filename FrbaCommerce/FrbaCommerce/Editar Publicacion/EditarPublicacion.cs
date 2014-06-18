@@ -147,6 +147,7 @@ namespace FrbaCommerce.Editar_Publicacion
             Decimal idRubro = (Decimal) comunicador.SelectFromWhere("id", "Rubro", "descripcion", rubro);
             Decimal idVisibilidad = (Decimal)comunicador.SelectFromWhere("id", "Visibilidad", "descripcion", visibilidad);
             Double duracion = Convert.ToDouble(comunicador.SelectFromWhere("duracion", "Visibilidad", "id", idVisibilidad));
+            Boolean habilitado = checkBox_Habilitado.Checked;
             DateTime fechaDeInicio;
             DateTime fechaDeVencimiento;
 
@@ -175,6 +176,7 @@ namespace FrbaCommerce.Editar_Publicacion
                 publicacion.SetPrecio(precio);
                 publicacion.SetIdRubro(idRubro);
                 publicacion.SetIdVisibilidad(idVisibilidad);
+                publicacion.SetHabilitado(habilitado);
                 Boolean pudoModificar = comunicador.Modificar(idPublicacion, publicacion);
                 if (pudoModificar) MessageBox.Show("La publicacion se modifico correctamente");
             }

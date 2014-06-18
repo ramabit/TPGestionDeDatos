@@ -93,6 +93,7 @@ namespace FrbaCommerce.ABM_Visibilidad
                 String idVisibilidadAModificiar = dataGridView_Visibilidad.Rows[e.RowIndex].Cells["id"].Value.ToString();
                 new EditarVisibilidad(idVisibilidadAModificiar).ShowDialog();
                 CargarVisibilidad();
+                return;
             }
             if (e.ColumnIndex == dataGridView_Visibilidad.Columns["Eliminar"].Index && e.RowIndex >= 0)
             {
@@ -100,6 +101,7 @@ namespace FrbaCommerce.ABM_Visibilidad
                 Boolean resultado = comunicador.Eliminar(Convert.ToDecimal(idVisibilidadAEliminar), "Visibilidad");
                 if (resultado) MessageBox.Show("Se elimino correctamente");
                 CargarVisibilidad();
+                return;
             }
         }
     }
