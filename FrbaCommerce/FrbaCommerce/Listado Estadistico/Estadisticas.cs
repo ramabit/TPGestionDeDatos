@@ -71,8 +71,8 @@ namespace FrbaCommerce.Listado_Estadistico
                                     + " (mes int,"
                                     + " visibilidad numeric(18,0),"
                                     + "	usuario numeric(18,0),"
-                                    + " cantidad numeric(18,0))";
-                                   // + " PRIMARY KEY(mes, visibilidad, usuario))";
+                                    + " cantidad numeric(18,0),"
+                                    + " PRIMARY KEY(mes, visibilidad, usuario))";
                 parametros.Clear();
                 builderDeComandos.Crear(crearTabla, parametros).ExecuteNonQuery();
 
@@ -95,31 +95,14 @@ namespace FrbaCommerce.Listado_Estadistico
                                 + " DEALLOCATE mi_cursor";
                 parametros.Clear();
                 parametros.Add(new SqlParameter("@fechaini", Convert.ToDateTime(fechaDeInicio)));
-                parametros.Add(new SqlParameter("@fechamed", Convert.ToDateTime(fechaDeInicio)));
-                parametros.Add(new SqlParameter("@fechafin", Convert.ToDateTime(fechaDeInicio)));
+                parametros.Add(new SqlParameter("@fechamed", Convert.ToDateTime(fechaMedia)));
+                parametros.Add(new SqlParameter("@fechafin", Convert.ToDateTime(fechaDeFin)));
                 command = builderDeComandos.Crear(llenarTabla, parametros);
                 command.CommandTimeout = 0;
                 command.ExecuteNonQuery();
 
-                
-                String crearTabla2 = "CREATE TABLE LOS_SUPER_AMIGOS.miTabla"
-                                    + " (mes int,"
-                                    + " visibilidad numeric(18,0),"
-                                    + "	usuario numeric(18,0),"
-                                    + " cantidad numeric(18,0))"
-                                    + " INSERT LOS_SUPER_AMIGOS.miTabla"
-	                                + " SELECT *"
-	                                + " FROM LOS_SUPER_AMIGOS.usuarios_por_visibilidad u"
-	                                + " ORDER BY u.mes, u.visibilidad, u.cantidad DESC";
                 parametros.Clear();
-                builderDeComandos.Crear(crearTabla2, parametros).ExecuteNonQuery();
-
-                String dropear = "DROP TABLE LOS_SUPER_AMIGOS.usuarios_por_visibilidad";
-                parametros.Clear();
-                builderDeComandos.Crear(dropear, parametros).ExecuteNonQuery();
-
-                parametros.Clear();
-                command = builderDeComandos.Crear("SELECT  *  FROM LOS_SUPER_AMIGOS.miTabla", parametros);
+                command = builderDeComandos.Crear("SELECT  *  FROM LOS_SUPER_AMIGOS.usuarios_por_visibilidad u ORDER BY u.mes, u.visibilidad, u.cantidad DESC", parametros);
                 DataSet datos = new DataSet();
                 SqlDataAdapter adapter = new SqlDataAdapter();
                 adapter.SelectCommand = command;
