@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,7 +14,7 @@ namespace FrbaCommerce
         public SqlConnection AbrirConexion()
         {
             this.Conexion = new SqlConnection();
-            this.Conexion.ConnectionString = System.Configuration.ConfigurationManager.ConnectionStrings["FrbaCommerce.Properties.Settings.GD1C2014ConnectionString"].ConnectionString;
+            this.Conexion.ConnectionString = ConfigurationManager.ConnectionStrings["FrbaCommerce.Properties.Settings.GD1C2014ConnectionString"].ConnectionString;
             this.Conexion.Open();
 
             return this.Conexion;

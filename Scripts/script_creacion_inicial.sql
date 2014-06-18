@@ -957,7 +957,7 @@ SET IDENTITY_INSERT LOS_SUPER_AMIGOS.Publicacion OFF;
 -- Finaliza todas las publicaciones que tienen fecha de vencimiento anterior al dia de hoy
 UPDATE LOS_SUPER_AMIGOS.Publicacion 
 	SET estado = 'Finalizada'
-	WHERE fecha_vencimiento <= GETDATE()
+	WHERE fecha_vencimiento <= '17/06/2013'
 	
 -- FIN INSERTAR Publicacion
 
