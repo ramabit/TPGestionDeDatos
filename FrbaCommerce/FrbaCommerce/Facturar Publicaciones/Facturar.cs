@@ -125,7 +125,7 @@ namespace FrbaCommerce.Facturar_Publicaciones
           
             // Creo la nueva factura
             String creoFactura = "insert LOS_SUPER_AMIGOS.Factura"
-                                + "(fecha) values(GETDATE())";
+                                + "(fecha) values('" + Convert.ToDateTime(System.Configuration.ConfigurationManager.AppSettings["DateKey"]) + "')";
             parametros.Clear();
             builderDeComandos.Crear(creoFactura, parametros).ExecuteNonQuery();
 
