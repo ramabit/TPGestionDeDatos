@@ -1064,7 +1064,7 @@ GO
 
 -- CREACION DE TRIGGERS
 
-CREATE TRIGGER finalizar_x_fin_stock ON LOS_SUPER_AMIGOS.Compra
+CREATE TRIGGER LOS_SUPER_AMIGOS.finalizar_x_fin_stock ON LOS_SUPER_AMIGOS.Compra
 FOR INSERT
 AS
 BEGIN
@@ -1081,7 +1081,7 @@ BEGIN
 END
 GO
 
-CREATE TRIGGER agregar_valor_default_de_nueva_visiblidad_en_comisiones ON LOS_SUPER_AMIGOS.Visibilidad
+CREATE TRIGGER LOS_SUPER_AMIGOS.agregar_valor_default_de_nueva_visiblidad_en_comisiones ON LOS_SUPER_AMIGOS.Visibilidad
 FOR INSERT
 AS
 BEGIN
@@ -1091,7 +1091,7 @@ BEGIN
 END
 GO
 
-CREATE TRIGGER agregar_valor_default_de_nuevo_usuario_en_comisiones ON LOS_SUPER_AMIGOS.Usuario
+CREATE TRIGGER LOS_SUPER_AMIGOS.agregar_valor_default_de_nuevo_usuario_en_comisiones ON LOS_SUPER_AMIGOS.Usuario
 FOR INSERT
 AS
 BEGIN
