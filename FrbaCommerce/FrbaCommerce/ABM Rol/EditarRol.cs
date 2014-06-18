@@ -190,7 +190,7 @@ namespace FrbaCommerce.ABM_Rol
                     parametros.Add(new SqlParameter("@rol", rolElegido));
                     parametros.Add(new SqlParameter("@funcionalidad", funcionalidad.Row["nombre"] as String));
 
-                    String sql1 = "INSERT INTO LOS_SUPER_AMIGOS.Funcionalidad_x_Rol(funcionalidad_id, rol_id) VALUES ((SELECT id FROM LOS_SUPER_AMIGOS.Funcionalidad WHERE nombre = @funcionalidad), (SELECT  id FROM Rol WHERE nombre = @rol))";
+                    String sql1 = "INSERT INTO LOS_SUPER_AMIGOS.Funcionalidad_x_Rol(funcionalidad_id, rol_id) VALUES ((SELECT id FROM LOS_SUPER_AMIGOS.Funcionalidad WHERE nombre = @funcionalidad), (SELECT id FROM LOS_SUPER_AMIGOS.Rol WHERE nombre = @rol))";
 
                     builderDeComandos.Crear(sql1, parametros).ExecuteNonQuery();
                 }
