@@ -6,12 +6,17 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Data.SqlClient;
+
 
 namespace FrbaCommerce.Listado_Estadistico
 {
     public partial class Estadisticas : Form
     {
         private ComunicadorConBaseDeDatos comunicador = new ComunicadorConBaseDeDatos();
+        private IList<SqlParameter> parametros = new List<SqlParameter>();
+        private BuilderDeComandos builderDeComandos = new BuilderDeComandos();
+        private SqlCommand command;
 
         public Estadisticas()
         {
@@ -59,6 +64,68 @@ namespace FrbaCommerce.Listado_Estadistico
             String fechaDeInicio = ObtenerFechaDeInicio(anio, trimestre);
             String fechaDeFin = ObtenerFechaDeFin(anio, trimestre);
             String fechaMedia = ObtenerFechaMedia(anio, trimestre);
+
+            if (tipoDeListado == "Vendedores con mayor cantidad de productos no vendidos")
+            {
+                String crearTabla = "CREATE TABLE LOS_SUPER_AMIGOS.usuarios_por_visibilidad"
+                                    + " (mes int,"
+                                    + " visibilidad numeric(18,0),"
+                                    + "	usuario numeric(18,0),"
+                                    + " cantidad numeric(18,0),"
+                                    + " PRIMARY KEY(mes, visibilidad, usuario))";
+                parametros.Clear();
+                builderDeComandos.Crear(crearTabla, parametros).ExecuteNonQuery();
+
+                String llenarTabla = "DECLARE mi_cursor CURSOR FOR"
+                                + " SELECT DATEPART(month, fecha) Mes, visibilidad.id Visibilidad"
+                                + " FROM (VALUES(@fechaini), (@fechamed), (@fechafin)) as F(fecha), LOS_SUPER_AMIGOS.Visibilidad visibilidad"
+                                + " ORDER BY Mes, Visibilidad"
+                                + " DECLARE @mes int, @visibilidad numeric(18,0)"
+                                + " OPEN mi_cursor"
+                                + " FETCH FROM mi_cursor INTO @mes, @visibilidad"
+                                + " WHILE  @@FETCH_STATUS = 0"
+                                + " BEGIN"
+                                + " INSERT INTO LOS_SUPER_AMIGOS.usuarios_por_visibilidad ([mes], [visibilidad], [usuario], [cantidad])"
+                                + " SELECT TOP 5 @mes, @visibilidad, usuario.id, LOS_SUPER_AMIGOS.calcular_productos_no_vendidos(usuario.id, @visibilidad, @fechaini, @fechafin) Cantidad"
+                                + " FROM LOS_SUPER_AMIGOS.Usuario usuario"
+                                + " ORDER BY Cantidad DESC"
+                                + " FETCH FROM mi_cursor INTO @mes, @visibilidad"
+                                + " END"
+                                + " CLOSE mi_cursor"
+                                + " DEALLOCATE mi_cursor";
+                parametros.Clear();
+                parametros.Add(new SqlParameter("@fechaini", Convert.ToDateTime(fechaDeInicio)));
+                parametros.Add(new SqlParameter("@fechamed", Convert.ToDateTime(fechaDeInicio)));
+                parametros.Add(new SqlParameter("@fechafin", Convert.ToDateTime(fechaDeInicio)));
+                builderDeComandos.Crear(llenarTabla, parametros).ExecuteNonQuery();
+
+                
+                String crearTabla2 = "CREATE TABLE LOS_SUPER_AMIGOS.miTabla"
+                                    + " (mes int,"
+                                    + " visibilidad numeric(18,0),"
+                                    + "	usuario numeric(18,0),"
+                                    + " cantidad numeric(18,0))"
+                                    + " INSERT LOS_SUPER_AMIGOS.miTabla"
+	                                + " SELECT *"
+	                                + " FROM LOS_SUPER_AMIGOS.usuarios_por_visibilidad u"
+	                                + " ORDER BY u.mes, u.visibilidad, u.cantidad DESC";
+                parametros.Clear();
+                builderDeComandos.Crear(crearTabla2, parametros).ExecuteNonQuery();
+
+                String dropear = "DROP TABLE LOS_SUPER_AMIGOS.usuarios_por_visibilidad";
+                parametros.Clear();
+                builderDeComandos.Crear(dropear, parametros).ExecuteNonQuery();
+
+                parametros.Clear();
+                command = builderDeComandos.Crear("SELECT  *  FROM LOS_SUPER_AMIGOS.miTabla", parametros);
+                DataSet datos = new DataSet();
+                SqlDataAdapter adapter = new SqlDataAdapter();
+                adapter.SelectCommand = command;
+                adapter.Fill(datos);
+                dataGridView_Estadistica.DataSource = datos.Tables[0];
+                return;
+            }
+
             String queryParaObtenerResultados = GetQueryObtenerResultados(tipoDeListado, fechaDeInicio, fechaMedia, fechaDeFin);
             
             dataGridView_Estadistica.DataSource = comunicador.SelectDataTable("*", queryParaObtenerResultados);
@@ -137,8 +204,8 @@ namespace FrbaCommerce.Listado_Estadistico
         {
             switch (tipoDeListado)
             {
-                case "Vendedores con mayor cantidad de productos no vendidos":
-                    return "LOS_SUPER_AMIGOS.vendedores_con_mayor_cantidad_de_publicaciones_sin_vender('" + fechaDeInicio + "', '" + fechaMedia + "' , '" + fechaDeFin + "')";
+              //  case "Vendedores con mayor cantidad de productos no vendidos":
+               //     return "LOS_SUPER_AMIGOS.vendedores_con_mayor_cantidad_de_publicaciones_sin_vender('" + fechaDeInicio + "', '" + fechaMedia + "' , '" + fechaDeFin + "')";
                 case "Vendedores con mayor facturacion":
                     return "LOS_SUPER_AMIGOS.vendedores_con_mayor_facturacion('" + fechaDeInicio + "', '" + fechaDeFin + "')";
                 case "Vendedores con mayores calificaciones":
