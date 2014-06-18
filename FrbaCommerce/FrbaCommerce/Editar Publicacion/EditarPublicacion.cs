@@ -153,7 +153,7 @@ namespace FrbaCommerce.Editar_Publicacion
 
             if (estadoInicial == "Borrador")
             {
-                fechaDeInicio = DateTime.Now;
+                fechaDeInicio = Convert.ToDateTime(System.Configuration.ConfigurationManager.AppSettings["DateKey"]);
                 fechaDeVencimiento = Convert.ToDateTime(Convert.ToString(Convert.ToDateTime(fechaDeInicio).AddDays(duracion)));
             }
             else

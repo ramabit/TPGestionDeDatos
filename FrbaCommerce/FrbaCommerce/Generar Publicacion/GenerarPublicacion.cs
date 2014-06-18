@@ -66,7 +66,7 @@ namespace FrbaCommerce.Generar_Publicacion
             String tipo = comboBox_TiposDePublicacion.Text;
             String estado = comboBox_Estado.Text;
             String descripcion = textBox_Descripcion.Text;
-            DateTime fechaDeInicio = DateTime.Now;
+            DateTime fechaDeInicio = Convert.ToDateTime(System.Configuration.ConfigurationManager.AppSettings["DateKey"]);
             String rubro = comboBox_Rubro.Text;
             String visibilidadDescripcion = comboBox_Visibilidad.Text;
             Boolean pregunta = radioButton_Pregunta.Checked;
