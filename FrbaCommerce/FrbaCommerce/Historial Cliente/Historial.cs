@@ -49,17 +49,6 @@ namespace FrbaCommerce.Historial_Cliente
             if (opcion == "Calificaciones") CargarInformacion("user1.username 'De', user2.username 'A quien', calificacion.cantidad_estrellas 'Estrellas', calificacion.descripcion 'Descripcion calificacion', publicacion.descripcion 'Publicacion', publicacion.tipo 'Tipo de publicacion', compra.fecha 'Cuando', compra.cantidad 'Cuantos productos', (compra.cantidad * publicacion.precio) 'Monto pagado'", "LOS_SUPER_AMIGOS.Compra compra, LOS_SUPER_AMIGOS.Calificacion calificacion, LOS_SUPER_AMIGOS.Publicacion publicacion, LOS_SUPER_AMIGOS.Usuario user1, LOS_SUPER_AMIGOS.Usuario user2", "compra.calificacion_id = calificacion.id AND compra.usuario_id = user1.id AND publicacion.usuario_id = user2.id AND compra.publicacion_id = publicacion.id AND (compra.usuario_id = @idUsuario OR publicacion.usuario_id = @idUsuario)");
         }
 
-        public void CargarInformacion(String query)
-        {
-            command = builderDeComandos.Crear(query, parametros);
-            command.Parameters.Add(new SqlParameter("@idUsuario", UsuarioSesion.Usuario.id));
-            DataSet compras = new DataSet();
-            SqlDataAdapter adapter = new SqlDataAdapter();
-            adapter.SelectCommand = command;
-            adapter.Fill(compras);
-            dataGridView_Historial.DataSource = compras.Tables[0].DefaultView;
-        }
-
         public void CargarInformacion(String select, String from, String where)
         {
             dataGridView_Historial.DataSource = comunicador.SelectDataTableConUsuario(select, from, where);
