@@ -21,7 +21,7 @@ namespace FrbaCommerce.Objetos
 
         public Boolean esFechaPasada(DateTime dateTime)
         {
-            DateTime dateNow = DateTime.Now;
+            DateTime dateNow = Convert.ToDateTime(System.Configuration.ConfigurationManager.AppSettings["DateKey"]); ;
             int comparacion = dateTime.CompareTo(dateNow);
             if (comparacion >= 0)
                 return false;
