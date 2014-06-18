@@ -13,7 +13,7 @@ namespace FrbaCommerce
         public SqlConnection AbrirConexion()
         {
             this.Conexion = new SqlConnection();
-            this.Conexion.ConnectionString = @"Server=localhost\SQLSERVER2008;Database=GD1C2014;User Id=gd; Password=gd2014";
+            this.Conexion.ConnectionString = System.Configuration.ConfigurationManager.ConnectionStrings["FrbaCommerce.Properties.Settings.GD1C2014ConnectionString"].ConnectionString;
             this.Conexion.Open();
 
             return this.Conexion;
