@@ -22,30 +22,6 @@ C:\Users\Fer\Documents\GitHub\gddfer\FrbaCommerce\FrbaCommerce\obj\Debug\FrbaCom
 C:\Users\Fer\Documents\GitHub\gddfer\FrbaCommerce\FrbaCommerce\obj\Debug\FrbaCommerce.Registro_de_Usuario.RegistrarUsuario.resources
 C:\Users\Fer\Documents\GitHub\gddfer\FrbaCommerce\FrbaCommerce\obj\Debug\FrbaCommerce.ABM_Cliente.AgregarCliente.resources
 C:\Users\Fer\Documents\GitHub\gddfer\FrbaCommerce\FrbaCommerce\obj\Debug\FrbaCommerce.ABM_Empresa.AgregarEmpresa.resources
-C:\Documents and Settings\Administrador\Mis documentos\Gestion de datos\gddfer\FrbaCommerce\FrbaCommerce\obj\Debug\FrbaCommerce.exe
-C:\Documents and Settings\Administrador\Mis documentos\Gestion de datos\gddfer\FrbaCommerce\FrbaCommerce\obj\Debug\FrbaCommerce.pdb
-C:\Documents and Settings\Administrador\Mis documentos\Gestion de datos\gddfer\FrbaCommerce\FrbaCommerce\bin\Debug\FrbaCommerce.exe
-C:\Documents and Settings\Administrador\Mis documentos\Gestion de datos\gddfer\FrbaCommerce\FrbaCommerce\bin\Debug\FrbaCommerce.pdb
-C:\Documents and Settings\Administrador\Mis documentos\Gestion de datos\gddfer\FrbaCommerce\FrbaCommerce\obj\Debug\ResolveAssemblyReference.cache
-C:\Documents and Settings\Administrador\Mis documentos\Gestion de datos\gddfer\FrbaCommerce\FrbaCommerce\obj\Debug\FrbaCommerce.ABM_Cliente.AgregarCliente.resources
-C:\Documents and Settings\Administrador\Mis documentos\Gestion de datos\gddfer\FrbaCommerce\FrbaCommerce\obj\Debug\FrbaCommerce.ABM_Empresa.AgregarEmpresa.resources
-C:\Documents and Settings\Administrador\Mis documentos\Gestion de datos\gddfer\FrbaCommerce\FrbaCommerce\obj\Debug\FrbaCommerce.ABM_Rol.AgregarRol.resources
-C:\Documents and Settings\Administrador\Mis documentos\Gestion de datos\gddfer\FrbaCommerce\FrbaCommerce\obj\Debug\FrbaCommerce.ABM_Rol.BajaRol.resources
-C:\Documents and Settings\Administrador\Mis documentos\Gestion de datos\gddfer\FrbaCommerce\FrbaCommerce\obj\Debug\FrbaCommerce.ABM_Rol.EditarRol.resources
-C:\Documents and Settings\Administrador\Mis documentos\Gestion de datos\gddfer\FrbaCommerce\FrbaCommerce\obj\Debug\FrbaCommerce.ABM_Rol.RolForm.resources
-C:\Documents and Settings\Administrador\Mis documentos\Gestion de datos\gddfer\FrbaCommerce\FrbaCommerce\obj\Debug\FrbaCommerce.Generar_Publicacion.GenerarPublicacion.resources
-C:\Documents and Settings\Administrador\Mis documentos\Gestion de datos\gddfer\FrbaCommerce\FrbaCommerce\obj\Debug\FrbaCommerce.Login.LoginForm.resources
-C:\Documents and Settings\Administrador\Mis documentos\Gestion de datos\gddfer\FrbaCommerce\FrbaCommerce\obj\Debug\FrbaCommerce.Properties.Resources.resources
-C:\Documents and Settings\Administrador\Mis documentos\Gestion de datos\gddfer\FrbaCommerce\FrbaCommerce\obj\Debug\FrbaCommerce.Registro_de_Usuario.RegistrarUsuario.resources
-C:\Documents and Settings\Administrador\Mis documentos\Gestion de datos\gddfer\FrbaCommerce\FrbaCommerce\obj\Debug\FrbaCommerce.csproj.GenerateResource.Cache
-C:\Documents and Settings\Administrador\Mis documentos\Gestion de datos\gddfer\FrbaCommerce\FrbaCommerce\obj\Debug\FrbaCommerce.Login.ElegirRol.resources
-C:\Documents and Settings\Administrador\Mis documentos\Gestion de datos\gddfer\FrbaCommerce\FrbaCommerce\obj\Debug\FrbaCommerce.ABM_Cliente.FiltroCliente.resources
-C:\Documents and Settings\Administrador\Mis documentos\Gestion de datos\gddfer\FrbaCommerce\FrbaCommerce\obj\Debug\FrbaCommerce.ABM_Cliente.EditarCliente.resources
-C:\Documents and Settings\Administrador\Mis documentos\Gestion de datos\gddfer\FrbaCommerce\FrbaCommerce\obj\Debug\FrbaCommerce.ABM_Empresa.EditarEmpresa.resources
-C:\Documents and Settings\Administrador\Mis documentos\Gestion de datos\gddfer\FrbaCommerce\FrbaCommerce\obj\Debug\FrbaCommerce.ABM_Empresa.FiltroEmpresa.resources
-C:\Documents and Settings\Administrador\Mis documentos\Gestion de datos\gddfer\FrbaCommerce\FrbaCommerce\obj\Debug\FrbaCommerce.ABM_Visibilidad.AgregarVisibilidad.resources
-C:\Documents and Settings\Administrador\Mis documentos\Gestion de datos\gddfer\FrbaCommerce\FrbaCommerce\obj\Debug\FrbaCommerce.ABM_Visibilidad.EditarVisibilidad.resources
-C:\Documents and Settings\Administrador\Mis documentos\Gestion de datos\gddfer\FrbaCommerce\FrbaCommerce\obj\Debug\FrbaCommerce.ABM_Visibilidad.FiltroVisibilidad.resources
 C:\Users\Fer\Documents\GitHub\gddfer\FrbaCommerce\FrbaCommerce\obj\Debug\FrbaCommerce.ABM_Cliente.EditarCliente.resources
 C:\Users\Fer\Documents\GitHub\gddfer\FrbaCommerce\FrbaCommerce\obj\Debug\FrbaCommerce.ABM_Cliente.FiltroCliente.resources
 C:\Users\Fer\Documents\GitHub\gddfer\FrbaCommerce\FrbaCommerce\obj\Debug\FrbaCommerce.ABM_Empresa.EditarEmpresa.resources
@@ -57,13 +33,6 @@ C:\Users\Fer\Documents\GitHub\gddfer\FrbaCommerce\FrbaCommerce\obj\Debug\FrbaCom
 C:\Users\Fer\Documents\GitHub\gddfer\FrbaCommerce\FrbaCommerce\obj\Debug\FrbaCommerce.Login.ElegirRol.resources
 C:\Users\Fer\Documents\GitHub\gddfer\FrbaCommerce\FrbaCommerce\obj\Debug\FrbaCommerce.MenuPrincipal.resources
 C:\Users\Fer\Documents\GitHub\gddfer\FrbaCommerce\FrbaCommerce\obj\Debug\FrbaCommerce.Login.CambiarContrasena.resources
-C:\Documents and Settings\Administrador\Mis documentos\Gestion de datos\gddfer\FrbaCommerce\FrbaCommerce\obj\Debug\FrbaCommerce.Login.CambiarContrasena.resources
-C:\Documents and Settings\Administrador\Mis documentos\Gestion de datos\gddfer\FrbaCommerce\FrbaCommerce\obj\Debug\FrbaCommerce.MenuPrincipal.resources
-C:\Documents and Settings\Administrador\Mis documentos\Gestion de datos\gddfer\FrbaCommerce\FrbaCommerce\obj\Debug\FrbaCommerce.ABM_Rol.ListadoEditarRol.resources
-C:\Documents and Settings\Administrador\Mis documentos\Gestion de datos\gddfer\FrbaCommerce\FrbaCommerce\obj\Debug\FrbaCommerce.Editar_Publicacion.EditarPublicacion.resources
-C:\Documents and Settings\Administrador\Mis documentos\Gestion de datos\gddfer\FrbaCommerce\FrbaCommerce\obj\Debug\FrbaCommerce.Editar_Publicacion.FiltrarPublicacion.resources
-C:\Documents and Settings\Administrador\Mis documentos\Gestion de datos\gddfer\FrbaCommerce\FrbaCommerce\obj\Debug\FrbaCommerce.ABM_Rubro.EditarRubro.resources
-C:\Documents and Settings\Administrador\Mis documentos\Gestion de datos\gddfer\FrbaCommerce\FrbaCommerce\obj\Debug\FrbaCommerce.ABM_Rubro.FiltroRubros.resources
 C:\Users\Fer\Documents\GitHub\gddfer\FrbaCommerce\FrbaCommerce\obj\Debug\FrbaCommerce.ABM_Rol.ListadoEditarRol.resources
 C:\Users\Fer\Documents\GitHub\gddfer\FrbaCommerce\FrbaCommerce\obj\Debug\FrbaCommerce.ABM_Rubro.EditarRubro.resources
 C:\Users\Fer\Documents\GitHub\gddfer\FrbaCommerce\FrbaCommerce\obj\Debug\FrbaCommerce.ABM_Rubro.FiltroRubros.resources
@@ -71,18 +40,10 @@ C:\Users\Fer\Documents\GitHub\gddfer\FrbaCommerce\FrbaCommerce\obj\Debug\FrbaCom
 C:\Users\Fer\Documents\GitHub\gddfer\FrbaCommerce\FrbaCommerce\obj\Debug\FrbaCommerce.Editar_Publicacion.FiltrarPublicacion.resources
 C:\Users\Fer\Documents\GitHub\gddfer\FrbaCommerce\FrbaCommerce\obj\Debug\FrbaCommerce.Calificar_Vendedor.Calificar.resources
 C:\Users\Fer\Documents\GitHub\gddfer\FrbaCommerce\FrbaCommerce\obj\Debug\FrbaCommerce.Calificar_Vendedor.Listado.resources
-C:\Documents and Settings\Administrador\Mis documentos\Gestion de datos\gddfer\FrbaCommerce\FrbaCommerce\obj\Debug\FrbaCommerce.Calificar_Vendedor.Calificar.resources
-C:\Documents and Settings\Administrador\Mis documentos\Gestion de datos\gddfer\FrbaCommerce\FrbaCommerce\obj\Debug\FrbaCommerce.Calificar_Vendedor.Listado.resources
 C:\Users\Fer\Documents\GitHub\gddfer\FrbaCommerce\FrbaCommerce\obj\Debug\FrbaCommerce.Comprar_Ofertar.BuscadorPublicaciones.resources
 C:\Users\Fer\Documents\GitHub\gddfer\FrbaCommerce\FrbaCommerce\obj\Debug\FrbaCommerce.Comprar_Ofertar.VerPublicacion.resources
 C:\Users\Fer\Documents\GitHub\gddfer\FrbaCommerce\FrbaCommerce\obj\Debug\FrbaCommerce.Comprar_Ofertar.Comprar.resources
 C:\Users\Fer\Documents\GitHub\gddfer\FrbaCommerce\FrbaCommerce\obj\Debug\FrbaCommerce.Facturar_Publicaciones.Facturar.resources
-C:\Documents and Settings\Administrador\Mis documentos\Gestion de datos\gddfer\FrbaCommerce\FrbaCommerce\obj\Debug\FrbaCommerce.Comprar_Ofertar.BuscadorPublicaciones.resources
-C:\Documents and Settings\Administrador\Mis documentos\Gestion de datos\gddfer\FrbaCommerce\FrbaCommerce\obj\Debug\FrbaCommerce.Comprar_Ofertar.Comprar.resources
-C:\Documents and Settings\Administrador\Mis documentos\Gestion de datos\gddfer\FrbaCommerce\FrbaCommerce\obj\Debug\FrbaCommerce.Comprar_Ofertar.Ofertar.resources
-C:\Documents and Settings\Administrador\Mis documentos\Gestion de datos\gddfer\FrbaCommerce\FrbaCommerce\obj\Debug\FrbaCommerce.Comprar_Ofertar.Preguntar.resources
-C:\Documents and Settings\Administrador\Mis documentos\Gestion de datos\gddfer\FrbaCommerce\FrbaCommerce\obj\Debug\FrbaCommerce.Comprar_Ofertar.VerPublicacion.resources
-C:\Documents and Settings\Administrador\Mis documentos\Gestion de datos\gddfer\FrbaCommerce\FrbaCommerce\obj\Debug\FrbaCommerce.Facturar_Publicaciones.Facturar.resources
 C:\Users\Fer\Documents\GitHub\gddfer\FrbaCommerce\FrbaCommerce\obj\Debug\FrbaCommerce.Comprar_Ofertar.Ofertar.resources
 C:\Users\Fer\Documents\GitHub\gddfer\FrbaCommerce\FrbaCommerce\obj\Debug\FrbaCommerce.Comprar_Ofertar.Preguntar.resources
 C:\Users\Fer\Documents\GitHub\gddfer\FrbaCommerce\FrbaCommerce\obj\Debug\FrbaCommerce.Listado_Estadistico.Estadisticas.resources
