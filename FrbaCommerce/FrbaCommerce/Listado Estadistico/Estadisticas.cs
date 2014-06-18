@@ -27,6 +27,7 @@ namespace FrbaCommerce.Listado_Estadistico
         {
             CargarTrimestres();
             CargarTiposDeListados();
+            progressBar.Visible = false;
         }
 
         private void CargarTrimestres()
@@ -57,6 +58,8 @@ namespace FrbaCommerce.Listado_Estadistico
 
         private void button_Buscar_Click(object sender, EventArgs e)
         {
+            progressBar.Maximum = 1000;
+
             String anio = textBox_Anio.Text;
             String trimestre = comboBox_Trimestre.Text;
             String tipoDeListado = comboBox_TipoDeListado.Text;
@@ -67,6 +70,7 @@ namespace FrbaCommerce.Listado_Estadistico
 
             if (tipoDeListado == "Vendedores con mayor cantidad de productos no vendidos")
             {
+                progressBar.Visible = true;
                 String crearTabla = "CREATE TABLE LOS_SUPER_AMIGOS.usuarios_por_visibilidad"
                                     + " (mes int,"
                                     + " visibilidad numeric(18,0),"
@@ -75,7 +79,7 @@ namespace FrbaCommerce.Listado_Estadistico
                                     + " PRIMARY KEY(mes, visibilidad, usuario))";
                 parametros.Clear();
                 builderDeComandos.Crear(crearTabla, parametros).ExecuteNonQuery();
-
+                progressBar.Value = 500;
                 String llenarTabla = "DECLARE mi_cursor CURSOR FOR"
                                 + " SELECT DATEPART(month, fecha) Mes, visibilidad.id Visibilidad"
                                 + " FROM (VALUES(@fechaini), (@fechamed), (@fechafin)) as F(fecha), LOS_SUPER_AMIGOS.Visibilidad visibilidad"
@@ -100,7 +104,7 @@ namespace FrbaCommerce.Listado_Estadistico
                 command = builderDeComandos.Crear(llenarTabla, parametros);
                 command.CommandTimeout = 0;
                 command.ExecuteNonQuery();
-
+                progressBar.Value = 1000;
                 parametros.Clear();
                 command = builderDeComandos.Crear("SELECT  *  FROM LOS_SUPER_AMIGOS.usuarios_por_visibilidad u ORDER BY u.mes, u.visibilidad, u.cantidad DESC", parametros);
                 DataSet datos = new DataSet();
