@@ -71,8 +71,8 @@ namespace FrbaCommerce.Listado_Estadistico
                                     + " (mes int,"
                                     + " visibilidad numeric(18,0),"
                                     + "	usuario numeric(18,0),"
-                                    + " cantidad numeric(18,0),"
-                                    + " PRIMARY KEY(mes, visibilidad, usuario))";
+                                    + " cantidad numeric(18,0))";
+                                   // + " PRIMARY KEY(mes, visibilidad, usuario))";
                 parametros.Clear();
                 builderDeComandos.Crear(crearTabla, parametros).ExecuteNonQuery();
 
@@ -86,7 +86,7 @@ namespace FrbaCommerce.Listado_Estadistico
                                 + " WHILE  @@FETCH_STATUS = 0"
                                 + " BEGIN"
                                 + " INSERT INTO LOS_SUPER_AMIGOS.usuarios_por_visibilidad ([mes], [visibilidad], [usuario], [cantidad])"
-                                + " SELECT TOP 5 @mes, @visibilidad, usuario.id, LOS_SUPER_AMIGOS.calcular_productos_no_vendidos(usuario.id, @visibilidad, @fechaini, @fechafin) Cantidad"
+                                + " SELECT TOP 5 @mes, @visibilidad, usuario.id, LOS_SUPER_AMIGOS.calcular_productos_no_vendidos(usuario.id, (@visibilidad), (@fechaini), (@fechafin)) Cantidad"
                                 + " FROM LOS_SUPER_AMIGOS.Usuario usuario"
                                 + " ORDER BY Cantidad DESC"
                                 + " FETCH FROM mi_cursor INTO @mes, @visibilidad"
@@ -97,7 +97,9 @@ namespace FrbaCommerce.Listado_Estadistico
                 parametros.Add(new SqlParameter("@fechaini", Convert.ToDateTime(fechaDeInicio)));
                 parametros.Add(new SqlParameter("@fechamed", Convert.ToDateTime(fechaDeInicio)));
                 parametros.Add(new SqlParameter("@fechafin", Convert.ToDateTime(fechaDeInicio)));
-                builderDeComandos.Crear(llenarTabla, parametros).ExecuteNonQuery();
+                command = builderDeComandos.Crear(llenarTabla, parametros);
+                command.CommandTimeout = 0;
+                command.ExecuteNonQuery();
 
                 
                 String crearTabla2 = "CREATE TABLE LOS_SUPER_AMIGOS.miTabla"
