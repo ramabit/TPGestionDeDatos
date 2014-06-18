@@ -446,23 +446,25 @@ END
 GO
 
 CREATE FUNCTION LOS_SUPER_AMIGOS.calcular_productos_no_vendidos 
-(@usuario_id numeric(18,0), @visibilidad_id numeric(18,0), @fecha_inicio datetime, @fecha_fin datetime) 
+(@usuario_id numeric(18,0), @visibilidad_descripcion nvarchar(255), @fecha_inicio datetime, @fecha_fin datetime) 
 RETURNS numeric(18,0) 
 AS 
 BEGIN 
 	DECLARE @stock_total numeric(18,0), @stock_vendido numeric(18,0) 
 	
 	SELECT @stock_total = SUM(publicacion.stock) 
-	FROM LOS_SUPER_AMIGOS.Publicacion publicacion
+	FROM LOS_SUPER_AMIGOS.Publicacion publicacion, LOS_SUPER_AMIGOS.Visibilidad visibilidad
 	WHERE publicacion.usuario_id = @usuario_id 
-	AND publicacion.visibilidad_id = @visibilidad_id 
+	AND publicacion.visibilidad_id = visibilidad.id
+	AND visibilidad.descripcion = @visibilidad_descripcion 
 	AND publicacion.fecha_vencimiento >= @fecha_inicio
 	AND publicacion.fecha_inicio < @fecha_fin 
 
 	SELECT @stock_vendido = SUM(compra.cantidad) 
-	FROM LOS_SUPER_AMIGOS.Publicacion publicacion, LOS_SUPER_AMIGOS.Compra compra
+	FROM LOS_SUPER_AMIGOS.Publicacion publicacion, LOS_SUPER_AMIGOS.Compra compra, LOS_SUPER_AMIGOS.Visibilidad visibilidad
 	WHERE publicacion.usuario_id = @usuario_id 
-	AND publicacion.visibilidad_id = @visibilidad_id 
+	AND publicacion.visibilidad_id = visibilidad.id 
+	AND visibilidad.descripcion = @visibilidad_descripcion
 	AND compra.publicacion_id = publicacion.id 
 	AND publicacion.fecha_vencimiento >= @fecha_inicio 
 	AND publicacion.fecha_inicio < @fecha_fin
