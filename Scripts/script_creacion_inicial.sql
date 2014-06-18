@@ -109,11 +109,14 @@ DROP FUNCTION LOS_SUPER_AMIGOS.gano_subasta
 IF OBJECT_ID('LOS_SUPER_AMIGOS.vendedores_con_mayor_facturacion') IS NOT NULL
 DROP FUNCTION LOS_SUPER_AMIGOS.vendedores_con_mayor_facturacion
 
-IF OBJECT_ID('LOS_SUPER_AMIGOS.vendedores_con_mayor_Calificacion') IS NOT NULL
+IF OBJECT_ID('LOS_SUPER_AMIGOS.vendedores_con_mayor_calificacion') IS NOT NULL
 DROP FUNCTION LOS_SUPER_AMIGOS.vendedores_con_mayor_Calificacion
 
-IF OBJECT_ID('LOS_SUPER_AMIGOS.clientes_con_publicaciones_sin_calIFicar') IS NOT NULL
-DROP FUNCTION LOS_SUPER_AMIGOS.clientes_con_publicaciones_sin_calIFicar
+IF OBJECT_ID('LOS_SUPER_AMIGOS.clientes_con_publicaciones_sin_calificar') IS NOT NULL
+DROP FUNCTION LOS_SUPER_AMIGOS.clientes_con_publicaciones_sin_calificar
+
+IF OBJECT_ID('LOS_SUPER_AMIGOS.calcular_productos_no_vendidos ') IS NOT NULL
+DROP FUNCTION LOS_SUPER_AMIGOS.calcular_productos_no_vendidos 
 
 IF OBJECT_ID('LOS_SUPER_AMIGOS.VistaCantidadVendida') IS NOT NULL
 DROP VIEW LOS_SUPER_AMIGOS.VistaCantidadVendida
@@ -354,8 +357,8 @@ CREATE FUNCTION LOS_SUPER_AMIGOS.vendedores_con_mayor_facturacion
 	@fecha_fin datetime
 )
 RETURNS @mi_tabla TABLE (
-							usuario_id numeric(18,0),
-							calficaciones_faltantes numeric(18,0)
+							Usuario numeric(18,0),
+							Facturacion numeric(18,0)
 						)
 AS
 BEGIN
@@ -378,13 +381,13 @@ CREATE FUNCTION LOS_SUPER_AMIGOS.vendedores_con_mayor_Calificacion
 	@fecha_fin datetime
 )
 RETURNS @mi_tabla TABLE (
-							usuario_id numeric(18,0),
-							calficaciones_faltantes numeric(18,2)
+							Usuario numeric(18,0),
+							Mayor_Calificacion numeric(18,2)
 						)
 AS
 BEGIN
 	INSERT @mi_tabla
-		SELECT TOP 5 usuario.id, SUM(Calificacion.cantidad_estrellas) / COUNT(*) 'Promedio Calificaciones'
+		SELECT TOP 5 usuario.id, SUM(Calificacion.cantidad_estrellas) / COUNT(*) 
 		FROM LOS_SUPER_AMIGOS.Usuario usuario, LOS_SUPER_AMIGOS.Publicacion publicacion, LOS_SUPER_AMIGOS.Compra compra, LOS_SUPER_AMIGOS.Calificacion Calificacion
 		WHERE usuario.id = publicacion.usuario_id
 			AND compra.publicacion_id = publicacion.id
@@ -402,8 +405,8 @@ CREATE FUNCTION LOS_SUPER_AMIGOS.clientes_con_publicaciones_sin_calificar
 	@fecha_fin datetime
 )
 RETURNS @mi_tabla TABLE (
-							usuario_id numeric(18,0),
-							calficaciones_faltantes numeric(18,0)
+							Usuario numeric(18,0),
+							Publicaciones_sin_calificar numeric(18,0)
 						)
 AS
 BEGIN
@@ -438,6 +441,33 @@ BEGIN
 			SELECT @id = usuario_id FROM LOS_SUPER_AMIGOS.Cliente WHERE documento = @documento
 		END
 	RETURN @id
+END
+GO
+
+CREATE FUNCTION LOS_SUPER_AMIGOS.calcular_productos_no_vendidos 
+(@usuario_id numeric(18,0), @visibilidad_id numeric(18,0), @fecha_inicio datetime, @fecha_fin datetime) 
+RETURNS numeric(18,0) 
+AS 
+BEGIN 
+	DECLARE @stock_total numeric(18,0), @stock_vendido numeric(18,0) 
+	
+	SELECT @stock_total = SUM(publicacion.stock) 
+	FROM LOS_SUPER_AMIGOS.Publicacion publicacion
+	WHERE publicacion.usuario_id = @usuario_id 
+	AND publicacion.visibilidad_id = @visibilidad_id 
+	AND publicacion.fecha_vencimiento >= @fecha_inicio
+	AND publicacion.fecha_inicio < @fecha_fin 
+
+	SELECT @stock_vendido = SUM(compra.cantidad) 
+	FROM LOS_SUPER_AMIGOS.Publicacion publicacion, LOS_SUPER_AMIGOS.Compra compra
+	WHERE publicacion.usuario_id = @usuario_id 
+	AND publicacion.visibilidad_id = @visibilidad_id 
+	AND compra.publicacion_id = publicacion.id 
+	AND publicacion.fecha_vencimiento >= @fecha_inicio 
+	AND publicacion.fecha_inicio < @fecha_fin
+	AND compra.fecha BETWEEN @fecha_inicio AND @fecha_fin
+	
+	RETURN @stock_total - @stock_vendido
 END
 GO
 
