@@ -75,6 +75,7 @@ namespace FrbaCommerce.Comprar_Ofertar
             if (cantFilas == 0)
             {
                 MessageBox.Show("No hay resultados");
+                return;
             }
             else
             {
@@ -212,19 +213,20 @@ namespace FrbaCommerce.Comprar_Ofertar
             if (sePuedeAvanzarPaginas())
             {
                 ini += publicacionesPorPagina;
-                if ((fin + publicacionesPorPagina) != totalPublicaciones)
+                if ((fin + publicacionesPorPagina) < totalPublicaciones)          
+                
                 {
-                    fin += publicacionesPorPagina;
+                    fin += publicacionesPorPagina;                    
                 }
                 else
                 {
                     fin = totalPublicaciones;
-                }
-
+                }                
                 dataGridView1.DataSource = paginarDataGridView(ini, fin);
                 mostrarNrosPaginas(ini);
             }
         }
+
 
         private void botonUltimaPagina_Click(object sender, EventArgs e)
         {
@@ -277,7 +279,8 @@ namespace FrbaCommerce.Comprar_Ofertar
             comboBoxRubro.SelectedIndex = -1;
             labelNrosPagina.Text = "";
             dataGridView1.DataSource = null;
-            dataGridView1.Columns.Remove("Ver Publicacion");
+            if (dataGridView1.Columns.Contains("Ver Publicacion"))
+                dataGridView1.Columns.Remove("Ver Publicacion");
         }
 
         private void botonVolver_Click(object sender, EventArgs e)
