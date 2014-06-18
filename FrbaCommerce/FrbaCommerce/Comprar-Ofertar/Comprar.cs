@@ -120,7 +120,7 @@ namespace FrbaCommerce.Comprar_Ofertar
             }
 
             String sql = "INSERT INTO LOS_SUPER_AMIGOS.Compra(cantidad, fecha, usuario_id, publicacion_id, calificacion_id, facturada) VALUES (@cant, @fecha, @usuario, @publicacion, NULL,0)";
-            DateTime fecha = DateTime.Now;
+            DateTime fecha = Convert.ToDateTime(System.Configuration.ConfigurationManager.AppSettings["DateKey"]);
 
             parametros.Clear();
             parametros.Add(new SqlParameter("@cant", this.textBoxCant.Text));
