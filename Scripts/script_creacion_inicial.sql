@@ -357,19 +357,19 @@ CREATE FUNCTION LOS_SUPER_AMIGOS.vendedores_con_mayor_facturacion
 	@fecha_fin datetime
 )
 RETURNS @mi_tabla TABLE (
-							Usuario numeric(18,0),
+							Usuario nvarchar(50),
 							Facturacion numeric(18,0)
 						)
 AS
 BEGIN
 	INSERT @mi_tabla
-		SELECT TOP 5 usuario.id, SUM(item.cantidad * item.monto) Facturacion
+		SELECT TOP 5 usuario.username, SUM(item.cantidad * item.monto) Facturacion
 		FROM LOS_SUPER_AMIGOS.Usuario usuario, LOS_SUPER_AMIGOS.Publicacion publicacion, LOS_SUPER_AMIGOS.Item_Factura item, LOS_SUPER_AMIGOS.Factura factura
 		WHERE usuario.id = publicacion.usuario_id 
 			AND publicacion.id = item.publicacion_id
 			AND factura.nro = item.factura_nro
 			AND factura.fecha BETWEEN @fecha_inicio AND @fecha_fin  
-		GROUP BY usuario.id
+		GROUP BY usuario.username
 		ORDER BY Facturacion DESC
 	RETURN
 END
@@ -381,19 +381,19 @@ CREATE FUNCTION LOS_SUPER_AMIGOS.vendedores_con_mayor_Calificacion
 	@fecha_fin datetime
 )
 RETURNS @mi_tabla TABLE (
-							Usuario numeric(18,0),
+							Usuario nvarchar(50),
 							Mayor_Calificacion numeric(18,2)
 						)
 AS
 BEGIN
 	INSERT @mi_tabla
-		SELECT TOP 5 usuario.id, SUM(Calificacion.cantidad_estrellas) / COUNT(*) 
+		SELECT TOP 5 usuario.username, SUM(Calificacion.cantidad_estrellas) / COUNT(*) 
 		FROM LOS_SUPER_AMIGOS.Usuario usuario, LOS_SUPER_AMIGOS.Publicacion publicacion, LOS_SUPER_AMIGOS.Compra compra, LOS_SUPER_AMIGOS.Calificacion Calificacion
 		WHERE usuario.id = publicacion.usuario_id
 			AND compra.publicacion_id = publicacion.id
 			AND compra.Calificacion_id = Calificacion.id
 			AND compra.fecha BETWEEN @fecha_inicio AND @fecha_fin  
-		GROUP BY usuario.id
+		GROUP BY usuario.username
 		ORDER BY 2 DESC
 	RETURN
 END
@@ -405,19 +405,20 @@ CREATE FUNCTION LOS_SUPER_AMIGOS.clientes_con_publicaciones_sin_calificar
 	@fecha_fin datetime
 )
 RETURNS @mi_tabla TABLE (
-							Usuario numeric(18,0),
+							Usuario nvarchar(50),
 							Publicaciones_sin_calificar numeric(18,0)
 						)
 AS
 BEGIN
 	INSERT @mi_tabla
-		SELECT TOP 5 cliente.usuario_id, COUNT(*) 'Cantidad de no calificadas'
-		FROM LOS_SUPER_AMIGOS.Cliente cliente, LOS_SUPER_AMIGOS.Compra compra, LOS_SUPER_AMIGOS.Publicacion publicacion
+		SELECT TOP 5 usuario.username, COUNT(*) 'Cantidad de no calificadas'
+		FROM LOS_SUPER_AMIGOS.Cliente cliente, LOS_SUPER_AMIGOS.Compra compra, LOS_SUPER_AMIGOS.Publicacion publicacion, LOS_SUPER_AMIGOS.Usuario usuario
 		WHERE cliente.usuario_id = compra.usuario_id
 			AND publicacion.id = compra.publicacion_id
+			AND cliente.usuario_id = usuario.id
 			AND ISNULL(compra.Calificacion_id, -1) = -1
 			AND compra.fecha BETWEEN @fecha_inicio AND @fecha_fin  
-		GROUP BY cliente.usuario_id
+		GROUP BY usuario.username
 		ORDER BY 2 DESC
 	RETURN
 END
@@ -857,7 +858,7 @@ VALUES
 	('Comprar / Ofertar'),
 	('Generar publicacion'),
 	('Editar publicacion'),
-	('CalIFicar vendedor'),
+	('Calificar vendedor'),
 	('Responder preguntas'),
 	('Ver respuestas'),
 	('Gestionar roles'),
