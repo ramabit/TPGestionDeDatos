@@ -350,6 +350,9 @@
     <EmbeddedResource Include="ABM Rol\RolForm.resx">
       <DependentUpon>RolForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ABM Rubro\AgregarRubro.resx">
+      <DependentUpon>AgregarRubro.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ABM Rubro\EditarRubro.resx">
       <DependentUpon>EditarRubro.cs</DependentUpon>
     </EmbeddedResource>

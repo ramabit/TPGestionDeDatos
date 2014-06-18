@@ -34,7 +34,7 @@ namespace FrbaCommerce
             funcionalidades.Add("Editar cliente", new ABM_Cliente.FiltroCliente());
             funcionalidades.Add("Crear visibilidad", new ABM_Visibilidad.AgregarVisibilidad());
             funcionalidades.Add("Editar visibilidad", new ABM_Visibilidad.FiltroVisibilidad());
-            funcionalidades.Add("Crear rubro", new ABM_Rubro.AgregarRubro());
+            funcionalidades.Add("Agregar rubro", new ABM_Rubro.AgregarRubro());
             funcionalidades.Add("Editar rubro", new ABM_Rubro.FiltroRubros());
             funcionalidades.Add("Obtener estadisticas", new Listado_Estadistico.Estadisticas());
             funcionalidades.Add("Ver historial", new Historial_Cliente.Historial());

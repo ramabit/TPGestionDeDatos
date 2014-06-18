@@ -79,8 +79,8 @@ namespace FrbaCommerce.Listado_Estadistico
 
                 String crearTabla = "CREATE TABLE LOS_SUPER_AMIGOS.usuarios_por_visibilidad"
                                     + " (mes int,"
-                                    + " visibilidad numeric(18,0),"
-                                    + "	usuario numeric(18,0),"
+                                    + " visibilidad nvarchar(255),"
+                                    + "	usuario nvarchar(50),"
                                     + " cantidad numeric(18,0),"
                                     + " PRIMARY KEY(mes, visibilidad, usuario))";
                 parametros.Clear();
@@ -90,7 +90,7 @@ namespace FrbaCommerce.Listado_Estadistico
                                 + " SELECT DATEPART(month, fecha) Mes, visibilidad.descripcion "
                                 + " FROM (VALUES(@fechaini), (@fechamed), (@fechafin)) as F(fecha), LOS_SUPER_AMIGOS.Visibilidad visibilidad"
                                 + " ORDER BY Mes, visibilidad.id"
-                                + " DECLARE @mes int, @visibilidad numeric(18,0)"
+                                + " DECLARE @mes int, @visibilidad nvarchar(255)"
                                 + " OPEN mi_cursor"
                                 + " FETCH FROM mi_cursor INTO @mes, @visibilidad"
                                 + " WHILE  @@FETCH_STATUS = 0"
@@ -112,7 +112,7 @@ namespace FrbaCommerce.Listado_Estadistico
                 command.ExecuteNonQuery();
                 progressBar.Value = 1000;
                 parametros.Clear();
-                command = builderDeComandos.Crear("SELECT  *  FROM LOS_SUPER_AMIGOS.usuarios_por_visibilidad u ORDER BY u.mes, u.visibilidad, u.cantidad DESC", parametros);
+                command = builderDeComandos.Crear("SELECT  u.mes, u.visibilidad, u.usuario, u.cantidad  FROM LOS_SUPER_AMIGOS.usuarios_por_visibilidad u, LOS_SUPER_AMIGOS.Visibilidad visibilidad WHERE u.visibilidad = visibilidad.descripcion ORDER BY u.mes, visibilidad.precio DESC, u.cantidad DESC", parametros);
                 DataSet datos = new DataSet();
                 SqlDataAdapter adapter = new SqlDataAdapter();
                 adapter.SelectCommand = command;
