@@ -130,9 +130,39 @@ namespace FrbaCommerce.Comprar_Ofertar
             builderDeComandos.Crear(sql, parametros).ExecuteNonQuery();
 
             MessageBox.Show("Contactese con el vendedor para finalizar la compra");
-            this.Hide();
-            new VerPublicacion(publicacionId).ShowDialog();
-            this.Close();
+
+            if (pedirEstado())
+            {
+                this.Hide();
+                new VerPublicacion(publicacionId).ShowDialog();
+                this.Close();
+            }
+            else
+            {
+                this.Hide();
+                new BuscadorPublicaciones().ShowDialog();
+                this.Close();
+            }
+        }
+
+        private bool pedirEstado()
+        {
+            parametros.Clear();
+            parametros.Add(new SqlParameter("@id", publicacionId));
+
+            String query = "SELECT * FROM LOS_SUPER_AMIGOS.Publicacion WHERE id = @id";
+            SqlDataReader reader = builderDeComandos.Crear(query, parametros).ExecuteReader();
+            reader.Read();
+
+            String estado = (String)reader["estado"];
+            if (estado == "Finalizada")
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
         }
 
         private void botonCancelar_Click(object sender, EventArgs e)
