@@ -51,7 +51,7 @@ namespace FrbaCommerce.Comprar_Ofertar
             if (Convert.ToInt32(this.textBoxMonto.Text) > ofertaMax)
             {
                 String sql = "INSERT INTO LOS_SUPER_AMIGOS.Oferta(monto, fecha, usuario_id, publicacion_id) VALUES (@monto, @fecha, @usuario, @publicacion)";
-                DateTime fecha = DateTime.Now;
+                DateTime fecha = Convert.ToDateTime(System.Configuration.ConfigurationManager.AppSettings["DateKey"]);
                 parametros.Clear();
                 parametros.Add(new SqlParameter("@monto", this.textBoxMonto.Text));
                 parametros.Add(new SqlParameter("@fecha", fecha));
