@@ -120,7 +120,7 @@ namespace FrbaCommerce.Listado_Estadistico
                 dataGridView_Estadistica.DataSource = datos.Tables[0];
                 return;
             }
-
+            progressBar.Visible = false;
             String queryParaObtenerResultados = GetQueryObtenerResultados(tipoDeListado, fechaDeInicio, fechaMedia, fechaDeFin);
             
             dataGridView_Estadistica.DataSource = comunicador.SelectDataTable("*", queryParaObtenerResultados);
