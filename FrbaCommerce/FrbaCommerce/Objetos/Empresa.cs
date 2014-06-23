@@ -34,7 +34,7 @@ namespace FrbaCommerce.Objetos
         public void SetRazonSocial(String razonSocial)
         {
             if (razonSocial == "")
-                throw new CampoVacioException();
+                throw new CampoVacioException("Razon social");
             this.razonSocial = razonSocial;
         }
 
@@ -46,7 +46,7 @@ namespace FrbaCommerce.Objetos
         public void SetNombreDeContacto(String nombreDeContacto)
         {
             if (nombreDeContacto == "")
-                throw new CampoVacioException();
+                throw new CampoVacioException("Nombre de contacto");
             this.nombreDeContacto = nombreDeContacto;
         }
 
@@ -58,7 +58,7 @@ namespace FrbaCommerce.Objetos
         public void SetCuit(String cuit)
         {
             if (cuit == "")
-                throw new CampoVacioException();
+                throw new CampoVacioException("CUIT");
 
             if (!esNumero(cuit))
                 throw new FormatoInvalidoException();
@@ -73,8 +73,8 @@ namespace FrbaCommerce.Objetos
 
         public void SetFechaDeCreacion(DateTime fechaDeCreacion)
         {
-            if (fechaDeCreacion.ToString() == "")
-                throw new CampoVacioException();
+            if (fechaDeCreacion.Equals(DateTime.MinValue))
+                throw new CampoVacioException("Fecha de creacion");
 
             if (!esFechaPasada(fechaDeCreacion))
                 throw new FechaPasadaException();
@@ -90,7 +90,7 @@ namespace FrbaCommerce.Objetos
         public void SetCiudad(String ciudad)
         {
             if (ciudad == "")
-                throw new CampoVacioException();
+                throw new CampoVacioException("Ciudad");
             this.ciudad = ciudad;
         }
 
@@ -102,7 +102,7 @@ namespace FrbaCommerce.Objetos
         public void SetMail(String mail)
         {
             if (mail == "")
-                throw new CampoVacioException();
+                throw new CampoVacioException("Mail");
             this.mail = mail;
         }
 
@@ -114,7 +114,7 @@ namespace FrbaCommerce.Objetos
         public void SetTelefono(String telefono)
         {
             if (telefono == "")
-                throw new CampoVacioException();
+                throw new CampoVacioException("Telefono");
 
             if (!esNumero(telefono))
                 throw new FormatoInvalidoException();
@@ -129,8 +129,6 @@ namespace FrbaCommerce.Objetos
 
         public void SetIdDireccion(Decimal idDireccion)
         {
-            if (idDireccion == 0)
-                throw new CampoVacioException();
             this.idDireccion = idDireccion;
         }
 
@@ -141,8 +139,6 @@ namespace FrbaCommerce.Objetos
 
         public void SetIdUsuario(Decimal idUsuario)
         {
-            if (idUsuario == 0)
-                throw new CampoVacioException();
             this.idUsuario = idUsuario;
         }
 

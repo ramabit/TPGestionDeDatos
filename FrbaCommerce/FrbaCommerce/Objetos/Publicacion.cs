@@ -36,7 +36,7 @@ namespace FrbaCommerce.Objetos
         public void SetTipo(String tipo)
         {
             if (tipo == "")
-                throw new CampoVacioException();
+                throw new CampoVacioException("Tipo");
             this.tipo = tipo;
         }
 
@@ -48,7 +48,7 @@ namespace FrbaCommerce.Objetos
         public void SetEstado(String estado)
         {
             if (estado == "")
-                throw new CampoVacioException();
+                throw new CampoVacioException("Estado");
             this.estado = estado;
         }
 
@@ -60,7 +60,7 @@ namespace FrbaCommerce.Objetos
         public void SetDescripcion(String descripcion)
         {
             if (descripcion == "")
-                throw new CampoVacioException();
+                throw new CampoVacioException("Descripcion");
             this.descripcion = descripcion;
         }
 
@@ -92,7 +92,7 @@ namespace FrbaCommerce.Objetos
         public void SetIdRubro(Decimal idRubro)
         {
             if (idRubro == 0)
-                throw new CampoVacioException();
+                throw new CampoVacioException("Rubro");
             this.idRubro = idRubro;
         }
 
@@ -104,7 +104,7 @@ namespace FrbaCommerce.Objetos
         public void SetIdUsuario(Decimal idUsuario)
         {
             if (idUsuario == 0)
-                throw new CampoVacioException();
+                throw new CampoVacioException("Usuario");
             this.idUsuario = idUsuario;
         }
 
@@ -116,7 +116,7 @@ namespace FrbaCommerce.Objetos
         public void SetIdVisibilidad(Decimal idVisibilidad)
         {
             if (idVisibilidad == 0)
-                throw new CampoVacioException();
+                throw new CampoVacioException("Visibilidad");
             this.idVisibilidad = idVisibilidad;
         }
 
@@ -128,7 +128,7 @@ namespace FrbaCommerce.Objetos
         public void SetStock(String stock)
         {
             if (stock == "")
-                throw new CampoVacioException();
+                throw new CampoVacioException("Stock");
 
             if (!esNumero(stock))
                 throw new FormatoInvalidoException();
@@ -144,7 +144,7 @@ namespace FrbaCommerce.Objetos
         public void SetPrecio(String precio)
         {
             if (precio == "")
-                throw new CampoVacioException();
+                throw new CampoVacioException("Precio");
 
             if (!esNumero(precio))
                 throw new FechaPasadaException();

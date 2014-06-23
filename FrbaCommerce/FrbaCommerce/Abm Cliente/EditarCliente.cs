@@ -75,7 +75,8 @@ namespace FrbaCommerce.ABM_Cliente
             String apellido = textBox_Apellido.Text;
             String tipoDeDocumento = comboBox_TipoDeDocumento.Text;
             String numeroDeDocumento = textBox_NumeroDeDoc.Text;
-            DateTime fechaDeNacimiento = Convert.ToDateTime(textBox_FechaDeNacimiento.Text);
+            DateTime fechaDeNacimiento;
+            DateTime.TryParse(textBox_FechaDeNacimiento.Text, out fechaDeNacimiento);
             String mail = textBox_Mail.Text;
             String telefono = textBox_Telefono.Text;
             String calle = textBox_Calle.Text;

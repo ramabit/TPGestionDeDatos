@@ -22,14 +22,14 @@ namespace FrbaCommerce
         public void SetCalle(String calle)
         {
             if (calle == "")
-                throw new CampoVacioException();
+                throw new CampoVacioException("Calle");
             this.calle = calle;
         }
 
         public void SetNumero(String numero)
         {
             if (numero == "")
-                throw new CampoVacioException();
+                throw new CampoVacioException("Numero");
 
             if (!esNumero(numero))
                 throw new FormatoInvalidoException();
@@ -53,7 +53,7 @@ namespace FrbaCommerce
         public void SetCodigoPostal(String codigoPostal)
         {
             if (codigoPostal == "")
-                throw new CampoVacioException();
+                throw new CampoVacioException("Codigo postal");
 
             if (!esNumero(codigoPostal))
                 throw new FormatoInvalidoException();
@@ -64,7 +64,7 @@ namespace FrbaCommerce
         public void SetLocalidad(String localidad)
         {
             if (localidad == "")
-                throw new CampoVacioException();
+                throw new CampoVacioException("Localidad");
             this.localidad = localidad;
         }
 
