@@ -17,7 +17,8 @@ namespace FrbaCommerce.ABM_Empresa
         private String username;
         private String contrasena;
         private ComunicadorConBaseDeDatos comunicador = new ComunicadorConBaseDeDatos();
-
+        private IList<SqlParameter> parametros = new List<SqlParameter>();
+        private BuilderDeComandos builderDeComandos = new BuilderDeComandos();
         public AgregarEmpresa(String username, String contrasena)
         {
             InitializeComponent();
@@ -129,6 +130,20 @@ namespace FrbaCommerce.ABM_Empresa
                 return;
             }
 
+            if (UsuarioSesion.Usuario.rol != "Administrador")
+            {
+                UsuarioSesion.Usuario.rol = "Empresa";
+                UsuarioSesion.Usuario.nombre = username;
+
+                String consultaUsuario = "select top 1 id"
+                            + " from LOS_SUPER_AMIGOS.Usuario"
+                            + " order by id DESC";
+                parametros.Clear();
+                Decimal idE = (Decimal)builderDeComandos.Crear(consultaUsuario, parametros).ExecuteScalar();
+
+                UsuarioSesion.Usuario.id = idE;
+            }
+
             VolverAlMenuPrincipal();
         }
 
@@ -161,7 +176,16 @@ namespace FrbaCommerce.ABM_Empresa
 
         private void button_Cancelar_Click(object sender, EventArgs e)
         {
-            VolverAlMenuPrincipal();
+            if (UsuarioSesion.Usuario.rol != "Administrador")
+            {
+                this.Hide();
+                new Registro_de_Usuario.RegistrarUsuario().ShowDialog();
+                this.Close();
+            }
+            else
+            {
+                VolverAlMenuPrincipal();
+            }
         }
 
         private void VolverAlMenuPrincipal()

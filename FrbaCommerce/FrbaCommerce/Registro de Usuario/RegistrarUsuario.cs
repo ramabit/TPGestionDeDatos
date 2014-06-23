@@ -87,7 +87,8 @@ namespace FrbaCommerce.Registro_de_Usuario
 
             if (rolElegido == "Cliente")
             {
-                new ABM_Cliente.AgregarCliente(usuario,contraseña).Show();
+                this.Hide();
+                new ABM_Cliente.AgregarCliente(usuario,contraseña).ShowDialog();
 
                 if (UsuarioSesion.Usuario.rol != "Administrador")
                 {
@@ -102,26 +103,14 @@ namespace FrbaCommerce.Registro_de_Usuario
 
                     UsuarioSesion.Usuario.id = idC;
                 }
+   
             }
             else if (rolElegido == "Empresa")
             {
-                new ABM_Empresa.AgregarEmpresa("username", "password").Show();
-
-                if (UsuarioSesion.Usuario.rol != "Administrador")
-                {
-                    UsuarioSesion.Usuario.rol = "Empresa";
-                    UsuarioSesion.Usuario.nombre = usuario;
-
-                    String idUsuario = "select top 1 id"
-                                + " from LOS_SUPER_AMIGOS.Usuario"
-                                + " order by id DESC";
-                    parametros.Clear();
-                    Decimal idE = (Decimal)builderDeComandos.Crear(idUsuario, parametros).ExecuteScalar();
-
-                    UsuarioSesion.Usuario.id = idE;
-                }
+                new ABM_Empresa.AgregarEmpresa("username", "password").ShowDialog();
+                
             }
-
+            this.Close();
             
 
         }

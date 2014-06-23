@@ -17,6 +17,8 @@ namespace FrbaCommerce.ABM_Cliente
         private String username;
         private String contrasena;
         private ComunicadorConBaseDeDatos comunicador = new ComunicadorConBaseDeDatos();
+        private IList<SqlParameter> parametros = new List<SqlParameter>();
+        private BuilderDeComandos builderDeComandos = new BuilderDeComandos();
 
         public AgregarCliente(String username, String contrasena)
         {
@@ -131,7 +133,21 @@ namespace FrbaCommerce.ABM_Cliente
                 MessageBox.Show("Fecha no valida");
                 return;
             }
-            
+
+            if (UsuarioSesion.Usuario.rol != "Administrador")
+            {
+                UsuarioSesion.Usuario.rol = "Cliente";
+                UsuarioSesion.Usuario.nombre = username;
+
+                String consultaUsuario = "select top 1 id"
+                            + " from LOS_SUPER_AMIGOS.Usuario"
+                            + " order by id DESC";
+                parametros.Clear();
+                Decimal idE = (Decimal)builderDeComandos.Crear(consultaUsuario, parametros).ExecuteScalar();
+
+                UsuarioSesion.Usuario.id = idE;
+            }
+
             VolverAlMenuPrincial();
         }
 
@@ -154,7 +170,18 @@ namespace FrbaCommerce.ABM_Cliente
 
         private void button_Cancelar_Click(object sender, EventArgs e)
         {
-            VolverAlMenuPrincial();
+
+            if (UsuarioSesion.Usuario.rol != "Administrador")
+            {
+                this.Hide();
+                new Registro_de_Usuario.RegistrarUsuario().ShowDialog();
+                this.Close();
+            }
+            else
+            {
+                VolverAlMenuPrincial();
+            }
+            
         }
 
         private void VolverAlMenuPrincial()
