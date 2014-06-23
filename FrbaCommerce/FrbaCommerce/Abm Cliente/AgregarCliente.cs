@@ -17,10 +17,6 @@ namespace FrbaCommerce.ABM_Cliente
         private String username;
         private String contrasena;
         private ComunicadorConBaseDeDatos comunicador = new ComunicadorConBaseDeDatos();
-
-        private IList<SqlParameter> parametros = new List<SqlParameter>();
-        private BuilderDeComandos builderDeComandos = new BuilderDeComandos();
-
         private Decimal idDireccion;
         private Decimal idUsuario;
 
@@ -146,14 +142,7 @@ namespace FrbaCommerce.ABM_Cliente
             {
                 UsuarioSesion.Usuario.rol = "Cliente";
                 UsuarioSesion.Usuario.nombre = username;
-
-                String consultaUsuario = "select top 1 id"
-                            + " from LOS_SUPER_AMIGOS.Usuario"
-                            + " order by id DESC";
-                parametros.Clear();
-                Decimal idE = (Decimal)builderDeComandos.Crear(consultaUsuario, parametros).ExecuteScalar();
-
-                UsuarioSesion.Usuario.id = idE;
+                UsuarioSesion.Usuario.id = idUsuario;
             }
 
             VolverAlMenuPrincial();
