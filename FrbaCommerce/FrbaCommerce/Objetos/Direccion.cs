@@ -32,7 +32,7 @@ namespace FrbaCommerce
                 throw new CampoVacioException("Numero");
 
             if (!esNumero(numero))
-                throw new FormatoInvalidoException();
+                throw new FormatoInvalidoException("Numero");
 
             this.numero = numero;
         }
@@ -40,7 +40,7 @@ namespace FrbaCommerce
         public void SetPiso(String piso)
         {
             if (piso != "" && !esNumero(piso))
-                throw new FormatoInvalidoException();
+                throw new FormatoInvalidoException("Piso");
 
             this.piso = piso;
         }
@@ -56,7 +56,7 @@ namespace FrbaCommerce
                 throw new CampoVacioException("Codigo postal");
 
             if (!esNumero(codigoPostal))
-                throw new FormatoInvalidoException();
+                throw new FormatoInvalidoException("Codigo postal");
 
             this.codigoPostal = codigoPostal;
         }

@@ -65,12 +65,12 @@ namespace FrbaCommerce.ABM_Empresa
             }
             catch (CampoVacioException exception)
             {
-                MessageBox.Show("Faltan completar campos en direccion");
+                MessageBox.Show("Falta completar campo: " + exception.Message);
                 return;
             }
             catch (FormatoInvalidoException exception)
             {
-                MessageBox.Show("Datos mal ingresados");
+                MessageBox.Show("Datos mal ingresados en: " + exception.Message);
                 return;
             }
             // Controla que no se haya creado ya la direccion
@@ -105,12 +105,12 @@ namespace FrbaCommerce.ABM_Empresa
             }
             catch (CampoVacioException exception)
             {
-                MessageBox.Show("Faltan completar campos");
+                MessageBox.Show("Falta completar campo: " + exception.Message);
                 return;
             }
             catch (FormatoInvalidoException exception)
             {
-                MessageBox.Show("Datos mal ingresados");
+                MessageBox.Show("Datos mal ingresados en: " + exception.Message);
                 return;
             }
             catch (TelefonoYaExisteException exception)

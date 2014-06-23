@@ -78,7 +78,7 @@ namespace FrbaCommerce.ABM_Cliente
             }
             catch (FormatoInvalidoException exception)
             {
-                MessageBox.Show("Datos mal ingresados");
+                MessageBox.Show("Datos mal ingresados en: " + exception.Message);
                 return;
             }
             // Controla que no se haya creado ya la direccion
@@ -118,7 +118,7 @@ namespace FrbaCommerce.ABM_Cliente
             }
             catch (FormatoInvalidoException exception)
             {
-                MessageBox.Show("Datos mal ingresados");
+                MessageBox.Show("Datos mal ingresados en: " + exception.Message);
                 return;
             }
             catch (ClienteYaExisteException exception)

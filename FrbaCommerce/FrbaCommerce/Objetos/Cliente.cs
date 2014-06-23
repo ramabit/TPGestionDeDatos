@@ -68,10 +68,10 @@ namespace FrbaCommerce.Objetos
         public void SetNumeroDeDocumento(String numeroDeDocumento)
         {
             if (numeroDeDocumento == "")
-                throw new CampoVacioException("Numero de Documento");
+                throw new CampoVacioException("Numero de documento");
 
             if (!esNumero(numeroDeDocumento))
-                throw new FormatoInvalidoException();
+                throw new FormatoInvalidoException("Numero de documento");
 
             this.numeroDeDocumento = numeroDeDocumento;
         }
@@ -115,7 +115,7 @@ namespace FrbaCommerce.Objetos
                 throw new CampoVacioException("Telefono");
 
             if (!esNumero(telefono))
-                throw new FormatoInvalidoException();
+                throw new FormatoInvalidoException("Telefono");
 
             this.telefono = telefono;
         }

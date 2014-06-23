@@ -61,7 +61,7 @@ namespace FrbaCommerce.Objetos
                 throw new CampoVacioException("CUIT");
 
             if (!esNumero(cuit))
-                throw new FormatoInvalidoException();
+                throw new FormatoInvalidoException("CUIT");
 
             this.cuit = cuit;
         }
@@ -117,7 +117,7 @@ namespace FrbaCommerce.Objetos
                 throw new CampoVacioException("Telefono");
 
             if (!esNumero(telefono))
-                throw new FormatoInvalidoException();
+                throw new FormatoInvalidoException("Telefono");
 
             this.telefono = telefono;
         }

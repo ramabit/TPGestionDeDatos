@@ -107,12 +107,12 @@ namespace FrbaCommerce.ABM_Cliente
             }
             catch (CampoVacioException exception)
             {
-                MessageBox.Show("Faltan completar campos en direccion");
+                MessageBox.Show("Falta completar campo: " + exception.Message);
                 return;
             }
             catch (FormatoInvalidoException exception)
             {
-                MessageBox.Show("Datos mal ingresados");
+                MessageBox.Show("Datos mal ingresados en: " + exception.Message);
                 return;
             }
 
@@ -134,12 +134,12 @@ namespace FrbaCommerce.ABM_Cliente
             }
             catch (CampoVacioException exception)
             {
-                MessageBox.Show("Faltan completar campos");
+                MessageBox.Show("Falta completar campo: " + exception.Message);
                 return;
             }
             catch (FormatoInvalidoException exception)
             {
-                MessageBox.Show("Datos mal ingresados");
+                MessageBox.Show("Datos mal ingresados en: " + exception.Message);
                 return;
             }
             catch (ClienteYaExisteException exception)

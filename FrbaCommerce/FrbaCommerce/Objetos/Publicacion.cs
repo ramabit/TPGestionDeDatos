@@ -131,7 +131,7 @@ namespace FrbaCommerce.Objetos
                 throw new CampoVacioException("Stock");
 
             if (!esNumero(stock))
-                throw new FormatoInvalidoException();
+                throw new FormatoInvalidoException("Stock");
 
             this.stock = stock;
         }
