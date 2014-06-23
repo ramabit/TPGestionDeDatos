@@ -54,9 +54,9 @@ namespace FrbaCommerce.ABM_Visibilidad
                 MessageBox.Show("Datos mal ingresados");
                 return;
             }
-            catch (TelefonoYaExisteException exception)
+            catch (VisibilidadYaExisteException exception)
             {
-                MessageBox.Show("Ya existe esa descripcion");
+                MessageBox.Show("Ya existe esa visibilidad");
                 return;
             }
 
