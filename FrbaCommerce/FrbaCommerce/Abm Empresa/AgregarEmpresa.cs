@@ -17,12 +17,16 @@ namespace FrbaCommerce.ABM_Empresa
         private String username;
         private String contrasena;
         private ComunicadorConBaseDeDatos comunicador = new ComunicadorConBaseDeDatos();
+        private Decimal idDireccion;
+        private Decimal idUsuario;
 
         public AgregarEmpresa(String username, String contrasena)
         {
             InitializeComponent();
             this.username = username;
             this.contrasena = contrasena;
+            this.idDireccion = 0;
+            this.idUsuario = 0;
         }
 
         private void AgregarEmpresa_Load(object sender, EventArgs e)
@@ -68,17 +72,17 @@ namespace FrbaCommerce.ABM_Empresa
                 MessageBox.Show("Datos mal ingresados");
                 return;
             }
-            Decimal idDireccion = comunicador.CrearDireccion(direccion);
+            // Controla que no se haya creado ya la direccion
+            if (this.idDireccion == 0)
+            {
+                this.idDireccion = comunicador.CrearDireccion(direccion);
+            }
 
             // Si la empresa lo crea el admin, crea un nuevo usuario predeterminado. Si lo crea un nuevo registro de usuario, usa el que viene por parametro
-            Decimal idUsuario;
-            if (username == "clienteCreadoPorAdmin")
+            if (idUsuario == 0)
             {
-                idUsuario = comunicador.CrearUsuario();
-            }
-            else
-            {
-                idUsuario = comunicador.CrearUsuarioConValores(username, contrasena);
+                idUsuario = CrearUsuario();
+                MessageBox.Show("Se creo el usuario correctamente");
             }
 
             // Crea empresa
@@ -132,14 +136,16 @@ namespace FrbaCommerce.ABM_Empresa
             VolverAlMenuPrincipal();
         }
 
-        private bool pasoControlDeNoVacio(string valor)
+        private Decimal CrearUsuario()
         {
-            if (valor == "")
+            if (username == "clienteCreadoPorAdmin")
             {
-                MessageBox.Show("Faltan datos");
-                return false;
+                return comunicador.CrearUsuario();
             }
-            return true;
+            else
+            {
+                return comunicador.CrearUsuarioConValores(username, contrasena);
+            }
         }
 
         private void button_Limpiar_Click(object sender, EventArgs e)

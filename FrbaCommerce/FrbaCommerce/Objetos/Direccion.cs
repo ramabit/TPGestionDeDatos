@@ -39,7 +39,7 @@ namespace FrbaCommerce
 
         public void SetPiso(String piso)
         {
-            if (!(piso == "") && !esNumero(piso))
+            if (piso != "" && !esNumero(piso))
                 throw new FormatoInvalidoException();
 
             this.piso = piso;

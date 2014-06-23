@@ -17,12 +17,16 @@ namespace FrbaCommerce.ABM_Cliente
         private String username;
         private String contrasena;
         private ComunicadorConBaseDeDatos comunicador = new ComunicadorConBaseDeDatos();
+        private Decimal idDireccion;
+        private Decimal idUsuario;
 
         public AgregarCliente(String username, String contrasena)
         {
             InitializeComponent();
             this.username = username;
             this.contrasena = contrasena;
+            this.idDireccion = 0;
+            this.idUsuario = 0;
         }
 
         private void AgregarCliente_Load(object sender, EventArgs e)
@@ -76,17 +80,17 @@ namespace FrbaCommerce.ABM_Cliente
                 MessageBox.Show("Datos mal ingresados");
                 return;
             }
-            Decimal idDireccion = comunicador.CrearDireccion(direccion);
+            // Controla que no se haya creado ya la direccion
+            if (this.idDireccion == 0)
+            {
+                this.idDireccion = comunicador.CrearDireccion(direccion);
+            }        
 
             // Si el cliente lo crea el admin, crea un nuevo usuario predeterminado. Si lo crea un nuevo registro de usuario, usa el que viene por parametro
-            Decimal idUsuario;
-            if (username == "clienteCreadoPorAdmin")
+            if (idUsuario == 0)
             {
-                idUsuario = comunicador.CrearUsuario();
-            }
-            else
-            {
-                idUsuario = comunicador.CrearUsuarioConValores(username, contrasena);
+                idUsuario = CrearUsuario();
+                MessageBox.Show("Se creo el usuario correctamente");
             }
 
             // Crear cliente
@@ -133,6 +137,18 @@ namespace FrbaCommerce.ABM_Cliente
             }
             
             VolverAlMenuPrincial();
+        }
+
+        private Decimal CrearUsuario()
+        {
+            if (username == "clienteCreadoPorAdmin")
+            {
+                return comunicador.CrearUsuario();
+            }
+            else
+            {
+                return comunicador.CrearUsuarioConValores(username, contrasena);
+            }
         }
 
         private void button_Limpiar_Click(object sender, EventArgs e)
