@@ -353,6 +353,7 @@
             // 
             // textBox_Departamento
             // 
+            this.textBox_Departamento.Enabled = false;
             this.textBox_Departamento.Location = new System.Drawing.Point(112, 97);
             this.textBox_Departamento.Name = "textBox_Departamento";
             this.textBox_Departamento.Size = new System.Drawing.Size(250, 20);

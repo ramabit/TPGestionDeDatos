@@ -174,5 +174,18 @@ namespace FrbaCommerce.ABM_Cliente
             textBox_FechaDeNacimiento.Text = e.Start.ToShortDateString();
             monthCalendar_FechaDeNacimiento.Visible = false;
         }
+
+        private void textBox_Piso_TextChanged(object sender, EventArgs e)
+        {
+            if (this.textBox_Piso.Text == "")
+            {
+                this.textBox_Departamento.Text = "";
+                this.textBox_Departamento.Enabled = false;
+            }
+            else
+            {
+                this.textBox_Departamento.Enabled = true;
+            }
+        }
     }
 }

@@ -352,6 +352,7 @@
             // 
             // textBox_Departamento
             // 
+            this.textBox_Departamento.Enabled = false;
             this.textBox_Departamento.Location = new System.Drawing.Point(112, 97);
             this.textBox_Departamento.Name = "textBox_Departamento";
             this.textBox_Departamento.Size = new System.Drawing.Size(250, 20);
@@ -363,6 +364,7 @@
             this.textBox_Piso.Name = "textBox_Piso";
             this.textBox_Piso.Size = new System.Drawing.Size(250, 20);
             this.textBox_Piso.TabIndex = 13;
+            this.textBox_Piso.TextChanged += new System.EventHandler(this.textBox_Piso_TextChanged);
             // 
             // textBox_Numero
             // 

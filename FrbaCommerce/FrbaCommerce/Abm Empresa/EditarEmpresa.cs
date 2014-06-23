@@ -171,5 +171,18 @@ namespace FrbaCommerce.ABM_Empresa
             textBox_FechaDeCreacion.Text = e.Start.ToShortDateString();
             monthCalendar_FechaDeCreacion.Visible = false;
         }
+
+        private void textBox_Piso_TextChanged(object sender, EventArgs e)
+        {
+            if (this.textBox_Piso.Text == "")
+            {
+                this.textBox_Departamento.Text = "";
+                this.textBox_Departamento.Enabled = false;
+            }
+            else
+            {
+                this.textBox_Departamento.Enabled = true;
+            }
+        }
     }
 }
