@@ -39,10 +39,7 @@ namespace FrbaCommerce
 
         public void SetPiso(String piso)
         {
-            if (piso == "")
-                throw new CampoVacioException();
-
-            if (!esNumero(piso))
+            if (!(piso == "") && !esNumero(piso))
                 throw new FormatoInvalidoException();
 
             this.piso = piso;
@@ -50,8 +47,6 @@ namespace FrbaCommerce
 
         public void SetDepartamento(String departamento)
         {
-            if (departamento == "")
-                throw new CampoVacioException();
             this.departamento = departamento;
         }
 
@@ -135,8 +130,8 @@ namespace FrbaCommerce
             IList<SqlParameter> parametros = new List<SqlParameter>();
             parametros.Add(new SqlParameter("@calle", this.calle));
             parametros.Add(new SqlParameter("@numero", this.numero));
-            parametros.Add(new SqlParameter("@piso", this.piso));
-            parametros.Add(new SqlParameter("@depto", this.departamento));
+            parametros.Add(new SqlParameter("@piso", this.siEsNuloDevolverDBNull(piso)));
+            parametros.Add(new SqlParameter("@depto", this.siEsNuloDevolverDBNull(departamento)));
             parametros.Add(new SqlParameter("@cod_postal", this.codigoPostal));
             parametros.Add(new SqlParameter("@localidad", this.localidad));
             return parametros;

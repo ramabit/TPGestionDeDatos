@@ -28,5 +28,16 @@ namespace FrbaCommerce.Objetos
             else
                 return true;
         }
+        public Object siEsNuloDevolverDBNull(String campo)
+        {
+            if (campo == "")
+            {
+                return DBNull.Value;
+            }
+            else
+            {
+                return campo;
+            }
+        }
     }
 }
