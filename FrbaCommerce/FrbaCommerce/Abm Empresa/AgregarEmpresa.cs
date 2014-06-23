@@ -141,6 +141,8 @@ namespace FrbaCommerce.ABM_Empresa
                 UsuarioSesion.Usuario.id = idUsuario;
             }
 
+            comunicador.AsignarRolAUsuario(this.idUsuario, "Empresa");
+
             VolverAlMenuPrincipal();
         }
 

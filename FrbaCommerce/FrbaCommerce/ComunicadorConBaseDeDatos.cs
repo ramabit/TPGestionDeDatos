@@ -45,6 +45,20 @@ namespace FrbaCommerce
             return (Decimal)parametroOutput.Value;
         }
 
+        public Boolean AsignarRolAUsuario(Decimal idUsuario, String rol)
+        {
+            Decimal idRol = Convert.ToDecimal(this.SelectFromWhere("id", "Rol", "nombre", rol));
+            query = "LOS_SUPER_AMIGOS.agregar_rol_a_usuario";
+            parametros.Clear();
+            parametros.Add(new SqlParameter("@usuario_id", idUsuario));
+            parametros.Add(new SqlParameter("@rol_id", idRol));
+            command = builderDeComandos.Crear(query, parametros);
+            command.CommandType = CommandType.StoredProcedure;
+            int filasAfectadas = command.ExecuteNonQuery();
+            if (filasAfectadas == 1) return true;
+            return false;
+        }
+
         public Decimal Crear(Comunicable objeto)
         {
             query = objeto.GetQueryCrear();

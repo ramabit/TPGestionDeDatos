@@ -100,6 +100,9 @@ DROP PROCEDURE LOS_SUPER_AMIGOS.crear_visibilidad
 IF OBJECT_ID('LOS_SUPER_AMIGOS.crear_publicacion', 'P') IS NOT NULL
 DROP PROCEDURE LOS_SUPER_AMIGOS.crear_publicacion
 
+IF OBJECT_ID('LOS_SUPER_AMIGOS.agregar_rol_a_usuario', 'P') IS NOT NULL
+DROP PROCEDURE LOS_SUPER_AMIGOS.agregar_rol_a_usuario
+
 IF OBJECT_ID('LOS_SUPER_AMIGOS.agregar_id_publ') IS NOT NULL
 DROP FUNCTION LOS_SUPER_AMIGOS.agregar_id_publ
 
@@ -326,6 +329,18 @@ BEGIN
 	VALUES
 		(@tipo, @estado, @descripcion, @fecha_inicio, @fecha_vencimiento, @rubro_id, @visibilidad_id, @precio, @stock, @usuario_id, @se_realizan_preguntas, @habilitado);
 	SET @id = SCOPE_IDENTITY();
+END
+GO
+
+CREATE PROCEDURE LOS_SUPER_AMIGOS.agregar_rol_a_usuario
+	@usuario_id numeric(18,0),
+	@rol_id numeric(18,0)
+AS
+BEGIN
+	INSERT INTO LOS_SUPER_AMIGOS.Rol_x_Usuario
+		(rol_id, usuario_id)
+	VALUES
+		(@rol_id, @usuario_id)
 END
 GO
 
