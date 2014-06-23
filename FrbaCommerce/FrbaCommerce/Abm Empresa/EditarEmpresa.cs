@@ -92,7 +92,7 @@ namespace FrbaCommerce.ABM_Empresa
 
                 if (pudoModificar) MessageBox.Show("La direccion se modifico correctamente");
             }
-            catch (CampoVacioException)
+            catch (CampoVacioException exception)
             {
                 MessageBox.Show("Falta completar campo: " + exception.Message);
                 return;

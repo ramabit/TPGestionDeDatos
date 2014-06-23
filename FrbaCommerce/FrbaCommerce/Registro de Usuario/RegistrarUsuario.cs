@@ -65,6 +65,12 @@ namespace FrbaCommerce.Registro_de_Usuario
                 return;
             }
 
+            if (contraseña.Length < 8)
+            {
+                MessageBox.Show("La contraseña debe tener por lo menos 8 caracteres");
+                return;
+            }
+
             if (textBoxPass.Text != textBoxPass2.Text)
             {
                 MessageBox.Show("La contraseña no se repite correctamente");
