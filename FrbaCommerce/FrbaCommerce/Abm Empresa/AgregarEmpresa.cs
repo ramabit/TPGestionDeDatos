@@ -19,11 +19,16 @@ namespace FrbaCommerce.ABM_Empresa
         private ComunicadorConBaseDeDatos comunicador = new ComunicadorConBaseDeDatos();
         private IList<SqlParameter> parametros = new List<SqlParameter>();
         private BuilderDeComandos builderDeComandos = new BuilderDeComandos();
+        private Decimal idDireccion;
+        private Decimal idUsuario;
+
         public AgregarEmpresa(String username, String contrasena)
         {
             InitializeComponent();
             this.username = username;
             this.contrasena = contrasena;
+            this.idDireccion = 0;
+            this.idUsuario = 0;
         }
 
         private void AgregarEmpresa_Load(object sender, EventArgs e)
@@ -37,7 +42,8 @@ namespace FrbaCommerce.ABM_Empresa
             String razonSocial = textBox_RazonSocial.Text;
             String nombreDeContacto = textBox_NombreDeContacto.Text;
             String cuit = textBox_CUIT.Text;
-            DateTime fechaDeCreacion = Convert.ToDateTime(textBox_FechaDeCreacion.Text);
+            DateTime fechaDeCreacion;
+            DateTime.TryParse(textBox_FechaDeCreacion.Text, out fechaDeCreacion);
             String mail = textBox_Mail.Text;
             String telefono = textBox_Telefono.Text;
             String ciudad = textBox_Ciudad.Text;
@@ -61,25 +67,25 @@ namespace FrbaCommerce.ABM_Empresa
             }
             catch (CampoVacioException exception)
             {
-                MessageBox.Show("Faltan completar campos en direccion");
+                MessageBox.Show("Falta completar campo: " + exception.Message);
                 return;
             }
             catch (FormatoInvalidoException exception)
             {
-                MessageBox.Show("Datos mal ingresados");
+                MessageBox.Show("Datos mal ingresados en: " + exception.Message);
                 return;
             }
-            Decimal idDireccion = comunicador.CrearDireccion(direccion);
+            // Controla que no se haya creado ya la direccion
+            if (this.idDireccion == 0)
+            {
+                this.idDireccion = comunicador.CrearDireccion(direccion);
+            }
 
             // Si la empresa lo crea el admin, crea un nuevo usuario predeterminado. Si lo crea un nuevo registro de usuario, usa el que viene por parametro
-            Decimal idUsuario;
-            if (username == "clienteCreadoPorAdmin")
+            if (idUsuario == 0)
             {
-                idUsuario = comunicador.CrearUsuario();
-            }
-            else
-            {
-                idUsuario = comunicador.CrearUsuarioConValores(username, contrasena);
+                idUsuario = CrearUsuario();
+                MessageBox.Show("Se creo el usuario correctamente");
             }
 
             // Crea empresa
@@ -101,12 +107,12 @@ namespace FrbaCommerce.ABM_Empresa
             }
             catch (CampoVacioException exception)
             {
-                MessageBox.Show("Faltan completar campos");
+                MessageBox.Show("Falta completar campo: " + exception.Message);
                 return;
             }
             catch (FormatoInvalidoException exception)
             {
-                MessageBox.Show("Datos mal ingresados");
+                MessageBox.Show("Datos mal ingresados en: " + exception.Message);
                 return;
             }
             catch (TelefonoYaExisteException exception)
@@ -147,14 +153,16 @@ namespace FrbaCommerce.ABM_Empresa
             VolverAlMenuPrincipal();
         }
 
-        private bool pasoControlDeNoVacio(string valor)
+        private Decimal CrearUsuario()
         {
-            if (valor == "")
+            if (username == "clienteCreadoPorAdmin")
             {
-                MessageBox.Show("Faltan datos");
-                return false;
+                return comunicador.CrearUsuario();
             }
-            return true;
+            else
+            {
+                return comunicador.CrearUsuarioConValores(username, contrasena);
+            }
         }
 
         private void button_Limpiar_Click(object sender, EventArgs e)

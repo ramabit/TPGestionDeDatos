@@ -28,7 +28,7 @@ namespace FrbaCommerce.Objetos
         public void SetDescripcion(String descripcion)
         {
             if (descripcion == "")
-                throw new CampoVacioException();
+                throw new CampoVacioException("Descripcion");
             this.descripcion = descripcion;
         }
 
@@ -40,10 +40,10 @@ namespace FrbaCommerce.Objetos
         public void SetPrecioPorPublicar(String precioPorPublicar)
         {
             if (precioPorPublicar == "")
-                throw new CampoVacioException();
+                throw new CampoVacioException("Precio por publicar");
 
             if (!esDouble(precioPorPublicar))
-                throw new FormatoInvalidoException();
+                throw new FormatoInvalidoException("Precio por publicar");
 
             this.precioPorPublicar = precioPorPublicar;
         }
@@ -56,10 +56,10 @@ namespace FrbaCommerce.Objetos
         public void SetPorcentajePorVenta(String porcentajePorVenta)
         {
             if (porcentajePorVenta == "")
-                throw new CampoVacioException();
+                throw new CampoVacioException("Porcentaje por venta");
 
             if (!esDouble(porcentajePorVenta))
-                throw new FormatoInvalidoException();
+                throw new FormatoInvalidoException("Porcentaje por venta");
 
             this.porcentajePorVenta = porcentajePorVenta;
         }
@@ -72,10 +72,10 @@ namespace FrbaCommerce.Objetos
         public void SetDuracion(String duracion)
         {
             if (duracion == "")
-                throw new CampoVacioException();
+                throw new CampoVacioException("Duracion");
 
             if (!esNumero(duracion))
-                throw new FormatoInvalidoException();
+                throw new FormatoInvalidoException("Duracion");
 
             this.duracion = duracion;
         }

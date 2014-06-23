@@ -7,5 +7,10 @@ namespace FrbaCommerce.Exceptions
 {
     class FormatoInvalidoException : Exception
     {
+        public FormatoInvalidoException(String mensaje)
+            : base(mensaje)
+        {
+
+        }
     }
 }

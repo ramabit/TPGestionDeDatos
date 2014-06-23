@@ -63,7 +63,8 @@ namespace FrbaCommerce.ABM_Empresa
             String razonSocial = textBox_RazonSocial.Text;
             String nombreDeContacto = textBox_NombreDeContacto.Text;
             String cuit = textBox_CUIT.Text;
-            DateTime fechaDeCreacion = Convert.ToDateTime(textBox_FechaDeCreacion.Text);
+            DateTime fechaDeCreacion;
+            DateTime.TryParse(textBox_FechaDeCreacion.Text, out fechaDeCreacion);
             String mail = textBox_Mail.Text;
             String telefono = textBox_Telefono.Text;
             String ciudad = textBox_Ciudad.Text;
@@ -93,12 +94,12 @@ namespace FrbaCommerce.ABM_Empresa
             }
             catch (CampoVacioException)
             {
-                MessageBox.Show("Faltan completar campos en direccion");
+                MessageBox.Show("Falta completar campo: " + exception.Message);
                 return;
             }
             catch (FormatoInvalidoException exception)
             {
-                MessageBox.Show("Datos mal ingresados");
+                MessageBox.Show("Datos mal ingresados en: " + exception.Message);
                 return;
             }
 
@@ -119,12 +120,12 @@ namespace FrbaCommerce.ABM_Empresa
             }
             catch (CampoVacioException exception)
             {
-                MessageBox.Show("Faltan completar campos");
+                MessageBox.Show("Falta completar campo: " + exception.Message);
                 return;
             }
             catch (FormatoInvalidoException exception)
             {
-                MessageBox.Show("Datos mal ingresados");
+                MessageBox.Show("Datos mal ingresados en: " + exception.Message);
                 return;
             }
             catch (TelefonoYaExisteException exception)
