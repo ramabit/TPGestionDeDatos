@@ -1036,7 +1036,7 @@ SET IDENTITY_INSERT LOS_SUPER_AMIGOS.Factura OFF;
 
 INSERT INTO LOS_SUPER_AMIGOS.Item_Factura
 	([monto], [cantidad], [factura_nro], [publicacion_id])
-SELECT DISTINCT Item_Factura_Monto, Item_Factura_Cantidad, Factura_Nro, Publicacion_Cod FROM gd_esquema.Maestra WHERE ISNULL(Factura_Nro,-1) != -1
+SELECT Item_Factura_Monto, Item_Factura_Cantidad, Factura_Nro, Publicacion_Cod FROM gd_esquema.Maestra WHERE ISNULL(Factura_Nro,-1) != -1
 
 -- FIN INSERTAR Items_Factura
 
