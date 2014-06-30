@@ -38,6 +38,12 @@ DROP TABLE LOS_SUPER_AMIGOS.Publicacion
 IF OBJECT_ID('LOS_SUPER_AMIGOS.Rubro', 'U') IS NOT NULL
 DROP TABLE LOS_SUPER_AMIGOS.Rubro
 
+IF OBJECT_ID('LOS_SUPER_AMIGOS.Estado', 'U') IS NOT NULL
+DROP TABLE LOS_SUPER_AMIGOS.Estado
+
+IF OBJECT_ID('LOS_SUPER_AMIGOS.TipoDePublicacion', 'U') IS NOT NULL
+DROP TABLE LOS_SUPER_AMIGOS.TipoDePublicacion
+
 IF OBJECT_ID('LOS_SUPER_AMIGOS.Comisiones_Usuario_x_Visibilidad', 'U') IS NOT NULL
 DROP TABLE LOS_SUPER_AMIGOS.Comisiones_Usuario_x_Visibilidad
 
@@ -617,11 +623,25 @@ CREATE TABLE LOS_SUPER_AMIGOS.Rubro
 	PRIMARY KEY(id)
 )
 
+CREATE TABLE LOS_SUPER_AMIGOS.Estado
+(
+	id numeric(18,0) IDENTITY(1,1),
+	descripcion nvarchar(255),
+	PRIMARY KEY(id)
+)
+
+CREATE TABLE LOS_SUPER_AMIGOS.TipoDePublicacion
+(
+	id numeric(18,0) IDENTITY(1,1),
+	descripcion nvarchar(255),
+	PRIMARY KEY(id)
+)
+
 CREATE TABLE LOS_SUPER_AMIGOS.Publicacion
 (
 	id numeric(18,0) IDENTITY(1,1),
-	tipo nvarchar(255),
-	estado nvarchar(255),
+	tipo_id nvarchar(255),
+	estado_id nvarchar(255),
 	descripcion nvarchar(255),
 	fecha_inicio datetime,
 	fecha_vencimiento datetime,
@@ -636,6 +656,8 @@ CREATE TABLE LOS_SUPER_AMIGOS.Publicacion
 	PRIMARY KEY (id),
 	FOREIGN KEY (visibilidad_id) REFERENCES LOS_SUPER_AMIGOS.Visibilidad (id),
 	FOREIGN KEY (usuario_id) REFERENCES LOS_SUPER_AMIGOS.Usuario (id),
+	FOREIGN KEY (tipo_id) REFERENCES LOS_SUPER_AMIGOS.TipoDePublicacion (id),
+	FOREIGN KEY (estado_id) REFERENCES LOS_SUPER_AMIGOS.Estado (id),
 	FOREIGN KEY (rubro_id) REFERENCES LOS_SUPER_AMIGOS.Rubro(id),
 )
 
