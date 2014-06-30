@@ -54,10 +54,12 @@ namespace FrbaCommerce.Calificar_Vendedor
             // Controla que la celda que se clickeo calificar vendedor
             if (e.ColumnIndex == dataGridViewCompras.Columns["Calificar"].Index && e.RowIndex >= 0)
             {
-                Decimal idCompraParaCalificar = Convert.ToDecimal(dataGridViewCompras.Rows[e.RowIndex].Cells[5].Value);
+                Decimal idCompraParaCalificar = Convert.ToDecimal(dataGridViewCompras.Rows[e.RowIndex].Cells[0].Value);
+                MessageBox.Show("ID: " + idCompraParaCalificar);
                 new Calificar(idCompraParaCalificar).ShowDialog();
                 CargarCompras();
             }
+            return;
         }
 
         private void buttonVolver_Click(object sender, EventArgs e)
