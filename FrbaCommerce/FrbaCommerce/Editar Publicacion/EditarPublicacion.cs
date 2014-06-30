@@ -15,6 +15,7 @@ namespace FrbaCommerce.Editar_Publicacion
     public partial class EditarPublicacion : Form
     {
         private Decimal idPublicacion;
+        private Decimal idEstadoInicial;
         private String estadoInicial;
         private ComunicadorConBaseDeDatos comunicador = new ComunicadorConBaseDeDatos();
 
@@ -35,12 +36,8 @@ namespace FrbaCommerce.Editar_Publicacion
 
         private void CargarTiposDePublicacion()
         {
-            DataTable tiposDePublicacion = new DataTable();
-            tiposDePublicacion.Columns.Add("tipoDePublicacion");
-            tiposDePublicacion.Rows.Add("Compra Inmediata");
-            tiposDePublicacion.Rows.Add("Subasta");
-            comboBox_TiposDePublicacion.DataSource = tiposDePublicacion;
-            comboBox_TiposDePublicacion.ValueMember = "tipoDePublicacion";
+            comboBox_TiposDePublicacion.DataSource = comunicador.SelectDataTable("descripcion", "LOS_SUPER_AMIGOS.TipoDePublicacion");
+            comboBox_TiposDePublicacion.ValueMember = "descripcion";
         }
 
         private void CargarEstados()
@@ -48,8 +45,8 @@ namespace FrbaCommerce.Editar_Publicacion
             DataTable estados = new DataTable();
             estados.Columns.Add("estados");
 
-            estadoInicial = (String) comunicador.SelectFromWhere("estado", "Publicacion", "id", idPublicacion);
-            
+            idEstadoInicial = (Decimal) comunicador.SelectFromWhere("estado_id", "Publicacion", "id", idPublicacion);
+            estadoInicial = (String)comunicador.SelectFromWhere("descripcion", "Estado", "id", idEstadoInicial);
 
             if (estadoInicial == "Borrador") CargarSegunBorrador(estados);
             if (estadoInicial == "Publicada") CargarSegunPublicada(estados);
@@ -128,8 +125,8 @@ namespace FrbaCommerce.Editar_Publicacion
             textBox_Stock.Text = publicacion.GetStock();
             comboBox_Rubro.SelectedValue = (String) comunicador.SelectFromWhere("descripcion", "Rubro", "id", publicacion.GetIdRubro());
             comboBox_Visibilidad.SelectedValue = (String) comunicador.SelectFromWhere("descripcion", "Visibilidad", "id", publicacion.GetIdVisibilidad()); ;
-            comboBox_TiposDePublicacion.SelectedValue = publicacion.GetTipo();
-            comboBox_Estado.SelectedValue = publicacion.GetEstado();
+            comboBox_TiposDePublicacion.SelectedValue = (String)comunicador.SelectFromWhere("descripcion", "TipoDePublicacion", "id", publicacion.GetTipo());
+            comboBox_Estado.SelectedValue = (String) comunicador.SelectFromWhere("descripcion", "Estado", "id", publicacion.GetEstado());
             checkBox_Pregunta.Checked = Convert.ToBoolean(comunicador.SelectFromWhere("se_realizan_preguntas", "Publicacion", "id", idPublicacion));
             checkBox_Habilitado.Checked = Convert.ToBoolean(comunicador.SelectFromWhere("habilitado", "Publicacion", "id", idPublicacion));
         }

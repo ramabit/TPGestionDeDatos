@@ -31,12 +31,8 @@ namespace FrbaCommerce.Generar_Publicacion
 
         private void CargarTiposDePublicacion()
         {
-            DataTable tiposDePublicacion = new DataTable();
-            tiposDePublicacion.Columns.Add("tipoDePublicacion");
-            tiposDePublicacion.Rows.Add("Compra Inmediata");
-            tiposDePublicacion.Rows.Add("Subasta");
-            comboBox_TiposDePublicacion.DataSource = tiposDePublicacion;
-            comboBox_TiposDePublicacion.ValueMember = "tipoDePublicacion";
+            comboBox_TiposDePublicacion.DataSource = comunicador.SelectDataTable("descripcion", "LOS_SUPER_AMIGOS.TipoDePublicacion");
+            comboBox_TiposDePublicacion.ValueMember = "descripcion";
         }
 
         private void CargarEstados()
