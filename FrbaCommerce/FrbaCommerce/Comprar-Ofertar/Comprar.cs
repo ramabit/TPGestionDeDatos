@@ -19,6 +19,7 @@ namespace FrbaCommerce.Comprar_Ofertar
         private Decimal vendedorId;
         private int publicacionId;
         private int stockActual;
+        private ComunicadorConBaseDeDatos comunicador = new ComunicadorConBaseDeDatos();
 
         public Comprar(Decimal usuarioVendedor, int publicacion, int stock)
         {
@@ -154,7 +155,8 @@ namespace FrbaCommerce.Comprar_Ofertar
             SqlDataReader reader = builderDeComandos.Crear(query, parametros).ExecuteReader();
             reader.Read();
 
-            String estado = (String)reader["estado"];
+            Decimal idEstado = (Decimal)reader["estado_id"];
+            String estado = (String) comunicador.SelectFromWhere("descripcion", "Estado", "id", idEstado)
             if (estado == "Finalizada")
             {
                 return false;

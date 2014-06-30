@@ -15,7 +15,7 @@ namespace FrbaCommerce.Comprar_Ofertar
         private SqlCommand command { get; set; }
         private IList<SqlParameter> parametros = new List<SqlParameter>();
         private BuilderDeComandos builderDeComandos = new BuilderDeComandos();
-
+        private ComunicadorConBaseDeDatos comunicador = new ComunicadorConBaseDeDatos();
         public Object SelectedItem { get; set; }        
         private String tipoPublicacion;
         private int publicacionId;
@@ -47,13 +47,16 @@ namespace FrbaCommerce.Comprar_Ofertar
             
             SqlDataReader reader = builderDeComandos.Crear(query, parametros).ExecuteReader();
             reader.Read();
-            if ((String)reader["estado"] == "Pausada")
+            Decimal idEstado = (Decimal)reader["estado_id"];
+            String estado = (String) comunicador.SelectFromWhere("descripcion", "Estado", "id", idEstado);
+            if (estado == "Pausada")
             {
                 botonComprarOfertar.Enabled = false;
                 MessageBox.Show("La publicación se encuentra pausada y no se pueden realizar compras/ofertas");
             }
             labelProductoDatos.Text = (String)reader["descripcion"];
-            tipoPublicacion = (String)reader["tipo"];
+            Decimal idTipoPublicacion = (Decimal)reader["tipo_id"];
+            tipoPublicacion = (String)comunicador.SelectFromWhere("descripcion", "TipoDePublicacion", "id", idTipoPublicacion);
         }
 
         private void pedirVendedor()

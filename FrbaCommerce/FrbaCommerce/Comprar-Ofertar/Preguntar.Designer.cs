@@ -83,6 +83,7 @@
             this.Controls.Add(this.textBoxPregunta);
             this.Name = "Preguntar";
             this.Text = "Preguntar";
+            this.Load += new System.EventHandler(this.Preguntar_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
