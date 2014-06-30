@@ -640,8 +640,8 @@ CREATE TABLE LOS_SUPER_AMIGOS.TipoDePublicacion
 CREATE TABLE LOS_SUPER_AMIGOS.Publicacion
 (
 	id numeric(18,0) IDENTITY(1,1),
-	tipo_id nvarchar(255),
-	estado_id nvarchar(255),
+	tipo_id numeric(18,0),
+	estado_id numeric(18,0),
 	descripcion nvarchar(255),
 	fecha_inicio datetime,
 	fecha_vencimiento datetime,
@@ -970,6 +970,22 @@ SET IDENTITY_INSERT LOS_SUPER_AMIGOS.Visibilidad OFF;
 
 -- FIN INSERTAR Visibilidad
 
+-- INSERTAR Estado
+
+INSERT INTO LOS_SUPER_AMIGOS.Estado
+	([descripcion])
+VALUES
+	('Publicada'), ('Borrador'), ('Pausada'), ('Finalizada')
+	
+-- FIN INSERTAR Estado
+
+-- INSERTAR Tipo de publicacion
+
+INSERT INTO LOS_SUPER_AMIGOS.TipoDePublicacion
+	([descripcion])
+SELECT DISTINCT Publicacion_Tipo FROM gd_esquema.Maestra
+	
+-- FIN INSERTAR Estado
 
 -- INSERTAR Rubro
 
@@ -986,14 +1002,28 @@ SET IDENTITY_INSERT LOS_SUPER_AMIGOS.Publicacion ON;
 
 -- Carga todas las publicaciones
 INSERT INTO LOS_SUPER_AMIGOS.Publicacion
-	([id], [descripcion], [stock], [fecha_inicio], [fecha_vencimiento], [precio], [rubro_id], [visibilidad_id], [usuario_id], [estado], [tipo], [costo_pagado], [se_realizan_preguntas])
-SELECT DISTINCT Publicacion_Cod, Publicacion_Descripcion, Publicacion_Stock, Publicacion_Fecha, Publicacion_Fecha_Venc, Publicacion_Precio, (SELECT id FROM LOS_SUPER_AMIGOS.Rubro r WHERE Publicacion_Rubro_Descripcion = r.descripcion), Publicacion_Visibilidad_Cod, LOS_SUPER_AMIGOS.agregar_id_publ(Publ_Cli_Dni, Publ_Empresa_Razon_Social),Publicacion_Estado,Publicacion_Tipo, 1, 1 FROM gd_esquema.Maestra WHERE ISNULL(Publicacion_Rubro_Descripcion, '') != ''
+	([id], [descripcion], [stock], [fecha_inicio], [fecha_vencimiento], [precio], [rubro_id], [visibilidad_id], [usuario_id], [estado_id], [tipo_id], [costo_pagado], [se_realizan_preguntas])
+SELECT DISTINCT 
+	Publicacion_Cod,
+	Publicacion_Descripcion,
+	Publicacion_Stock,
+	Publicacion_Fecha,
+	Publicacion_Fecha_Venc,
+	Publicacion_Precio,
+	(SELECT id FROM LOS_SUPER_AMIGOS.Rubro r WHERE Publicacion_Rubro_Descripcion = r.descripcion),
+	Publicacion_Visibilidad_Cod,
+	LOS_SUPER_AMIGOS.agregar_id_publ(Publ_Cli_Dni, Publ_Empresa_Razon_Social),
+	(SELECT id FROM LOS_SUPER_AMIGOS.Estado e WHERE e.descripcion = Publicacion_Estado), 
+	(SELECT id FROM LOS_SUPER_AMIGOS.TipoDePublicacion t WHERE t.descripcion = Publicacion_Tipo),
+	1,
+	1
+FROM gd_esquema.Maestra
 
 SET IDENTITY_INSERT LOS_SUPER_AMIGOS.Publicacion OFF;
 
 -- Finaliza todas las publicaciones que tienen fecha de vencimiento anterior al dia de hoy
 UPDATE LOS_SUPER_AMIGOS.Publicacion 
-	SET estado = 'Finalizada'
+	SET estado_id = (SELECT id FROM LOS_SUPER_AMIGOS.Estado WHERE descripcion = 'Finalizada')
 	WHERE fecha_vencimiento <= '17/06/2014'
 	
 -- FIN INSERTAR Publicacion
@@ -1115,7 +1145,7 @@ BEGIN
 				AND i.publicacion_id = v.publicacion_id
 		) = 0)
 	UPDATE LOS_SUPER_AMIGOS.Publicacion 
-		SET estado = 'Finalizada'
+		SET estado_id = (SELECT id FROM LOS_SUPER_AMIGOS.Estado WHERE descripcion = 'Finalizada')
 		FROM INSERTED i, LOS_SUPER_AMIGOS.Publicacion p
 		WHERE p.id = i.publicacion_id	
 END
