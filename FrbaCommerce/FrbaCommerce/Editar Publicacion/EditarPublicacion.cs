@@ -137,7 +137,9 @@ namespace FrbaCommerce.Editar_Publicacion
         private void button_Guardar_Click(object sender, EventArgs e)
         {
             String tipo = comboBox_TiposDePublicacion.Text;
+            Decimal idTipoDePublicacion = (Decimal)comunicador.SelectFromWhere("id", "TipoDePublicacion", "descripcion", tipo);
             String estado = comboBox_Estado.Text;
+            Decimal idEstado = (Decimal)comunicador.SelectFromWhere("id", "Estado", "descripcion", estado);
             String descripcion = textBox_Descripcion.Text;
             String rubro = comboBox_Rubro.Text;
             String visibilidad = comboBox_Visibilidad.Text;
@@ -166,8 +168,8 @@ namespace FrbaCommerce.Editar_Publicacion
             try
             {
                 Publicacion publicacion = new Publicacion();
-                publicacion.SetTipo(tipo);
-                publicacion.SetEstado(estado);
+                publicacion.SetTipo(idTipoDePublicacion);
+                publicacion.SetEstado(idEstado);
                 publicacion.SetDescripcion(descripcion);
                 publicacion.SetFechaDeInicio(fechaDeInicio);
                 publicacion.SetFechaDeVencimiento(fechaDeVencimiento);

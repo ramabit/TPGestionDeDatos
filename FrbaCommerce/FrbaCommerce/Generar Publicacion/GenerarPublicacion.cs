@@ -73,7 +73,9 @@ namespace FrbaCommerce.Generar_Publicacion
             String stock = textBox_Stock.Text;
             String precio = textBox_Precio.Text;
 
-            Decimal idRubro = (Decimal) comunicador.SelectFromWhere("id", "Rubro", "descripcion", rubro);
+            Decimal idRubro = (Decimal)comunicador.SelectFromWhere("id", "Rubro", "descripcion", rubro);
+            Decimal idEstado = (Decimal)comunicador.SelectFromWhere("id", "Estado", "descripcion", estado);
+            Decimal idTipoDePublicacion = (Decimal)comunicador.SelectFromWhere("id", "TipoDePublicacion", "descripcion", tipo);
             Decimal idVisibilidad = Convert.ToDecimal(comunicador.SelectFromWhere("id", "Visibilidad", "descripcion", visibilidadDescripcion));
             Double duracion = Convert.ToDouble(comunicador.SelectFromWhere("duracion", "Visibilidad", "descripcion", visibilidadDescripcion));
             DateTime fechaDeVencimiento = Convert.ToDateTime(Convert.ToString(Convert.ToDateTime(fechaDeInicio).AddDays(duracion)));
@@ -82,8 +84,8 @@ namespace FrbaCommerce.Generar_Publicacion
             try
             {
                 Publicacion publicacion = new Publicacion();
-                publicacion.SetTipo(tipo);
-                publicacion.SetEstado(estado);
+                publicacion.SetTipo(idTipoDePublicacion);
+                publicacion.SetEstado(idEstado);
                 publicacion.SetDescripcion(descripcion);
                 publicacion.SetFechaDeInicio(fechaDeInicio);
                 publicacion.SetFechaDeVencimiento(fechaDeVencimiento);

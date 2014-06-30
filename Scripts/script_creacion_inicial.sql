@@ -315,8 +315,8 @@ END
 GO
 
 CREATE PROCEDURE LOS_SUPER_AMIGOS.crear_publicacion
-	@tipo nvarchar(255),
-	@estado nvarchar(255),
+	@tipo_id nvarchar(255),
+	@estado_id nvarchar(255),
 	@descripcion nvarchar(255),
 	@fecha_inicio datetime,
 	@fecha_vencimiento datetime,
@@ -331,9 +331,9 @@ CREATE PROCEDURE LOS_SUPER_AMIGOS.crear_publicacion
 AS
 BEGIN
 	INSERT INTO LOS_SUPER_AMIGOS.Publicacion
-		(tipo, estado, descripcion, fecha_inicio, fecha_vencimiento, rubro_id, visibilidad_id, precio, stock, usuario_id, se_realizan_preguntas, habilitado)
+		(tipo_id, estado_id, descripcion, fecha_inicio, fecha_vencimiento, rubro_id, visibilidad_id, precio, stock, usuario_id, se_realizan_preguntas, habilitado)
 	VALUES
-		(@tipo, @estado, @descripcion, @fecha_inicio, @fecha_vencimiento, @rubro_id, @visibilidad_id, @precio, @stock, @usuario_id, @se_realizan_preguntas, @habilitado);
+		(@tipo_id, @estado_id, @descripcion, @fecha_inicio, @fecha_vencimiento, @rubro_id, @visibilidad_id, @precio, @stock, @usuario_id, @se_realizan_preguntas, @habilitado);
 	SET @id = SCOPE_IDENTITY();
 END
 GO
