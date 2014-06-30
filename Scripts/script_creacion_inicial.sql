@@ -82,8 +82,11 @@ DROP TABLE LOS_SUPER_AMIGOS.Forma_Pago
 -- ELIMINACION DE PROCESOS, FUNCIONES, VISTAS Y TRIGGERS NECESARIOS
 -- Si existe, lo elimina
 
-IF OBJECT_ID('LOS_SUPER_AMIGOS.Hacer_Facturacion', 'P') IS NOT NULL
-DROP PROCEDURE LOS_SUPER_AMIGOS.Hacer_Facturacion
+IF OBJECT_ID('LOS_SUPER_AMIGOS.facturar_ventas', 'P') IS NOT NULL
+DROP PROCEDURE LOS_SUPER_AMIGOS.facturar_ventas
+
+IF OBJECT_ID('LOS_SUPER_AMIGOS.facturar_costos_publicacion', 'P') IS NOT NULL
+DROP PROCEDURE LOS_SUPER_AMIGOS.facturar_costos_publicacion
 
 IF OBJECT_ID('LOS_SUPER_AMIGOS.crear_cliente', 'P') IS NOT NULL
 DROP PROCEDURE LOS_SUPER_AMIGOS.crear_cliente
@@ -148,11 +151,9 @@ GO
 
 -- CREACION DE PROCEDIMIENTOS
 
-CREATE PROCEDURE LOS_SUPER_AMIGOS.Hacer_Facturacion
+CREATE PROCEDURE LOS_SUPER_AMIGOS.facturar_ventas
 	@id numeric(18,0),
-	@idF numeric(18,0),
-	@contador_bonificaciones int OUTPUT,
-	@monto_descontado numeric(18,2) OUTPUT
+	@idF numeric(18,0)
 AS
 BEGIN
 DECLARE @vid numeric(18,0)
@@ -165,10 +166,43 @@ DECLARE comision_cursor CURSOR FOR
 	FROM LOS_SUPER_AMIGOS.Compra_Comision cc, LOS_SUPER_AMIGOS.Compra c,
 	LOS_SUPER_AMIGOS.Publicacion p, LOS_SUPER_AMIGOS.Visibilidad v
 	WHERE cc.compra_id = c.id AND c.publicacion_id = p.id AND p.visibilidad_id = v.id)
+OPEN comision_cursor
+FETCH NEXT FROM comision_cursor INTO @compra_publicacion, @compra_cantidad, @precio, @porcentaje, @vid
+
+WHILE @@FETCH_STATUS = 0
+BEGIN
+
+	INSERT LOS_SUPER_AMIGOS.Item_Factura
+		(factura_nro, publicacion_id, cantidad, monto)
+	VALUES
+		(@idF, @compra_publicacion, @compra_cantidad, @compra_cantidad * @precio * @porcentaje)
+	
+	FETCH NEXT FROM comision_cursor INTO @compra_publicacion, @compra_cantidad, @precio, @porcentaje, @vid
+END
+CLOSE comision_cursor
+DEALLOCATE comision_cursor
+END
+GO
+
+CREATE PROCEDURE LOS_SUPER_AMIGOS.facturar_costos_publicacion
+	@id numeric(18,0),
+	@idF numeric(18,0),
+	@contador_bonificaciones int OUTPUT,
+	@monto_descontado numeric(18,2) OUTPUT
+AS
+BEGIN
+DECLARE @vid numeric(18,0)
+DECLARE @publicacion numeric(18,0) 
+DECLARE @precio numeric(18,0) 
+DECLARE comision_cursor CURSOR FOR
+(SELECT p.id, v.precio, v.id
+	from LOS_SUPER_AMIGOS.Publicacion p, LOS_SUPER_AMIGOS.Visibilidad v, LOS_SUPER_AMIGOS.Usuario u
+	where p.costo_pagado = 0 and p.visibilidad_id = v.id and p.usuario_id = u.id and u.id = @id
+	and p.estado_id = (select id from LOS_SUPER_AMIGOS.Estado where descripcion = 'Finalizada'))
 SET @monto_descontado = 0
 SET @contador_bonificaciones = 0
 OPEN comision_cursor
-FETCH NEXT FROM comision_cursor INTO @compra_publicacion, @compra_cantidad, @precio, @porcentaje, @vid
+FETCH NEXT FROM comision_cursor INTO @publicacion, @precio, @vid
 
 WHILE @@FETCH_STATUS = 0
 BEGIN
@@ -181,13 +215,13 @@ BEGIN
 		INSERT LOS_SUPER_AMIGOS.Item_Factura
 			(factura_nro, publicacion_id, cantidad, monto)
 		VALUES
-			(@idF, @compra_publicacion, @compra_cantidad, 0)
+			(@idF, @publicacion, 1, 0)
 		
 		UPDATE LOS_SUPER_AMIGOS.Comisiones_Usuario_x_Visibilidad	
 			SET contador_comisiones = 0
 			WHERE  visibilidad_id = @vid AND usuario_id = @id
 		
-		SET @monto_descontado = @monto_descontado + (@compra_cantidad * @precio * @porcentaje)
+		SET @monto_descontado = @monto_descontado + @precio
 
 		SET @contador_bonificaciones = @contador_bonificaciones + 1		
 	END
@@ -196,14 +230,14 @@ BEGIN
 		INSERT LOS_SUPER_AMIGOS.Item_Factura
 			(factura_nro, publicacion_id, cantidad, monto)
 		VALUES
-			(@idF, @compra_publicacion, @compra_cantidad, @compra_cantidad * @precio * @porcentaje)
+			(@idF, @publicacion, 1, @precio)
 		
 		UPDATE LOS_SUPER_AMIGOS.Comisiones_Usuario_x_Visibilidad
 			SET contador_comisiones = contador_comisiones + 1
 			WHERE visibilidad_id = @vid AND usuario_id = @id
 	END
 	
-	FETCH NEXT FROM comision_cursor INTO @compra_publicacion, @compra_cantidad, @precio, @porcentaje, @vid
+	FETCH NEXT FROM comision_cursor INTO @publicacion, @precio, @vid
 END
 CLOSE comision_cursor
 DEALLOCATE comision_cursor

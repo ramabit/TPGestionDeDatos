@@ -62,7 +62,7 @@ namespace FrbaCommerce.Facturar_Publicaciones
                         + " + (select isnull( (select sum(v.precio)"
                         + " from LOS_SUPER_AMIGOS.Publicacion p, LOS_SUPER_AMIGOS.Visibilidad v, LOS_SUPER_AMIGOS.Usuario u"
                         + " where p.costo_pagado = 0 and p.visibilidad_id = v.id and p.usuario_id = u.id and u.id = @id"
-                        + " and p.estado = 'Finalizada'),0))";
+                        + " and p.estado_id = (select e.id from LOS_SUPER_AMIGOS.Estado e where e.descripcion = 'Finalizada')),0))";
             Double montoCalculado = Convert.ToDouble(builderDeComandos.Crear(monto, parametros).ExecuteScalar());
             labelMontoCalculado.Text = montoCalculado.ToString();
 
@@ -81,7 +81,7 @@ namespace FrbaCommerce.Facturar_Publicaciones
             String cantidadCostos = "select COUNT(p.id) from LOS_SUPER_AMIGOS.Publicacion p,"
             + " LOS_SUPER_AMIGOS.Visibilidad v, LOS_SUPER_AMIGOS.Usuario u"
             + " where p.usuario_id = u.id and u.id = @id and p.visibilidad_id = v.id"
-            + " and p.costo_pagado = 0 and p.estado = 'Finalizada'";
+            + " and p.costo_pagado = 0 and p.estado_id = (select id from LOS_SUPER_AMIGOS.Estado where descripcion = 'Finalizada')";
 
             int cantidad  = (int)builderDeComandos.Crear(cantidadCostos, parametros).ExecuteScalar();
 
@@ -96,7 +96,7 @@ namespace FrbaCommerce.Facturar_Publicaciones
             String cantidadMinimaComisiones = "select COUNT(c.id) from LOS_SUPER_AMIGOS.Usuario u,"
              + " LOS_SUPER_AMIGOS.Compra c, LOS_SUPER_AMIGOS.Publicacion p"
              + " where u.id = @id and p.usuario_id = u.id and c.publicacion_id = p.id"
-             + " and c.facturada = 0 and p.estado = 'Finalizada'";
+             + " and c.facturada = 0 and p.estado_id = (select id from LOS_SUPER_AMIGOS.Estado where descripcion = 'Finalizada')";
 
             cantidadMin = (int)builderDeComandos.Crear(cantidadMinimaComisiones, parametros).ExecuteScalar();
 
@@ -125,8 +125,9 @@ namespace FrbaCommerce.Facturar_Publicaciones
           
             // Creo la nueva factura
             String creoFactura = "insert LOS_SUPER_AMIGOS.Factura"
-                                + "(fecha) values('" + Convert.ToDateTime(System.Configuration.ConfigurationManager.AppSettings["DateKey"]) + "')";
+                                + "(fecha) values(@fecha)";
             parametros.Clear();
+            parametros.Add(new SqlParameter("@fecha", Convert.ToDateTime(System.Configuration.ConfigurationManager.AppSettings["DateKey"])));
             builderDeComandos.Crear(creoFactura, parametros).ExecuteNonQuery();
 
             // Obtengo el id de la nueva factura
@@ -134,25 +135,31 @@ namespace FrbaCommerce.Facturar_Publicaciones
             parametros.Clear();
             Decimal idFact = (Decimal)builderDeComandos.Crear(idFactura,parametros).ExecuteScalar();
 
-            // Inserto los items factura de costos de publicaciones finalizadas
-            String costo_publicacion = "insert LOS_SUPER_AMIGOS.Item_Factura"
-                        + " (cantidad, factura_nro, monto, publicacion_id)"
-                        + " select 1, @idF, v.precio, p.id"
-                        + " from LOS_SUPER_AMIGOS.Publicacion p, LOS_SUPER_AMIGOS.Visibilidad v, LOS_SUPER_AMIGOS.Usuario u"
-                        + " where p.costo_pagado = 0 and p.visibilidad_id = v.id and p.usuario_id = u.id and u.id = @id"
-                        + " and p.estado = 'Finalizada'";
+            // Inserto los items factura de costos por publicacion 
+            String consulta = "LOS_SUPER_AMIGOS.facturar_costos_publicacion";
             parametros.Clear();
             parametros.Add(new SqlParameter("@id", UsuarioSesion.Usuario.id));
             parametros.Add(new SqlParameter("@idF", idFact));
-            builderDeComandos.Crear(costo_publicacion, parametros).ExecuteNonQuery();
+            SqlParameter parametroContador = new SqlParameter("@contador_bonificaciones", SqlDbType.Int);
+            parametroContador.Direction = ParameterDirection.Output;
+            parametros.Add(parametroContador);
+            SqlParameter parametroMonto = new SqlParameter("@monto_descontado", SqlDbType.Decimal);
+            parametroMonto.Direction = ParameterDirection.Output;
+            parametros.Add(parametroMonto);
+            command = builderDeComandos.Crear(consulta, parametros);
+            command.CommandType = CommandType.StoredProcedure;
+            command.ExecuteNonQuery();
 
-            // Actualizo campo costo pagado
+            int cantidadDeBonificaciones = (int)parametroContador.Value;
+            Decimal montoDescontadoBonificaciones = 0;
+            montoDescontadoBonificaciones = (Decimal)parametroMonto.Value;
+
             String costoPagado = "declare @pid numeric(18,0)"
                             + " declare publ_cursor cursor for"
                             + " (select p.id from LOS_SUPER_AMIGOS.Publicacion p,"
                             + " LOS_SUPER_AMIGOS.Visibilidad v, LOS_SUPER_AMIGOS.Usuario u"
                             + " where p.costo_pagado = 0 and p.visibilidad_id = v.id and p.usuario_id = u.id"
-                            + " and u.id = @id and p.estado = 'Finalizada')"
+                            + " and u.id = @id and p.estado_id = (select id from LOS_SUPER_AMIGOS.Estado where descripcion = 'Finalizada'))"
                             + " open publ_cursor"
                             + " fetch next from publ_cursor into @pid"
                             + " while @@FETCH_STATUS = 0"
@@ -189,26 +196,16 @@ namespace FrbaCommerce.Facturar_Publicaciones
                                     + " order by c.fecha";
             builderDeComandos.Crear(totalidadVentasFacturar, parametros).ExecuteNonQuery();
 
-            // Inserto los items factura 
-            String consulta = "LOS_SUPER_AMIGOS.Hacer_Facturacion";
+            // Inserto los items factura de ventas
+            String consulta2 = "LOS_SUPER_AMIGOS.facturar_ventas";
             parametros.Clear();
             parametros.Add(new SqlParameter("@id", UsuarioSesion.Usuario.id));
             parametros.Add(new SqlParameter("@idF", idFact));
-            SqlParameter parametroContador = new SqlParameter("@contador_bonificaciones", SqlDbType.Int);
-            parametroContador.Direction = ParameterDirection.Output;
-            parametros.Add(parametroContador);
-            SqlParameter parametroMonto = new SqlParameter("@monto_descontado", SqlDbType.Decimal);
-            parametroMonto.Direction = ParameterDirection.Output;
-            parametros.Add(parametroMonto);
-            command = builderDeComandos.Crear(consulta, parametros);
+            command = builderDeComandos.Crear(consulta2, parametros);
             command.CommandType = CommandType.StoredProcedure;
             command.ExecuteNonQuery();
 
-            int cantidadDeBonificaciones = (int)parametroContador.Value;
-            Decimal montoDescontadoBonificaciones = 0;
-            montoDescontadoBonificaciones = (Decimal)parametroMonto.Value;
-
-            // Actualizo el campo facturada en las compras que facturo
+            // Actualizo el campo facturada en las ventas que facturo
             String ventaFacturada = "declare @cid numeric(18,0)"
                                 + " declare compra_cursor cursor for"
                                 + " (select c.id from LOS_SUPER_AMIGOS.Compra_Comision cc,"
