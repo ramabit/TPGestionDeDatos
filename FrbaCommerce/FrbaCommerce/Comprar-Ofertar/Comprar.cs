@@ -156,7 +156,7 @@ namespace FrbaCommerce.Comprar_Ofertar
             reader.Read();
 
             Decimal idEstado = (Decimal)reader["estado_id"];
-            String estado = (String) comunicador.SelectFromWhere("descripcion", "Estado", "id", idEstado)
+            String estado = (String)comunicador.SelectFromWhere("descripcion", "Estado", "id", idEstado);
             if (estado == "Finalizada")
             {
                 return false;
