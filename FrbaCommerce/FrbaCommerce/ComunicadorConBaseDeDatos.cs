@@ -272,7 +272,7 @@ namespace FrbaCommerce
 
         public DataTable SelectPublicacionesParaFiltroConFiltro(String filtro)
         {
-            return this.SelectDataTableConUsuario("p.id, u.username Username, p.tipo 'Tipo de publicacion', p.estado Estado, p.descripcion Descripcion, p.fecha_inicio 'Fecha de inicio', p.fecha_vencimiento 'Fecha de vencimiento', r.descripcion Rubro, v.descripcion Visibilidad, p.se_realizan_preguntas 'Permite preguntas', p.stock Stock, p.precio Precio"
+            return this.SelectDataTableConUsuario("p.id, u.username Username, (SELECT descripcion FROM LOS_SUPER_AMIGOS.TipoDePublicacion WHERE id = p.tipo_id) 'Tipo de publicacion', (SELECT descripcion FROM LOS_SUPER_AMIGOS.Estado WHERE id = p.estado_id) Estado, p.descripcion Descripcion, p.fecha_inicio 'Fecha de inicio', p.fecha_vencimiento 'Fecha de vencimiento', r.descripcion Rubro, v.descripcion Visibilidad, p.se_realizan_preguntas 'Permite preguntas', p.stock Stock, p.precio Precio"
                 , "LOS_SUPER_AMIGOS.Publicacion p, LOS_SUPER_AMIGOS.Rubro r, LOS_SUPER_AMIGOS.Visibilidad v, LOS_SUPER_AMIGOS.Usuario u"
                 , "p.rubro_id = r.id AND p.visibilidad_id = v.id AND p.usuario_id = u.id AND p.usuario_id = @idUsuario" + filtro);
         }

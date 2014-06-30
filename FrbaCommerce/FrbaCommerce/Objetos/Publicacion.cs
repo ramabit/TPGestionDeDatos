@@ -10,8 +10,8 @@ namespace FrbaCommerce.Objetos
     class Publicacion : Objeto, Comunicable
     {
         private Decimal id;
-        private String tipo;
-        private String estado;
+        private Decimal idTipoDePublicacion;
+        private Decimal idEstado;
         private String descripcion;
         private DateTime fechaDeInicio;
         private DateTime fechaDeVencimiento;
@@ -33,28 +33,24 @@ namespace FrbaCommerce.Objetos
             return this.id;
         }
 
-        public void SetTipo(String tipo)
+        public void SetTipo(Decimal idTipoDePublicacion)
         {
-            if (tipo == "")
-                throw new CampoVacioException("Tipo");
-            this.tipo = tipo;
+            this.idTipoDePublicacion = idTipoDePublicacion;
         }
 
-        public String GetTipo()
+        public Decimal GetTipo()
         {
-            return this.tipo;
+            return this.idTipoDePublicacion;
         }
 
-        public void SetEstado(String estado)
+        public void SetEstado(Decimal idEstado)
         {
-            if (estado == "")
-                throw new CampoVacioException("Estado");
-            this.estado = estado;
+            this.idEstado = idEstado;
         }
 
-        public String GetEstado()
+        public Decimal GetEstado()
         {
-            return this.estado;
+            return this.idEstado;
         }
 
         public void SetDescripcion(String descripcion)
@@ -187,7 +183,7 @@ namespace FrbaCommerce.Objetos
 
         string Comunicable.GetQueryModificar()
         {
-            return "UPDATE LOS_SUPER_AMIGOS.Publicacion SET tipo = @tipo, estado = @estado, descripcion = @descripcion, fecha_inicio = @fecha_inicio, fecha_vencimiento = @fecha_vencimiento, rubro_id = @rubro_id, visibilidad_id = @visibilidad_id, stock = @stock, precio = @precio, se_realizan_preguntas = @se_realizan_preguntas, habilitado = @habilitado WHERE id = @id";
+            return "UPDATE LOS_SUPER_AMIGOS.Publicacion SET tipo_id = @tipo_id, estado_id = @estado_id, descripcion = @descripcion, fecha_inicio = @fecha_inicio, fecha_vencimiento = @fecha_vencimiento, rubro_id = @rubro_id, visibilidad_id = @visibilidad_id, stock = @stock, precio = @precio, se_realizan_preguntas = @se_realizan_preguntas, habilitado = @habilitado WHERE id = @id";
         }
 
         string Comunicable.GetQueryObtener()
@@ -198,8 +194,8 @@ namespace FrbaCommerce.Objetos
         IList<System.Data.SqlClient.SqlParameter> Comunicable.GetParametros()
         {
             IList<SqlParameter> parametros = new List<SqlParameter>();
-            parametros.Add(new SqlParameter("@tipo", this.tipo));
-            parametros.Add(new SqlParameter("@estado", this.estado));
+            parametros.Add(new SqlParameter("@tipo_id", this.idTipoDePublicacion));
+            parametros.Add(new SqlParameter("@estado_id", this.idEstado));
             parametros.Add(new SqlParameter("@descripcion", this.descripcion));
             parametros.Add(new SqlParameter("@fecha_inicio", this.fechaDeInicio));
             parametros.Add(new SqlParameter("@fecha_vencimiento", this.fechaDeVencimiento));
@@ -215,8 +211,8 @@ namespace FrbaCommerce.Objetos
 
         void Comunicable.CargarInformacion(SqlDataReader reader)
         {
-            this.tipo = Convert.ToString(reader["tipo"]);
-            this.estado = Convert.ToString(reader["estado"]);
+            this.idTipoDePublicacion = Convert.ToDecimal(reader["tipo_id"]);
+            this.idEstado = Convert.ToDecimal(reader["estado_id"]);
             this.descripcion = Convert.ToString(reader["descripcion"]);
             this.fechaDeInicio = Convert.ToDateTime(reader["fecha_inicio"]);
             this.fechaDeVencimiento = Convert.ToDateTime(reader["fecha_vencimiento"]);

@@ -32,7 +32,7 @@ namespace FrbaCommerce.Calificar_Vendedor
 
         private void CargarCompras()
         {
-            dataGridViewCompras.DataSource = comunicar.SelectDataTableConUsuario("c.id id, u.username Vendedor, p.descripcion Publicacion, c.cantidad Cantidad,p.tipo Tipo, convert(varchar, c.fecha, 102) Fecha", "LOS_SUPER_AMIGOS.Compra c, LOS_SUPER_AMIGOS.Publicacion p, LOS_SUPER_AMIGOS.Usuario u", "isnull(c.calificacion_id,0) = 0 AND c.publicacion_id = p.id and p.usuario_id = u.id AND c.usuario_id = @idUsuario");
+            dataGridViewCompras.DataSource = comunicar.SelectDataTableConUsuario("c.id id, u.username Vendedor, p.descripcion Publicacion, c.cantidad Cantidad, tipo.descripcion Tipo, convert(varchar, c.fecha, 102) Fecha", "LOS_SUPER_AMIGOS.Compra c, LOS_SUPER_AMIGOS.Publicacion p, LOS_SUPER_AMIGOS.Usuario u, LOS_SUPER_AMIGOS.TipoDePublicacion tipo", "tipo.id = p.tipo_id AND isnull(c.calificacion_id,0) = 0 AND c.publicacion_id = p.id and p.usuario_id = u.id AND c.usuario_id = @idUsuario");
             CargarColumnaCalificacion();
         }
 
@@ -54,10 +54,12 @@ namespace FrbaCommerce.Calificar_Vendedor
             // Controla que la celda que se clickeo calificar vendedor
             if (e.ColumnIndex == dataGridViewCompras.Columns["Calificar"].Index && e.RowIndex >= 0)
             {
-                Decimal idCompraParaCalificar = Convert.ToDecimal(dataGridViewCompras.Rows[e.RowIndex].Cells[5].Value);
+                Decimal idCompraParaCalificar = Convert.ToDecimal(dataGridViewCompras.Rows[e.RowIndex].Cells[0].Value);
+                MessageBox.Show("ID: " + idCompraParaCalificar);
                 new Calificar(idCompraParaCalificar).ShowDialog();
                 CargarCompras();
             }
+            return;
         }
 
         private void buttonVolver_Click(object sender, EventArgs e)
