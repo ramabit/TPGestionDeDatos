@@ -253,15 +253,14 @@ CREATE PROCEDURE LOS_SUPER_AMIGOS.crear_cliente
 	@mail nvarchar(255),
 	@telefono numeric(18,0),
 	@direccion_id numeric(18,0),
-	@usuario_id numeric(18,0),
 	@habilitado bit,
 	@id numeric(18,0) OUTPUT
 AS
 BEGIN
 	INSERT INTO LOS_SUPER_AMIGOS.Cliente 
-		(nombre, apellido, fecha_nacimiento, tipo_de_documento_id, documento, mail, telefono, direccion_id, usuario_id, habilitado) 
+		(nombre, apellido, fecha_nacimiento, tipo_de_documento_id, documento, mail, telefono, direccion_id, habilitado) 
 	VALUES 
-		(@nombre, @apellido, @fecha_nacimiento, @tipo_de_documento_id, @documento, @mail, @telefono, @direccion_id, @usuario_id, @habilitado);
+		(@nombre, @apellido, @fecha_nacimiento, @tipo_de_documento_id, @documento, @mail, @telefono, @direccion_id, @habilitado);
 	SET @id = SCOPE_IDENTITY();	
 END
 GO

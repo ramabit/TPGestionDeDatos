@@ -19,6 +19,7 @@ namespace FrbaCommerce.ABM_Cliente
         private ComunicadorConBaseDeDatos comunicador = new ComunicadorConBaseDeDatos();
         private Decimal idDireccion;
         private Decimal idUsuario;
+        private Decimal idCliente;
 
 
         public AgregarCliente(String username, String contrasena)
@@ -86,14 +87,7 @@ namespace FrbaCommerce.ABM_Cliente
             if (this.idDireccion == 0)
             {
                 this.idDireccion = comunicador.CrearDireccion(direccion);
-            }        
-
-            // Si el cliente lo crea el admin, crea un nuevo usuario predeterminado. Si lo crea un nuevo registro de usuario, usa el que viene por parametro
-            if (idUsuario == 0)
-            {
-                idUsuario = CrearUsuario();
-                MessageBox.Show("Se creo el usuario correctamente");
-            }
+            } 
 
             // Crear cliente
             try
@@ -109,7 +103,7 @@ namespace FrbaCommerce.ABM_Cliente
                 cliente.SetIdDireccion(idDireccion);
                 cliente.SetIdUsuario(idUsuario);
                 cliente.SetHabilitado(true);
-                Decimal idCliente = comunicador.CrearCliente(cliente);
+                idCliente = comunicador.CrearCliente(cliente);
                 if (idCliente > 0) MessageBox.Show("Se agrego el cliente correctamente");
             }
             catch (CampoVacioException exception)
@@ -136,6 +130,14 @@ namespace FrbaCommerce.ABM_Cliente
             {
                 MessageBox.Show("Fecha no valida");
                 return;
+            }
+
+            // Si el cliente lo crea el admin, crea un nuevo usuario predeterminado. Si lo crea un nuevo registro de usuario, usa el que viene por parametro
+            if (idUsuario == 0)
+            {
+                idUsuario = CrearUsuario();
+                Boolean seCreoBien = comunicador.AsignarUsuarioACliente(idCliente, idUsuario);
+                MessageBox.Show("Se creo el usuario correctamente");
             }
 
             if (UsuarioSesion.Usuario.rol != "Administrador")
