@@ -113,7 +113,7 @@ namespace FrbaCommerce.Registro_de_Usuario
             }
             else if (rolElegido == "Empresa")
             {
-                new ABM_Empresa.AgregarEmpresa("username", "password").ShowDialog();
+                new ABM_Empresa.AgregarEmpresa(usuario, contraseña).ShowDialog();
                 
             }
             this.Close();
