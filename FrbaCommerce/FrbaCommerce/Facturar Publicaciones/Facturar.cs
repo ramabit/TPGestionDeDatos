@@ -122,7 +122,8 @@ namespace FrbaCommerce.Facturar_Publicaciones
 
         private void botonFacturar_Click(object sender, EventArgs e)
         {
-          
+            if (labelCantidadCostos.Text != "0" || dropDownFacturar.Text != "0")
+            {
             // Creo la nueva factura
             String creoFactura = "insert LOS_SUPER_AMIGOS.Factura"
                                 + "(fecha) values(@fecha)";
@@ -254,8 +255,7 @@ namespace FrbaCommerce.Facturar_Publicaciones
             parametros.Clear();
             builderDeComandos.Crear(borroTablaTemporal, parametros).ExecuteNonQuery();
 
-            if (labelCantidadCostos.Text != "0" || dropDownFacturar.Text != "0")
-            {
+            
                 MessageBox.Show("Factura realizada. Por bonificaciones se desconto: $" + montoDescontadoBonificaciones);
                 dropDownFacturar.Items.Clear();
             }
