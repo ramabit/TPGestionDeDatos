@@ -15,6 +15,7 @@ namespace FrbaCommerce.Registro_de_Usuario
         private SqlCommand command { get; set; }
         private IList<SqlParameter> parametros = new List<SqlParameter>();
         private BuilderDeComandos builderDeComandos = new BuilderDeComandos();
+        private ComunicadorConBaseDeDatos comunicador = new ComunicadorConBaseDeDatos();
 
         public Object SelectedItem { get; set; }
 
@@ -114,7 +115,17 @@ namespace FrbaCommerce.Registro_de_Usuario
             else if (rolElegido == "Empresa")
             {
                 new ABM_Empresa.AgregarEmpresa(usuario, contraseña).ShowDialog();
-                
+
+            }
+            else
+            {
+                Decimal idUsuario = comunicador.CrearUsuarioConValores(usuario, contraseña);
+                comunicador.AsignarRolAUsuario(idUsuario, rolElegido);
+                UsuarioSesion.Usuario.rol = rolElegido;
+                UsuarioSesion.Usuario.nombre = usuario;
+                UsuarioSesion.Usuario.id = idUsuario;
+                this.Hide();
+                new MenuPrincipal().ShowDialog();
             }
             this.Close();
             
