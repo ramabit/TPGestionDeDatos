@@ -88,9 +88,7 @@ namespace FrbaCommerce.ABM_Empresa
                 direccion.SetDepartamento(departamento);
                 direccion.SetCodigoPostal(codigoPostal);
                 direccion.SetLocalidad(localidad);
-                pudoModificar = comunicador.Modificar(idDireccion, direccion);
-
-                if (pudoModificar) MessageBox.Show("La direccion se modifico correctamente");
+                comunicador.Modificar(idDireccion, direccion);
             }
             catch (CampoVacioException exception)
             {
