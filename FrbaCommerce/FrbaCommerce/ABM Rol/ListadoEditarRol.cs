@@ -52,13 +52,20 @@ namespace FrbaCommerce.ABM_Rol
 
         private void botonBuscar_Click(object sender, EventArgs e)
         {
-            if (this.comboBoxEstadoRoles.Text == "Habilitado")
+            if (this.comboBoxEstadoRoles.Text == "")
             {
-                CargarRoles(1);
+                MessageBox.Show("No seleccíono un estado de rol para buscar");
             }
             else
             {
-                CargarRoles(0);
+                if (this.comboBoxEstadoRoles.Text == "Habilitado")
+                {
+                    CargarRoles(1);
+                }
+                else
+                { 
+                    CargarRoles(0);
+                }
             }
             
         }

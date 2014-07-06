@@ -36,46 +36,47 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewResultadosBusqueda)).BeginInit();
             this.SuspendLayout();
             // 
-            // dataGridView1
+            // dataGridViewResultadosBusqueda
             // 
             this.dataGridViewResultadosBusqueda.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewResultadosBusqueda.Location = new System.Drawing.Point(9, 108);
-            this.dataGridViewResultadosBusqueda.Name = "dataGridView1";
+            this.dataGridViewResultadosBusqueda.Name = "dataGridViewResultadosBusqueda";
+            this.dataGridViewResultadosBusqueda.ReadOnly = true;
             this.dataGridViewResultadosBusqueda.Size = new System.Drawing.Size(394, 235);
             this.dataGridViewResultadosBusqueda.TabIndex = 0;
             // 
-            // comboBox1
+            // comboBoxEstadoRoles
             // 
             this.comboBoxEstadoRoles.FormattingEnabled = true;
             this.comboBoxEstadoRoles.Location = new System.Drawing.Point(143, 21);
-            this.comboBoxEstadoRoles.Name = "comboBox1";
+            this.comboBoxEstadoRoles.Name = "comboBoxEstadoRoles";
             this.comboBoxEstadoRoles.Size = new System.Drawing.Size(142, 21);
             this.comboBoxEstadoRoles.TabIndex = 1;
             this.comboBoxEstadoRoles.SelectedIndexChanged += new System.EventHandler(this.comboBoxEstadoRoles_SelectedIndexChanged);
             // 
-            // label1
+            // labelEstadoRoles
             // 
             this.labelEstadoRoles.AutoSize = true;
             this.labelEstadoRoles.Location = new System.Drawing.Point(22, 21);
-            this.labelEstadoRoles.Name = "label1";
+            this.labelEstadoRoles.Name = "labelEstadoRoles";
             this.labelEstadoRoles.Size = new System.Drawing.Size(101, 13);
             this.labelEstadoRoles.TabIndex = 2;
             this.labelEstadoRoles.Text = "Estado de los Roles";
             // 
-            // button1
+            // botonCancelar
             // 
             this.botonCancelar.Location = new System.Drawing.Point(23, 76);
-            this.botonCancelar.Name = "button1";
+            this.botonCancelar.Name = "botonCancelar";
             this.botonCancelar.Size = new System.Drawing.Size(73, 23);
             this.botonCancelar.TabIndex = 3;
             this.botonCancelar.Text = "Cancelar";
             this.botonCancelar.UseVisualStyleBackColor = true;
             this.botonCancelar.Click += new System.EventHandler(this.botonCancelar_Click);
             // 
-            // button2
+            // botonBuscar
             // 
             this.botonBuscar.Location = new System.Drawing.Point(191, 77);
-            this.botonBuscar.Name = "button2";
+            this.botonBuscar.Name = "botonBuscar";
             this.botonBuscar.Size = new System.Drawing.Size(94, 21);
             this.botonBuscar.TabIndex = 4;
             this.botonBuscar.Text = "Buscar";
