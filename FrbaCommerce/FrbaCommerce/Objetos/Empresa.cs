@@ -60,9 +60,8 @@ namespace FrbaCommerce.Objetos
             if (cuit == "")
                 throw new CampoVacioException("CUIT");
 
-            if (!esNumero(cuit))
-                throw new FormatoInvalidoException("CUIT");
-
+            if (!esCuit(cuit))
+                throw new FormatoInvalidoException("CUIT. Usar el siguiente formato: XX-XXXXXXXX-XX donde X es numero");
             this.cuit = cuit;
         }
 

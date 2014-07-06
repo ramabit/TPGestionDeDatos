@@ -71,7 +71,7 @@ namespace FrbaCommerce.Objetos
                 throw new CampoVacioException("Numero de documento");
 
             if (!esNumero(numeroDeDocumento))
-                throw new FormatoInvalidoException("Numero de documento");
+                throw new FormatoInvalidoException("Numero de documento. Ingrese todos los numeros seguidos.");
 
             this.numeroDeDocumento = numeroDeDocumento;
         }

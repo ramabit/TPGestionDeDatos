@@ -39,5 +39,17 @@ namespace FrbaCommerce.Objetos
                 return campo;
             }
         }
+
+        public Boolean esCuit(String cuit)
+        {
+            if (cuit.Length < 14) return false;
+            String primerosDosNumeros = cuit.Substring(0, 2);
+            String primerGuion = cuit.Substring(2, 1);
+            String ochoNumeros = cuit.Substring(3, 8);
+            String segundoGuion = cuit.Substring(11, 1);
+            String segundosDosNumeros = cuit.Substring(12, 2);
+
+            return this.esNumero(primerosDosNumeros) && primerGuion == "-" && this.esNumero(ochoNumeros) && segundoGuion == "-" && this.esNumero(segundosDosNumeros);
+        }
     }
 }
