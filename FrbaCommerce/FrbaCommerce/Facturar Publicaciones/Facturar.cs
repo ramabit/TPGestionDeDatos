@@ -181,7 +181,12 @@ namespace FrbaCommerce.Facturar_Publicaciones
             parametros.Clear();
             parametros.Add(new SqlParameter("@id", UsuarioSesion.Usuario.id));
             parametros.Add(new SqlParameter("@cant", valor));
-            
+
+            // Borro tabla temporal con ventas que se facturan pagando comision
+            String borroTabla = "drop table LOS_SUPER_AMIGOS.Compra_Comision";
+            parametros.Clear();
+            builderDeComandos.Crear(borroTabla, parametros).ExecuteNonQuery();
+
             // Creo una tabla con todas las ventas por facturar
             String totalidadVentasFacturar = "create table LOS_SUPER_AMIGOS.Compra_Comision"
                                     + " (compra_id numeric(18,0),"
