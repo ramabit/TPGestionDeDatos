@@ -186,7 +186,7 @@ namespace FrbaCommerce.Comprar_Ofertar
             parametros.Add(new SqlParameter("@user", UsuarioSesion.Usuario.id));
             String query = "select COUNT(*) from LOS_SUPER_AMIGOS.Compra c "
                 + "where isnull(c.calificacion_id,0)=0 and c.usuario_id = @user";
-            Decimal cantidad = (Decimal)builderDeComandos.Crear(query, parametros).ExecuteScalar();
+            Decimal cantidad = Convert.ToDecimal(builderDeComandos.Crear(query, parametros).ExecuteScalar());
 
             if (cantidad >= 5)
             {
