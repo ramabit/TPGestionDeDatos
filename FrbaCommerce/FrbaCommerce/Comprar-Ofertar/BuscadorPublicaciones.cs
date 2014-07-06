@@ -65,7 +65,16 @@ namespace FrbaCommerce.Comprar_Ofertar
                 filtro += " and publicacion.rubro_id = @idRubro";                
             }
 
-            String query = "SELECT publicacion.id, publicacion.descripcion, publicacion.precio, tipo.descripcion FROM LOS_SUPER_AMIGOS.Publicacion publicacion, LOS_SUPER_AMIGOS.Visibilidad visibilidad, LOS_SUPER_AMIGOS.TipoDePublicacion tipo WHERE publicacion.tipo_id = tipo.id AND publicacion.visibilidad_id = visibilidad.id AND (publicacion.estado_id = (SELECT id FROM LOS_SUPER_AMIGOS.Estado WHERE descripcion = 'Publicada') or publicacion.estado_id = (SELECT id FROM LOS_SUPER_AMIGOS.Estado WHERE descripcion = 'Pausada')) " + filtro + " ORDER BY visibilidad.precio DESC";
+            String query = "SELECT publicacion.id, " + 
+                                  "publicacion.descripcion, " +
+                                 "(CASE WHEN (tipo.descripcion = 'Subasta' AND (SELECT COUNT(*) FROM LOS_SUPER_AMIGOS.VistaOfertaMax vista WHERE vista.publicacion_id = publicacion.id) = 1) " + 
+                                             "THEN (SELECT vista.precioMax FROM LOS_SUPER_AMIGOS.VistaOfertaMax vista WHERE vista.publicacion_id = publicacion.id) " + 
+                                        "ELSE publicacion.precio " + 
+                                  "END), " + 
+                                 "tipo.descripcion " + 
+                           "FROM LOS_SUPER_AMIGOS.Publicacion publicacion, LOS_SUPER_AMIGOS.Visibilidad visibilidad, LOS_SUPER_AMIGOS.TipoDePublicacion tipo " + 
+                           "WHERE publicacion.tipo_id = tipo.id AND publicacion.visibilidad_id = visibilidad.id AND (publicacion.estado_id = (SELECT id FROM LOS_SUPER_AMIGOS.Estado WHERE descripcion = 'Publicada') or publicacion.estado_id = (SELECT id FROM LOS_SUPER_AMIGOS.Estado WHERE descripcion = 'Pausada')) " 
+                           + filtro + " ORDER BY visibilidad.precio DESC";
             
             command = builderDeComandos.Crear(query, parametros);
             adapter.SelectCommand = command;            

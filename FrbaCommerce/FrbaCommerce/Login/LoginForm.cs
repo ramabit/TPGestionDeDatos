@@ -152,7 +152,7 @@ namespace FrbaCommerce.Login
                         String deshabilitar = "UPDATE LOS_SUPER_AMIGOS.Usuario SET habilitado = 0 WHERE username = @username";
                         builderDeComandos.Crear(deshabilitar, parametros).ExecuteNonQuery();
                     }
-                    MessageBox.Show("Contraseña incorrecta. Fallidos del usuario: " + intentosFallidos);
+                    MessageBox.Show("Contraseña incorrecta." + '\n' + "La contrseña distingue mayusculas y minusculas." + '\n' + "Fallidos del usuario: " + intentosFallidos);
                 }
                 else 
                 {
