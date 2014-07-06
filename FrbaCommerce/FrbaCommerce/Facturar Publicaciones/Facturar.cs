@@ -177,15 +177,15 @@ namespace FrbaCommerce.Facturar_Publicaciones
 
             int valor;
             Int32.TryParse(dropDownFacturar.Text, out valor);
-            
-            parametros.Clear();
-            parametros.Add(new SqlParameter("@id", UsuarioSesion.Usuario.id));
-            parametros.Add(new SqlParameter("@cant", valor));
 
             // Borro tabla temporal con ventas que se facturan pagando comision
             String borroTabla = "IF OBJECT_ID('LOS_SUPER_AMIGOS.Compra_Comision', 'U') IS NOT NULL drop table LOS_SUPER_AMIGOS.Compra_Comision";
             parametros.Clear();
             builderDeComandos.Crear(borroTabla, parametros).ExecuteNonQuery();
+
+            parametros.Clear();
+            parametros.Add(new SqlParameter("@id", UsuarioSesion.Usuario.id));
+            parametros.Add(new SqlParameter("@cant", valor));
 
             // Creo una tabla con todas las ventas por facturar
             String totalidadVentasFacturar = "create table LOS_SUPER_AMIGOS.Compra_Comision"
