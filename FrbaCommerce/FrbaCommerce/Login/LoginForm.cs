@@ -99,6 +99,11 @@ namespace FrbaCommerce.Login
                     String rolUser = (String)builderDeComandos.Crear(rolDeUsuario, parametros).ExecuteScalar();
 
                     UsuarioSesion.Usuario.rol = rolUser;
+                    if(UsuarioSesion.Usuario.rol == null)
+                    {
+                        MessageBox.Show("Usted no tiene roles para iniciar sesion");
+                        return;
+                    }
                   //  MessageBox.Show("Rol: " + UsuarioSesion.Usuario.rol);
 
                     this.Hide();
