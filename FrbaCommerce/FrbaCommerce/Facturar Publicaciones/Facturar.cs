@@ -122,6 +122,22 @@ namespace FrbaCommerce.Facturar_Publicaciones
 
         private void botonFacturar_Click(object sender, EventArgs e)
         {
+            if (radioButtonTarjeta.Checked)
+            {
+                if (textBoxNumero.Text == "" || textBoxBanco.Text == "")
+                {
+                    MessageBox.Show("Para pagar con tarjeta de credito debe completar el numero de tarjeta y el Banco");
+                    return;
+                }
+
+                long number1 = 0;
+                if (!long.TryParse(textBoxNumero.Text, out number1))
+                {
+                    MessageBox.Show("El campo numero de tarjeta solo permite numeros");
+                    return;
+                }
+            }
+
             if (labelCantidadCostos.Text != "0" || dropDownFacturar.Text != "0")
             {
             // Creo la nueva factura

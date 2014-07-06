@@ -255,6 +255,7 @@
             this.textBoxNumero.Name = "textBoxNumero";
             this.textBoxNumero.Size = new System.Drawing.Size(100, 20);
             this.textBoxNumero.TabIndex = 19;
+            this.textBoxNumero.TextChanged += new System.EventHandler(this.textBoxNumero_TextChanged);
             // 
             // labelNumero
             // 
