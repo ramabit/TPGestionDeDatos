@@ -38,6 +38,8 @@
             // 
             // dataGridViewResultadosBusqueda
             // 
+            this.dataGridViewResultadosBusqueda.AllowUserToAddRows = false;
+            this.dataGridViewResultadosBusqueda.AllowUserToDeleteRows = false;
             this.dataGridViewResultadosBusqueda.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewResultadosBusqueda.Location = new System.Drawing.Point(9, 108);
             this.dataGridViewResultadosBusqueda.Name = "dataGridViewResultadosBusqueda";

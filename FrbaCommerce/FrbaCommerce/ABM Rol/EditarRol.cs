@@ -38,8 +38,7 @@ namespace FrbaCommerce.ABM_Rol
             CargarFuncionalidades();            
             if (estaHabilitado())
             {
-                checkBoxEstadoRol.Checked = true;
-                checkBoxEstadoRol.Enabled = false;
+                checkBoxEstadoRol.Visible = false;
                 estabaDeshabilitado = 0;
             }
             else
