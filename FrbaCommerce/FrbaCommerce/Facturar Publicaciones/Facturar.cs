@@ -183,7 +183,7 @@ namespace FrbaCommerce.Facturar_Publicaciones
             parametros.Add(new SqlParameter("@cant", valor));
 
             // Borro tabla temporal con ventas que se facturan pagando comision
-            String borroTabla = "drop table LOS_SUPER_AMIGOS.Compra_Comision";
+            String borroTabla = "IF OBJECT_ID('LOS_SUPER_AMIGOS.Compra_Comision', 'U') IS NOT NULL drop table LOS_SUPER_AMIGOS.Compra_Comision";
             parametros.Clear();
             builderDeComandos.Crear(borroTabla, parametros).ExecuteNonQuery();
 
@@ -250,7 +250,7 @@ namespace FrbaCommerce.Facturar_Publicaciones
             builderDeComandos.Crear(formaPago, parametros).ExecuteNonQuery();
 
             // Borro tabla temporal con ventas que se facturan pagando comision
-            String borroTablaTemporal = "drop table LOS_SUPER_AMIGOS.Compra_Comision";
+            String borroTablaTemporal = "IF OBJECT_ID('LOS_SUPER_AMIGOS.Compra_Comision', 'U') IS NOT NULL drop table LOS_SUPER_AMIGOS.Compra_Comision";
             parametros.Clear();
             builderDeComandos.Crear(borroTablaTemporal, parametros).ExecuteNonQuery();
 
