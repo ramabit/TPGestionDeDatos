@@ -19,6 +19,7 @@ namespace FrbaCommerce.ABM_Empresa
         private ComunicadorConBaseDeDatos comunicador = new ComunicadorConBaseDeDatos();
         private Decimal idDireccion;
         private Decimal idUsuario;
+        private Decimal idEmpresa;
 
         public AgregarEmpresa(String username, String contrasena)
         {
@@ -79,13 +80,6 @@ namespace FrbaCommerce.ABM_Empresa
                 this.idDireccion = comunicador.CrearDireccion(direccion);
             }
 
-            // Si la empresa lo crea el admin, crea un nuevo usuario predeterminado. Si lo crea un nuevo registro de usuario, usa el que viene por parametro
-            if (idUsuario == 0)
-            {
-                idUsuario = CrearUsuario();
-                MessageBox.Show("Se creo el usuario correctamente");
-            }
-
             // Crea empresa
             try
             {
@@ -98,9 +92,9 @@ namespace FrbaCommerce.ABM_Empresa
                 empresa.SetTelefono(telefono);
                 empresa.SetCiudad(ciudad);
                 empresa.SetIdDireccion(idDireccion);
-                empresa.SetIdUsuario(idUsuario);
+                //empresa.SetIdUsuario(idUsuario);
                 empresa.SetHabilitado(true);
-                Decimal idEmpresa = comunicador.CrearEmpresa(empresa);
+                idEmpresa = comunicador.CrearEmpresa(empresa);
                 if (idEmpresa > 0) MessageBox.Show("Se agrego la empresa correctamente");
             }
             catch (CampoVacioException exception)
@@ -132,6 +126,14 @@ namespace FrbaCommerce.ABM_Empresa
             {
                 MessageBox.Show("Fecha no valida");
                 return;
+            }
+
+            // Si la empresa lo crea el admin, crea un nuevo usuario predeterminado. Si lo crea un nuevo registro de usuario, usa el que viene por parametro
+            if (idUsuario == 0)
+            {
+                idUsuario = CrearUsuario();
+                Boolean seCreoBien = comunicador.AsignarUsuarioAEmpresa(idEmpresa, idUsuario);
+                if (seCreoBien) MessageBox.Show("Se creo el usuario correctamente");
             }
 
             if (UsuarioSesion.Usuario.rol != "Administrador")

@@ -137,7 +137,7 @@ namespace FrbaCommerce.ABM_Cliente
             {
                 idUsuario = CrearUsuario();
                 Boolean seCreoBien = comunicador.AsignarUsuarioACliente(idCliente, idUsuario);
-                MessageBox.Show("Se creo el usuario correctamente");
+                if (seCreoBien) MessageBox.Show("Se creo el usuario correctamente");
             }
 
             if (UsuarioSesion.Usuario.rol != "Administrador")

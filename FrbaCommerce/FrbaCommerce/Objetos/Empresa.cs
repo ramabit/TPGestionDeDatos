@@ -185,7 +185,7 @@ namespace FrbaCommerce.Objetos
             parametros.Add(new SqlParameter("@telefono", this.telefono));
             parametros.Add(new SqlParameter("@ciudad", this.ciudad));
             parametros.Add(new SqlParameter("@direccion_id", this.idDireccion));
-            parametros.Add(new SqlParameter("@usuario_id", this.idUsuario));
+            //parametros.Add(new SqlParameter("@usuario_id", this.idUsuario));
             parametros.Add(new SqlParameter("@habilitado", this.habilitado));
             return parametros;
         }

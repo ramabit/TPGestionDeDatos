@@ -274,15 +274,17 @@ CREATE PROCEDURE LOS_SUPER_AMIGOS.crear_empresa
 	@telefono numeric(18,0),
 	@ciudad nvarchar(50),
 	@direccion_id numeric(18,0),
-	@usuario_id numeric(18,0),
+	--@usuario_id numeric(18,0),
 	@habilitado bit,
 	@id numeric(18,0) OUTPUT
 AS
 BEGIN
 	INSERT INTO LOS_SUPER_AMIGOS.Empresa 
-		(razon_social, nombre_de_contacto, cuit, fecha_creacion, mail, telefono, ciudad, direccion_id, usuario_id, habilitado) 
+		--(razon_social, nombre_de_contacto, cuit, fecha_creacion, mail, telefono, ciudad, direccion_id, usuario_id, habilitado) 
+		(razon_social, nombre_de_contacto, cuit, fecha_creacion, mail, telefono, ciudad, direccion_id, habilitado) 
 	VALUES 
-		(@razon_social, @nombre_de_contacto, @cuit, @fecha_creacion, @mail, @telefono, @ciudad, @direccion_id, @usuario_id, @habilitado)
+		--(@razon_social, @nombre_de_contacto, @cuit, @fecha_creacion, @mail, @telefono, @ciudad, @direccion_id, @usuario_id, @habilitado)
+		(@razon_social, @nombre_de_contacto, @cuit, @fecha_creacion, @mail, @telefono, @ciudad, @direccion_id, @habilitado)
 	SET @id = SCOPE_IDENTITY();	
 END
 GO
